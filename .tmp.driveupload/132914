@@ -1,0 +1,6 @@
+{
+  "/transaction-all/page": "app/transaction-all/page.js",
+  "/api/transaction-all/route": "app/api/transaction-all/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/neraca/page": "app/neraca/page.js"
+}
