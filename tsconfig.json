@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/transactions/route.js", "src/app/jurnal/trans-form.jsx", "src/app/jurnal/JurnalUmum.tsx"],
   "exclude": ["node_modules"]
 }

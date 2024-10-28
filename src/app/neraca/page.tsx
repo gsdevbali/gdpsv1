@@ -1,0 +1,134 @@
+import { DataTable } from "./data-tables";
+import { columns } from "./columns";
+
+import PageLayout from "@/components/PageLayout";
+import global from "@/config.js";
+import toidr from "@/lib/toidr";
+import TulisTotalRp from "@/components/TulisTotalRp";
+import Divider from "@/components/Divider";
+import PrintButton from "@/components/PrintButton";
+
+
+// async function getData() {
+//     const res = await fetch(`${global.baseUrl}/api/transaction-all`)
+//     const data = await res.json()
+//     //console.log(data)
+//     return data
+// }
+
+
+//http://localhost:3000/api/neraca?accountTypeId=1
+//http://localhost:3000/api/neraca?accountTypeId=1&accountGroup2Id=2
+
+//Aktiva - Aktiva Lancar
+async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
+    const res = await fetch(`${global.baseUrl}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`)
+    const data = await res.json()
+    //console.log(data)
+    //return data
+    return {
+        accounts: data.accounts,
+        totalBalance: data.totalBalance
+    }
+}
+
+
+
+
+export default async function Page() {
+    const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
+    const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
+    const { accounts: data_AktivaTetap, totalBalance: totalBalance_AktivaTetap } = await getNeraca(1, 2)
+    const { accounts: data_Kewajiban1, totalBalance: totalBalance_Kewajiban1 } = await getNeraca(2, 4)
+    const { accounts: data_Kewajiban2, totalBalance: totalBalance_Kewajiban2 } = await getNeraca(2, 5)
+    const { accounts: data_AsetBersih1, totalBalance: totalBalance_AsetBersih1 } = await getNeraca(3, 6)
+    const { accounts: data_AsetBersih2, totalBalance: totalBalance_AsetBersih2 } = await getNeraca(3, 7)
+
+    const header = <h4>{global.pageInfo.headerText}</h4>;
+    const footer = <p>{global.pageInfo.footerText}</p>;
+
+    const newTotalBalance_AktivaLancar = toidr(totalBalance_AktivaLancar)
+    const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
+    const newTotalBalance_AktivaTetap = toidr(totalBalance_AktivaTetap)
+    const newTotalBalance_Kewajiban = toidr(totalBalance_Kewajiban1 + totalBalance_Kewajiban2)
+    const newTotalBalance_AsetBersih = toidr(totalBalance_AsetBersih1 + totalBalance_AsetBersih2)
+
+    const totalAktiva = totalBalance_AktivaLancar + totalBalance_AktivaTidakLancar + totalBalance_AktivaTetap
+    const totalPasiva = totalBalance_Kewajiban1 + totalBalance_Kewajiban2 + totalBalance_AsetBersih1 + totalBalance_AsetBersih2
+    const newTotalAktiva = toidr(totalAktiva)
+    const newTotalPasiva = toidr(totalPasiva)
+
+    {/* Selisih Aset dan Pasiva */ }
+    const selisihAkhir = toidr(totalAktiva - totalPasiva)
+
+    const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
+        return totalAktiva === totalPasiva
+    }
+
+    return (
+
+        <PageLayout header={header} footer={footer}>
+            <div className="w-full">
+                {/* <Divider /> */}
+                {/* <AccountDialog mode="create">
+                    <Button>Add New Account</Button>
+                </AccountDialog> */}
+                {/* <Button>Add New Account</Button> */}
+
+
+                <h1 className="text-3xl font-bold">NERACA</h1>
+                <Divider />
+                <PrintButton />
+
+
+                {/* AKTIVA - KIRI */}
+
+                <h1 className="text-xl font-bold pt-4 pb-2">AKTIVA</h1>
+                <Divider />
+                <h2 className="text-lg font-bold pt-2 pb-2">AKTIVA LANCAR</h2>
+                <DataTable columns={columns} data={data_AktivaLancar} />
+                <TulisTotalRp value={newTotalBalance_AktivaLancar} title={"Aktiva Lancar"} />
+
+                <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TIDAK LANCAR</h2>
+                <DataTable columns={columns} data={data_AktivaTidakLancar} />
+                <TulisTotalRp value={newTotalBalance_AktivaTidakLancar} title="Aktiva Tidak Lancar" />
+
+                <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TETAP</h2>
+                <DataTable columns={columns} data={data_AktivaTetap} />
+                <TulisTotalRp value={newTotalBalance_AktivaTetap} title="Aktiva Tetap" />
+
+
+
+
+                {/* PASIVA - KANAN */}
+
+                <h2 className="text-xl font-bold pt-4 pb-2">KEWAJIBAN DAN ASET BERSIH</h2>
+                <Divider />
+                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2>
+                <DataTable columns={columns} data={data_Kewajiban1} />
+                <DataTable columns={columns} data={data_Kewajiban2} />
+                <TulisTotalRp value={newTotalBalance_Kewajiban} title="Kewajiban" />
+
+                <h2 className="text-lg font-bold pt-2 pb-2">ASET BERSIH</h2>
+                <DataTable columns={columns} data={data_AsetBersih1} />
+                <DataTable columns={columns} data={data_AsetBersih2} />
+                <TulisTotalRp value={newTotalBalance_AsetBersih} title="Aset Bersih" />
+
+                <div className="h-4"></div>
+
+                <div className="p-4 rounded-lg bg-blue-50">
+                    {/* Rangkuman Neraca */}
+                    <h1 className="text-xl font-bold pt-4 pb-2">RANGKUMAN NERACA</h1>
+                    {isBalanceSheetEqual(totalAktiva, totalPasiva) ? <p className="text-green-500 pb-2">{global.pageInfo.infoNeracaBalance}</p> : <p className="text-red-500 pb-2">{global.pageInfo.infoNeracaUnbalance}</p>}
+
+                    <TulisTotalRp value={newTotalAktiva} title="ASET" />
+                    <TulisTotalRp value={newTotalPasiva} title="PASIVA (Kewajiban + Aset Bersih)" />
+
+
+
+                    <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" />
+                </div>
+            </div>
+        </PageLayout>
+    )
+}

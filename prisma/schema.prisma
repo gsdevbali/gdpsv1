@@ -1,0 +1,171 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Account {
+  id               Int               @id @default(autoincrement())
+  code             String            @unique @db.VarChar(16)
+  name             String
+  accountTypeId    Int
+  accountGroupId   Int
+  accountGroup2Id  Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  accountGroup2    AccountGroup2     @relation(fields: [accountGroup2Id], references: [id])
+  accountGroup     AccountGroup      @relation(fields: [accountGroupId], references: [id])
+  accountType      AccountType       @relation(fields: [accountTypeId], references: [id])
+  JournalDetail    JournalDetail[]
+  transactions     Transaction[]
+  transactionMains TransactionMain[]
+  transactionAlls  TransactionAll[]
+
+  @@index([accountGroup2Id], map: "Account_accountGroup2Id_fkey")
+  @@index([accountGroupId], map: "Account_accountGroupId_fkey")
+  @@index([accountTypeId], map: "Account_accountTypeId_fkey")
+}
+
+model AccountType {
+  id       Int       @id @default(autoincrement())
+  flag     String
+  name     String    @unique
+  accounts Account[]
+}
+
+model AccountGroup {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  flag     String
+  accounts Account[]
+}
+
+model AccountGroup2 {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  flag     String
+  accounts Account[]
+}
+
+model Tag {
+  id               Int                  @id @default(autoincrement())
+  name             String               @unique
+  flag             String
+  transactionMains TransactionMainTag[]
+  transactions     TransactionTag[]
+  transactionAlls  TransactionAllTag[]
+}
+
+model TransactionMainTag {
+  id                Int             @id @default(autoincrement())
+  transactionMain   TransactionMain @relation(fields: [transactionMainId], references: [id])
+  transactionMainId Int
+  tag               Tag             @relation(fields: [tagId], references: [id])
+  tagId             Int
+
+  @@unique([transactionMainId, tagId])
+}
+
+model TransactionTag {
+  id            Int         @id @default(autoincrement())
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
+  tag           Tag         @relation(fields: [tagId], references: [id])
+  tagId         Int
+
+  @@unique([transactionId, tagId])
+}
+
+model TransactionAllTag {
+  id               Int            @id @default(autoincrement())
+  transactionAll   TransactionAll @relation(fields: [transactionAllId], references: [id])
+  transactionAllId Int
+  tag              Tag            @relation(fields: [tagId], references: [id])
+  tagId            Int
+
+  @@unique([transactionAllId, tagId])
+}
+
+model TransactionMain {
+  id           Int                  @id @default(autoincrement())
+  date         DateTime             @default(now())
+  description  String
+  ref          String               @default("")
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  transactions Transaction[]
+  tags         TransactionMainTag[]
+  accountId    Int
+  account      Account              @relation(fields: [accountId], references: [id])
+
+  @@index([accountId], map: "TransactionMain_accountId_fkey")
+}
+
+model Transaction {
+  id            Int              @id @default(autoincrement())
+  date          DateTime         @default(now())
+  description   String
+  ref           String           @default("")
+  mediaPath     String           @default("")
+  debit         Float            @default(0)
+  credit        Float            @default(0)
+  accountId     Int
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  transactionId Int
+  account       Account          @relation(fields: [accountId], references: [id])
+  transaction   TransactionMain  @relation(fields: [transactionId], references: [id])
+  tags          TransactionTag[]
+
+  @@index([accountId], map: "Transaction_accountId_fkey")
+  @@index([transactionId], map: "Transaction_transactionId_fkey")
+}
+
+model TransactionAll {
+  id          Int                 @id @default(autoincrement())
+  date        DateTime            @default(now())
+  description String
+  ref         String              @default("")
+  mediaPath   String              @default("")
+  debit       Float               @default(0)
+  credit      Float               @default(0)
+  flag        String              @default("")
+  accountId   Int
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  account     Account             @relation(fields: [accountId], references: [id])
+  tags        TransactionAllTag[]
+
+  @@index([accountId], map: "Transaction_accountId_fkey")
+}
+
+model JournalEntry {
+  id          Int             @id @default(autoincrement())
+  date        DateTime        @default(now())
+  description String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  entries     JournalDetail[]
+}
+
+model JournalDetail {
+  id             Int          @id @default(autoincrement())
+  journalEntryId Int
+  accountId      Int
+  ref            String       @default("")
+  mediaPath      String       @default("")
+  debit          Float        @default(0)
+  credit         Float        @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  account        Account      @relation(fields: [accountId], references: [id])
+  journalEntry   JournalEntry @relation(fields: [journalEntryId], references: [id])
+
+  @@index([accountId], map: "JournalDetail_accountId_fkey")
+  @@index([journalEntryId], map: "JournalDetail_journalEntryId_fkey")
+}
