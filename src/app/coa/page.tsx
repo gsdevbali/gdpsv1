@@ -1,8 +1,6 @@
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
-import { Button } from "@/components/ui/button";
 
-import Divider from "@/components/Divider";
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 

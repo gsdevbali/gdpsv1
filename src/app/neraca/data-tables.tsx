@@ -1,16 +1,10 @@
 "use client"
 
 import React from "react"
-import { ChevronDown } from "lucide-react"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import {
     ColumnDef,
-    ColumnFiltersState,
+
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -18,7 +12,7 @@ import {
     getPaginationRowModel,
     SortingState,
     useReactTable,
-    VisibilityState,
+
 } from "@tanstack/react-table"
 
 import {

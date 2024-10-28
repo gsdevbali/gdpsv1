@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import dbprisma from "@/lib/dbprisma";
 import { NextResponse } from "next/server";
 
@@ -12,7 +11,7 @@ export async function GET(request: Request) {
 
         // Extract accountTypeId from the request query parameters
         const { searchParams } = new URL(request.url);
-        const accountTypeId = searchParams.get('accountTypeId');
+        //const accountTypeId = searchParams.get('accountTypeId');
         const accountGroup2Id = searchParams.get('accountGroup2Id');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
@@ -45,53 +44,51 @@ export async function GET(request: Request) {
         });
 
           // Replace the existing accountsWithBalance calculation with:
-          const accountsWithBalance = await Promise.all(query.map(async (group) => {
-            const accounts = await dbprisma.account.findMany({
-              where: {
-                accountGroup2Id: group.accountGroup2Id,
-              },
-              include: {
-                accountType: true,
-                accountGroup: true,
-                accountGroup2: true,
-                transactionAlls: {
-                  select: {
-                    date: true,
-                    description: true,
-                    debit: true,
-                    credit: true,
-                    flag: true,
-                  },
-                  where: {
-                    date: {
-                      gte: new Date(startDate),
-                      lte: new Date(endDate),
-                    },
-                  },
-                },
-              },
-            });
+          // const accountsWithBalance = await Promise.all(query.map(async (group) => {
+          //   const accounts = await dbprisma.account.findMany({
+          //     where: {
+          //       accountGroup2Id: group.accountGroup2Id,
+          //     },
+          //     include: {
+          //       accountType: true,
+          //       accountGroup: true,
+          //       accountGroup2: true,
+          //       transactionAlls: {
+          //         select: {
+          //           date: true,
+          //           description: true,
+          //           debit: true,
+          //           credit: true,
+          //           flag: true,
+          //         },
+          //         where: {
+          //           date: {
+          //             gte: new Date(startDate),
+          //             lte: new Date(endDate),
+          //           },
+          //         },
+          //       },
+          //     },
+          //   });
           
-            const groupBalance = accounts.reduce((acc, account) => {
-              const accountBalance = account.transactionAlls.reduce((sum, transaction) => 
-                sum + (transaction.debit - transaction.credit), 0);
-              return acc + accountBalance;
-            }, 0);
-          
-            return {
-                accountGroup2Id: group.accountGroup2Id,
-                accountCount: group._count?.id || 0,
-                totalDebit: group._sum.debit || 0,
-                totalCredit: group._sum.credit || 0,
-                balance: (group._sum.debit || 0) - (group._sum.credit || 0),
-                accounts: accounts,
-              };
-            }));
+          //   return {
+          //       accountGroup2Id: group.accountGroup2Id,
+          //       accountCount: group._count?.id || 0,
+          //       totalDebit: group._sum.debit || 0,
+          //       totalCredit: group._sum.credit || 0,
+          //       balance: (group._sum.debit || 0) - (group._sum.credit || 0),
+          //       accounts: accounts,
+          //     };
+          //   }));
 
         // Calculate the sum of all balances
-        const totalBalance = accountsWithBalance.reduce((sum, group) => sum + group.balance, 0);
+        //const totalBalance = accountsWithBalance.reduce((sum, group) => sum + group.balance, 0);
 
         // return NextResponse.json(accountsWithBalance, { status: 200 });
+
+        const accountsWithBalance = query;
+        const totalBalance = 0;
+        
         return NextResponse.json({
             accountGroups: accountsWithBalance,
             totalBalance: totalBalance

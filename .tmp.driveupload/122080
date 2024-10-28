@@ -1,0 +1,5 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/rep-activity/page": "app/rep-activity/page.js",
+  "/neraca/page": "app/neraca/page.js"
+}

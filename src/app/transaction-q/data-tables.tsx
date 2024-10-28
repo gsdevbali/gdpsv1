@@ -32,7 +32,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 // Add this new import for date handling
-import { format, isWithinInterval, parseISO, startOfYear, endOfYear } from "date-fns"
+import { format, parseISO, startOfYear, endOfYear } from "date-fns"
 import Divider from "@/components/Divider"
 import PrintButton from "@/components/PrintButton"
 
@@ -57,12 +57,12 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     // Add a new state variable to track whether the date filter is active
-    const [isDateFilterActive, setIsDateFilterActive] = React.useState(false)
+    const [isDateFilterActive] = React.useState(false)
 
 
     // Add these new state variables
-    const [dateStart, setDateStart] = React.useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = React.useState<string>(initialDateEnd)
+    const [dateStart] = React.useState<string>(initialDateStart)
+    const [dateEnd] = React.useState<string>(initialDateEnd)
     // Modify these state variables to use the current year as default
     // const [dateStart, setDateStart] = React.useState<string>(() => {
     //     return format(startOfYear(new Date()), "yyyy-MM-dd")
@@ -123,13 +123,13 @@ export function DataTable<TData, TValue>({
     // }, [dateStart, dateEnd])
 
     // Modify the useEffect to only apply the filter when isDateFilterActive is true
-    React.useEffect(() => {
-        if (isDateFilterActive) {
-            table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-        } else {
-            table.getColumn('date')?.setFilterValue(null)
-        }
-    }, [dateStart, dateEnd, isDateFilterActive])
+    // React.useEffect(() => {
+    //     if (isDateFilterActive) {
+    //         table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
+    //     } else {
+    //         table.getColumn('date')?.setFilterValue(null)
+    //     }
+    // }, [dateStart, dateEnd, isDateFilterActive])
 
     return (
         <>

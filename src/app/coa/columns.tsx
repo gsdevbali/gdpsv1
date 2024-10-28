@@ -2,7 +2,6 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 //import AccountDialog from "./AccountDialog"
 
@@ -12,6 +11,7 @@ export type Account = {
     name: string
     accountType: string
     accountGroup: string
+    balance: number
 }
 
 export const columns: ColumnDef<Account>[] = [

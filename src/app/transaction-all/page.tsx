@@ -1,4 +1,4 @@
-"use client"
+
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
 

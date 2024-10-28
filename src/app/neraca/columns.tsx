@@ -1,8 +1,6 @@
 'use client'
 
-import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 //import AccountDialog from "./AccountDialog"
 
@@ -11,8 +9,18 @@ export type Account = {
     code: string
     name: string
     accountType: string
-    accountGroup: string
-    accountGroup2: string
+    accountGroup: {
+        id: number
+        name: string
+    }
+    accountGroup2: {
+        id: number
+        name: string
+    }
+    //accountGroup: string
+    //accountGroup2: string
+    balance: number
+
 }
 
 export const columns: ColumnDef<Account>[] = [

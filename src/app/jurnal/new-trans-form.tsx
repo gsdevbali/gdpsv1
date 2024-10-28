@@ -12,12 +12,12 @@ interface Account {
     name: string;
 }
 
-interface MainData {
-    date: string;
-    description: string;
-    ref: string;
-    accountId: string;
-}
+// interface MainData {
+//     date: string;
+//     description: string;
+//     ref: string;
+//     accountId: string;
+// }
 
 interface Transaction {
     date: string;

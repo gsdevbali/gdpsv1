@@ -5,10 +5,8 @@ import { useState } from "react";
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
-import Divider from "@/components/Divider";
-import PrintButton from "@/components/PrintButton";
 //import { DatePicker } from "@/components/ui/date-picker";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,7 +24,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export default function Page() {
     // const data = await getData()
     const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-    const today = new Date().toISOString().split('T')[0];
+    //const today = new Date().toISOString().split('T')[0];
 
     const [data, setData] = useState(null);
     //const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]);

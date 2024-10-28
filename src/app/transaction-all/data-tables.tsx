@@ -32,7 +32,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 // Add this new import for date handling
-import { format, isWithinInterval, parseISO, startOfYear, endOfYear } from "date-fns"
+import { parseISO, startOfYear, endOfYear } from "date-fns"
 import Divider from "@/components/Divider"
 import PrintButton from "@/components/PrintButton"
 
@@ -42,27 +42,27 @@ import printStyles from './PrintStyles.module.css';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    dateStart: string
-    dateEnd: string
+    // dateStart: string
+    // dateEnd: string
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
-    dateStart: initialDateStart,
-    dateEnd: initialDateEnd,
+
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     // Add a new state variable to track whether the date filter is active
-    const [isDateFilterActive, setIsDateFilterActive] = React.useState(false)
+    //const [isDateFilterActive] = React.useState(false)
 
 
     // Add these new state variables
-    const [dateStart, setDateStart] = React.useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = React.useState<string>(initialDateEnd)
+    // const [dateStart, setDateStart] = React.useState<string>(initialDateStart)
+    // const [dateEnd, setDateEnd] = React.useState<string>(initialDateEnd)
+
     // Modify these state variables to use the current year as default
     // const [dateStart, setDateStart] = React.useState<string>(() => {
     //     return format(startOfYear(new Date()), "yyyy-MM-dd")
@@ -72,14 +72,14 @@ export function DataTable<TData, TValue>({
     // })
 
     // Add this new function to format the date range for the title
-    const formatDateRange = () => {
-        if (isDateFilterActive) {
-            const startFormatted = format(parseISO(dateStart), "d MMMM yyyy")
-            const endFormatted = format(parseISO(dateEnd), "d MMMM yyyy")
-            return `${startFormatted} - ${endFormatted}`
-        }
-        return "Semua"
-    }
+    // const formatDateRange = () => {
+    //     if (isDateFilterActive) {
+    //         const startFormatted = format(parseISO(dateStart), "d MMMM yyyy")
+    //         const endFormatted = format(parseISO(dateEnd), "d MMMM yyyy")
+    //         return `${startFormatted} - ${endFormatted}`
+    //     }
+    //     return "Semua"
+    // }
 
     const table = useReactTable({
         data,
@@ -123,13 +123,13 @@ export function DataTable<TData, TValue>({
     // }, [dateStart, dateEnd])
 
     // Modify the useEffect to only apply the filter when isDateFilterActive is true
-    React.useEffect(() => {
-        if (isDateFilterActive) {
-            table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-        } else {
-            table.getColumn('date')?.setFilterValue(null)
-        }
-    }, [dateStart, dateEnd, isDateFilterActive])
+    // React.useEffect(() => {
+    //     if (isDateFilterActive) {
+    //         table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
+    //     } else {
+    //         table.getColumn('date')?.setFilterValue(null)
+    //     }
+    // }, [dateStart, dateEnd, isDateFilterActive])
 
     return (
         <>
@@ -137,11 +137,11 @@ export function DataTable<TData, TValue>({
                 <div>
                     <h1 className="text-3xl font-bold">TRANSAKSI
                     </h1>
-                    {isDateFilterActive && (
+                    {/* {isDateFilterActive && (
                         <h2 className="ml-2 text-xl font-normal">
                             ({formatDateRange()})
                         </h2>
-                    )}
+                    )} */}
                     <Divider />
                     <PrintButton />
 

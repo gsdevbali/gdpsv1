@@ -2,12 +2,12 @@
 
 import prisma from '@/lib/dbprisma';
 
-interface TransMainDetail {
-  date: string;
-  description: string;
-  ref: string;
-  accountId: number;
-}
+// interface TransMainDetail {
+//   date: string;
+//   description: string;
+//   ref: string;
+//   accountId: number;
+// }
 
 interface TransactionDetail {
   date: string;

@@ -12,12 +12,12 @@ interface Account {
     name: string;
 }
 
-interface MainData {
-    date: string;
-    description: string;
-    ref: string;
-    accountId: 2; // 2 is account id for Account: 'Kas Kerk'
-}
+// interface MainData {
+//     date: string;
+//     description: string;
+//     ref: string;
+//     accountId: 2; // 2 is account id for Account: 'Kas Kerk'
+// }
 
 interface Transaction {
     date: string;
@@ -56,20 +56,20 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
     // 10 - Biaya Operasional Gereja
     // 11 - Biaya Sekre
     // 12 - Biaya Bidang & Bapel
-    if (accountId === '') {
-        useEffect(() => {
-            const fetchAccounts = async () => {
-                try {
-                    const fetchedAccounts = await getAccountsByType(5);
-                    setAccounts(fetchedAccounts);
-                } catch (error) {
-                    console.error('Failed to fetch accounts:', error);
-                }
-            };
+    // if (accountId === '') {
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            try {
+                const fetchedAccounts = await getAccountsByType(5);
+                setAccounts(fetchedAccounts);
+            } catch (error) {
+                console.error('Failed to fetch accounts:', error);
+            }
+        };
 
-            fetchAccounts();
-        }, []);
-    }
+        fetchAccounts();
+    }, []);
+    // }
 
     const [mainData, setMainData] = useState({
         date: new Date().toISOString().split('T')[0],
@@ -88,28 +88,28 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
 
     // const isResetEnabled = transactions.length > 1;
 
-    const [totalDebit, setTotalDebit] = useState(0);
+    //const [totalDebit, setTotalDebit] = useState(0);
     const [totalCredit, setTotalCredit] = useState(0);
     // Calculate totals immediately
 
 
-    const difference = Math.abs(totalDebit - totalCredit);
-    const isBalanced = difference === 0;
+    //const difference = Math.abs(totalDebit - totalCredit);
+    //const isBalanced = difference === 0;
 
     // const isSubmitEnabled = isBalanced && transactions.length > 1;
     // Remove isBalanced and isSubmitEnabled
     const isResetEnabled = transactions.length > 1;
 
-    const [displayValues, setDisplayValues] = useState<string[]>(transactions.map(() => ''));
+    const [setDisplayValues] = useState<string[]>(transactions.map(() => ''));
 
-    const formatCurrency = (value: number): string => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(value);
-    };
+    // const formatCurrency = (value: number): string => {
+    //     return new Intl.NumberFormat('id-ID', {
+    //         style: 'currency',
+    //         currency: 'IDR',
+    //         minimumFractionDigits: 0,
+    //         maximumFractionDigits: 0,
+    //     }).format(value);
+    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -187,23 +187,23 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
         }]);
     };
 
-    const handleDebitChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value.replace(/[^\d]/g, '');
-        const numericValue = parseInt(inputValue, 10) || 0;
+    // const handleDebitChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
+    //     const inputValue = e.target.value.replace(/[^\d]/g, '');
+    //     const numericValue = parseInt(inputValue, 10) || 0;
 
-        // Update display value
-        const newDisplayValues = [...displayValues];
-        newDisplayValues[index] = inputValue;
-        setDisplayValues(newDisplayValues);
+    //     // Update display value
+    //     const newDisplayValues = [...displayValues];
+    //     newDisplayValues[index] = inputValue;
+    //     setDisplayValues(newDisplayValues);
 
-        // Update actual transaction value
-        handleTransactionChange(index, {
-            target: {
-                name: 'debit',
-                value: numericValue.toString()
-            }
-        } as ChangeEvent<HTMLInputElement>);
-    };
+    //     // Update actual transaction value
+    //     handleTransactionChange(index, {
+    //         target: {
+    //             name: 'debit',
+    //             value: numericValue.toString()
+    //         }
+    //     } as ChangeEvent<HTMLInputElement>);
+    // };
 
     const handleReset = () => {
         setTransactions([{ ...initialTransaction }]);
@@ -213,8 +213,8 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
             ref: '',
             accountId: accountId,
         });
-        setDisplayValues(['']);
-        setTotalDebit(0);
+        //setDisplayValues(['']);
+        //setTotalDebit(0);
         setTotalCredit(0);
     };
 

@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function saveTransaction(formData, accountId) {
+export async function saveTransaction(formData) {
   // Extract and parse transactions data
   const flagJurnalUmum = 'u'; // untuk 'Jurnal Umum'
   const transactions = JSON.parse(formData.get('transactions') || '[]');
