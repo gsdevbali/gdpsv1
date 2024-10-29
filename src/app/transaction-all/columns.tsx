@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
-import { Account } from "@prisma/client";
+//import { Account } from "@prisma/client";
 
 export type Transaction = {
     id: number
