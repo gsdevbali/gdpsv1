@@ -40,14 +40,15 @@ export async function saveTransaction(formData, accountId) {
     //   });
     
       // 1: Save main transaction ( Also in Transaction )
+      // Jumlah Pengeluaran masuk ke Kredit
       const mainAllTransaction = await prisma.transactionAll.create({
         data: {
           date: new Date(main.date),
           description: main.description,
           ref: main.ref,
           accountId: main.accountId,
-          debit: totalCredit, // Assuming main transaction doesn't have debit/credit
-          credit: 0, // You may need to adjust this based on your requirements
+          debit: 0, // Assuming main transaction doesn't have debit/credit
+          credit: totalDebit, // You may need to adjust this based on your requirements
         //   account: {
         //     connect: {
         //       id: main.accountId,
