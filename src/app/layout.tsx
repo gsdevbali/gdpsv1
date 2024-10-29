@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -45,6 +45,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <SidebarProvider>
+              
               <AppSidebar />
               {/* <SidebarTrigger /> */}
               {children}

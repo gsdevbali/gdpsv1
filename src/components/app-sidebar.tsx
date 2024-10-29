@@ -5,17 +5,14 @@ import {
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
-  LandPlot,
-  ListIcon,
   Newspaper,
-  PersonStanding,
   Printer,
   Settings2,
   Table2Icon,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+//import { NavProjects } from "@/components/nav-projects"
 //import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
@@ -24,21 +21,22 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
-import ThemeToggle from "./ThemeToggle"
-
+//import ThemeToggle from "./ThemeToggle"
+import AppLogo from "./AppLogo"
 // This is sample data.
 const data = {
   user: {
-    name: "dev",
+    name: "GDPS-APP",
     email: "dev@gs.com",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
     {
-      name: "dev1",
+      name: "GDPS-APP",
       logo: GalleryVerticalEnd,
-      plan: "v1App",
+      plan: "v1.0",
     },
     {
       name: "dev2",
@@ -55,7 +53,7 @@ const data = {
     // APP-CUSTOM
     {
       title: "DAFTAR",
-      url: "#",
+      url: "/transaction-all",
       icon: Table2Icon,
       isActive: true,
       items: [
@@ -81,7 +79,7 @@ const data = {
 
     {
       title: "ENTRI",
-      url: "#",
+      url: "/jurnal",
       icon: Newspaper,
       isActive: true,
       items: [
@@ -108,7 +106,7 @@ const data = {
 
     {
       title: "AKUN",
-      url: "#",
+      url: "/coa",
       icon: Table2Icon,
       isActive: true,
       items: [
@@ -121,11 +119,11 @@ const data = {
           url: "/coa-type",
         },
         {
-          title: "Group 1",
+          title: "Group Akun",
           url: "/coa-group1",
         },
         {
-          title: "Group 2",
+          title: "Group Akun-2",
           url: "/coa-group2",
         },
       ],
@@ -135,7 +133,7 @@ const data = {
       title: "LAPORAN",
       url: "#",
       icon: Printer,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "AKTIVITAS R/L",
@@ -164,6 +162,7 @@ const data = {
       title: "Pengaturan",
       url: "#",
       icon: Settings2,
+      isActive: false,
       items: [
         {
           title: "Awal",
@@ -181,37 +180,39 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "ASET",
-      url: "#",
-      icon: LandPlot,
-    },
-    {
-      name: "PAYROL",
-      url: "#",
-      icon: PersonStanding,
-    },
-    {
-      name: "KONTAK",
-      url: "#",
-      icon: ListIcon,
-    },
-  ],
+  // projects: [
+  //   {
+  //     name: "ASET",
+  //     url: "#",
+  //     icon: LandPlot,
+  //   },
+  //   {
+  //     name: "PAYROL",
+  //     url: "#",
+  //     icon: PersonStanding,
+  //   },
+  //   {
+  //     name: "KONTAK",
+  //     url: "#",
+  //     icon: ListIcon,
+  //   },
+  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" {...props} className="print:hidden">
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
+        {/* <AppLogo /> */}
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <ThemeToggle />
+       <SidebarTrigger />
+        {/* <ThemeToggle /> */}
         {/* <NavUser user={data.user} /> */}
       </SidebarFooter>
       <SidebarRail />

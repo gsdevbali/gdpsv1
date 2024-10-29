@@ -158,7 +158,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
         const { name, value } = e.target;
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
-                if (name === 'debit') {
+                if (name === 'credit') {
                     // Remove non-numeric characters and parse as float
                     const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
                     
@@ -303,10 +303,10 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                                     className='w-[100%] md:w-[100%] p-2 rounded'
                                 />
 
-
+                                {/* CREDIT untuk Detail Penerimaan KAS & Bank */}
                                 <input
                                     type="text" // Changed from "number" to "text"
-                                    name='debit'
+                                    name='credit'
                                     value={displayValues[index] || ''} // Use displayValues instead of direct transaction value
                                     onChange={(e) => handleTransactionChange(index, e)}
                                     placeholder="Jumlah"
@@ -339,7 +339,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                         <div>
                             <div>
                                 {/* <p>Total Penerimaan: {totalDebit}</p> */}
-                                <p className='text-lg text-bold'>Total Penerimaan: {formatCurrency(totalDebit)}</p>
+                                <p className='text-lg text-bold'>Total Penerimaan: {formatCurrency(totalCredit)}</p>
                                 {/* <p className={isBalanced ? 'text-green-600' : 'text-orange-500'}>
                                     Perbedaan: {difference.toFixed(2)}
                                 </p> */}

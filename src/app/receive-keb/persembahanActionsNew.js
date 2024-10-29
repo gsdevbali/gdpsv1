@@ -40,6 +40,7 @@ export async function saveTransaction(formData, accountId) {
     //   });
     
       // 1: Save main transaction ( Also into TransactionAll model )
+      // Penerimaan Persembahan SIMPAN di ....
       const mainAllTransaction = await prisma.transactionAll.create({
         data: {
           date: new Date(main.date),

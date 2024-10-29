@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
+import { Printer } from "lucide-react";
 
 const PrintButton = () => {
     const handlePrint = () => {
@@ -8,8 +9,8 @@ const PrintButton = () => {
     };
 
     return (
-        <Button onClick={handlePrint} className="print:hidden">
-            CETAK
+        <Button onClick={handlePrint} variant="outline" size="icon" className="print:hidden">
+            <Printer />
         </Button>
     );
 };

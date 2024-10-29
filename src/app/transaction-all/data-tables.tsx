@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ChevronDown } from "lucide-react"
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -143,7 +143,7 @@ export function DataTable<TData, TValue>({
                         </h2>
                     )} */}
                     <Divider />
-                    <PrintButton />
+                    {/* <PrintButton /> */}
 
                 </div>
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
@@ -260,7 +260,7 @@ export function DataTable<TData, TValue>({
                             ) : (
                                 <TableRow>
                                     <TableCell colSpan={columns.length} className="h-24 text-center">
-                                        No results.
+                                        Tidak ada data.
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -273,8 +273,8 @@ export function DataTable<TData, TValue>({
                 <div className={printStyles.printHide}>
                     <div className="flex items-center justify-end space-x-2 py-4">
                         <div className="flex-1 text-sm text-muted-foreground">
-                            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                            {table.getFilteredRowModel().rows.length} row(s) selected.
+                            {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
+                            {table.getFilteredRowModel().rows.length} baris data ditemukan.
                         </div>
                         <div className="space-x-2">
                             <Button
@@ -283,7 +283,7 @@ export function DataTable<TData, TValue>({
                                 onClick={() => table.previousPage()}
                                 disabled={!table.getCanPreviousPage()}
                             >
-                                Previous
+                                <ArrowLeft className="mr-2 h-4 w-4" />
                             </Button>
                             <Button
                                 variant="outline"
@@ -291,7 +291,7 @@ export function DataTable<TData, TValue>({
                                 onClick={() => table.nextPage()}
                                 disabled={!table.getCanNextPage()}
                             >
-                                Next
+                                <ArrowRight className="mr-2 h-4 w-4" />
                             </Button>
                         </div>
                     </div>

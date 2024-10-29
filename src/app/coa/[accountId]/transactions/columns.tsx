@@ -20,37 +20,41 @@ export type Transaction = {
 }
 
 export const columns: ColumnDef<Transaction>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
+    // {
+    //     id: "select",
+    //     header: ({ table }) => (
+    //         <Checkbox
+    //             checked={
+    //                 table.getIsAllPageRowsSelected() ||
+    //                 (table.getIsSomePageRowsSelected() && "indeterminate")
+    //             }
+    //             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    //             aria-label="Select all"
+    //         />
+    //     ),
+    //     cell: ({ row }) => (
+    //         <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
+    //             aria-label="Select row"
+    //         />
+    //     ),
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
 
-    {
-        accessorKey: "account.code",
-        header: "Akun",
-    },
+    // {
+    //     accessorKey: "account.code",
+    //     header: "Akun",
+    //     enableColumnFilter: true,
+    //     enableSorting: true,
+    // },
 
     {
         accessorKey: "ref",
         header: "Nom. Ref.",
+        enableColumnFilter: true,
+        enableSorting: true,
     },
 
     {
@@ -58,18 +62,22 @@ export const columns: ColumnDef<Transaction>[] = [
         header: "Tanggal",
         cell: ({ row }) => {
             const newDate = tanggal(row.original.date)
-            return <div className="text-left">{newDate}</div>;
+            return <div className="text-left w-[100px]">{newDate}</div>;
         },
+        enableColumnFilter: true,
+        enableSorting: true,
     },
 
 
 
     {
         accessorKey: "description",
-        header: () => <div className="text-left w-[200px]">URAIAN</div>,
+        header: () => <div className="text-left w-[100%]">URAIAN</div>,
         cell: ({ row }) => {
-            return <div className="text-left w-[200px]">{row.original.description}</div>;
+            return <div className="text-left w-[100%]">{row.original.description}</div>;
         },
+        enableColumnFilter: true,
+        enableSorting: true,
     },
 
     {
@@ -82,6 +90,8 @@ export const columns: ColumnDef<Transaction>[] = [
             }).format(row.original.debit)
             return <div className="text-right w-[200px]">{newDebit}</div>;
         },
+        enableColumnFilter: true,
+        enableSorting: true,
     },
     {
         accessorKey: "credit",
@@ -93,6 +103,8 @@ export const columns: ColumnDef<Transaction>[] = [
             }).format(row.original.credit)
             return <div className="text-right w-[200px]">{newCredit}</div>;
         },
+        enableColumnFilter: true,
+        enableSorting: true,
     },
 
 ]

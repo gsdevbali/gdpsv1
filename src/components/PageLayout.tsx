@@ -1,5 +1,7 @@
 import React from 'react';
 import Divider from './Divider';
+import ThemeToggle from './ThemeToggle';
+import PrintButton from './PrintButton';
 
 interface PageLayoutProps {
     header: React.ReactNode;
@@ -7,10 +9,19 @@ interface PageLayoutProps {
     footer: React.ReactNode;
 }
 
+const handlePrint = () => {
+    console.log("Printing...");
+}
+
 const PageLayout: React.FC<PageLayoutProps> = ({ header, children, footer }) => {
     return (
         <div className="w-full p-4">
-            <header className="page-header">{header}</header>
+            <header className="page-header flex justify-between items-center">{header} 
+                <div className="flex items-center gap-2">
+                    <PrintButton />
+                    <ThemeToggle />
+                </div>
+            </header>
             <Divider />
             <main className="page-body">{children}</main>
             <Divider />

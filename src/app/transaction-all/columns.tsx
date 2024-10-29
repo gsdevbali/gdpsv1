@@ -8,6 +8,7 @@ import Link from "next/link";
 
 import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
+import { Account } from "@prisma/client";
 
 export type Transaction = {
     id: number
@@ -21,6 +22,13 @@ export type Transaction = {
     createdAt: Date
     updatedAt: Date
     flag: string
+    account: Account
+}
+
+export type Account = {
+    id: number
+    code: string
+    name: string
 }
 
 // const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
@@ -91,6 +99,11 @@ export const columns: ColumnDef<Transaction>[] = [
     {
         accessorKey: "account.code",
         header: "Akun",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100%]">
+                {row.original.account.code}
+            </div>;
+        },
         enableSorting: true,
     },
     {
