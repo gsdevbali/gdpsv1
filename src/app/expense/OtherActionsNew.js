@@ -47,7 +47,7 @@ export async function saveTransaction(formData, accountId) {
           ref: main.ref,
           accountId: main.accountId,
           debit: totalCredit, // Assuming main transaction doesn't have debit/credit
-          credit: totalDebit, // You may need to adjust this based on your requirements
+          credit: 0, // You may need to adjust this based on your requirements
         //   account: {
         //     connect: {
         //       id: main.accountId,

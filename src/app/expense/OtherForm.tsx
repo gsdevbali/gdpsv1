@@ -158,7 +158,7 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
         const { name, value } = e.target;
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
-                if (name === 'credit') {
+                if (name === 'debit') {
                     // Remove non-numeric characters and parse as float
                     const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
                     
@@ -311,7 +311,7 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
 
                                 <input
                                     type="text" // Changed from "number" to "text"
-                                    name='credit'
+                                    name='debit'
                                     value={displayValues[index] || ''} // Use displayValues instead of direct transaction value
                                     onChange={(e) => handleTransactionChange(index, e)}
                                     placeholder="Jumlah"
