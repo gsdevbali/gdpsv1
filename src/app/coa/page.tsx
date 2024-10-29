@@ -5,9 +5,14 @@ import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 
 async function getAccount() {
-    const res = await fetch(`${global.baseUrl}/api/accountbl`, {
+    
+    // const res = await fetch(`${global.baseUrl}/api/accountbl`, {
+    //     cache: 'no-store'
+    // })
+    const res = await fetch(`${process.env.APP_URL}/api/accountbl`, {
         cache: 'no-store'
     })
+    
     const data = await res.json()
     //console.log(data)
     return data

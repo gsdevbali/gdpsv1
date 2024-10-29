@@ -22,9 +22,13 @@ import PrintButton from "@/components/PrintButton";
 
 //Aktiva - Aktiva Lancar
 async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
-    const res = await fetch(`${global.baseUrl}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
+    // const res = await fetch(`${global.baseUrl}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
+    //     cache: 'no-store'
+    // })
+    const res = await fetch(`${process.env.APP_URL}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
         cache: 'no-store'
     })
+    
     const data = await res.json()
     //console.log(data)
     //return data

@@ -5,7 +5,10 @@ import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 
 async function getData(accountId: string) {
-    const res = await fetch(`${global.baseUrl}/api/transbyid?accountId=${accountId}`, {
+    // const res = await fetch(`${global.baseUrl}/api/transbyid?accountId=${accountId}`, {
+    //     cache: 'no-store'
+    // })
+    const res = await fetch(`${process.env.APP_URL}/api/transbyid?accountId=${accountId}`, {
         cache: 'no-store'
     })
     const data = await res.json()

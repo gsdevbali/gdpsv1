@@ -38,7 +38,10 @@ export default function Page() {
 
     // fetch data, source: /api/transaction-q
     const fetchData = async (start: string, end: string) => {
-        const res = await fetch(`${global.baseUrl}/api/transaction-q?startDate=${start}&endDate=${end}`, {
+        // const res = await fetch(`${global.baseUrl}/api/transaction-q?startDate=${start}&endDate=${end}`, {
+        //     cache: 'no-store'
+        // });
+        const res = await fetch(`${process.env.APP_URL}/api/transaction-q?startDate=${start}&endDate=${end}`, {
             cache: 'no-store'
         });
         const fetchedData = await res.json();

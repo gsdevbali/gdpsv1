@@ -7,7 +7,8 @@ import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
 
 const getActivity = async (start: string, end: string, accountTypeId: number, accountGroup2Id: number) => {
-    const res = await fetch(`${global.baseUrl}/api/activity?startDate=${start}&endDate=${end}&accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`);
+    //const res = await fetch(`${global.baseUrl}/api/activity?startDate=${start}&endDate=${end}&accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`);
+    const res = await fetch(`${process.env.APP_URL}/api/activity?startDate=${start}&endDate=${end}&accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`);
     const data = await res.json()
     return {
         accounts: data.accounts,
