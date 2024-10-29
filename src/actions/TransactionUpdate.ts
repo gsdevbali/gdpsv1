@@ -6,25 +6,25 @@ import prisma from '@/lib/dbprisma'
 
 export async function updateTransaction(id: number, data: Partial<Transaction>) {
   try {
-    // const response = await fetch(`${process.env.API_URL}/api/transaction-all/${id}`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
+    const response = await fetch(`${process.env.API_URL}/api/transaction-all/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
 
     //Prisma
-    const updated = await prisma.transactionAll.update({
-      where: { id: id },
-      data: data,
-    })
+    // const updated = await prisma.transactionAll.update({
+    //   where: { id: id },
+    //   data: data,
+    // })
 
     // if (!response.ok) {
     //   const error = await response.json()
     //   throw new Error(error.message || 'Failed to update transaction')
     // }
-    console.log('TO UPDATE -updated: ', updated)
+    //console.log('TO UPDATE -updated: ', updated)
     revalidatePath('/transaction-all')
     return { success: true }
   } catch (error) {
