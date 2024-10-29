@@ -3,7 +3,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast"
 import { saveTransaction } from './OtherActionsNew';
-import { getAccountsByType } from '@/actions/AccountAction';
+import { getAccountsByType, getAccountsAll } from '@/actions/AccountAction';
 import Divider from '@/components/Divider';
 
 interface Account {
@@ -11,13 +11,6 @@ interface Account {
     code: string;
     name: string;
 }
-
-// interface MainData {
-//     date: string;
-//     description: string;
-//     ref: string;
-//     accountId: 2; // 2 is account id for Account: 'Kas Kerk'
-// }
 
 interface Transaction {
     date: string;
@@ -49,6 +42,7 @@ interface OtherFormProps {
 const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
 
     const [accounts, setAccounts] = useState<Account[]>([]);
+    const [accountsAll, setAccountsAll] = useState<Account[]>([]);
     const { toast } = useToast()
 
     // fetch accounts by group2 id - khusus untuk penerimaan LAIN-LAIN
@@ -66,7 +60,17 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
             }
         };
 
+        const fetchAccountsAll = async () => {
+            try {
+                const fetchedAccounts = await getAccountsAll();
+                setAccountsAll(fetchedAccounts);
+            } catch (error) {
+                console.error('Failed to fetch accounts:', error);
+            }
+        };
+
         fetchAccounts();
+        fetchAccountsAll();
     }, []);
     //}
 
@@ -88,8 +92,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
     // const isResetEnabled = transactions.length > 1;
 
     const [totalDebit, setTotalDebit] = useState(0);
-    //const [totalCredit, setTotalCredit] = useState(0);
-    const [setTotalCredit] = useState(0);
+    const [totalCredit, setTotalCredit] = useState(0);
     // Calculate totals immediately
 
 
@@ -101,16 +104,19 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
     const isResetEnabled = transactions.length > 1;
 
     //const [displayValues, setDisplayValues] = useState<string[]>(transactions.map(() => ''));
-    const [setDisplayValues] = useState<string[]>(transactions.map(() => ''));
+    //const [setDisplayValues] = useState<string[]>(transactions.map(() => ''));
+    // Add this state for display values
+    const [displayValues, setDisplayValues] = useState<string[]>(['']);
 
-    // const formatCurrency = (value: number): string => {
-    //     return new Intl.NumberFormat('id-ID', {
-    //         style: 'currency',
-    //         currency: 'IDR',
-    //         minimumFractionDigits: 0,
-    //         maximumFractionDigits: 0,
-    //     }).format(value);
-    // };
+
+    const formatCurrency = (value: number): string => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value);
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -126,8 +132,8 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
             handleReset();
             // Show success toast
             toast({
-                title: "Success",
-                description: "Transaction saved successfully",
+                title: "Sukses",
+                description: "Transaksi berhasil disimpan",
                 duration: 3000,
             })
         } catch (error) {
@@ -152,29 +158,30 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
         const { name, value } = e.target;
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
+                if (name === 'debit') {
+                    // Remove non-numeric characters and parse as float
+                    const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+                    
+                    // Update display values
+                    const newDisplayValues = [...displayValues];
+                    newDisplayValues[index] = formatCurrency(numericValue);
+                    setDisplayValues(newDisplayValues);
+                    
+                    return { ...t, [name]: numericValue };
+                }
                 return { ...t, [name]: value };
-                //return { ...t, [name]: name === 'debit' || name === 'credit' ? parseFloat(value) || 0 : value };
             }
             return t;
         });
-        // const updatedTransactions = transactions.map((t, i) => {
-        //     if (i === index) {
-        //         if (name === 'debit') {
-        //             // Remove non-numeric characters and parse as float
-        //             const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
-        //             return { ...t, [name]: numericValue };
-        //         }
-        //         return { ...t, [name]: value };
-        //     }
-        //     return t;
-        // });
+
 
         setTransactions(updatedTransactions);
 
         const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
-        //const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+        const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+
         setTotalDebit(newTotalDebit);
-        //setTotalCredit(newTotalCredit);
+        setTotalCredit(newTotalCredit);
     };
 
     const addTransaction = () => {
@@ -186,25 +193,9 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
             credit: 0,
             accountId: 0,
         }]);
+        setDisplayValues([...displayValues, '']);
     };
 
-    // const handleDebitChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
-    //     const inputValue = e.target.value.replace(/[^\d]/g, '');
-    //     const numericValue = parseInt(inputValue, 10) || 0;
-
-    //     // Update display value
-    //     const newDisplayValues = [...displayValues];
-    //     newDisplayValues[index] = inputValue;
-    //     setDisplayValues(newDisplayValues);
-
-    //     // Update actual transaction value
-    //     handleTransactionChange(index, {
-    //         target: {
-    //             name: 'debit',
-    //             value: numericValue.toString()
-    //         }
-    //     } as ChangeEvent<HTMLInputElement>);
-    // };
 
     const handleReset = () => {
         setTransactions([{ ...initialTransaction }]);
@@ -214,9 +205,9 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
             ref: '',
             accountId: accountId,
         });
-        //setDisplayValues(['']);
-        //setTotalDebit(0);
-        //setTotalCredit(0);
+        setDisplayValues(['']);
+        setTotalDebit(0);
+        setTotalCredit(0);
     };
 
     return (
@@ -226,15 +217,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                 <form onSubmit={handleSubmit}>
 
                     <div className='bg-gray-100 rounded-lg space-y-2'>
-                        {/* TransactionMain fields */}
-                        {/* <input
-                            type="number"
-                            name="accountId"
-                            value={mainData.accountId}
-                            onChange={handleMainChange}
-                            placeholder="Account ID"
-                            className='w-[100%] p-2 rounded'
-                        /> */}
+
                         <select
                             required
                             name="accountId"
@@ -242,7 +225,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                             value={mainData.accountId}
                             onChange={handleMainChange}
                         >
-                            <option value="">Akun</option>
+                            <option value="">Akun (Penerima Dana)</option>
                             {accounts.map((account) => (
                                 <option key={account.id} value={account.id}>
                                     {account.code} - {account.name}
@@ -301,7 +284,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                                         className='border p-2 rounded w-[100%] md:w-[100%] h-[40px]'
                                     >
                                         <option value="">Akun</option>
-                                        {accounts.map((account) => (
+                                        {accountsAll.map((account) => (
                                             <option key={account.id} value={account.id}>
                                                 {account.code} - {account.name}
                                             </option>
@@ -319,45 +302,17 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                                     placeholder="Uraian"
                                     className='w-[100%] md:w-[100%] p-2 rounded'
                                 />
+
+
                                 <input
-                                    required
-                                    type="number"
+                                    type="text" // Changed from "number" to "text"
                                     name='debit'
-                                    value={transaction.debit || ''}
-                                    //value={formatCurrency(transaction.debit)}
-                                    //value={transaction.debit === 0 ? '' : formatCurrency(transaction.debit)}
+                                    value={displayValues[index] || ''} // Use displayValues instead of direct transaction value
                                     onChange={(e) => handleTransactionChange(index, e)}
-                                    //value={displayValues[index]}
-                                    // onChange={(e) => handleDebitChange(index, e)}
-                                    // onBlur={() => {
-                                    //     const newDisplayValues = [...displayValues];
-                                    //     newDisplayValues[index] = transactions[index].debit ? formatCurrency(transactions[index].debit) : '';
-                                    //     setDisplayValues(newDisplayValues);
-                                    // }}
-                                    // onFocus={() => {
-                                    //     const newDisplayValues = [...displayValues];
-                                    //     newDisplayValues[index] = transactions[index].debit.toString();
-                                    //     setDisplayValues(newDisplayValues);
-                                    // }}
                                     placeholder="Jumlah"
-                                    className='w-[100%] md:w-[100%] p-2 rounded'
-                                />
-                                {/* <input
-                                    type="number"
-                                    name='credit'
-                                    value={transaction.credit || ''}
-                                    onChange={(e) => handleTransactionChange(index, e)}
-                                    placeholder="Kredit"
                                     className='w-[200px] p-2 rounded'
-                                /> */}
-                                {/* <input
-                                    type="number"
-                                    name='accountId'
-                                    value={transaction.accountId}
-                                    onChange={(e) => handleTransactionChange(index, e)}
-                                    placeholder="Account ID"
-                                /> */}
-                                {/* Add other Transaction fields as needed */}
+                                />
+
 
                             </div>
 
@@ -384,7 +339,7 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                         <div>
                             <div>
                                 {/* <p>Total Penerimaan: {totalDebit}</p> */}
-                                {/* <p>Total Credit: {totalCredit}</p> */}
+                                <p className='text-lg text-bold'>Total Penerimaan: {formatCurrency(totalDebit)}</p>
                                 {/* <p className={isBalanced ? 'text-green-600' : 'text-orange-500'}>
                                     Perbedaan: {difference.toFixed(2)}
                                 </p> */}

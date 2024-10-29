@@ -12,13 +12,6 @@ interface Account {
     name: string;
 }
 
-// interface MainData {
-//     date: string;
-//     description: string;
-//     ref: string;
-//     accountId: string;
-// }
-
 interface Transaction {
     date: string;
     description: string;
@@ -81,11 +74,26 @@ const TransactionForm: React.FC = () => {
     const [totalCredit, setTotalCredit] = useState(0);
     // Calculate totals immediately
 
-
     const difference = Math.abs(totalDebit - totalCredit);
     const isBalanced = difference === 0;
 
     const isSubmitEnabled = isBalanced && transactions.length > 1;
+
+    //const [displayValues, setDisplayValues] = useState<string[]>(['']);
+    // Update the displayValues state to handle both debit and credit
+const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: string[] }>({
+    debit: [''],
+    credit: ['']
+});
+
+    const formatCurrency = (value: number): string => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value);
+    };
 
     // useEffect(() => {
     //     const newTotalDebit = transactions.reduce((sum, transaction) => sum + transaction.debit, 0);
@@ -131,7 +139,30 @@ const TransactionForm: React.FC = () => {
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
                 // return { ...t, [name]: value };
-                return { ...t, [name]: name === 'debit' || name === 'credit' ? parseFloat(value) || 0 : value };
+
+                // const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+                    
+                //     // Update display values
+                // const newDisplayValues = [...displayValues];
+                // newDisplayValues[index] = formatCurrency(numericValue);
+                // setDisplayValues(newDisplayValues);
+
+                // return { ...t, [name]: name === 'debit' || name === 'credit' ? parseFloat(value) || 0 : numericValue };
+                // Update display values for debit and credit separately
+                const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+
+                if (name === 'debit' || name === 'credit') {
+                    const newDisplayValues = {
+                        ...displayValues,
+                        [name]: [...displayValues[name]]
+                    };
+                    newDisplayValues[name][index] = formatCurrency(numericValue);
+                    setDisplayValues(newDisplayValues);
+                    return { ...t, [name]: numericValue };
+                }
+                
+                return { ...t, [name]: value };
+            
             }
             return t;
         });
@@ -258,22 +289,32 @@ const TransactionForm: React.FC = () => {
                                     placeholder="Uraian"
                                     className='w-[150px] md:w-[100%] p-2 rounded'
                                 />
+                                
                                 <input
-                                    type="number"
+                                    type="text" // Changed from "number" to "text"
                                     name='debit'
-                                    value={transaction.debit || ''}
+                                    value={displayValues.debit[index] || ''}  // Use displayValues instead of direct transaction value
                                     onChange={(e) => handleTransactionChange(index, e)}
-                                    placeholder="Debet"
+                                    placeholder="Jumlah Debit"
                                     className='w-[200px] p-2 rounded'
                                 />
+
                                 <input
+                                    type="text" // Changed from "number" to "text"
+                                    name='credit'
+                                    value={displayValues.credit[index] || ''} // Use displayValues instead of direct transaction value
+                                    onChange={(e) => handleTransactionChange(index, e)}
+                                    placeholder="Jumlah Kredit"
+                                    className='w-[200px] p-2 rounded'
+                                />
+                                {/* <input
                                     type="number"
                                     name='credit'
                                     value={transaction.credit || ''}
                                     onChange={(e) => handleTransactionChange(index, e)}
                                     placeholder="Kredit"
                                     className='w-[200px] p-2 rounded'
-                                />
+                                /> */}
                                 {/* <input
                                     type="number"
                                     name='accountId'
@@ -308,10 +349,10 @@ const TransactionForm: React.FC = () => {
                         </div>
                         <div>
                             <div>
-                                <p>Total Debit: {totalDebit}</p>
-                                <p>Total Credit: {totalCredit}</p>
+                                <p>Total Debit: {formatCurrency(totalDebit)}</p>
+                                <p>Total Credit: {formatCurrency(totalCredit)}</p>
                                 <p className={isBalanced ? 'text-green-600' : 'text-orange-500'}>
-                                    Perbedaan: {difference.toFixed(2)}
+                                    Perbedaan: {formatCurrency(difference)}
                                 </p>
                             </div>
                         </div>

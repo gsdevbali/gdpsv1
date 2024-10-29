@@ -1,5 +1,5 @@
 import React from 'react'
-import TransactionForm from './new-trans-form'
+import TransactionForm from './trans-form'
 import PageLayout from '@/components/PageLayout'
 
 import global from "../../config.js";

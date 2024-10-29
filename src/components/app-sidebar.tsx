@@ -90,11 +90,11 @@ const data = {
           url: "/jurnal",
         },
         {
-          title: "PERSEMBAHAN",
+          title: "Penerimaan KAS KERK",
           url: "/receive-keb",
         },
         {
-          title: "Penerimaan LAIN",
+          title: "Penerimaan KAS & BANK",
           url: "/receive-other",
         },
         {

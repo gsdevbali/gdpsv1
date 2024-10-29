@@ -12,13 +12,6 @@ interface Account {
     name: string;
 }
 
-// interface MainData {
-//     date: string;
-//     description: string;
-//     ref: string;
-//     accountId: 2; // 2 is account id for Account: 'Kas Kerk'
-// }
-
 interface Transaction {
     date: string;
     description: string;
@@ -50,6 +43,19 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
 
     const [accounts, setAccounts] = useState<Account[]>([]);
     const { toast } = useToast()
+
+    const formatCurrency = (value: number): string => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value);
+    };
+
+    
+    // Add this state for display values
+    const [displayValues, setDisplayValues] = useState<string[]>(['']);
 
     // fetch accounts by group2 id - khusus untuk penerimaan persembaha
     // 8 is group2 id for Group2: 'persembahan
@@ -84,29 +90,10 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
     // const isResetEnabled = transactions.length > 1;
 
     const [totalDebit, setTotalDebit] = useState(0);
-    //const [setTotalDebit] = useState(0);
     const [totalCredit, setTotalCredit] = useState(0);
-    // Calculate totals immediately
 
-
-    //const difference = Math.abs(totalDebit - totalCredit);
-    //const isBalanced = difference === 0;
-
-    // const isSubmitEnabled = isBalanced && transactions.length > 1;
-    // Remove isBalanced and isSubmitEnabled
     const isResetEnabled = transactions.length > 1;
 
-    const [displayValues, setDisplayValues] = useState<string[]>(transactions.map(() => ''));
-    //const [setDisplayValues] = useState<string[]>(transactions.map(() => ''));
-
-    // const formatCurrency = (value: number): string => {
-    //     return new Intl.NumberFormat('id-ID', {
-    //         style: 'currency',
-    //         currency: 'IDR',
-    //         minimumFractionDigits: 0,
-    //         maximumFractionDigits: 0,
-    //     }).format(value);
-    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,8 +109,8 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
             handleReset();
             // Show success toast
             toast({
-                title: "Success",
-                description: "Transaction saved successfully",
+                title: "Sukses",
+                description: "Transaksi berhasil disimpan",
                 duration: 3000,
             })
         } catch (error) {
@@ -144,20 +131,20 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
         setMainData({ ...mainData, [e.target.name]: e.target.value });
     };
 
+    
     const handleTransactionChange = (index: number, e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        // const updatedTransactions = transactions.map((t, i) => {
-        //     if (i === index) {
-        //         // return { ...t, [name]: value };
-        //         return { ...t, [name]: name === 'debit' || name === 'credit' ? parseFloat(value) || 0 : value };
-        //     }
-        //     return t;
-        // });
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
-                if (name === 'debit') {
+                if (name === 'credit') {
                     // Remove non-numeric characters and parse as float
                     const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+                    
+                    // Update display values
+                    const newDisplayValues = [...displayValues];
+                    newDisplayValues[index] = formatCurrency(numericValue);
+                    setDisplayValues(newDisplayValues);
+                    
                     return { ...t, [name]: numericValue };
                 }
                 return { ...t, [name]: value };
@@ -167,41 +154,19 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
 
         setTransactions(updatedTransactions);
 
-        // const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
-        // const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+        const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
+        const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
 
-        // setTotalDebit(newTotalDebit);
-        // setTotalCredit(newTotalCredit);
+        setTotalDebit(newTotalDebit);
+        setTotalCredit(newTotalCredit);
     };
 
+    // Update the addTransaction function to handle display values
     const addTransaction = () => {
-        setTransactions([...transactions, {
-            description: '',
-            ref: '',
-            mediaPath: '',
-            debit: 0,
-            credit: 0,
-            accountId: 0,
-        }]);
+        setTransactions([...transactions, initialTransaction]);
+        setDisplayValues([...displayValues, '']);
     };
 
-    // const handleDebitChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
-    //     const inputValue = e.target.value.replace(/[^\d]/g, '');
-    //     const numericValue = parseInt(inputValue, 10) || 0;
-
-    //     // Update display value
-    //     const newDisplayValues = [...displayValues];
-    //     newDisplayValues[index] = inputValue;
-    //     setDisplayValues(newDisplayValues);
-
-    //     // Update actual transaction value
-    //     handleTransactionChange(index, {
-    //         target: {
-    //             name: 'debit',
-    //             value: numericValue.toString()
-    //         }
-    //     } as ChangeEvent<HTMLInputElement>);
-    // };
 
     const handleReset = () => {
         setTransactions([{ ...initialTransaction }]);
@@ -223,28 +188,7 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
                 <form onSubmit={handleSubmit}>
 
                     <div className='bg-gray-100 rounded-lg space-y-2'>
-                        {/* TransactionMain fields */}
-                        {/* <input
-                            type="number"
-                            name="accountId"
-                            value={mainData.accountId}
-                            onChange={handleMainChange}
-                            placeholder="Account ID"
-                            className='w-[100%] p-2 rounded'
-                        /> */}
-                        {/* <select
-                            name="accountId"
-                            className='border p-2 rounded w-full'
-                            value={mainData.accountId}
-                            onChange={handleMainChange}
-                        >
-                            <option value="">Akun</option>
-                            {accounts.map((account) => (
-                                <option key={account.id} value={account.id}>
-                                    {account.code} - {account.name}
-                                </option>
-                            ))}
-                        </select> */}
+                        
 
                         <div className='flex justify-between gap-2'>
                             <input
@@ -334,14 +278,23 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
                                     placeholder="Jumlah"
                                     className='w-[200px] p-2 rounded'
                                 /> */}
-                                <input
+                                {/* <input
                                     type="number"
                                     name='credit'
                                     value={transaction.credit || ''}
                                     onChange={(e) => handleTransactionChange(index, e)}
                                     placeholder="Jumlah"
                                     className='w-[200px] p-2 rounded'
-                                />
+                                /> */}
+
+                                    <input
+                                            type="text" // Changed from "number" to "text"
+                                            name='credit'
+                                            value={displayValues[index] || ''} // Use displayValues instead of direct transaction value
+                                            onChange={(e) => handleTransactionChange(index, e)}
+                                            placeholder="Jumlah"
+                                            className='w-[200px] p-2 rounded'
+                                        />
                                 {/* <input
                                     type="number"
                                     name='accountId'
@@ -376,7 +329,7 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
                         <div>
                             <div>
                                 {/* <p>Total Penerimaan: {totalDebit}</p> */}
-                                {/* <p>Total Credit: {totalCredit}</p> */}
+                                <p className='text-lg text-bold'>Total Penerimaan: {formatCurrency(totalCredit)}</p>
                                 {/* <p className={isBalanced ? 'text-green-600' : 'text-orange-500'}>
                                     Perbedaan: {difference.toFixed(2)}
                                 </p> */}

@@ -12,7 +12,7 @@ function Page() {
     return (
         <>
             <PageLayout header={header} footer={footer}>
-                <h1 className='text-2xl text-bold'>PENERIMAAN LAIN-LAIN</h1>
+                <h1 className='text-2xl text-bold'>PENERIMAAN KAS & BANK</h1>
                 <div className='flex flex-col'>
                     {/* Form hanya untuk Penerimaan Lain */}
                     <OtherForm accountId={''} />

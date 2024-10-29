@@ -1,5 +1,8 @@
 "use client"
 
+import prisma from "@/lib/dbprisma"
+import { updateTransaction, deleteTransaction } from "@/actions/TransactionUpdate"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -12,7 +15,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { Transaction } from "./columns"
-import { revalidatePath } from "next/cache"
+import { Trash2Icon } from "lucide-react"
+//import { revalidatePath } from "next/cache"
 
 interface EditDialogProps {
     children: React.ReactNode
@@ -22,29 +26,64 @@ interface EditDialogProps {
 export function EditDialog({ children, transaction }: EditDialogProps) {
     const [open, setOpen] = useState(false)
     const [formData, setFormData] = useState(transaction)
+    const { toast }: any = useToast()
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await fetch(`/api/transaction-all/${transaction.id}`, {
-                cache: 'no-store',
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            })
+            // const response = await fetch(`/api/transaction-all/${transaction.id}`, {
+            //     cache: 'no-store',
+            //     method: 'PUT',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formData),
+            // })
+            
+            console.log('TO UPDATE -formData: ', formData)
+            
+            const result = await updateTransaction(transaction.id, formData)
+            console.log('TO UPDATE -result: ', result)
 
-            if (response.ok) {
+            toast(
+                {
+                    title: "Berhasil",
+                    description: "Transaksi telah diperbarui",
+                    variant: "default",
+                }
+            )
 
-                setOpen(false)
-                revalidatePath('/transaction-all')
-                console.log('ID:', transaction.id)
-                // You might want to add a refresh mechanism here
-            }
+            setOpen(false)
+
+            // if (result.success) {
+            //     toast({
+            //         title: "Berhasil",
+            //         description: "Transaksi telah diperbarui",
+            //         variant: "default",
+            //     })
+            //     setOpen(false)
+            //     // No need for window.location.reload() anymore
+            // } else {
+            //     toast({
+            //         title: "Gagal",
+            //         description: result.error || "Terjadi kesalahan saat memperbarui transaksi",
+            //         variant: "destructive",
+            //     })
+            // }
         } catch (error) {
             console.error('Error updating transaction:', error)
+            toast({
+                title: "Gagal",
+                description: "Terjadi kesalahan saat memperbarui transaksi",
+                variant: "destructive",
+            })
         }
+    }
+
+    const handleDelete = async () => {
+        console.log('TO DELETE -transaction id: ', transaction.id)
+        await deleteTransaction(transaction.id)
     }
 
     return (
@@ -75,7 +114,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                                 Referensi
                             </Label>
                             <Input
-                                id="description"
+                                id="ref"
                                 value={formData.ref}
                                 onChange={(e) => setFormData({ ...formData, ref: e.target.value })}
                                 className="col-span-3"
@@ -117,7 +156,8 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                             />
                         </div>
                     </div>
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex justify-between space-x-2">
+                        <Button variant="link" onClick={handleDelete}>{<Trash2Icon />}</Button>
                         <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                             Batal
                         </Button>

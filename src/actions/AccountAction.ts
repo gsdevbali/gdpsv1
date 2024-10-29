@@ -66,3 +66,22 @@ export async function getAccountsByType(typeId: number) {
     throw new Error('Failed to fetch accounts')
   }
 }
+
+export async function getAccountsAll() {
+  try {
+    const accounts = await prisma.account.findMany({
+      select: {
+        id: true,
+        code: true,
+        name: true,
+      },
+      orderBy: {
+        code: 'asc',
+      },
+    })
+    return accounts
+  } catch (error) {
+    console.error('Failed to fetch accounts:', error)
+    throw new Error('Failed to fetch accounts')
+  }
+}

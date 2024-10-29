@@ -63,7 +63,7 @@ export async function saveTransaction(formData, accountId) {
         data: transactions.map(t => ({
           date: new Date(main.date), // Using the main date for all transactions
           description: t.description,
-          ref: t.ref || '',
+          ref: main.ref,
           mediaPath: t.mediaPath || '',
           debit: parseFloat(t.debit) || 0,
           credit: parseFloat(t.credit) || 0,
