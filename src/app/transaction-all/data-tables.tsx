@@ -34,7 +34,6 @@ import { Button } from "@/components/ui/button"
 // Add this new import for date handling
 import { parseISO, startOfYear, endOfYear } from "date-fns"
 import Divider from "@/components/Divider"
-import PrintButton from "@/components/PrintButton"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
@@ -63,31 +62,7 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
-    // Add a new state variable to track whether the date filter is active
-    //const [isDateFilterActive] = React.useState(false)
 
-
-    // Add these new state variables
-    // const [dateStart, setDateStart] = React.useState<string>(initialDateStart)
-    // const [dateEnd, setDateEnd] = React.useState<string>(initialDateEnd)
-
-    // Modify these state variables to use the current year as default
-    // const [dateStart, setDateStart] = React.useState<string>(() => {
-    //     return format(startOfYear(new Date()), "yyyy-MM-dd")
-    // })
-    // const [dateEnd, setDateEnd] = React.useState<string>(() => {
-    //     return format(endOfYear(new Date()), "yyyy-MM-dd")
-    // })
-
-    // Add this new function to format the date range for the title
-    // const formatDateRange = () => {
-    //     if (isDateFilterActive) {
-    //         const startFormatted = format(parseISO(dateStart), "d MMMM yyyy")
-    //         const endFormatted = format(parseISO(dateEnd), "d MMMM yyyy")
-    //         return `${startFormatted} - ${endFormatted}`
-    //     }
-    //     return "Semua"
-    // }
     const [accounts, setAccounts] = useState<Account[]>([]);
     
     useEffect(() => {
@@ -139,19 +114,6 @@ export function DataTable<TData, TValue>({
         },
     })
 
-    // Add this effect to update the date filter when dateStart or dateEnd changes
-    // React.useEffect(() => {
-    //     table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-    // }, [dateStart, dateEnd])
-
-    // Modify the useEffect to only apply the filter when isDateFilterActive is true
-    // React.useEffect(() => {
-    //     if (isDateFilterActive) {
-    //         table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-    //     } else {
-    //         table.getColumn('date')?.setFilterValue(null)
-    //     }
-    // }, [dateStart, dateEnd, isDateFilterActive])
 
     return (
         <>
@@ -168,51 +130,7 @@ export function DataTable<TData, TValue>({
                     {/* <PrintButton /> */}
 
                 </div>
-                <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
-
-                    {/* <Input
-                    type="date"
-                    value={dateStart}
-                    onChange={(e) => {
-                        setDateStart(e.target.value)
-                        if (isDateFilterActive) {
-                            table.getColumn('date')?.setFilterValue([e.target.value, dateEnd])
-                        }
-                    }}
-                    placeholder="Start Date"
-                />
-                <Input
-                    type="date"
-                    value={dateEnd}
-                    onChange={(e) => {
-                        setDateEnd(e.target.value)
-                        if (isDateFilterActive) {
-                            table.getColumn('date')?.setFilterValue([dateStart, e.target.value])
-                        }
-                    }}
-                    placeholder="End Date"
-                />
-                <Button
-                    onClick={() => setIsDateFilterActive(!isDateFilterActive)}
-                    variant={isDateFilterActive ? "default" : "outline"}
-                >
-                    {isDateFilterActive ? "Clear Date Filter" : "Apply Date Filter"}
-                </Button>
-                 */}
-
-                    {/* <Input
-                        placeholder="Cari Kode Akun ...."
-                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            {
-                            console.log(event.target.value)
-                            table.getColumn("account.code")?.setFilterValue(event.target.value)
-                            }
-                        }
-                        className="w-[200px]"
-                    /> */}
-
-                    
+                <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>                
 
                                     <select
                                         //value={transaction.accountId}
@@ -228,7 +146,7 @@ export function DataTable<TData, TValue>({
                                         required
                                         className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
                                     >
-                                        <option value="">Akun</option>
+                                        <option value="">Pilih Akun untuk ditampilkan</option>
                                         {accounts.map((account) => (
                                             <option key={account.id} value={account.id}>
                                                 {account.code} - {account.name}
@@ -330,9 +248,9 @@ export function DataTable<TData, TValue>({
                 {/* Pagination */}
                 <div className={printStyles.printHide}>
                     <div className="flex items-center justify-end space-x-2 py-4">
-                        <div className="flex-1 text-sm text-muted-foreground">
+                        <div className="flex-1 text-sm text-foreground">
                             {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
-                            {table.getFilteredRowModel().rows.length} baris data ditemukan.
+                            <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan.
                         </div>
                         <div className="space-x-2">
                             <Button

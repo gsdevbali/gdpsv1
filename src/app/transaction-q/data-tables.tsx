@@ -34,7 +34,6 @@ import { Button } from "@/components/ui/button"
 // Add this new import for date handling
 import { format, parseISO, startOfYear, endOfYear } from "date-fns"
 import Divider from "@/components/Divider"
-import PrintButton from "@/components/PrintButton"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
@@ -59,17 +58,10 @@ export function DataTable<TData, TValue>({
     // Add a new state variable to track whether the date filter is active
     const [isDateFilterActive] = React.useState(false)
 
-
     // Add these new state variables
     const [dateStart] = React.useState<string>(initialDateStart)
     const [dateEnd] = React.useState<string>(initialDateEnd)
-    // Modify these state variables to use the current year as default
-    // const [dateStart, setDateStart] = React.useState<string>(() => {
-    //     return format(startOfYear(new Date()), "yyyy-MM-dd")
-    // })
-    // const [dateEnd, setDateEnd] = React.useState<string>(() => {
-    //     return format(endOfYear(new Date()), "yyyy-MM-dd")
-    // })
+
 
     // Add this new function to format the date range for the title
     const formatDateRange = () => {
@@ -117,19 +109,6 @@ export function DataTable<TData, TValue>({
         },
     })
 
-    // Add this effect to update the date filter when dateStart or dateEnd changes
-    // React.useEffect(() => {
-    //     table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-    // }, [dateStart, dateEnd])
-
-    // Modify the useEffect to only apply the filter when isDateFilterActive is true
-    // React.useEffect(() => {
-    //     if (isDateFilterActive) {
-    //         table.getColumn('date')?.setFilterValue([dateStart, dateEnd])
-    //     } else {
-    //         table.getColumn('date')?.setFilterValue(null)
-    //     }
-    // }, [dateStart, dateEnd, isDateFilterActive])
 
     return (
         <>
@@ -143,7 +122,6 @@ export function DataTable<TData, TValue>({
                         </h2>
                     )}
                     <Divider />
-                    <PrintButton />
 
                 </div>
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>

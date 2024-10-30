@@ -6,15 +6,6 @@ import global from "@/config.js";
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
-import PrintButton from "@/components/PrintButton";
-
-
-// async function getData() {
-//     const res = await fetch(`${global.baseUrl}/api/transaction-all`)
-//     const data = await res.json()
-//     //console.log(data)
-//     return data
-// }
 
 
 //http://localhost:3000/api/neraca?accountTypeId=1
@@ -37,8 +28,6 @@ async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
         totalBalance: data.totalBalance
     }
 }
-
-
 
 
 export default async function Page() {
@@ -75,17 +64,9 @@ export default async function Page() {
 
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
-                {/* <Divider /> */}
-                {/* <AccountDialog mode="create">
-                    <Button>Add New Account</Button>
-                </AccountDialog> */}
-                {/* <Button>Add New Account</Button> */}
-
 
                 <h1 className="text-3xl font-bold">NERACA</h1>
                 <Divider />
-                <PrintButton />
-
 
                 {/* AKTIVA - KIRI */}
 
@@ -102,8 +83,6 @@ export default async function Page() {
                 <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TETAP</h2>
                 <DataTable columns={columns} data={data_AktivaTetap} />
                 <TulisTotalRp value={newTotalBalance_AktivaTetap} title="Aktiva Tetap" />
-
-
 
 
                 {/* PASIVA - KANAN */}
