@@ -37,7 +37,7 @@ import Divider from "@/components/Divider"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
-import { getAccounts } from "@/actions/AccountAction"
+import { getGroup2 } from "@/actions/AccountAction"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -47,9 +47,14 @@ interface DataTableProps<TData, TValue> {
 }
 
 
-interface Account {
+// interface Account {
+//     id: number;
+//     code: string;
+//     name: string;
+// }
+
+interface Group2 {
     id: number;
-    code: string;
     name: string;
 }
 
@@ -63,19 +68,20 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
-    const [accounts, setAccounts] = useState<Account[]>([]);
+    const [group2, setGroup2] = useState<Group2[]>([]);
 
+    // Fetch data Group2 for Filter Lookup
     useEffect(() => {
-        const fetchAccounts = async () => {
+        const fetchGroup2 = async () => {
             try {
-                const fetchedAccounts = await getAccounts();
-                setAccounts(fetchedAccounts);
+                const fetchedGroup2 = await getGroup2();
+                setGroup2(fetchedGroup2);
             } catch (error) {
-                console.error('Failed to fetch accounts:', error);
+                console.error('Failed to fetch data Group2:', error);
             }
         };
 
-        fetchAccounts();
+        fetchGroup2();
     }, []);
 
     const table = useReactTable({
@@ -84,8 +90,8 @@ export function DataTable<TData, TValue>({
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
-        //getSortedRowModel: getSortedRowModel(),
-        //getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         //getPaginationRowModel: getPaginationRowModel(),
@@ -132,26 +138,30 @@ export function DataTable<TData, TValue>({
                 </div>
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
 
-                    {/* <select
+                    <select
                         //value={transaction.accountId}
-                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
-                        name='accountId'
+                        value={(table.getColumn("account.accountGroup2.id")?.getFilterValue() as string) ?? ""}
+                        name='group2'
                         //onChange={(e) => handleTransactionChange(index, e)}
                         onChange={(e) => {
-                            table.getColumn("account.code")?.setFilterValue(e.target.value)
+                            // Find the selected group2 item and use its name instead of ID
+                            //const selectedGroup = group2.find(g => g.id === parseInt(e.target.value));
+                            //table.getColumn("account.accountGroup2.id")?.setFilterValue(selectedGroup ? selectedGroup.name : "");
+                            table.getColumn("account.accountGroup2.id")?.setFilterValue(e.target.value)
                             console.log(e.target.value)
+                            
                         }
                         }
                         required
                         className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
                     >
-                        <option value="">Pilih Akun untuk ditampilkan</option>
-                        {accounts.map((account) => (
-                            <option key={account.id} value={account.id}>
-                                {account.code} - {account.name}
+                        <option value="">Pilih Aktivitas untuk ditampilkan</option>
+                        {group2.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.id} - {item.name}
                             </option>
                         ))}
-                    </select> */}
+                    </select>
 
                     <Input
                         placeholder="Cari Referensi ...."

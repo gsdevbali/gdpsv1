@@ -86,11 +86,43 @@ export const columns: ColumnDef<Transaction>[] = [
         enableSorting: true,
     },
 
-    // {
-    //     accessorKey: "account.accountGroup2.name",
-    //     header: "Kelompok",
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "ref",
+        header: "Referensi",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.ref}</div>;
+        },
+        enableSorting: true,
+    },
+
+    {
+        accessorKey: "account.accountGroup2.id",
+        header: "IDG2",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.account.accountGroup2.id}</div>;
+        },
+        enableSorting: true,
+        enableGlobalFilter: true,
+        
+    },
+
+    {
+        accessorKey: "account.accountGroup2.name",
+        header: "Kelompok",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
+        },
+        enableSorting: true,
+    },
+
+    {
+        accessorKey: "account.code",
+        header: "Kode",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.account.code}</div>;
+        },
+        enableSorting: true,
+    },
 
     // {
     //     accessorKey: "date",
@@ -119,30 +151,30 @@ export const columns: ColumnDef<Transaction>[] = [
 
     // },
 
-    // {
-    //     accessorKey: "debit",
-    //     header: () => <div className="text-right w-[200px]">DEBET</div>,
-    //     cell: ({ row }) => {
-    //         const newDebit = Intl.NumberFormat("id-ID", {
-    //             style: "currency",
-    //             currency: "IDR",
-    //         }).format(row.original.debit)
-    //         return <div className="text-right w-[200px]">{newDebit}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
-    // {
-    //     accessorKey: "credit",
-    //     header: () => <div className="text-right w-[200px]">KREDIT</div>,
-    //     cell: ({ row }) => {
-    //         const newCredit = Intl.NumberFormat("id-ID", {
-    //             style: "currency",
-    //             currency: "IDR",
-    //         }).format(row.original.credit)
-    //         return <div className="text-right w-[200px]">{newCredit}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "debit",
+        header: () => <div className="text-right w-[200px]">DEBET</div>,
+        cell: ({ row }) => {
+            const newDebit = Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+            }).format(row.original.debit)
+            return <div className="text-right w-[200px]">{newDebit}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "credit",
+        header: () => <div className="text-right w-[200px]">KREDIT</div>,
+        cell: ({ row }) => {
+            const newCredit = Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+            }).format(row.original.credit)
+            return <div className="text-right w-[200px]">{newCredit}</div>;
+        },
+        enableSorting: true,
+    },
 
 
 ]

@@ -24,7 +24,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 //import ThemeToggle from "./ThemeToggle"
-import AppLogo from "./AppLogo"
+//import AppLogo from "./AppLogo"
 // This is sample data.
 const data = {
   user: {
@@ -133,10 +133,10 @@ const data = {
       title: "LAPORAN",
       url: "#",
       icon: Printer,
-      isActive: false,
+      isActive: true,
       items: [
         {
-          title: "AKTIVITAS R/L",
+          title: "AKTIVITAS",
           url: "/rep-activity",
         },
         // {
@@ -154,6 +154,12 @@ const data = {
       ],
     },
 
+    {
+      title: "TEST",
+      url: "#",
+      icon: Table2Icon,
+      isActive: true,
+    },
     // End App-Custom
 
 
