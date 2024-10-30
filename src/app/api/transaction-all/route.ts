@@ -9,6 +9,7 @@ export async function GET() {
     {
 
         const query = await dbprisma.transactionAll.findMany({
+            
             select: {
                 id: true,
                 accountId: true,
@@ -17,8 +18,10 @@ export async function GET() {
                 date: true,
                 debit: true,
                 credit: true,
+                
                 account: {
                     select: {
+                        id: true,
                       code: true,
                     }
                   }, 
@@ -27,6 +30,10 @@ export async function GET() {
             orderBy: {
                 date: 'desc',
             },
+            
+
+
+
         });
         //console.log('query TRANSACTION ALL', query);
         return NextResponse.json(query, { status: 200 });

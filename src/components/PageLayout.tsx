@@ -2,6 +2,7 @@ import React from 'react';
 import Divider from './Divider';
 import ThemeToggle from './ThemeToggle';
 import PrintButton from './PrintButton';
+import HomeButton from './HomeButton';
 
 interface PageLayoutProps {
     header: React.ReactNode;
@@ -18,6 +19,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ header, children, footer }) => 
         <div className="w-full p-4">
             <header className="page-header flex justify-between items-center">{header} 
                 <div className="flex items-center gap-2">
+                    <HomeButton />
                     <PrintButton />
                     <ThemeToggle />
                 </div>

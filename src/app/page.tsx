@@ -1,14 +1,18 @@
-import Image from "next/image";
+import Divider from "@/components/Divider";
+import PageLayout from "@/components/PageLayout";
+import global from "@/config.js";
 
 export default function Home() {
+  const header = <h4>{global.pageInfo.headerText}</h4>;
+  const footer = <p>{global.pageInfo.footerText}</p>;
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <p className="text-xl">HALO....</p>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        
-      </footer>
-    </div>
+    <>
+            <PageLayout header={header} footer={footer}>
+                <h1 className="text-3xl font-bold">Selamat datang!</h1>
+
+                <Divider />
+
+            </PageLayout>
+        </>
   );
 }

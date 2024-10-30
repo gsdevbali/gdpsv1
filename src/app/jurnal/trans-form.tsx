@@ -134,46 +134,79 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
         setMainData({ ...mainData, [e.target.name]: e.target.value });
     };
 
+    //NEW
     const handleTransactionChange = (index: number, e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         const updatedTransactions = transactions.map((t, i) => {
             if (i === index) {
-                // return { ...t, [name]: value };
-
-                // const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
-                    
-                //     // Update display values
-                // const newDisplayValues = [...displayValues];
-                // newDisplayValues[index] = formatCurrency(numericValue);
-                // setDisplayValues(newDisplayValues);
-
-                // return { ...t, [name]: name === 'debit' || name === 'credit' ? parseFloat(value) || 0 : numericValue };
-                // Update display values for debit and credit separately
                 const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
-
+    
                 if (name === 'debit' || name === 'credit') {
                     const newDisplayValues = {
                         ...displayValues,
-                        [name]: [...displayValues[name]]
+                        debit: [...displayValues.debit],
+                        credit: [...displayValues.credit]
                     };
+                    
+                    // Update the changed field's display value
                     newDisplayValues[name][index] = formatCurrency(numericValue);
+                    // Reset the other field's display value
+                    newDisplayValues[name === 'debit' ? 'credit' : 'debit'][index] = '';
+                    
                     setDisplayValues(newDisplayValues);
-                    return { ...t, [name]: numericValue };
+    
+                    // Return updated transaction with one field set to 0
+                    return {
+                        ...t,
+                        debit: name === 'debit' ? numericValue : 0,
+                        credit: name === 'credit' ? numericValue : 0
+                    };
                 }
                 
                 return { ...t, [name]: value };
-            
             }
             return t;
         });
-
+    
         setTransactions(updatedTransactions);
-
+    
         const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
         const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
         setTotalDebit(newTotalDebit);
         setTotalCredit(newTotalCredit);
     };
+
+
+    // const handleTransactionChange = (index: number, e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    //     const { name, value } = e.target;
+    //     const updatedTransactions = transactions.map((t, i) => {
+    //         if (i === index) {
+
+    //             const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
+
+    //             if (name === 'debit' || name === 'credit') {
+    //                 const newDisplayValues = {
+    //                     ...displayValues,
+    //                     [name]: [...displayValues[name]]
+    //                 };
+    //                 newDisplayValues[name][index] = formatCurrency(numericValue);
+    //                 setDisplayValues(newDisplayValues);
+    //                 return { ...t, [name]: numericValue };
+    //             }
+                
+    //             return { ...t, [name]: value };
+            
+    //         }
+    //         return t;
+    //     });
+
+    //     setTransactions(updatedTransactions);
+
+    //     const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
+    //     const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+    //     setTotalDebit(newTotalDebit);
+    //     setTotalCredit(newTotalCredit);
+    // };
 
     const addTransaction = () => {
         setTransactions([...transactions, {

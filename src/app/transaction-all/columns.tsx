@@ -8,6 +8,7 @@ import Link from "next/link";
 
 import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox";
 //import { Account } from "@prisma/client";
 
 export type Transaction = {
@@ -48,28 +49,28 @@ const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
 
 
 export const columns: ColumnDef<Transaction>[] = [
-    // {
-    //     id: "select",
-    //     header: ({ table }) => (
-    //         <Checkbox
-    //             checked={
-    //                 table.getIsAllPageRowsSelected() ||
-    //                 (table.getIsSomePageRowsSelected() && "indeterminate")
-    //             }
-    //             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-    //             aria-label="Select all"
-    //         />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <Checkbox
-    //             checked={row.getIsSelected()}
-    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
-    //             aria-label="Select row"
-    //         />
-    //     ),
-    //     enableSorting: false,
-    //     enableHiding: false,
-    // },
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
 
     // {
     //     id: "date",
@@ -96,19 +97,39 @@ export const columns: ColumnDef<Transaction>[] = [
         enableSorting: true,
     },
 
+    // {
+    //     id: "account.code",  // unique identifier for the column
+    //     header: "COA",
+    //     accessorFn: (row) => row.account.code,  // explicitly define how to access the data
+    //     cell: ({ row }) => row.original.account.code,
+    //     filterFn: "includesString",
+    // },
+
     {
-        accessorKey: "account.code",
+        id: "account.code",
+        //accessorKey: "accountId",
+        //accessorKey: "account.code",
+        accessorFn: (row) => row.account.code,
         header: "Akun",
         cell: ({ row }) => {
             return <div className="text-left w-[100%]">
-                {row.original.account.code}
+                {/* {row.original.account.code} */}
+                <Link
+                    href={`/coa/${row.original.accountId}/transactions`}
+                    className="text-blue-600 hover:underline"
+                >
+                    {row.original.account.code}
+                </Link>
             </div>;
         },
+        filterFn: "includesString",
         enableSorting: true,
+        
     },
+
     {
         accessorKey: "ref",
-        header: "Nom. Ref.",
+        header: "Referensi",
         cell: ({ row }) => {
             return <div className="text-left w-[100%]">
 

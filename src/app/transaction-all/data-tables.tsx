@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
 import {
     DropdownMenu,
@@ -38,12 +38,20 @@ import PrintButton from "@/components/PrintButton"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
+import { getAccounts } from "@/actions/AccountAction"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     // dateStart: string
     // dateEnd: string
+}
+
+
+interface Account {
+    id: number;
+    code: string;
+    name: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -80,7 +88,21 @@ export function DataTable<TData, TValue>({
     //     }
     //     return "Semua"
     // }
+    const [accounts, setAccounts] = useState<Account[]>([]);
+    
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            try {
+                const fetchedAccounts = await getAccounts();
+                setAccounts(fetchedAccounts);
+            } catch (error) {
+                console.error('Failed to fetch accounts:', error);
+            }
+        };
 
+        fetchAccounts();
+    }, []);
+    
     const table = useReactTable({
         data,
         columns,
@@ -177,6 +199,42 @@ export function DataTable<TData, TValue>({
                     {isDateFilterActive ? "Clear Date Filter" : "Apply Date Filter"}
                 </Button>
                  */}
+
+                    {/* <Input
+                        placeholder="Cari Kode Akun ...."
+                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            {
+                            console.log(event.target.value)
+                            table.getColumn("account.code")?.setFilterValue(event.target.value)
+                            }
+                        }
+                        className="w-[200px]"
+                    /> */}
+
+                    
+
+                                    <select
+                                        //value={transaction.accountId}
+                                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
+                                        name='accountId'
+                                        //onChange={(e) => handleTransactionChange(index, e)}
+                                        onChange={(e) =>
+                                            {
+                                            table.getColumn("account.code")?.setFilterValue(e.target.value)
+                                            console.log(e.target.value)
+                                            }
+                                        }
+                                        required
+                                        className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
+                                    >
+                                        <option value="">Akun</option>
+                                        {accounts.map((account) => (
+                                            <option key={account.id} value={account.id}>
+                                                {account.code} - {account.name}
+                                            </option>
+                                        ))}
+                                    </select>
 
                     <Input
                         placeholder="Cari Referensi ...."
