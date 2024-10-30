@@ -1,8 +1,8 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '@/lib/dbprisma';
+//import { PrismaClient } from '@prisma/client';
+//const prisma = new PrismaClient();
 
 export async function saveTransaction(formData, accountId) {
   // Extract and parse transactions data

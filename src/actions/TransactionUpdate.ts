@@ -14,17 +14,6 @@ export async function updateTransaction(id: number, data: Partial<Transaction>) 
       body: JSON.stringify(data),
     })
 
-    //Prisma
-    // const updated = await prisma.transactionAll.update({
-    //   where: { id: id },
-    //   data: data,
-    // })
-
-    // if (!response.ok) {
-    //   const error = await response.json()
-    //   throw new Error(error.message || 'Failed to update transaction')
-    // }
-    //console.log('TO UPDATE -updated: ', updated)
     revalidatePath('/transaction-all')
     return { success: true }
   } catch (error) {
