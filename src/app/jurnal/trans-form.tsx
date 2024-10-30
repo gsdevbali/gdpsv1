@@ -1,6 +1,6 @@
 'use client';
 import React, { ChangeEvent, useState } from 'react';
-import { saveTransaction } from './transactionActionsNew';
+import { saveTransaction } from './transactionActions';
 import { getAccounts } from '@/actions/AccountAction';
 import { useEffect } from 'react';
 import Divider from '@/components/Divider';
@@ -36,6 +36,9 @@ const initialTransaction: Transaction = {
 };
 
 const TransactionForm: React.FC = () => {
+
+    // Add loading state
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [accounts, setAccounts] = useState<Account[]>([]);
 
@@ -81,10 +84,10 @@ const TransactionForm: React.FC = () => {
 
     //const [displayValues, setDisplayValues] = useState<string[]>(['']);
     // Update the displayValues state to handle both debit and credit
-const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: string[] }>({
-    debit: [''],
-    credit: ['']
-});
+    const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: string[] }>({
+        debit: [''],
+        credit: ['']
+    });
 
     const formatCurrency = (value: number): string => {
         return new Intl.NumberFormat('id-ID', {
@@ -104,6 +107,9 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsSubmitting(true); // Disable interactions
+
+        // Get form data
         const formData = new FormData(e.currentTarget);
 
         // Append transactions data to formData
@@ -127,6 +133,8 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
                 variant: "destructive",
                 duration: 3000,
             })
+        } finally {
+            setIsSubmitting(false); // Re-enable interactions
         }
     };
 
@@ -231,20 +239,6 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
                 <form onSubmit={handleSubmit}>
 
                     <div className='bg-gray-100 rounded-lg space-y-2'>
-                        {/* TransactionMain fields */}
-                        {/* <select
-                            name="accountId"
-                            className='border p-2 rounded w-full'
-                            value={mainData.accountId}
-                            onChange={handleMainChange}
-                        >
-                            <option value="">Akun</option>
-                            {accounts.map((account) => (
-                                <option key={account.id} value={account.id}>
-                                    {account.code} - {account.name}
-                                </option>
-                            ))}
-                        </select> */}
 
                         <div className='flex justify-between gap-2'>
                             <input
@@ -264,25 +258,10 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
                                 placeholder="Nomor Referensi"
                                 className='w-[100%] p-2 rounded'
                             />
-                            {/* <input
-                                type="number"
-                                name="accountId"
-                                value={mainData.accountId}
-                                onChange={handleMainChange}
-                                placeholder="Account ID"
-                                className='w-[100%] p-2 rounded'
-                            /> */}
+
 
                         </div>
 
-                        {/* <input
-                            type="text"
-                            name="description"
-                            value={mainData.description}
-                            onChange={handleMainChange}
-                            placeholder="Uraian transaksi"
-                            className='w-[100%] p-2 rounded'
-                        /> */}
 
                     </div>
                     {/* Add other TransactionMain fields as needed */}
@@ -340,21 +319,7 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
                                     placeholder="Jumlah Kredit"
                                     className='w-[200px] p-2 rounded'
                                 />
-                                {/* <input
-                                    type="number"
-                                    name='credit'
-                                    value={transaction.credit || ''}
-                                    onChange={(e) => handleTransactionChange(index, e)}
-                                    placeholder="Kredit"
-                                    className='w-[200px] p-2 rounded'
-                                /> */}
-                                {/* <input
-                                    type="number"
-                                    name='accountId'
-                                    value={transaction.accountId}
-                                    onChange={(e) => handleTransactionChange(index, e)}
-                                    placeholder="Account ID"
-                                /> */}
+  
                                 {/* Add other Transaction fields as needed */}
 
                             </div>
@@ -363,19 +328,24 @@ const [displayValues, setDisplayValues] = useState<{ debit: string[], credit: st
                     </div>
                     <div className='flex flex-col gap-4 mt-4 mb-2'>
                         <div className='flex flex-row gap-2'>
-                            <button className='bg-blue-500 text-white p-2 px-4 rounded-md' type="button" onClick={addTransaction}>Tambah transaksi</button>
-                            <button
-                                className={`text-white p-2 px-4 rounded-md ${isSubmitEnabled ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'}`}
-                                type="submit"
-                                disabled={!isSubmitEnabled}
+                            <button className='bg-blue-500 text-white p-2 px-4 rounded-md' 
+                                type="button" 
+                                onClick={addTransaction}
+                                disabled={isSubmitting}
                             >
-                                SIMPAN
+                                {isSubmitting ? 'Proses...' : 'Tambah transaksi'}
+                            </button>
+                            <button className={`text-white p-2 px-4 rounded-md ${isSubmitEnabled ? 'bg-blue-500' : 'bg-gray-400'} ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                type="submit"
+                                disabled={!isSubmitEnabled || isSubmitting}
+                            >
+                                {isSubmitting ? 'Menyimpan...' : 'SIMPAN'}
                             </button>
                             <button
                                 className={`text-white p-2 px-4 rounded-md ${isResetEnabled ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'}`}
                                 type="button"
                                 onClick={handleReset}
-                                disabled={!isResetEnabled}
+                                disabled={!isResetEnabled || isSubmitting}
                             >
                                 Reset
                             </button>

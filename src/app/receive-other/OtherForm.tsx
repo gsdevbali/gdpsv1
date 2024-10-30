@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast"
-import { saveTransaction } from './OtherActionsNew';
+import { saveTransaction } from './OtherActions';
 import { getAccountsByType, getAccountsAll } from '@/actions/AccountAction';
 import Divider from '@/components/Divider';
 
@@ -40,6 +40,8 @@ interface OtherFormProps {
 
 
 const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
+    // Add loading state
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [accountsAll, setAccountsAll] = useState<Account[]>([]);
@@ -120,6 +122,9 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsSubmitting(true); // Disable interactions
+
+        // Get form data
         const formData = new FormData(e.currentTarget);
 
         // Append transactions data to formData
@@ -147,6 +152,8 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                 variant: "destructive",
                 duration: 3000,
             })
+        } finally {
+            setIsSubmitting(false); // Re-enable interactions
         }
     };
 
@@ -320,18 +327,25 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                     </div>
                     <div className='flex flex-col gap-4 mt-4 mb-2'>
                         <div className='flex flex-row gap-2'>
-                            <button className='bg-blue-500 text-white p-2 px-4 rounded-md' type="button" onClick={addTransaction}>Tambah transaksi</button>
+                            <button className='bg-blue-500 text-white p-2 px-4 rounded-md' 
+                            type="button" 
+                            onClick={addTransaction}
+                            disabled={isSubmitting}
+                            >
+                                {isSubmitting ? 'Proses...' : 'Tambah transaksi'}
+                            </button>
                             <button
                                 className='bg-blue-500 text-white p-2 px-4 rounded-md'
                                 type="submit"
+                                disabled={isSubmitting}
                             >
-                                SIMPAN
+                                {isSubmitting ? 'Menyimpan...' : 'SIMPAN'}
                             </button>
                             <button
                                 className={`text-white p-2 px-4 rounded-md ${isResetEnabled ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'}`}
                                 type="button"
                                 onClick={handleReset}
-                                disabled={!isResetEnabled}
+                                disabled={!isResetEnabled || isSubmitting}
                             >
                                 Reset
                             </button>

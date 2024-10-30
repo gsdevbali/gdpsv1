@@ -1,17 +1,12 @@
 import React from 'react';
 import Divider from './Divider';
 import ThemeToggle from './ThemeToggle';
-import PrintButton from './PrintButton';
-import HomeButton from './HomeButton';
+import { HomeButton, PrintButton } from './AppButtons';
 
 interface PageLayoutProps {
     header: React.ReactNode;
     children: React.ReactNode;
     footer: React.ReactNode;
-}
-
-const handlePrint = () => {
-    console.log("Printing...");
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({ header, children, footer }) => {

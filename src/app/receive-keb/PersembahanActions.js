@@ -5,6 +5,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function saveTransaction(formData, accountId) {
+  // Extract and parse transactions data
+  const transactions = JSON.parse(formData.get('transactions') || '[]');
+
   // Extract main transaction data
   const main = {
     date: formData.get('date'),
@@ -13,57 +16,79 @@ export async function saveTransaction(formData, accountId) {
     accountId: parseInt(accountId),
   };
 
-  //const transactions = [];
-  // Extract and parse transactions data
-  const transactions = JSON.parse(formData.get('transactions') || '[]');
-
-  let i = 0;
-  while (formData.get(`transactions[${i}].description`)) {
-    transactions.push({
-      description: formData.get(`transactions[${i}].description`),
-      debit: parseFloat(formData.get(`transactions[${i}].debit`)),
-      credit: parseFloat(formData.get(`transactions[${i}].credit`)),
-      accountId: parseInt(formData.get(`transactions[${i}].accountId`)),
-    });
-    i++;
-  }
-
-  
+  console.log('action-main TANGGAL', main.date);
 
   try {
     const result = await prisma.$transaction(async (prisma) => {
-      // Create TransactionMain
-      const transactionMain = await prisma.transactionMain.create({
+        // Calculate sums before creating transactions
+      const { totalDebit, totalCredit } = transactions.reduce(
+        (acc, t) => ({
+          totalDebit: acc.totalDebit + (parseFloat(t.debit) || 0),
+          totalCredit: acc.totalCredit + (parseFloat(t.credit) || 0),
+        }),
+        { totalDebit: 0, totalCredit: 0 }
+      );
+
+      // Create Main - temporary - nantinya tidak perlu???
+    //   const transactionMain = await prisma.transactionMain.create({
+    //     data: {
+    //         date: new Date(main.date),
+    //         description: main.description,
+    //         ref: main.ref,
+    //         accountId: main.accountId,
+    //       },
+    //   });
+    
+      // 1: Save main transaction ( Also into TransactionAll model )
+      // Penerimaan Persembahan SIMPAN di ....
+      const mainAllTransaction = await prisma.transactionAll.create({
         data: {
           date: new Date(main.date),
           description: main.description,
           ref: main.ref,
           accountId: main.accountId,
-          transactions: {
-            create: transactions.map(t => ({
-              date: new Date(main.date), // Using the main date for all transactions
-              description: t.description,
-              ref: t.ref || '',
-              mediaPath: t.mediaPath || '',
-              debit: parseFloat(t.debit) || 0,
-              credit: parseFloat(t.credit) || 0,
-              accountId: parseInt(t.accountId),
-            })),
-          },
-        },
-        include: {
-          transactions: true,
+          debit: totalCredit, // Assuming main transaction doesn't have debit/credit
+          credit: totalDebit, // You may need to adjust this based on your requirements
+        //   account: {
+        //     connect: {
+        //       id: main.accountId,
+        //     },
+        //   },
+          //transactionId: transactionMain.id,
+          
         },
       });
 
-      console.log('Saving main transaction:', main);
-  console.log('Saving detailed transactions:', transactions);
-      return transactionMain;
+      // 2: Save detailed transactions
+      const savedAllTransactions = await prisma.transactionAll.createMany({
+        data: transactions.map(t => ({
+          date: new Date(main.date), // Using the main date for all transactions
+          description: t.description,
+          //ref: t.ref || '', 
+          ref: main.ref, // disamakan dengan ref main
+          mediaPath: t.mediaPath || '',
+          debit: parseFloat(t.debit) || 0,
+          credit: parseFloat(t.credit) || 0,
+          accountId: parseInt(t.accountId),
+        //   account: {
+        //     connect: {
+        //       id: main.accountId,
+        //     },
+        //   },
+          //transactionId: mainSelfTransaction.id,
+        })),
+      });
+
+      
+
+      console.log('action- Saved detailed ALL transactions:', savedAllTransactions);
+      console.log('action-Saved main ALL transaction:', mainAllTransaction)
+      return { savedAllTransactions, mainAllTransaction };
     });
 
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error creating transaction:', error);
-    return { success: false, error: 'Error creating transaction' };
+    console.error('Error creating transactions:', error);
+    return { success: false, error: 'Error creating transactions' };
   }
 }

@@ -16,8 +16,7 @@ export async function saveTransaction(formData, accountId) {
     accountId: parseInt(accountId),
   };
 
-  console.log('action-main TANGGAL', main.date);
-
+  //console.log('action-main TANGGAL', main.date);
   try {
     const result = await prisma.$transaction(async (prisma) => {
         // Calculate sums before creating transactions
@@ -29,25 +28,16 @@ export async function saveTransaction(formData, accountId) {
         { totalDebit: 0, totalCredit: 0 }
       );
 
-      // Create Main - temporary - nantinya tidak perlu???
-    //   const transactionMain = await prisma.transactionMain.create({
-    //     data: {
-    //         date: new Date(main.date),
-    //         description: main.description,
-    //         ref: main.ref,
-    //         accountId: main.accountId,
-    //       },
-    //   });
     
-      // 1: Save main transaction ( Also into TransactionAll model )
-      // Penerimaan Persembahan SIMPAN di ....
+      // 1: Save main transaction ( Also in Transaction )
+      // Jumlah Pengeluaran masuk ke Kredit
       const mainAllTransaction = await prisma.transactionAll.create({
         data: {
           date: new Date(main.date),
           description: main.description,
           ref: main.ref,
           accountId: main.accountId,
-          debit: totalCredit, // Assuming main transaction doesn't have debit/credit
+          debit: 0, // Assuming main transaction doesn't have debit/credit
           credit: totalDebit, // You may need to adjust this based on your requirements
         //   account: {
         //     connect: {
@@ -64,8 +54,7 @@ export async function saveTransaction(formData, accountId) {
         data: transactions.map(t => ({
           date: new Date(main.date), // Using the main date for all transactions
           description: t.description,
-          //ref: t.ref || '', 
-          ref: main.ref, // disamakan dengan ref main
+          ref: main.ref,
           mediaPath: t.mediaPath || '',
           debit: parseFloat(t.debit) || 0,
           credit: parseFloat(t.credit) || 0,
@@ -81,8 +70,8 @@ export async function saveTransaction(formData, accountId) {
 
       
 
-      console.log('action- Saved detailed ALL transactions:', savedAllTransactions);
-      console.log('action-Saved main ALL transaction:', mainAllTransaction)
+      //console.log('action- Saved detailed ALL transactions:', savedAllTransactions);
+      //console.log('action-Saved main ALL transaction:', mainAllTransaction)
       return { savedAllTransactions, mainAllTransaction };
     });
 
