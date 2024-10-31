@@ -25,7 +25,8 @@ export type Transaction = {
     updatedAt: Date
     flag: string
     account: Account
-    accountGroup2Id: number
+    // g2id: number
+    //accountGroup2Id: number
 }
 
 export type Account = {
@@ -55,6 +56,16 @@ export type AccountGroup2 = {
 //     const [start, end] = filterValue as [Date, Date];
 //     return cellValue >= start && cellValue <= end;
 // };
+
+const nestedStringFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
+    const rowData = row.original;
+    if (!rowData.account?.accountGroup2?.name) return true;
+
+    const value = rowData.account.accountGroup2.name;
+    if (!filterValue || !value) return true;
+
+    return value.toLowerCase().includes(String(filterValue).toLowerCase());
+};
 
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -102,27 +113,26 @@ export const columns: ColumnDef<Transaction>[] = [
     },
 
     {
+        id: "g2id",
         accessorKey: "account.accountGroup2.id",
-        // accessorFn: (row) => row.account.accountGroup2.id,
-        header: "IDG2",
+        header: "x",
         cell: ({ row }) => {
             return <div className="text-left">{row.original.account.accountGroup2.id}</div>;
         },
-        //enableGlobalFilter: true,
-        //filterFn: "includesString",
-        enableSorting: true,
-        
+        filterFn: "equalsString",
+        enableHiding: true,
+
     },
 
-    {
-        accessorKey: "account.accountGroup2.name",
-        header: "G2-Id",
-        cell: ({ row }) => {
-            return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
-        },
-        enableSorting: true,
-        
-    },
+    // {
+    //     id: "g2name",
+    //     accessorFn: (row) => row.account.accountGroup2.name,
+    //     header: "G2name",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
+    //     },
+    //     //filterFn: "contains"
+    // },
 
     {
         accessorKey: "account.code",
@@ -133,16 +143,23 @@ export const columns: ColumnDef<Transaction>[] = [
         enableSorting: true,
     },
 
-    // {
-    //     accessorKey: "date",
-    //     header: "Tanggal",
-    //     cell: ({ row }) => {
-    //         const newDate = tanggal(row.original.date)
-    //         return <div className="text-left">{newDate}</div>;
-    //     },
-    //     filterFn: dateRangeFilter,
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "date",
+        header: "Tanggal",
+        cell: ({ row }) => {
+            const newDate = tanggal(row.original.date)
+            return <div className="text-left">{newDate}</div>;
+        },
+        enableSorting: true,
+    },
+
+    {
+        accessorKey: "description",
+        header: "Uraian",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.description}</div>;
+        },
+    },
 
 
     {

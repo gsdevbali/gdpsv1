@@ -83,6 +83,7 @@ export default async function RepActivity() {
     return (
         <>
             <PageLayout header={header} footer={footer}>
+
                 <DataTable columns={columns} data={data} />
                 {/* <h1 className="text-2xl font-bold">PERSEMBAHAN:</h1>
                 <DataTable columns={columns} data={data_persembahan} />

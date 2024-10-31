@@ -95,7 +95,7 @@ export async function getGroup2() {
         name: true,
       },
       orderBy: {
-        name: 'asc',
+        id: 'asc',
       },
     })
     return accounts
