@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
 
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
-    const [subTitle, setSubTitle] = useState<String>('SEMUA');
+    const [subTitle, setSubTitle] = useState<string>('SEMUA');
 
     const [group2, setGroup2] = useState<Group2[]>([]);
 
