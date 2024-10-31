@@ -78,6 +78,7 @@ export default async function RepActivity() {
     const start = "2024-01-01"
     const today = new Date().toISOString().split('T')[0];
     const data = await getData(start, today)
+    console.log('data Query First:', data)
 
     return (
         <>

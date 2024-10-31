@@ -7,6 +7,11 @@ import { tanggal } from '@/lib/tanggal';
 
 import { Checkbox } from "@/components/ui/checkbox";
 
+const group2Filter: FilterFn<Transaction> = (row, columnId, filterValue) => {
+    const value = row.getValue(columnId) as number;
+    return filterValue.includes(value);
+};
+
 export type Transaction = {
     id: number
     date: Date
@@ -20,6 +25,7 @@ export type Transaction = {
     updatedAt: Date
     flag: string
     account: Account
+    accountGroup2Id: number
 }
 
 export type Account = {
@@ -97,22 +103,25 @@ export const columns: ColumnDef<Transaction>[] = [
 
     {
         accessorKey: "account.accountGroup2.id",
+        // accessorFn: (row) => row.account.accountGroup2.id,
         header: "IDG2",
         cell: ({ row }) => {
             return <div className="text-left">{row.original.account.accountGroup2.id}</div>;
         },
+        //enableGlobalFilter: true,
+        //filterFn: "includesString",
         enableSorting: true,
-        enableGlobalFilter: true,
         
     },
 
     {
         accessorKey: "account.accountGroup2.name",
-        header: "Kelompok",
+        header: "G2-Id",
         cell: ({ row }) => {
             return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
         },
         enableSorting: true,
+        
     },
 
     {
@@ -135,21 +144,6 @@ export const columns: ColumnDef<Transaction>[] = [
     //     enableSorting: true,
     // },
 
-
-
-    // {
-    //     accessorKey: "ref",
-    //     header: "Referensi",
-    //     cell: ({ row }) => {
-    //         return <div className="text-left w-[100%]">
-
-    //             {row.original.ref}
-
-    //         </div>;
-    //     },
-    //     enableSorting: true,
-
-    // },
 
     {
         accessorKey: "debit",

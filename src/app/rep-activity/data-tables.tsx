@@ -110,6 +110,26 @@ export function DataTable<TData, TValue>({
 
                 return date >= startDate && date <= endDate
             },
+
+            group2Filter: (row, columnId, filterValue) => {
+                const value = row.getValue(columnId);
+                if (!filterValue) return true;
+                return value === parseInt(filterValue);
+            },
+
+            nestedString: (row, columnId, filterValue) => {
+                // Get the nested value using path segments
+                const getNestedValue = (obj: any, path: string) => {
+                    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+                };
+                
+                const value = getNestedValue(row.original, columnId);
+                if (!filterValue || !value) return true;
+                
+                return String(value)
+                    .toLowerCase()
+                    .includes(String(filterValue).toLowerCase());
+            },
         },
 
         state: {
@@ -142,14 +162,10 @@ export function DataTable<TData, TValue>({
                         //value={transaction.accountId}
                         value={(table.getColumn("account.accountGroup2.id")?.getFilterValue() as string) ?? ""}
                         name='group2'
-                        //onChange={(e) => handleTransactionChange(index, e)}
                         onChange={(e) => {
                             // Find the selected group2 item and use its name instead of ID
-                            //const selectedGroup = group2.find(g => g.id === parseInt(e.target.value));
-                            //table.getColumn("account.accountGroup2.id")?.setFilterValue(selectedGroup ? selectedGroup.name : "");
                             table.getColumn("account.accountGroup2.id")?.setFilterValue(e.target.value)
-                            console.log(e.target.value)
-                            
+                            //e.target.value ? parseInt(e.target.value) : ""
                         }
                         }
                         required
@@ -163,6 +179,14 @@ export function DataTable<TData, TValue>({
                         ))}
                     </select>
 
+                    <Input
+                        placeholder="G2 name ...."
+                        value={(table.getColumn("accountGroup2.name")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("accountGroup2.name")?.setFilterValue(event.target.value)
+                        }
+                        className="w-[200px]"
+                    />
                     <Input
                         placeholder="Cari Referensi ...."
                         value={(table.getColumn("ref")?.getFilterValue() as string) ?? ""}
