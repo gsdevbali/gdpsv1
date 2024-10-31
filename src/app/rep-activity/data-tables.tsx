@@ -68,9 +68,26 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
+    const [totalDebit, setTotalDebit] = useState<number>(0);
+    const [totalCredit, setTotalCredit] = useState<number>(0);
+
     const [group2, setGroup2] = useState<Group2[]>([]);
 
+    // Add this helper function before the return statement
+    const calculateTotals = (rows: any[]) => {
+        const totals = rows.reduce((acc, row) => {
+            return {
+                debit: acc.debit + (Number(row.original.debit) || 0),
+                credit: acc.credit + (Number(row.original.credit) || 0)
+            };
+        }, { debit: 0, credit: 0 });
+
+        setTotalDebit(totals.debit);
+        setTotalCredit(totals.credit);
+    };
+
     //const [filterValue, setFilterValue] = useState("");  // Add this state
+
 
 
     // Fetch data Group2 for Filter Lookup
@@ -85,7 +102,9 @@ export function DataTable<TData, TValue>({
         };
 
         fetchGroup2();
+
     }, []);
+
 
     const table = useReactTable({
         data,
@@ -147,6 +166,11 @@ export function DataTable<TData, TValue>({
 
     })
 
+    useEffect(() => {
+        calculateTotals(table.getFilteredRowModel().rows);
+    }, [table.getFilteredRowModel().rows]);
+
+
     //table.getColumn("g2id")?.toggleVisibility(false);
     //const isVisible = table.getColumn("id")?.getIsVisible();
 
@@ -166,6 +190,25 @@ export function DataTable<TData, TValue>({
                     {/* <PrintButton /> */}
 
                 </div>
+
+                {/* TOTAL  */}
+                <div className="ml-auto flex gap-4 mr-4">
+                    <div className="text-xl">
+                        <span className="font-semibold">Total Debit: </span>
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalDebit)}
+                    </div>
+                    <div className="text-xl">
+                        <span className="font-semibold">Total Kredit: </span>
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalCredit)}
+                    </div>
+                </div>
+
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
 
                     <select
@@ -175,7 +218,9 @@ export function DataTable<TData, TValue>({
                         onChange={(e) => {
                             // Find the selected group2 item and use its name instead of ID
                             table.getColumn("g2id")?.setFilterValue(e.target.value)
-                            //e.target.value ? parseInt(e.target.value) : ""
+                            // setTotalDebit(0);
+                            // setTotalCredit(0);
+                            // calculateTotals(table.getFilteredRowModel().rows);
                         }
                         }
                         //required
@@ -215,8 +260,13 @@ export function DataTable<TData, TValue>({
                     <Input
                         placeholder="Cari Referensi ...."
                         value={(table.getColumn("ref")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
+                        onChange={(event) => {
+
                             table.getColumn("ref")?.setFilterValue(event.target.value)
+                            // setTotalDebit(0);
+                            // setTotalCredit(0);
+                            // calculateTotals(table.getFilteredRowModel().rows);
+                        }
                         }
                         className="w-[200px]"
                     />
