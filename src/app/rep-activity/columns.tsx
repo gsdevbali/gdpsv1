@@ -101,6 +101,8 @@ export const columns: ColumnDef<Transaction>[] = [
             return <div className="text-left">{row.original.id}</div>;
         },
         enableSorting: true,
+        enableHiding: true,
+        enableColumnFilter: false,
     },
 
     {
@@ -121,18 +123,21 @@ export const columns: ColumnDef<Transaction>[] = [
         },
         filterFn: "equalsString",
         enableHiding: true,
+        enableColumnFilter: false,
 
     },
 
-    // {
-    //     id: "g2name",
-    //     accessorFn: (row) => row.account.accountGroup2.name,
-    //     header: "G2name",
-    //     cell: ({ row }) => {
-    //         return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
-    //     },
-    //     //filterFn: "contains"
-    // },
+    {
+        id: "g2name",
+        accessorFn: (row) => row.account.accountGroup2.name,
+        header: "G2name",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
+        },
+        enableHiding: true,
+        enableColumnFilter: false,
+        //filterFn: "contains"
+    },
 
     {
         accessorKey: "account.code",

@@ -46,13 +46,6 @@ interface DataTableProps<TData, TValue> {
     // dateEnd: string
 }
 
-
-// interface Account {
-//     id: number;
-//     code: string;
-//     name: string;
-// }
-
 interface Group2 {
     id: number;
     name: string;
@@ -65,11 +58,16 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+        id: false,
+        g2id: false,
+        g2name: false,
+    })
     const [rowSelection, setRowSelection] = React.useState({})
 
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
+    const [subTitle, setSubTitle] = useState<String>('SEMUA');
 
     const [group2, setGroup2] = useState<Group2[]>([]);
 
@@ -86,10 +84,6 @@ export function DataTable<TData, TValue>({
         setTotalCredit(totals.credit);
     };
 
-    //const [filterValue, setFilterValue] = useState("");  // Add this state
-
-
-
     // Fetch data Group2 for Filter Lookup
     useEffect(() => {
         const fetchGroup2 = async () => {
@@ -102,9 +96,9 @@ export function DataTable<TData, TValue>({
         };
 
         fetchGroup2();
+        //setSubTitle('');
 
     }, []);
-
 
     const table = useReactTable({
         data,
@@ -133,27 +127,7 @@ export function DataTable<TData, TValue>({
                 return date >= startDate && date <= endDate
             },
 
-            // group2Filter: (row, columnId, filterValue) => {
-            //     const value = row.getValue(columnId);
-            //     if (!filterValue) return true;
-            //     return value === parseInt(filterValue);
-            // },
 
-            // g2Filter: (row, columnId, value) => {
-            //     const g2name = row.original.accountGroup2?.name;
-            //     if (!value || !g2name) return true;
-            //     return g2name.toLowerCase().includes(value.toLowerCase());
-            // },
-
-            // nestedString: (row, columnId, filterValue) => {
-            //     const rowData = row.original as any;
-            //     if (!rowData.accountGroup2) return true;
-
-            //     const value = rowData.accountGroup2.name;
-            //     if (!filterValue || !value) return true;
-
-            //     return value.toLowerCase().includes(filterValue.toLowerCase());
-            // },
         },
 
         state: {
@@ -163,23 +137,27 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
 
-
     })
+
+    const getGroup2Name = (id: string) => {
+        if (!id) return 'SEMUA';
+        const selected = group2.find(g => g.id === parseInt(id));
+        return selected ? selected.name : 'SEMUA';
+    }
 
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
+        const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+        setSubTitle(getGroup2Name(g2Id));
     }, [table.getFilteredRowModel().rows]);
-
-
-    //table.getColumn("g2id")?.toggleVisibility(false);
-    //const isVisible = table.getColumn("id")?.getIsVisible();
-
 
     return (
         <>
             <div className={printStyles.printContainer}>
                 <div>
-                    <h1 className="text-3xl font-bold">AKTIVITAS
+                    <h1 className="text-3xl">
+                        <span className="font-bold">AKTIVITAS</span>
+                        <span className="font-light"> - {subTitle} </span>
                     </h1>
                     {/* {isDateFilterActive && (
                         <h2 className="ml-2 text-xl font-normal">
@@ -195,17 +173,25 @@ export function DataTable<TData, TValue>({
                 <div className="ml-auto flex gap-4 mr-4">
                     <div className="text-xl">
                         <span className="font-semibold">Total Debit: </span>
-                        {new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }).format(totalDebit)}
+
+                        <span className="font-bold text-orange-500">
+                            {new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(totalDebit)}
+                        </span>
+
                     </div>
                     <div className="text-xl">
                         <span className="font-semibold">Total Kredit: </span>
-                        {new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }).format(totalCredit)}
+
+                        <span className="font-bold text-orange-500">
+                            {new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(totalCredit)}
+                        </span>
+
                     </div>
                 </div>
 
