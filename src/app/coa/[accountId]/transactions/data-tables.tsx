@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
 import {
     DropdownMenu,
@@ -46,6 +46,9 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
+    const [totalDebit, setTotalDebit] = useState<number>(0);
+    const [totalCredit, setTotalCredit] = useState<number>(0);
+
     const table = useReactTable({
         data,
         columns,
@@ -65,8 +68,56 @@ export function DataTable<TData, TValue>({
         },
     })
 
+    // Add this helper function before the return statement
+    const calculateTotals = (rows: any[]) => {
+        const totals = rows.reduce((acc, row) => {
+            return {
+                debit: acc.debit + (Number(row.original.debit) || 0),
+                credit: acc.credit + (Number(row.original.credit) || 0)
+            };
+        }, { debit: 0, credit: 0 });
+
+        setTotalDebit(totals.debit);
+        setTotalCredit(totals.credit);
+    };
+
+    useEffect(() => {
+        calculateTotals(table.getFilteredRowModel().rows);
+        //const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+        //setSubTitle(getGroup2Name(g2Id));
+    }, [table.getFilteredRowModel().rows]);
+
     return (
         <>
+
+
+            {/* TOTAL  */}
+
+            <div className="ml-auto flex gap-4 mr-4">
+                <div className="text-xl">
+                    <span className="font-semibold">Total Debit: </span>
+
+                    <span className="font-bold text-orange-500">
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalDebit)}
+                    </span>
+
+                </div>
+                <div className="text-xl">
+                    <span className="font-semibold">Total Kredit: </span>
+
+                    <span className="font-bold text-orange-500">
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalCredit)}
+                    </span>
+
+                </div>
+            </div>
+
             <div className="flex items-center py-4 gap-2">
                 <Input
                     placeholder="Filter Ref ...."

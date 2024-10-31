@@ -5,6 +5,7 @@ import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 
 import prisma from "@/lib/dbprisma";
+import Divider from "@/components/Divider";
 
 async function getData(accountId: string) {
     // const res = await fetch(`${global.baseUrl}/api/transbyid?accountId=${accountId}`, {
@@ -38,6 +39,7 @@ export default async function Page({ params }: { params: { accountId: string } }
                     <Button>Add New Account</Button>
                 </AccountDialog> */}
                 {/* <Button>Add New Account</Button> */}
+                <Divider />
                 <DataTable columns={columns} data={data} />
             </div>
         </PageLayout>
