@@ -12,7 +12,7 @@ function Page() {
     return (
         <>
             <PageLayout header={header} footer={footer}>
-                <h1 className='text-2xl text-bold'>ENTRI Jurnal Umum</h1>
+                <h1 className='text-2xl text-bold dark:text-orange-500'>ENTRI Jurnal Umum</h1>
                 <div className='flex flex-col pt-3 mb-6'>
                     <TransactionForm />
                     <Toaster />

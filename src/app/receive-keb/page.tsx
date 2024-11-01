@@ -12,7 +12,7 @@ function Page() {
     return (
         <>
             <PageLayout header={header} footer={footer}>
-                <h1 className='text-2xl text-bold'>PENERIMAAN Persembahan (KAS KERK)</h1>
+                <h1 className='text-2xl text-bold dark:text-blue-500'>PENERIMAAN Persembahan (KAS KERK)</h1>
                 <div className='flex flex-col pt-3 mb-6'>
                     {/* Form hanya untuk Penerimaan Persembahan */}
                     <PersembahanForm accountId={'2'} />

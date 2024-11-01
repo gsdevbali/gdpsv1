@@ -65,12 +65,12 @@ export default async function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold">NERACA</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">NERACA</h1>
                 <Divider />
 
                 {/* AKTIVA - KIRI */}
 
-                <h1 className="text-xl font-bold pt-4 pb-2">AKTIVA</h1>
+                <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">AKTIVA</h1>
                 <Divider />
                 <h2 className="text-lg font-bold pt-2 pb-2">AKTIVA LANCAR</h2>
                 <DataTable columns={columns} data={data_AktivaLancar} />
@@ -87,10 +87,11 @@ export default async function Page() {
 
                 {/* PASIVA - KANAN */}
 
-                <h2 className="text-xl font-bold pt-4 pb-2">KEWAJIBAN DAN ASET BERSIH</h2>
+                <h2 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">KEWAJIBAN DAN ASET BERSIH</h2>
                 <Divider />
                 <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2>
                 <DataTable columns={columns} data={data_Kewajiban1} />
+                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN LANCAR</h2>
                 <DataTable columns={columns} data={data_Kewajiban2} />
                 <TulisTotalRp value={newTotalBalance_Kewajiban} title="Kewajiban" />
 
@@ -101,7 +102,7 @@ export default async function Page() {
 
                 <div className="h-4"></div>
 
-                <div className="p-4 rounded-lg bg-blue-50">
+                <div className="p-4 rounded-lg bg-blue-50 dark:bg-slate-800">
                     {/* Rangkuman Neraca */}
                     <h1 className="text-xl font-bold pt-4 pb-2">RANGKUMAN NERACA</h1>
                     {isBalanceSheetEqual(totalAktiva, totalPasiva) ? <p className="text-green-500 pb-2">{global.pageInfo.infoNeracaBalance}</p> : <p className="text-red-500 pb-2">{global.pageInfo.infoNeracaUnbalance}</p>}

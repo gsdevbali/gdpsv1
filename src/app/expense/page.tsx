@@ -12,8 +12,8 @@ function Page() {
     return (
         <>
             <PageLayout header={header} footer={footer}>
-                <h1 className='text-2xl text-bold'>PENGELUARAN</h1>
-                <div className='flex flex-col'>
+                <h1 className='text-2xl text-bold dark:text-red-500'>PENGELUARAN</h1>
+                <div className='flex flex-col pt-3 mb-6'>
                     {/* Form hanya untuk Penerimaan Lain */}
                     <OtherFormPay accountId={''} />
                     <Toaster />

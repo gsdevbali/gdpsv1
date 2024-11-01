@@ -234,11 +234,11 @@ const TransactionForm: React.FC = () => {
 
     return (
         <>
-            <div className='bg-gray-100 shadow-md rounded-lg p-3 space-y-4 w-full'>
+            <div className='bg-gray-100 border dark:bg-slate-800 border-orange-400 shadow-md rounded-lg p-3 space-y-4 w-full'>
                 <p className='text-md text-bold mt-1'>Catatan Transaksi:</p>
                 <form onSubmit={handleSubmit}>
 
-                    <div className='bg-gray-100 rounded-lg space-y-2'>
+                    <div className='rounded-lg space-y-2'>
 
                         <div className='flex justify-between gap-2'>
                             <input
