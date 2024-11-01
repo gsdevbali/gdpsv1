@@ -1,6 +1,5 @@
 "use client"
 
-//import prisma from "@/lib/dbprisma"
 import { updateTransaction, deleteTransaction } from "@/actions/TransactionUpdate"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -11,6 +10,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
@@ -26,7 +37,8 @@ interface EditDialogProps {
 
 export function EditDialog({ children, transaction }: EditDialogProps) {
     const [open, setOpen] = useState(false)
-    const [formData, setFormData] = useState(transaction)
+    //const [formData, setFormData] = useState(transaction)
+    const [showDeleteAlert, setShowDeleteAlert] = useState(false)
     const { toast }: any = useToast()
 
 
@@ -59,74 +71,9 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
         }
     }
 
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault()
-    //     try {
-    //         const result = await updateTransaction(transaction.id, formData)
-            
-    //         if (!result || result.error) {
-    //             // Handle error case
-    //             toast({
-    //                 title: "Gagal",
-    //                 description: result?.error || "Terjadi kesalahan saat memperbarui transaksi",
-    //                 variant: "destructive",
-    //             })
-    //             return
-    //         }
-
-    //         // Success case
-    //         toast({
-    //             title: "Berhasil",
-    //             description: "Transaksi telah diperbarui",
-    //             variant: "default",
-    //         })
-
-    //         setOpen(false)
-    //         // Add a way to refresh the data
-    //         window.location.reload() // Temporary solution - better to use React state management
-    //     } catch (error) {
-    //         console.error('Error updating transaction:', error)
-    //         toast({
-    //             title: "Gagal",
-    //             description: "Terjadi kesalahan saat memperbarui transaksi",
-    //             variant: "destructive",
-    //         })
-    //     }
-    // }
-
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault()
-    //     try {
-            
-    //         console.log('TO UPDATE -formData: ', formData)
-            
-    //         const result = await updateTransaction(transaction.id, formData)
-    //         console.log('TO UPDATE -result: ', result)
-
-    //         toast(
-    //             {
-    //                 title: "Berhasil",
-    //                 description: "Transaksi telah diperbarui",
-    //                 variant: "default",
-    //             }
-    //         )
-
-    //         setOpen(false)
-
-    //     } catch (error) {
-    //         console.error('Error updating transaction:', error)
-    //         toast({
-    //             title: "Gagal",
-    //             description: "Terjadi kesalahan saat memperbarui transaksi",
-    //             variant: "destructive",
-    //         })
-    //     }
-    // }
-
-    // const handleDelete = async () => {
-    //     console.log('TO DELETE -transaction id: ', transaction.id)
-    //     await deleteTransaction(transaction.id)
-    // }
+    const handleDeleteClick = () => {
+        setShowDeleteAlert(true)
+    }
 
     const handleDelete = async () => {
         try {
@@ -148,6 +95,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
             })
             
             setOpen(false)
+            setShowDeleteAlert(false)
             //window.location.reload() // Temporary solution - better to use React state management
         } catch (error) {
             console.error('Error deleting transaction:', error)
@@ -160,6 +108,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
     }
 
     return (
+    <>
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {children}
@@ -258,7 +207,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                         </div>
                     </div>
                     <div className="flex justify-between space-x-2">
-                        <Button variant="link" onClick={handleDelete}>{<Trash2Icon />}</Button>
+                        <Button variant="link" onClick={handleDeleteClick}>{<Trash2Icon />}</Button>
                         <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                             Batal
                         </Button>
@@ -267,5 +216,24 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 </form>
             </DialogContent>
         </Dialog>
+        
+        {/* Alert before Delete */}
+        <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Tindakan ini tidak dapat dibatalkan. Transaksi ini akan dihapus secara permanen.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Batal</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                        Hapus
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    </>
     )
 }
