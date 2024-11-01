@@ -114,18 +114,18 @@ const data = {
           title: "Daftar (COA)",
           url: "/coa",
         },
-        {
-          title: "Tipe Akun",
-          url: "/coa-type",
-        },
-        {
-          title: "Group Akun",
-          url: "/coa-group1",
-        },
-        {
-          title: "Group Akun-2",
-          url: "/coa-group2",
-        },
+        // {
+        //   title: "Tipe Akun",
+        //   url: "/coa-type",
+        // },
+        // {
+        //   title: "Group Akun",
+        //   url: "/coa-group1",
+        // },
+        // {
+        //   title: "Group Akun-2",
+        //   url: "/coa-group2",
+        // },
       ],
     },
 
@@ -154,12 +154,12 @@ const data = {
       ],
     },
 
-    {
-      title: "TEST",
-      url: "#",
-      icon: Table2Icon,
-      isActive: true,
-    },
+    // {
+    //   title: "TEST",
+    //   url: "#",
+    //   icon: Table2Icon,
+    //   isActive: true,
+    // },
     // End App-Custom
 
 

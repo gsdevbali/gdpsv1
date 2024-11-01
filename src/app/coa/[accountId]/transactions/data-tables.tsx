@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { PaginationInfo } from "@/components/PaginationInfo"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -48,6 +49,7 @@ export function DataTable<TData, TValue>({
 
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
+    const [totalBalance, setBalance] = useState<number>(0);
 
     const table = useReactTable({
         data,
@@ -79,6 +81,7 @@ export function DataTable<TData, TValue>({
 
         setTotalDebit(totals.debit);
         setTotalCredit(totals.credit);
+        setBalance(totals.debit - totals.credit);
     };
 
     useEffect(() => {
@@ -115,6 +118,16 @@ export function DataTable<TData, TValue>({
                         }).format(totalCredit)}
                     </span>
 
+                </div>
+                <div className="text-xl">
+                    <span className="font-semibold">Total Saldo: </span>
+
+                    <span className="font-bold text-orange-500">
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalBalance)}
+                    </span>
                 </div>
             </div>
 
@@ -212,10 +225,7 @@ export function DataTable<TData, TValue>({
 
             {/* Pagination */}
             <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
-                    {table.getFilteredRowModel().rows.length} baris data ditemukan.
-                </div>
+            <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
                 <div className="space-x-2">
                     <Button
                         variant="outline"
