@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { PaginationInfo } from "@/components/PaginationInfo"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -153,10 +154,8 @@ export function DataTable<TData, TValue>({
 
             {/* Pagination */}
             <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {/* {table.getFilteredSelectedRowModel().rows.length} of{" "} */}
-                    {table.getFilteredRowModel().rows.length} baris data ditemukan.
-                </div>
+                
+                <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
 
                 <div className="space-x-2">
                     <Button

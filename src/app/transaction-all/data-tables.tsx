@@ -38,6 +38,7 @@ import Divider from "@/components/Divider"
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
 import { getAccounts } from "@/actions/AccountAction"
+import { PaginationInfo } from "@/components/PaginationInfo"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -297,10 +298,12 @@ export function DataTable<TData, TValue>({
                 {/* Pagination */}
                 <div className={printStyles.printHide}>
                     <div className="flex items-center justify-end space-x-2 py-4">
-                        <div className="flex-1 text-sm text-foreground">
+                        {/* <div className="flex-1 text-sm text-foreground"> */}
                             {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
-                            <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan.
-                        </div>
+                            {/* <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan. */}
+                        {/* </div> */}
+
+                        <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
                         <div className="space-x-2">
                             <Button
                                 variant="outline"

@@ -1,6 +1,6 @@
 "use client"
 
-import prisma from "@/lib/dbprisma"
+//import prisma from "@/lib/dbprisma"
 import { updateTransaction, deleteTransaction } from "@/actions/TransactionUpdate"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { Transaction } from "./columns"
 import { Trash2Icon } from "lucide-react"
+import { CurrencyInput } from "@/components/currency-input"
 //import { revalidatePath } from "next/cache"
 
 interface EditDialogProps {
@@ -29,50 +30,27 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
     const { toast }: any = useToast()
 
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    async function handleFormAction(formData: FormData) {
         try {
-            // const response = await fetch(`/api/transaction-all/${transaction.id}`, {
-            //     cache: 'no-store',
-            //     method: 'PUT',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(formData),
-            // })
+            const result = await updateTransaction(formData)
             
-            console.log('TO UPDATE -formData: ', formData)
-            
-            const result = await updateTransaction(transaction.id, formData)
-            console.log('TO UPDATE -result: ', result)
+            if (!result || result.error) {
+                toast({
+                    title: "Gagal",
+                    description: result?.error || "Terjadi kesalahan saat memperbarui transaksi",
+                    variant: "destructive",
+                })
+                return
+            }
 
-            toast(
-                {
-                    title: "Berhasil",
-                    description: "Transaksi telah diperbarui",
-                    variant: "default",
-                }
-            )
+            toast({
+                title: "Berhasil",
+                description: "Transaksi telah diperbarui",
+                variant: "default",
+            })
 
             setOpen(false)
-
-            // if (result.success) {
-            //     toast({
-            //         title: "Berhasil",
-            //         description: "Transaksi telah diperbarui",
-            //         variant: "default",
-            //     })
-            //     setOpen(false)
-            //     // No need for window.location.reload() anymore
-            // } else {
-            //     toast({
-            //         title: "Gagal",
-            //         description: result.error || "Terjadi kesalahan saat memperbarui transaksi",
-            //         variant: "destructive",
-            //     })
-            // }
         } catch (error) {
-            console.error('Error updating transaction:', error)
             toast({
                 title: "Gagal",
                 description: "Terjadi kesalahan saat memperbarui transaksi",
@@ -81,9 +59,104 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
         }
     }
 
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     try {
+    //         const result = await updateTransaction(transaction.id, formData)
+            
+    //         if (!result || result.error) {
+    //             // Handle error case
+    //             toast({
+    //                 title: "Gagal",
+    //                 description: result?.error || "Terjadi kesalahan saat memperbarui transaksi",
+    //                 variant: "destructive",
+    //             })
+    //             return
+    //         }
+
+    //         // Success case
+    //         toast({
+    //             title: "Berhasil",
+    //             description: "Transaksi telah diperbarui",
+    //             variant: "default",
+    //         })
+
+    //         setOpen(false)
+    //         // Add a way to refresh the data
+    //         window.location.reload() // Temporary solution - better to use React state management
+    //     } catch (error) {
+    //         console.error('Error updating transaction:', error)
+    //         toast({
+    //             title: "Gagal",
+    //             description: "Terjadi kesalahan saat memperbarui transaksi",
+    //             variant: "destructive",
+    //         })
+    //     }
+    // }
+
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault()
+    //     try {
+            
+    //         console.log('TO UPDATE -formData: ', formData)
+            
+    //         const result = await updateTransaction(transaction.id, formData)
+    //         console.log('TO UPDATE -result: ', result)
+
+    //         toast(
+    //             {
+    //                 title: "Berhasil",
+    //                 description: "Transaksi telah diperbarui",
+    //                 variant: "default",
+    //             }
+    //         )
+
+    //         setOpen(false)
+
+    //     } catch (error) {
+    //         console.error('Error updating transaction:', error)
+    //         toast({
+    //             title: "Gagal",
+    //             description: "Terjadi kesalahan saat memperbarui transaksi",
+    //             variant: "destructive",
+    //         })
+    //     }
+    // }
+
+    // const handleDelete = async () => {
+    //     console.log('TO DELETE -transaction id: ', transaction.id)
+    //     await deleteTransaction(transaction.id)
+    // }
+
     const handleDelete = async () => {
-        console.log('TO DELETE -transaction id: ', transaction.id)
-        await deleteTransaction(transaction.id)
+        try {
+            const result = await deleteTransaction(transaction.id)
+            
+            if (!result || result.error) {
+                toast({
+                    title: "Gagal",
+                    description: result?.error || "Terjadi kesalahan saat menghapus transaksi",
+                    variant: "destructive",
+                })
+                return
+            }
+
+            toast({
+                title: "Berhasil",
+                description: "Transaksi telah dihapus",
+                variant: "default",
+            })
+            
+            setOpen(false)
+            //window.location.reload() // Temporary solution - better to use React state management
+        } catch (error) {
+            console.error('Error deleting transaction:', error)
+            toast({
+                title: "Gagal",
+                description: "Terjadi kesalahan saat menghapus transaksi",
+                variant: "destructive",
+            })
+        }
     }
 
     return (
@@ -95,7 +168,9 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 <DialogHeader>
                     <DialogTitle>UBAH Transaksi</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {/* <form onSubmit={handleSubmit} className="space-y-4"> */}
+                <form action={handleFormAction} className="space-y-4">
+                    <input type="hidden" name="id" value={transaction.id} />
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="date" className="text-left">
@@ -103,9 +178,11 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                             </Label>
                             <Input
                                 id="date"
+                                name="date"
                                 type="date"
-                                value={new Date(formData.date).toISOString().split('T')[0]}
-                                onChange={(e) => setFormData({ ...formData, date: new Date(e.target.value) })}
+                                //value={new Date(formData.date).toISOString().split('T')[0]}
+                                //onChange={(e) => setFormData({ ...formData, date: new Date(e.target.value) })}
+                                defaultValue={new Date(transaction.date).toISOString().split('T')[0]}
                                 className="col-span-3"
                             />
                         </div>
@@ -115,8 +192,10 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                             </Label>
                             <Input
                                 id="ref"
-                                value={formData.ref}
-                                onChange={(e) => setFormData({ ...formData, ref: e.target.value })}
+                                name="ref"
+                                //value={formData.ref}
+                                //onChange={(e) => setFormData({ ...formData, ref: e.target.value })}
+                                defaultValue={transaction.ref}
                                 className="col-span-3"
                             />
                         </div>
@@ -126,8 +205,10 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                             </Label>
                             <Input
                                 id="description"
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                name="description"
+                                //value={formData.description}
+                                //onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                defaultValue={transaction.description}
                                 className="col-span-3"
                             />
                         </div>
@@ -135,25 +216,45 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                             <Label htmlFor="debit" className="text-left">
                                 Debet
                             </Label>
-                            <Input
+                            {/* <Input
                                 id="debit"
+                                name="debit"
                                 type="number"
-                                value={formData.debit}
-                                onChange={(e) => setFormData({ ...formData, debit: Number(e.target.value) })}
+                                //value={formData.debit}
+                                //onChange={(e) => setFormData({ ...formData, debit: Number(e.target.value) })}
+                                defaultValue={transaction.debit}
                                 className="col-span-3"
-                            />
+                            /> */}
+                            <div className="col-span-3 w-full">
+                                <CurrencyInput
+                                id="debit"
+                                name="debit"
+                                defaultValue={transaction.debit}
+                                //className="col-span-3"
+                                />
+                            </div>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="credit" className="text-left">
                                 Kredit
                             </Label>
-                            <Input
+                            {/* <Input
                                 id="credit"
+                                name="credit"
                                 type="number"
-                                value={formData.credit}
-                                onChange={(e) => setFormData({ ...formData, credit: Number(e.target.value) })}
+                                //value={formData.credit}
+                                //onChange={(e) => setFormData({ ...formData, credit: Number(e.target.value) })}
+                                defaultValue={transaction.credit}
                                 className="col-span-3"
-                            />
+                            /> */}
+                            <div className="col-span-3 w-full">
+                                <CurrencyInput
+                                id="credit"
+                                name="credit"
+                                defaultValue={transaction.credit}
+                                className="col-span-3"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-between space-x-2">
