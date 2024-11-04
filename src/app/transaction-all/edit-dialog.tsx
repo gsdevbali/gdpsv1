@@ -47,8 +47,11 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
     const [showDeleteAlert, setShowDeleteAlert] = useState(false)
     const { toast }: any = useToast()
     const [accounts, setAccounts] = useState<Account[]>([])
+    const [selectedAccountId, setSelectedAccountId] = useState(transaction.accountId)
+
 
     useEffect(() => {
+        
         const fetchAccounts = async () => {
             try {
                 const fetchedAccounts = await getAccounts();
@@ -60,10 +63,33 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
 
         fetchAccounts();
     }, []);
+
+    // Log initial selectedAccountId
+    // useEffect(() => {
+    //     console.log('Initial selectedAccountId:', selectedAccountId);
+    // }, []);
     
     async function handleFormAction(formData: FormData) {
+        // console.log('Before setting accountId:', formData.get('accountId'));
+        formData.set('accountId', selectedAccountId.toString())
+        // console.log('After setting accountId:', formData.get('accountId'));
+        // Create a new FormData instance to avoid mutation issues
+        const updatedFormData = new FormData();
+        // Copy all existing form data
+        Array.from(formData.entries()).forEach(([key, value]) => {
+            updatedFormData.append(key, value);
+        });
+        // for (const [key, value] of formData.entries()) {
+        //     updatedFormData.append(key, value);
+        // }
+        // Explicitly set the accountId
+        updatedFormData.set('accountId', selectedAccountId.toString());
+        
+
         try {
-            const result = await updateTransaction(formData)
+            //const result = await updateTransaction(formData)
+            const result = await updateTransaction(updatedFormData);
+            // console.log('Update Result:', result);
             
             if (!result || result.error) {
                 toast({
@@ -141,15 +167,17 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                     <input type="hidden" name="id" value={transaction.id} />
                     <div className="grid gap-4 py-4">
                         <select
-                            value={transaction.accountId}
-                            //value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
                             name='accountId'
-                            //onChange={(e) => handleTransactionChange(index, e)}
-                            // onChange={(e) => {
-                            //     table.getColumn("account.code")?.setFilterValue(e.target.value)
-                            //     console.log(e.target.value)
-                            // }
-                            // }
+                            value={selectedAccountId}
+                            onChange={(e) => 
+                            {
+                                const newValue = Number(e.target.value)
+                                setSelectedAccountId(newValue)
+                                // console.log('New selectedAccountId:', newValue)
+                                
+                            }
+                            }
+
                             required
                             className='border p-2 rounded w-[100%] md:w-[100%] h-[40px]'
                         >
@@ -262,7 +290,9 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 <AlertDialogHeader>
                     <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Tindakan ini tidak dapat dibatalkan. Transaksi ini akan dihapus secara permanen.
+                        Tindakan ini tidak dapat dibatalkan.
+                        <br />Transaksi ini akan dihapus secara permanen.
+                        <br />Akan berpengaruh pada posisi Saldo Akun.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

@@ -12,10 +12,11 @@ export async function updateTransaction(formData: FormData) {
     const description = formData.get('description') as string
     const debit = Number(formData.get('debit'))
     const credit = Number(formData.get('credit'))
+    const accountId = Number(formData.get('accountId'))
 
     const transaction = await prisma.transactionAll.update({
       where: { id: Number(id) },
-      data: { date, ref, description, debit, credit },
+      data: { date, ref, description, debit, credit, accountId },
     })
 
     revalidatePath('/transactions-all') // Adjust this path to match your route
