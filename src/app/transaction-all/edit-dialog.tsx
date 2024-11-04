@@ -24,12 +24,18 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Transaction } from "./columns"
 import { Trash2Icon } from "lucide-react"
 import { CurrencyInput } from "@/components/currency-input"
+import { getAccounts } from "@/actions/AccountAction"
 //import { revalidatePath } from "next/cache"
 
+interface Account {
+    id: number;
+    code: string;
+    name: string;
+}
 interface EditDialogProps {
     children: React.ReactNode
     transaction: Transaction
@@ -40,8 +46,21 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
     //const [formData, setFormData] = useState(transaction)
     const [showDeleteAlert, setShowDeleteAlert] = useState(false)
     const { toast }: any = useToast()
+    const [accounts, setAccounts] = useState<Account[]>([])
 
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            try {
+                const fetchedAccounts = await getAccounts();
+                setAccounts(fetchedAccounts);
+            } catch (error) {
+                console.error('Failed to fetch accounts:', error);
+            }
+        };
 
+        fetchAccounts();
+    }, []);
+    
     async function handleFormAction(formData: FormData) {
         try {
             const result = await updateTransaction(formData)
@@ -121,6 +140,26 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 <form action={handleFormAction} className="space-y-4">
                     <input type="hidden" name="id" value={transaction.id} />
                     <div className="grid gap-4 py-4">
+                        <select
+                            value={transaction.accountId}
+                            //value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
+                            name='accountId'
+                            //onChange={(e) => handleTransactionChange(index, e)}
+                            // onChange={(e) => {
+                            //     table.getColumn("account.code")?.setFilterValue(e.target.value)
+                            //     console.log(e.target.value)
+                            // }
+                            // }
+                            required
+                            className='border p-2 rounded w-[100%] md:w-[100%] h-[40px]'
+                        >
+                            <option value="">Pilih Akun</option>
+                            {accounts.map((account) => (
+                                <option key={account.id} value={account.id}>
+                                    {account.code} - {account.name}
+                                </option>
+                            ))}
+                        </select>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="date" className="text-left">
                                 Tanggal
