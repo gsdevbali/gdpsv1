@@ -61,7 +61,9 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+        accountId: false,
+    })
     const [rowSelection, setRowSelection] = React.useState({})
 
     const [totalDebit, setTotalDebit] = useState<number>(0);
@@ -70,7 +72,7 @@ export function DataTable<TData, TValue>({
     const [accounts, setAccounts] = useState<Account[]>([]);
 
 
-    // Add this helper function before the return statement
+    // Hitung Total Debit dan Kredit
     const calculateTotals = (rows: any[]) => {
         const totals = rows.reduce((acc, row) => {
             return {
@@ -133,6 +135,7 @@ export function DataTable<TData, TValue>({
     })
 
 
+    // Hitung Total Debit dan Kredit di Awal
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
         //const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
@@ -185,13 +188,11 @@ export function DataTable<TData, TValue>({
 
                     <select
                         //value={transaction.accountId}
-                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
+                        //value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
                         name='accountId'
-                        //onChange={(e) => handleTransactionChange(index, e)}
-                        onChange={(e) => {
-                            table.getColumn("account.code")?.setFilterValue(e.target.value)
-                            console.log(e.target.value)
-                        }
+                        value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("accountId")?.setFilterValue(event.target.value)
                         }
                         required
                         className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
@@ -199,10 +200,19 @@ export function DataTable<TData, TValue>({
                         <option value="">Pilih Akun untuk ditampilkan</option>
                         {accounts.map((account) => (
                             <option key={account.id} value={account.id}>
-                                {account.code} - {account.name}
+                                {account.id} - {account.code} - {account.name}
                             </option>
                         ))}
                     </select>
+                    
+                    {/* <Input
+                        placeholder="Akun ...."
+                        value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("accountId")?.setFilterValue(event.target.value)
+                        }
+                        className="w-[100px]"
+                    /> */}
 
                     <Input
                         placeholder="Cari Referensi ...."

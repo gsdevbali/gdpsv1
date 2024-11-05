@@ -42,6 +42,9 @@ interface EditDialogProps {
 }
 
 export function EditDialog({ children, transaction }: EditDialogProps) {
+    // Add loading state
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [open, setOpen] = useState(false)
     //const [formData, setFormData] = useState(transaction)
     const [showDeleteAlert, setShowDeleteAlert] = useState(false)
@@ -70,6 +73,8 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
     // }, []);
     
     async function handleFormAction(formData: FormData) {
+        
+        setIsSubmitting(true); 
         // console.log('Before setting accountId:', formData.get('accountId'));
         formData.set('accountId', selectedAccountId.toString())
         // console.log('After setting accountId:', formData.get('accountId'));
@@ -100,6 +105,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 return
             }
 
+            setIsSubmitting(false); 
             toast({
                 title: "Berhasil",
                 description: "Transaksi telah diperbarui",
@@ -113,6 +119,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                 description: "Terjadi kesalahan saat memperbarui transaksi",
                 variant: "destructive",
             })
+            setIsSubmitting(false); 
         }
     }
 
@@ -278,7 +285,9 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
                         <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                             Batal
                         </Button>
-                        <Button variant="destructive" type="submit">SIMPAN PERUBAHAN</Button>
+                        <Button variant="destructive" type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Menyimpan...' : 'SIMPAN PERUBAHAN'}
+                        </Button>
                     </div>
                 </form>
             </DialogContent>

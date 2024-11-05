@@ -23,6 +23,7 @@ export async function GET() {
                     select: {
                         id: true,
                       code: true,
+                      name: true,
                     }
                   }, 
             },

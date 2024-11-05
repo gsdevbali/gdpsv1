@@ -3,6 +3,8 @@ import { columns } from "./columns";
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
+import Loading from "@/app/loading";
+import { Suspense } from "react";
 
 async function getAccount() {
     
@@ -27,6 +29,7 @@ export default async function AccountPage() {
     return (
 
         <PageLayout header={header} footer={footer}>
+            <Suspense fallback={<Loading />}>
             <div className="w-full">
                 {/* <Divider /> */}
                 {/* <AccountDialog mode="create">
@@ -35,6 +38,7 @@ export default async function AccountPage() {
                 <h1 className='text-2xl text-bold'>DAFTAR AKUN</h1>
                 <DataTable columns={columns} data={data} />
             </div>
+            </Suspense>
         </PageLayout>
     )
 }

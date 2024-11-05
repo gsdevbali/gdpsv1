@@ -91,7 +91,7 @@ export const columns: ColumnDef<Transaction>[] = [
         header: "Tanggal",
         cell: ({ row }) => {
             const newDate = tanggal(row.original.date)
-            return <div className="text-left">{newDate}</div>;
+            return <div className="text-left w-[80px]">{newDate}</div>;
         },
         filterFn: dateRangeFilter,
         enableSorting: true,
@@ -106,13 +106,13 @@ export const columns: ColumnDef<Transaction>[] = [
     // },
 
     {
-        id: "account.code",
-        //accessorKey: "accountId",
+        id: "accountId",
+        accessorKey: "accountId",
         //accessorKey: "account.code",
-        accessorFn: (row) => row.account.code,
+        //accessorFn: (row) => row.account.code,
         header: "Akun",
         cell: ({ row }) => {
-            return <div className="text-left w-[100%]">
+            return <div className="text-left w-[80px]">
                 {/* {row.original.account.code} */}
                 <Link
                     href={`/coa/${row.original.accountId}/transactions`}
@@ -122,16 +122,31 @@ export const columns: ColumnDef<Transaction>[] = [
                 </Link>
             </div>;
         },
-        filterFn: "includesString",
         enableSorting: true,
         
+    },
+
+    {
+        accessorKey: "accountId",
+        header: "COA",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100px]">
+
+                {row.original.accountId}
+
+            </div>;
+        },
+        enableSorting: true,
+        filterFn: "equalsString",
+        enableHiding: true,
+
     },
 
     {
         accessorKey: "ref",
         header: "Referensi",
         cell: ({ row }) => {
-            return <div className="text-left w-[100%]">
+            return <div className="text-left w-[100px]">
 
                 {row.original.ref}
 
@@ -143,16 +158,14 @@ export const columns: ColumnDef<Transaction>[] = [
 
     {
         accessorKey: "description",
-        header: () => <div className="text-left w-[200px]">URAIAN</div>,
+        header: () => <div className="text-left w-[100%] min-w-[130px]">URAIAN</div>,
         cell: ({ row }) => {
-            return <div className="text-left w-[100%]">
-
+            return <div className="text-left w-[100%] min-w-[130px]">
                 <EditDialog transaction={row.original}>
                     <Button variant="link" size="sm">
                         {row.original.description}
                     </Button>
                 </EditDialog>
-
             </div>;
         },
         enableSorting: true,
@@ -161,13 +174,13 @@ export const columns: ColumnDef<Transaction>[] = [
 
     {
         accessorKey: "debit",
-        header: () => <div className="text-right w-[200px]">DEBET</div>,
+        header: () => <div className="text-right w-[160px]">DEBET</div>,
         cell: ({ row }) => {
             const newDebit = Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
             }).format(row.original.debit)
-            return <div className="text-right w-[200px]">{newDebit}</div>;
+            return <div className="text-right w-[160px]">{newDebit}</div>;
         },
         enableSorting: true,
     },

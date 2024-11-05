@@ -162,7 +162,7 @@ export const columns: ColumnDef<Transaction>[] = [
         accessorKey: "description",
         header: "Uraian",
         cell: ({ row }) => {
-            return <div className="text-left">{row.original.description}</div>;
+            return <div className="text-left w-[100%]">{row.original.description}</div>;
         },
     },
 
