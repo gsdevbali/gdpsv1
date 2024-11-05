@@ -54,14 +54,14 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
     // 12 - Biaya Bidang & Bapel
     // if (accountId === '') {
     useEffect(() => {
-        const fetchAccounts = async () => {
-            try {
-                const fetchedAccounts = await getAccountsByType(5);
-                setAccounts(fetchedAccounts);
-            } catch (error) {
-                console.error('Failed to fetch accounts:', error);
-            }
-        };
+        // const fetchAccounts = async () => {
+        //     try {
+        //         const fetchedAccounts = await getAccountsByType(5);
+        //         setAccounts(fetchedAccounts);
+        //     } catch (error) {
+        //         console.error('Failed to fetch accounts:', error);
+        //     }
+        // };
 
         const fetchAccountsAll = async () => {
             try {
@@ -72,7 +72,7 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
             }
         };
 
-        fetchAccounts();
+        //fetchAccounts();
         fetchAccountsAll();
 
     }, []);
@@ -282,7 +282,7 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
                                         className='border p-2 rounded w-[100%] md:w-[100%] h-[40px]'
                                     >
                                         <option value="">Akun</option>
-                                        {accounts.map((account) => (
+                                        {accountsAll.map((account) => (
                                             <option key={account.id} value={account.id}>
                                                 {account.code} - {account.name}
                                             </option>
