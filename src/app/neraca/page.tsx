@@ -6,7 +6,7 @@ import global from "@/config.js";
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
-import { useState } from "react";
+//import { useState } from "react";
 
 
 //http://localhost:3000/api/neraca?accountTypeId=1
@@ -31,19 +31,19 @@ async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
 }
 
 
-const delayHere = (ms: number) {
+async function delayHere(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
 export default async function Page() {
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
 
-    setLoading(true);
+    //setLoading(true);
     delayHere(2000);
-    setLoading(false)
+    //setLoading(false)
 
     const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
 
