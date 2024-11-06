@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import AktivaLancar from "./nrcAktivaLancar";
 import AktivaTidakLancar from "./nrcAktivaTidakLancar";
+import NeracaData from "./neraca-data";
 //import { useState } from "react";
 
 
@@ -58,12 +59,19 @@ export default async function Page() {
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">AKTIVA</h1>
                 <Divider />
 
-                <Suspense fallback={<h2>Loading AL...</h2>}>
-                    <AktivaLancar />
+                <Suspense fallback={<h2>Memproses data: AKTIVA LANCAR</h2>}>
+                    {/* <AktivaLancar /> */}
+                    <NeracaData title="AKTIVA LANCAR" titleTotal="Aktiva Lancar" type={1} group2={1} />
                 </Suspense>
 
-                <Suspense fallback={<h2>Loading ATL...</h2>}>
-                    <AktivaTidakLancar />
+                <Suspense fallback={<h2>Memproses data: AKTIVA TIDAK LANCAR</h2>}>
+                    {/* <AktivaTidakLancar /> */}
+                    <NeracaData title="AKTIVA TIDAK LANCAR" titleTotal="Aktiva Tidak Lancar" type={1} group2={3} />
+                </Suspense>
+
+                <Suspense fallback={<h2>Memproses data: AKTIVA TETAP</h2>}>
+                    {/* <AktivaTidakLancar /> */}
+                    <NeracaData title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} />
                 </Suspense>
 
 
