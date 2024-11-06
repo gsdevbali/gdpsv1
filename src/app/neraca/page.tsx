@@ -41,11 +41,10 @@ export default async function Page() {
 
     const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
 
-    //setLoading(true);
-    // delayHere(2000);
-    //setLoading(false)
+    delayHere(2000);
 
-    // const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
+
+    const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
 
 
 
@@ -59,7 +58,7 @@ export default async function Page() {
     const footer = <p>{global.pageInfo.footerText}</p>;
 
     const newTotalBalance_AktivaLancar = toidr(totalBalance_AktivaLancar)
-    // const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
+    const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
     // const newTotalBalance_AktivaTetap = toidr(totalBalance_AktivaTetap)
     // const newTotalBalance_Kewajiban = toidr(totalBalance_Kewajiban1 + totalBalance_Kewajiban2)
     // const newTotalBalance_AsetBersih = toidr(totalBalance_AsetBersih1 + totalBalance_AsetBersih2)
@@ -98,8 +97,8 @@ export default async function Page() {
 
 
                 <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TIDAK LANCAR</h2>
-                {/* <DataTable columns={columns} data={data_AktivaTidakLancar} />
-                <TulisTotalRp value={newTotalBalance_AktivaTidakLancar} title="Aktiva Tidak Lancar" /> */}
+                <DataTable columns={columns} data={data_AktivaTidakLancar} />
+                <TulisTotalRp value={newTotalBalance_AktivaTidakLancar} title="Aktiva Tidak Lancar" />
 
                 <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TETAP</h2>
                 {/* <DataTable columns={columns} data={data_AktivaTetap} />
