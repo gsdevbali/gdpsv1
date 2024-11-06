@@ -6,6 +6,7 @@ import global from "@/config.js";
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
+import { useState } from "react";
 
 
 //http://localhost:3000/api/neraca?accountTypeId=1
@@ -19,7 +20,7 @@ async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
     const res = await fetch(`${process.env.APP_URL}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
         cache: 'no-store'
     })
-    
+
     const data = await res.json()
     //console.log(data)
     //return data
@@ -30,9 +31,24 @@ async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
 }
 
 
+const delayHere = (ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 export default async function Page() {
+    const [loading, setLoading] = useState(false);
+
     const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
+
+    setLoading(true);
+    delayHere(2000);
+    setLoading(false)
+
     const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
+
+
+
     const { accounts: data_AktivaTetap, totalBalance: totalBalance_AktivaTetap } = await getNeraca(1, 2)
     const { accounts: data_Kewajiban1, totalBalance: totalBalance_Kewajiban1 } = await getNeraca(2, 4)
     const { accounts: data_Kewajiban2, totalBalance: totalBalance_Kewajiban2 } = await getNeraca(2, 5)
@@ -60,6 +76,9 @@ export default async function Page() {
         return totalAktiva === totalPasiva
     }
 
+
+
+
     return (
 
         <PageLayout header={header} footer={footer}>
@@ -75,6 +94,8 @@ export default async function Page() {
                 <h2 className="text-lg font-bold pt-2 pb-2">AKTIVA LANCAR</h2>
                 <DataTable columns={columns} data={data_AktivaLancar} />
                 <TulisTotalRp value={newTotalBalance_AktivaLancar} title={"Aktiva Lancar"} />
+
+
 
                 <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TIDAK LANCAR</h2>
                 <DataTable columns={columns} data={data_AktivaTidakLancar} />
