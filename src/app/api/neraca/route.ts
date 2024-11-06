@@ -1,3 +1,6 @@
+
+export const maxDuration = 20;
+
 import dbprisma from "@/lib/dbprisma";
 import { NextResponse } from "next/server";
 
