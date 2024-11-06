@@ -50,7 +50,7 @@ export default async function Page() {
 
 
     const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
-    //delayHere(4000);
+    delayHere(6000);
     const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
     //delayHere(4000);
     const { accounts: data_AktivaTetap, totalBalance: totalBalance_AktivaTetap } = await getNeraca(1, 2)
