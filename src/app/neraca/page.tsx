@@ -7,7 +7,7 @@ import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
 import { Suspense } from "react";
-import Loading from "../loading";
+import Loading from "./loading";
 //import { useState } from "react";
 
 
@@ -53,7 +53,7 @@ export default async function Page() {
     const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
     delayHere(2000);
     const { accounts: data_AktivaTetap, totalBalance: totalBalance_AktivaTetap } = await getNeraca(1, 2)
-    delayHere(2000);
+    delayHere(4000);
     const { accounts: data_Kewajiban1, totalBalance: totalBalance_Kewajiban1 } = await getNeraca(2, 4)
     delayHere(2000);
     const { accounts: data_Kewajiban2, totalBalance: totalBalance_Kewajiban2 } = await getNeraca(2, 5)
