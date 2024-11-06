@@ -8,6 +8,8 @@ import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
 import { Suspense } from "react";
 import Loading from "./loading";
+import AktivaLancar from "./nrcAktivaLancar";
+import AktivaTidakLancar from "./nrcAktivaTidakLancar";
 //import { useState } from "react";
 
 
@@ -15,59 +17,18 @@ import Loading from "./loading";
 //http://localhost:3000/api/neraca?accountTypeId=1&accountGroup2Id=2
 
 //Aktiva - Aktiva Lancar
-async function getNeraca(accountTypeId: number, accountGroup2Id: number) {
-    // const res = await fetch(`${global.baseUrl}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
-    //     cache: 'no-store'
-    // })
-    const res = await fetch(`${process.env.APP_URL}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
-        cache: 'no-store'
-    })
 
-    const data = await res.json()
-    //console.log(data)
-    //return data
-    return {
-        accounts: data.accounts,
-        totalBalance: data.totalBalance
-    }
-}
-
-
-async function delayHere(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// async function delayHere(ms: number, htmlContent: string) {
-//     return new Promise(resolve => {
-//         setTimeout(() => {
-//             resolve(htmlContent);
-//         }, ms);
-//     });
-// }
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
 
-
-    const { accounts: data_AktivaLancar, totalBalance: totalBalance_AktivaLancar } = await getNeraca(1, 1)
-    delayHere(6000);
-    const { accounts: data_AktivaTidakLancar, totalBalance: totalBalance_AktivaTidakLancar } = await getNeraca(1, 3)
-    //delayHere(4000);
-    const { accounts: data_AktivaTetap, totalBalance: totalBalance_AktivaTetap } = await getNeraca(1, 2)
-    //delayHere(4000);
-    const { accounts: data_Kewajiban1, totalBalance: totalBalance_Kewajiban1 } = await getNeraca(2, 4)
-    //delayHere(4000);
-    const { accounts: data_Kewajiban2, totalBalance: totalBalance_Kewajiban2 } = await getNeraca(2, 5)
-    // const { accounts: data_AsetBersih1, totalBalance: totalBalance_AsetBersih1 } = await getNeraca(3, 6)
-    // const { accounts: data_AsetBersih2, totalBalance: totalBalance_AsetBersih2 } = await getNeraca(3, 7)
-
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
-    const newTotalBalance_AktivaLancar = toidr(totalBalance_AktivaLancar)
-    const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
-    const newTotalBalance_AktivaTetap = toidr(totalBalance_AktivaTetap)
-    const newTotalBalance_Kewajiban = toidr(totalBalance_Kewajiban1 + totalBalance_Kewajiban2)
+    // const newTotalBalance_AktivaLancar = toidr(totalBalance_AktivaLancar)
+    // const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
+    // const newTotalBalance_AktivaTetap = toidr(totalBalance_AktivaTetap)
+    // const newTotalBalance_Kewajiban = toidr(totalBalance_Kewajiban1 + totalBalance_Kewajiban2)
     // const newTotalBalance_AsetBersih = toidr(totalBalance_AsetBersih1 + totalBalance_AsetBersih2)
 
     // const totalAktiva = totalBalance_AktivaLancar + totalBalance_AktivaTidakLancar + totalBalance_AktivaTetap
@@ -83,8 +44,6 @@ export default async function Page() {
     }
 
 
-
-
     return (
 
 
@@ -98,35 +57,29 @@ export default async function Page() {
 
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">AKTIVA</h1>
                 <Divider />
-                <h2 className="text-lg font-bold pt-2 pb-2">AKTIVA LANCAR</h2>
-                <DataTable columns={columns} data={data_AktivaLancar} />
-                <TulisTotalRp value={newTotalBalance_AktivaLancar} title={"Aktiva Lancar"} />
+
+                <Suspense fallback={<h2>Loading AL...</h2>}>
+                    <AktivaLancar />
+                </Suspense>
+
+                <Suspense fallback={<h2>Loading ATL...</h2>}>
+                    <AktivaTidakLancar />
+                </Suspense>
 
 
-
-                <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TIDAK LANCAR</h2>
-                <DataTable columns={columns} data={data_AktivaTidakLancar} />
-                <TulisTotalRp value={newTotalBalance_AktivaTidakLancar} title="Aktiva Tidak Lancar" />
-
-                <h2 className="text-lg font-bold pt-4 pb-2">AKTIVA TETAP</h2>
-                <DataTable columns={columns} data={data_AktivaTetap} />
-                <TulisTotalRp value={newTotalBalance_AktivaTetap} title="Aktiva Tetap" />
 
 
                 {/* PASIVA - KANAN */}
 
                 <h2 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">KEWAJIBAN DAN ASET BERSIH</h2>
                 <Divider />
-                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2>
-                <DataTable columns={columns} data={data_Kewajiban1} />
-                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN LANCAR</h2>
-                <DataTable columns={columns} data={data_Kewajiban2} />
-                <TulisTotalRp value={newTotalBalance_Kewajiban} title="Kewajiban" />
 
-                {/* <h2 className="text-lg font-bold pt-2 pb-2">ASET BERSIH</h2>
-                <DataTable columns={columns} data={data_AsetBersih1} />
-                <DataTable columns={columns} data={data_AsetBersih2} />
-                <TulisTotalRp value={newTotalBalance_AsetBersih} title="Aset Bersih" /> */}
+                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2>
+
+                <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN LANCAR</h2>
+
+                <h2 className="text-lg font-bold pt-2 pb-2">ASET BERSIH</h2>
+
 
                 <div className="h-4"></div>
 
@@ -143,7 +96,7 @@ export default async function Page() {
                     <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" /> */}
                 </div>
             </div>
-        </PageLayout>
+        </PageLayout >
 
     )
 }
