@@ -1,5 +1,5 @@
 
-export const maxDuration = 20;
+export const maxDuration = 30;
 
 import dbprisma from "@/lib/dbprisma";
 import { NextResponse } from "next/server";
