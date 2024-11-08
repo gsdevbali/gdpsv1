@@ -3,7 +3,7 @@ import { columns } from "./columns";
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
-import Loading from "./loading";
+import Loading from "@/app/loading";
 import { Suspense } from "react";
 
 async function getAccount() {

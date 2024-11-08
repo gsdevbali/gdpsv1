@@ -48,9 +48,9 @@ export const columns: ColumnDef<Account>[] = [
     },
     {
         accessorKey: "name",
-        header: () => <div className="text-left w-[200px]">Nama</div>,
+        header: () => <div className="text-left w-[100%]">Nama</div>,
         cell: ({ row }) => {
-            return <div className="text-left w-[200px]">
+            return <div className="text-left w-[100%]">
                 <Link
                     href={`/coa/${row.original.id}/transactions`}
                     className="text-blue-600 hover:underline"
@@ -62,26 +62,35 @@ export const columns: ColumnDef<Account>[] = [
         enableSorting: true,
     },
     {
-        accessorKey: "accountType.name",
-        header: "Tipe",
+        accessorKey: "accountGroup.name",
+        header: "Grup",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100%]">{row.original.accountGroup.name}</div>;
+        },
         enableSorting: true,
     },
     {
-        accessorKey: "accountGroup.name",
-        header: "Grup",
+        accessorKey: "accountType.name",
+        header: "Tipe",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100%]">{row.original.accountType.name}</div>;
+        },
         enableSorting: true,
     },
     {
         accessorKey: "accountGroup2.name",
         header: "Grup 2",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100%]">{row.original.accountGroup2.name}</div>;
+        },
         enableSorting: true,
     },
     {
         accessorKey: "balance",
-        header: () => <div className="text-right w-[200px]">Saldo</div>,
+        header: () => <div className="text-right w-[100%]">Saldo</div>,
         cell: ({ row }) => {
             const balance = row.original.balance;
-            return <div className="text-right w-[200px]">Rp. {balance.toLocaleString()}</div>;
+            return <div className="text-right w-[100%]">Rp. {balance.toLocaleString()}</div>;
         },
         enableSorting: true,
     },

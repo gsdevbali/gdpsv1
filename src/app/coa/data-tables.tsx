@@ -107,10 +107,10 @@ export function DataTable<TData, TValue>({
                 </DropdownMenu>
             </div>
             <div className="rounded-md border">
-                <Table className="w-full table-auto">
-                    <TableHeader>
+            <Table className="w-full">
+                    <TableHeader className="bg-gray-100 dark:bg-slate-800">
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
+                            <TableRow key={headerGroup.id} className="text-center">
                                 {headerGroup.headers.map((header) => {
                                     return (
                                         <TableHead key={header.id}>
@@ -130,6 +130,7 @@ export function DataTable<TData, TValue>({
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
+                                    className="text-center"
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
                                 >

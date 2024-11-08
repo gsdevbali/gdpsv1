@@ -69,28 +69,28 @@ const nestedStringFilter: FilterFn<Transaction> = (row, columnId, filterValue) =
 
 
 export const columns: ColumnDef<Transaction>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
+    // {
+    //     id: "select",
+    //     header: ({ table }) => (
+    //         <Checkbox
+    //             checked={
+    //                 table.getIsAllPageRowsSelected() ||
+    //                 (table.getIsSomePageRowsSelected() && "indeterminate")
+    //             }
+    //             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    //             aria-label="Select all"
+    //         />
+    //     ),
+    //     cell: ({ row }) => (
+    //         <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
+    //             aria-label="Select row"
+    //         />
+    //     ),
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
 
 
     {
@@ -169,25 +169,25 @@ export const columns: ColumnDef<Transaction>[] = [
 
     {
         accessorKey: "debit",
-        header: () => <div className="text-right w-[200px]">DEBET</div>,
+        header: () => <div className="text-right w-[100%]">DEBET</div>,
         cell: ({ row }) => {
             const newDebit = Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
             }).format(row.original.debit)
-            return <div className="text-right w-[200px]">{newDebit}</div>;
+            return <div className="text-right w-[100%]">{newDebit}</div>;
         },
         enableSorting: true,
     },
     {
         accessorKey: "credit",
-        header: () => <div className="text-right w-[200px]">KREDIT</div>,
+        header: () => <div className="text-right w-[100%]">KREDIT</div>,
         cell: ({ row }) => {
             const newCredit = Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
             }).format(row.original.credit)
-            return <div className="text-right w-[200px]">{newCredit}</div>;
+            return <div className="text-right w-[100%]">{newCredit}</div>;
         },
         enableSorting: true,
     },

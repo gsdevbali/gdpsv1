@@ -7,6 +7,7 @@ import global from "@/config.js";
 import prisma from "@/lib/dbprisma";
 import Divider from "@/components/Divider";
 import { Suspense } from "react";
+import Loading from "./loading";
 
 async function getData(accountId: string) {
     // const res = await fetch(`${global.baseUrl}/api/transbyid?accountId=${accountId}`, {
@@ -33,20 +34,15 @@ export default async function Page({ params }: { params: { accountId: string } }
     return (
 
         <PageLayout header={header} footer={footer}>
-
+            <Suspense fallback={<Loading />}>
             <div className="w-full">
                 <h2 className="text-lg font-bold">Daftar Transaksi Akun: {account?.code} - {account?.name}</h2>
-                {/* <Divider /> */}
-                {/* <AccountDialog mode="create">
-                    <Button>Add New Account</Button>
-                </AccountDialog> */}
-                {/* <Button>Add New Account</Button> */}
-                <Divider />
 
+                <Divider />
                 <DataTable columns={columns} data={data} />
 
             </div>
-
+            </Suspense>        
         </PageLayout>
     )
 }
