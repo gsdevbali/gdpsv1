@@ -9,8 +9,9 @@ export type Account = {
     id: number
     code: string
     name: string
-    accountType: string
-    accountGroup: string
+    accountType: { name: string } 
+    accountGroup: { name: string } 
+    accountGroup2: { name: string } 
     balance: number
 }
 
