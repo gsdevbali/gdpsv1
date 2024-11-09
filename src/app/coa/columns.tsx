@@ -91,7 +91,8 @@ export const columns: ColumnDef<Account>[] = [
         header: () => <div className="text-right w-[100%]">Saldo</div>,
         cell: ({ row }) => {
             const balance = row.original.balance;
-            return <div className="text-right w-[100%]">Rp. {balance.toLocaleString()}</div>;
+            const positiveBalance = Math.abs(balance);
+            return <div className="text-right w-[100%]">Rp. {positiveBalance.toLocaleString()}</div>;
         },
         enableSorting: true,
     },

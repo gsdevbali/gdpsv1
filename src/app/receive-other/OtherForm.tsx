@@ -5,6 +5,8 @@ import { useToast } from "@/hooks/use-toast"
 import { saveTransaction } from './OtherActions';
 import { getAccountsByType, getAccountsAll } from '@/actions/AccountAction';
 import Divider from '@/components/Divider';
+import { Button } from '@/components/ui/button';
+import { Trash2Icon } from 'lucide-react';
 
 interface Account {
     id: number;
@@ -217,6 +219,20 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
         setTotalCredit(0);
     };
 
+    const removeTransaction = (index: number) => {
+        setTransactions(transactions.filter((_, i) => i !== index));
+        
+        // Update display values
+        setDisplayValues(displayValues.filter((_, i) => i !== index));
+
+        // Update totals after removing transaction
+        const updatedTransactions = transactions.filter((_, i) => i !== index);
+        const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
+        const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+        setTotalDebit(newTotalDebit);
+        setTotalCredit(newTotalCredit);
+    };
+
     return (
         <>
             <div className='bg-gray-100 border dark:bg-slate-800 border-blue-500 shadow-md rounded-lg p-3 space-y-4 w-full'>
@@ -319,6 +335,16 @@ const OtherForm: React.FC<OtherFormProps> = ({ accountId }) => {
                                     placeholder="Jumlah"
                                     className='w-[200px] p-2 rounded'
                                 />
+
+                                <Button
+                                    
+                                    variant="ghost"
+                                    onClick={() => removeTransaction(index)}
+                                    className="bg-red-900 hover:bg-red-600 text-white p-2 rounded"
+                                    disabled={isSubmitting}
+                                >
+                                    <Trash2Icon />
+                                </Button>
 
 
                             </div>

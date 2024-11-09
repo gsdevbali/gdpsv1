@@ -5,6 +5,8 @@ import { getAccounts } from '@/actions/AccountAction';
 import { useEffect } from 'react';
 import Divider from '@/components/Divider';
 import { toast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Trash2Icon } from 'lucide-react';
 
 interface Account {
     id: number;
@@ -232,6 +234,23 @@ const TransactionForm: React.FC = () => {
         setTransactions([{ ...initialTransaction }]);
     };
 
+    const removeTransaction = (index: number) => {
+        setTransactions(transactions.filter((_, i) => i !== index));
+        
+        // Update display values
+        setDisplayValues({
+            debit: displayValues.debit.filter((_, i) => i !== index),
+            credit: displayValues.credit.filter((_, i) => i !== index)
+        });
+
+        // Update totals after removing transaction
+        const updatedTransactions = transactions.filter((_, i) => i !== index);
+        const newTotalDebit = updatedTransactions.reduce((sum, transaction) => sum + transaction.debit, 0);
+        const newTotalCredit = updatedTransactions.reduce((sum, transaction) => sum + transaction.credit, 0);
+        setTotalDebit(newTotalDebit);
+        setTotalCredit(newTotalCredit);
+    };
+
     return (
         <>
             <div className='bg-gray-100 border dark:bg-slate-800 border-orange-400 shadow-md rounded-lg p-3 space-y-4 w-full'>
@@ -321,6 +340,15 @@ const TransactionForm: React.FC = () => {
                                 />
   
                                 {/* Add other Transaction fields as needed */}
+                                <Button
+                                    
+                                    variant="ghost"
+                                    onClick={() => removeTransaction(index)}
+                                    className="bg-red-900 hover:bg-red-600 text-white p-2 rounded"
+                                    disabled={isSubmitting}
+                                >
+                                    <Trash2Icon />
+                                </Button>
 
                             </div>
 
