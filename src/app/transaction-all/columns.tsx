@@ -9,6 +9,7 @@ import Link from "next/link";
 import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox";
+import { PencilIcon } from "lucide-react";
 //import { Account } from "@prisma/client";
 
 export type Transaction = {
@@ -127,6 +128,17 @@ export const columns: ColumnDef<Transaction>[] = [
     },
 
     {
+        accessorKey: "account.code",
+        header: "COA",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100px]">
+                {row.original.account.code}
+            </div>;
+        },
+        enableSorting: true,
+    },
+
+    {
         accessorKey: "accountId",
         header: "COA",
         cell: ({ row }) => {
@@ -162,7 +174,7 @@ export const columns: ColumnDef<Transaction>[] = [
         cell: ({ row }) => {
             return <div className="text-left w-[100%] min-w-[130px]">
                 <EditDialog transaction={row.original}>
-                    <Button variant="link" size="sm">
+                    <Button variant="custom1" size="custom1">
                         {row.original.description}
                     </Button>
                 </EditDialog>
@@ -202,8 +214,8 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <div className="text-right">
                     <EditDialog transaction={row.original}>
-                        <Button variant="ghost" size="sm">
-                            Edit
+                        <Button variant="ghost" size="icon">
+                            <PencilIcon />
                         </Button>
                     </EditDialog>
                 </div>

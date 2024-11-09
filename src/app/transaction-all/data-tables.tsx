@@ -197,10 +197,10 @@ export function DataTable<TData, TValue>({
                         required
                         className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
                     >
-                        <option value="">Pilih Akun untuk ditampilkan</option>
+                        <option value="">Semua Akun</option>
                         {accounts.map((account) => (
                             <option key={account.id} value={account.id}>
-                                {account.id} - {account.code} - {account.name}
+                                {account.code} - {account.name}
                             </option>
                         ))}
                     </select>

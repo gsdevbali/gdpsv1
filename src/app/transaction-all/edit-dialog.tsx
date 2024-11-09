@@ -165,7 +165,7 @@ export function EditDialog({ children, transaction }: EditDialogProps) {
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] dark:bg-gray-700">
                 <DialogHeader>
                     <DialogTitle>UBAH Transaksi</DialogTitle>
                 </DialogHeader>

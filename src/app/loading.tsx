@@ -1,11 +1,14 @@
 
+import { Spinner } from '@/components/ui/spinner';
+
 export default function Loading() {
     // Or a custom loading skeleton component
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="flex flex-col items-center p-8">
-                <p className="text-center text-4xl text-foreground">... Memuat Data...</p>
+        //<div className="flex h-screen text-left">
+            <div className="flex flex-row items-start align-middle p-8">
+                <Spinner size="medium"/> <div className="w-[10px]"></div>
+                <p className="text-left text-2xl text-muted-foreground">Memuat Data, tunggu...      </p>
             </div>
-        </div>
+        //</div> run de
     )
 }
