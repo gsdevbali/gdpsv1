@@ -46,6 +46,7 @@ export const columns: ColumnDef<Account>[] = [
             return <div className="text-left w-[80px]">{row.original.code}</div>;
         },
         enableSorting: true,
+        filterFn: "includesString",
     },
     {
         accessorKey: "name",
@@ -63,6 +64,7 @@ export const columns: ColumnDef<Account>[] = [
         enableSorting: true,
     },
     {
+        id: "accountGroup",
         accessorKey: "accountGroup.name",
         header: "Grup",
         cell: ({ row }) => {
@@ -71,18 +73,19 @@ export const columns: ColumnDef<Account>[] = [
         enableSorting: true,
     },
     {
-        accessorKey: "accountType.name",
-        header: "Tipe",
-        cell: ({ row }) => {
-            return <div className="text-left w-[100%]">{row.original.accountType.name}</div>;
-        },
-        enableSorting: true,
-    },
-    {
+        id: "accountGroup2",
         accessorKey: "accountGroup2.name",
         header: "Grup 2",
         cell: ({ row }) => {
             return <div className="text-left w-[100%]">{row.original.accountGroup2.name}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "accountType.name",
+        header: "Tipe",
+        cell: ({ row }) => {
+            return <div className="text-left w-[100%]">{row.original.accountType.name}</div>;
         },
         enableSorting: true,
     },
