@@ -171,7 +171,7 @@ export function DataTable<TData, TValue>({
         const textAll = 'Semua Akun';
         if (!id) return textAll;
         const selected = accounts.find(a => a.id === parseInt(id));
-        return selected ? selected.name : {textAll};
+        return selected ? selected.name : textAll;
     }
 
 
@@ -182,6 +182,7 @@ export function DataTable<TData, TValue>({
         const coaId = table.getColumn("coaid")?.getFilterValue() as string;
         setSubTitleAccount(getAccountName(coaId));
 
+    //}, [table, getGroup2Name, getAccountName]);
     }, [table.getFilteredRowModel().rows]);
 
     return (
