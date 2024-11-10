@@ -92,6 +92,15 @@ export const columns: ColumnDef<Transaction>[] = [
     //     enableHiding: false,
     // },
 
+    {
+        accessorKey: "date",
+        header: "Tanggal",
+        cell: ({ row }) => {
+            const newDate = tanggal(row.original.date)
+            return <div className="text-left">{newDate}</div>;
+        },
+        enableSorting: true,
+    },
 
     {
         id: "id",
@@ -159,16 +168,7 @@ export const columns: ColumnDef<Transaction>[] = [
         filterFn: "equalsString",
         enableSorting: true,
         enableHiding: true,
-    },
-
-    {
-        accessorKey: "date",
-        header: "Tanggal",
-        cell: ({ row }) => {
-            const newDate = tanggal(row.original.date)
-            return <div className="text-left">{newDate}</div>;
-        },
-        enableSorting: true,
+        enableColumnFilter: false,
     },
 
     {
@@ -177,6 +177,7 @@ export const columns: ColumnDef<Transaction>[] = [
         cell: ({ row }) => {
             return <div className="text-left w-[100%]">{row.original.description}</div>;
         },
+        enableHiding: true,
     },
 
 
@@ -204,6 +205,19 @@ export const columns: ColumnDef<Transaction>[] = [
         },
         enableSorting: true,
     },
+
+    // {
+    //     accessorKey: "balance",
+    //     header: () => <div className="text-right w-[100%]">SALDO</div>,
+    //     cell: ({ row }) => {
+    //         const newBalance = Intl.NumberFormat("id-ID", {
+    //             style: "currency",
+    //             currency: "IDR",
+    //         }).format(row.original.debit - row.original.credit)
+    //         return <div className="text-right w-[100%]">{newBalance}</div>;
+    //     },
+    //     enableSorting: true,
+    // }
 
 
 ]

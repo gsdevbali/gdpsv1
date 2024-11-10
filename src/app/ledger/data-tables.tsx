@@ -76,7 +76,9 @@ export function DataTable<TData, TValue>({
 
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
+    const [totalBalance, setBalance] = useState<number>(0);
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
+    const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
 
     const [group2, setGroup2] = useState<Group2[]>([]);
     const [accounts, setAccounts] = useState<Account[]>([]);
@@ -92,9 +94,10 @@ export function DataTable<TData, TValue>({
 
         setTotalDebit(totals.debit);
         setTotalCredit(totals.credit);
+        setBalance(totals.debit - totals.credit);
     };
 
-    // Fetch data Group2 for Filter Lookup
+    // Fetch data: Group2 & Accounts for Filter Lookup
     useEffect(() => {
         const fetchGroup2 = async () => {
             try {
@@ -114,10 +117,8 @@ export function DataTable<TData, TValue>({
             }
         };
 
-
         fetchGroup2();
         fetchAccounts();
-        //setSubTitle('');
 
     }, []);
 
@@ -161,15 +162,26 @@ export function DataTable<TData, TValue>({
     })
 
     const getGroup2Name = (id: string) => {
-        if (!id) return 'SEMUA';
+        if (!id) return 'Semua Aktivitas';
         const selected = group2.find(g => g.id === parseInt(id));
         return selected ? selected.name : 'SEMUA';
     }
+
+    const getAccountName = (id: string) => {
+        const textAll = 'Semua Akun';
+        if (!id) return textAll;
+        const selected = accounts.find(a => a.id === parseInt(id));
+        return selected ? selected.name : {textAll};
+    }
+
 
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
         const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
         setSubTitle(getGroup2Name(g2Id));
+        const coaId = table.getColumn("coaid")?.getFilterValue() as string;
+        setSubTitleAccount(getAccountName(coaId));
+
     }, [table.getFilteredRowModel().rows]);
 
     return (
@@ -177,8 +189,9 @@ export function DataTable<TData, TValue>({
             <div className={printStyles.printContainer}>
                 <div>
                     <h1 className="text-3xl">
-                        <span className="font-bold">AKTIVITAS</span>
+                        <span className="font-bold">BUKU BESAR</span>
                         <span className="font-light"> - {subTitle} </span>
+                        <div className="font-light">{subTitleAccount} </div>
                     </h1>
                     {/* {isDateFilterActive && (
                         <h2 className="ml-2 text-xl font-normal">
@@ -214,6 +227,16 @@ export function DataTable<TData, TValue>({
                         </span>
 
                     </div>
+                    <div className="text-xl">
+                    <span className="font-semibold">Total Saldo: </span>
+
+                    <span className="font-bold text-orange-500">
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(totalBalance)}
+                    </span>
+                </div>
                 </div>
 
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>

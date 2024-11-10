@@ -3,7 +3,7 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
-import { EditDialog } from "./edit-dialog"
+//import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
 //import AccountDialog from "./AccountDialog"
 
@@ -46,11 +46,12 @@ export const columns: ColumnDef<Account>[] = [
         header: () => <div className="text-left w-[80px]">Kode</div>,
         cell: ({ row }) => {
             return <div className="text-left w-[80px] min-w-[130px]">
-                <EditDialog transaction={row.original}>
+                {row.original.code}
+                {/* <EditDialog transaction={row.original}>
                     <Button variant="custom1" size="custom1">
                         {row.original.code}
                     </Button>
-                </EditDialog>
+                </EditDialog> */}
             </div>;
         },
         enableSorting: true,

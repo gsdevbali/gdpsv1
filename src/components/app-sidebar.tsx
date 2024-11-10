@@ -136,21 +136,21 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "AKTIVITAS",
-          url: "/rep-activity",
+          title: "BUKU BESAR",
+          url: "/ledger",
         },
         // {
-        //   title: "BUKU BESAR",
-        //   url: "/rep-ledger",
-        // },
-        // {
-        //   title: "NERACA",
-        //   url: "/rep-balance",
+        //   title: "AKTIVITAS",
+        //   url: "/rep-activity",
         // },
         {
           title: "NERACA",
           url: "/neraca",
         },
+        // {
+        //   title: "NERACA",
+        //   url: "/rep-balance",
+        // },
       ],
     },
 
