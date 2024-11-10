@@ -3,7 +3,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast"
 import { saveTransaction } from './PersembahanActions';
-import { getAccountsByGroup2 } from '@/actions/AccountAction';
+import { getAccountsByGroup2, getAccountsByType } from '@/actions/AccountAction';
 import Divider from '@/components/Divider';
 import { Button } from '@/components/ui/button';
 import { Trash2Icon } from 'lucide-react';
@@ -67,8 +67,10 @@ const PersembahanForm: React.FC<PersembahanFormProps> = ({ accountId }) => {
     useEffect(() => {
         const fetchAccounts = async () => {
             try {
-                const fetchedAccounts = await getAccountsByGroup2(8); // 8 is group2 id for persembahan
-                setAccounts(fetchedAccounts);
+                //const fetchedAccounts = await getAccountsByGroup2(8); 
+                const fetchedAccountsByType = await getAccountsByType(4); // 2 is type id for persembahan
+                //setAccounts(fetchedAccounts);
+                setAccounts(fetchedAccountsByType);
             } catch (error) {
                 console.error('Failed to fetch accounts:', error);
             }
