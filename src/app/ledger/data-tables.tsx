@@ -37,8 +37,7 @@ import Divider from "@/components/Divider"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
-import { getGroup2 } from "@/actions/AccountAction"
-import { getAccounts } from "@/actions/AccountAction"
+import { getAccounts, getAccountsByGroup2, getGroup2 } from "@/actions/AccountAction"
 import { PaginationInfo } from "@/components/PaginationInfo"
 
 interface DataTableProps<TData, TValue> {
@@ -82,7 +81,7 @@ export function DataTable<TData, TValue>({
 
     const [group2, setGroup2] = useState<Group2[]>([]);
     const [accounts, setAccounts] = useState<Account[]>([]);
-
+    const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
     // Add this helper function before the return statement
     const calculateTotals = (rows: any[]) => {
         const totals = rows.reduce((acc, row) => {
@@ -108,9 +107,18 @@ export function DataTable<TData, TValue>({
             }
         };
 
+        // const fetchAccounts = async () => {
+        //     try {
+        //         const fetchedAccounts = await getAccounts();
+        //         setAccounts(fetchedAccounts);
+        //     } catch (error) {
+        //         console.error('Failed to fetch accounts:', error);
+        //     }
+        // };
+
         const fetchAccounts = async () => {
             try {
-                const fetchedAccounts = await getAccounts();
+                const fetchedAccounts = await getAccountsByGroup2(currentGroup2Id);
                 setAccounts(fetchedAccounts);
             } catch (error) {
                 console.error('Failed to fetch accounts:', error);
@@ -120,7 +128,19 @@ export function DataTable<TData, TValue>({
         fetchGroup2();
         fetchAccounts();
 
-    }, []);
+    }, [currentGroup2Id]);
+
+
+    // const handleGroup2Change = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     //setCurrentGroup2Id(parseInt(e.target.value));
+    //     //setSubTitle(getGroup2Name(e.target.value));
+    //     try {
+    //         const fetchedAccounts = await getAccountsByGroup2(currentGroup2Id);
+    //         setAccounts(fetchedAccounts);
+    //     } catch (error) {
+    //         console.error('Failed to fetch accounts:', error);
+    //     }
+    // };
 
     const table = useReactTable({
         data,
@@ -178,6 +198,7 @@ export function DataTable<TData, TValue>({
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
         const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+        setCurrentGroup2Id(parseInt(g2Id));
         setSubTitle(getGroup2Name(g2Id));
         const coaId = table.getColumn("coaid")?.getFilterValue() as string;
         setSubTitleAccount(getAccountName(coaId));
@@ -250,6 +271,7 @@ export function DataTable<TData, TValue>({
                             // Find the selected group2 item and use its name instead of ID
                             table.getColumn("g2id")?.setFilterValue(e.target.value)
                             console.log("G2 ID:", e.target.value);
+                            setCurrentGroup2Id(parseInt(e.target.value));
                             // setTotalDebit(0);
                             // setTotalCredit(0);
                             // calculateTotals(table.getFilteredRowModel().rows);
