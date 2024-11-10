@@ -43,9 +43,9 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "code",
-        header: () => <div className="text-left w-[80px]">Kode</div>,
+        header: () => <div className="text-left">Kode</div>,
         cell: ({ row }) => {
-            return <div className="text-left w-[80px] min-w-[130px]">
+            return <div className="text-left">
                 {row.original.code}
                 {/* <EditDialog transaction={row.original}>
                     <Button variant="custom1" size="custom1">
