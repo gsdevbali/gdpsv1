@@ -368,7 +368,7 @@ const OtherFormPay: React.FC<OtherFormProps> = ({ accountId }) => {
                         <div>
                             <div>
                                 {/* <p>Total Pengeluaran: {totalCredit}</p> */}
-                                <p className='text-lg text-bold'>Total Penerimaan: {formatCurrency(totalDebit)}</p>
+                                <p className='text-lg text-bold'>Total Pengeluaran: {formatCurrency(totalDebit)}</p>
                                 {/* <p>Total Credit: {totalCredit}</p> */}
                                 {/* <p className={isBalanced ? 'text-green-600' : 'text-orange-500'}>
                                     Perbedaan: {difference.toFixed(2)}

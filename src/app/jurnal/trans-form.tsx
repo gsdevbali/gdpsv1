@@ -100,12 +100,6 @@ const TransactionForm: React.FC = () => {
         }).format(value);
     };
 
-    // useEffect(() => {
-    //     const newTotalDebit = transactions.reduce((sum, transaction) => sum + transaction.debit, 0);
-    //     const newTotalCredit = transactions.reduce((sum, transaction) => sum + transaction.credit, 0);
-    //     setTotalDebit(newTotalDebit);
-    //     setTotalCredit(newTotalCredit);
-    // }, [transactions]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -232,6 +226,15 @@ const TransactionForm: React.FC = () => {
 
     const handleReset = () => {
         setTransactions([{ ...initialTransaction }]);
+        setMainData({
+            date: new Date().toISOString().split('T')[0],
+            description: '',
+            ref: '',
+            accountId: '',
+        });
+        setDisplayValues({ debit: [''], credit: [''] });
+        setTotalDebit(0);
+        setTotalCredit(0);
     };
 
     const removeTransaction = (index: number) => {
