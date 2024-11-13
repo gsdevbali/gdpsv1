@@ -75,7 +75,7 @@ export default async function RepActivity() {
     // 11: Biaya Sekretariat
     // 12: BIaya Bidang & Bapel
 
-    const start = "2024-01-01"
+    const start = "2020-01-01"
     const today = new Date().toISOString().split('T')[0];
     const data = await getData(start, today)
     //console.log('data Query First:', data)

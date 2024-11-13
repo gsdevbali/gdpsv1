@@ -40,6 +40,12 @@ import printStyles from './PrintStyles.module.css';
 import { getAccounts, getAccountsByGroup2, getGroup2 } from "@/actions/AccountAction"
 import { PaginationInfo } from "@/components/PaginationInfo"
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+import { Label } from "@/components/ui/label"
+
+
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
@@ -63,6 +69,10 @@ export function DataTable<TData, TValue>({
     data,
 
 }: DataTableProps<TData, TValue>) {
+
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
@@ -203,7 +213,7 @@ export function DataTable<TData, TValue>({
         const coaId = table.getColumn("coaid")?.getFilterValue() as string;
         setSubTitleAccount(getAccountName(coaId));
 
-    //}, [table, getGroup2Name, getAccountName]);
+        //}, [table, getGroup2Name, getAccountName]);
     }, [table.getFilteredRowModel().rows]);
 
     return (
@@ -250,18 +260,81 @@ export function DataTable<TData, TValue>({
 
                     </div>
                     <div className="text-xl">
-                    <span className="font-semibold">Total Saldo: </span>
+                        <span className="font-semibold">Total Saldo: </span>
 
-                    <span className="font-bold text-orange-500">
-                        {new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        }).format(totalBalance)}
-                    </span>
+                        <span className="font-bold text-orange-500">
+                            {new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(totalBalance)}
+                        </span>
+                    </div>
                 </div>
+
+                {/* Filter Tanggal */}
+                <div className="flex pt-4 items-center gap-4">
+                    <Label>Awal:</Label>
+                    <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Bulan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <SelectItem key={i} value={i.toString()}>
+                                    {new Date(0, i).toLocaleString('id-ID', { month: 'long' })}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Tahun" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Array.from({ length: 10 }, (_, i) => {
+                                const year = new Date().getFullYear() - i;
+                                return (
+                                    <SelectItem key={year} value={year.toString()}>
+                                        {year}
+                                    </SelectItem>
+                                );
+                            })}
+                        </SelectContent>
+                    </Select>
+
+                    <Label>Akhir:</Label>
+                    <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Bulan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <SelectItem key={i} value={i.toString()}>
+                                    {new Date(0, i).toLocaleString('id-ID', { month: 'long' })}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Tahun" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Array.from({ length: 10 }, (_, i) => {
+                                const year = new Date().getFullYear() - i;
+                                return (
+                                    <SelectItem key={year} value={year.toString()}>
+                                        {year}
+                                    </SelectItem>
+                                );
+                            })}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
+
+
 
                     <select
                         //value={transaction.accountId}
@@ -294,11 +367,10 @@ export function DataTable<TData, TValue>({
                         //value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
                         //name='accountId'
                         value={(table.getColumn("coaid")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            {
-                                table.getColumn("coaid")?.setFilterValue(event.target.value)
-                                console.log("COA ID:", event.target.value);
-                            }
+                        onChange={(event) => {
+                            table.getColumn("coaid")?.setFilterValue(event.target.value)
+                            console.log("COA ID:", event.target.value);
+                        }
                         }
                         required
                         className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
@@ -384,82 +456,83 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <div className="rounded-md border">
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id} className="text-center text-sm font-black">
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead key={header.id}>
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
-                                            </TableHead>
-                                        )
-                                    })}
+            </div>
+            <div className="rounded-md border">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id} className="text-center text-sm font-black">
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </TableHead>
+                                    )
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    className="text-center"
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        className="text-center"
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && "selected"}
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell colSpan={columns.length} className="h-24 text-center">
-                                        Tidak ada data.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                    Tidak ada data.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
 
 
-                {/* Pagination */}
-                <div className={printStyles.printHide}>
-                    <div className="flex items-center justify-end space-x-2 py-4">
-                        {/* <div className="flex-1 text-sm text-foreground"> */}
-                            {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
-                            {/* <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan. */}
-                        {/* </div> */}
-                        <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
-                        <div className="space-x-2">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => table.previousPage()}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                <ArrowLeft className="mr-2 h-4 w-4" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => table.nextPage()}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                <ArrowRight className="mr-2 h-4 w-4" />
-                            </Button>
-                        </div>
+            {/* Pagination */}
+            <div className={printStyles.printHide}>
+                <div className="flex items-center justify-end space-x-2 py-4">
+                    {/* <div className="flex-1 text-sm text-foreground"> */}
+                    {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
+                    {/* <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan. */}
+                    {/* </div> */}
+                    <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
+                    <div className="space-x-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            <ArrowRight className="mr-2 h-4 w-4" />
+                        </Button>
                     </div>
                 </div>
             </div>
+
         </>
     )
 }
