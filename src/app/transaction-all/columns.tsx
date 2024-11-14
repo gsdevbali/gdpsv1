@@ -39,11 +39,17 @@ export type Account = {
 //     return cellValue >= start && cellValue <= end;
 // };
 
+// const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
+//     const cellValue = row.getValue(columnId) as Date;
+//     if (!Array.isArray(filterValue) || filterValue.length !== 2) {
+//         return true; // If filterValue is not a valid array, don't filter
+//     }
+//     const [start, end] = filterValue as [Date, Date];
+//     return cellValue >= start && cellValue <= end;
+// };
+
 const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
     const cellValue = row.getValue(columnId) as Date;
-    if (!Array.isArray(filterValue) || filterValue.length !== 2) {
-        return true; // If filterValue is not a valid array, don't filter
-    }
     const [start, end] = filterValue as [Date, Date];
     return cellValue >= start && cellValue <= end;
 };
@@ -124,7 +130,7 @@ export const columns: ColumnDef<Transaction>[] = [
             </div>;
         },
         enableSorting: true,
-        
+
     },
 
     {

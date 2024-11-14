@@ -39,6 +39,7 @@ import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
 import { getAccounts } from "@/actions/AccountAction"
 import { PaginationInfo } from "@/components/PaginationInfo"
+import { Label } from "@/components/ui/label"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -59,6 +60,12 @@ export function DataTable<TData, TValue>({
     data,
 
 }: DataTableProps<TData, TValue>) {
+
+    const [newPeriod, setNewPeriod] = useState(true);
+
+    const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]);
+    const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
+
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
@@ -142,6 +149,27 @@ export function DataTable<TData, TValue>({
         //setSubTitle(getGroup2Name(g2Id));
     }, [table.getFilteredRowModel().rows]);
 
+
+    const getDateRange = () => {
+        if (newPeriod) return 'Semua Tanggal';
+        //setNewPeriod(false);
+        const start = new Date(dateStart);
+        const end = new Date(dateEnd);
+
+        const startDateLong = start.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+        const endDateLong = end.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+        //return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
+        return `${startDateLong} - ${endDateLong}`;
+
+    }
+
+    const handleResetDate = () => {
+        setDateStart(new Date().toISOString().split('T')[0]);
+        setDateEnd(new Date().toISOString().split('T')[0]);
+        table.getColumn("date")?.setFilterValue(["2020-01-01", new Date().toISOString().split('T')[0]]);
+        setNewPeriod(true);
+    }
+
     return (
         <>
             <div className={printStyles.printContainer}>
@@ -153,6 +181,13 @@ export function DataTable<TData, TValue>({
                             ({formatDateRange()})
                         </h2>
                     )} */}
+                    <div>
+
+                        <span className="text-[18px] text-orange-500 font-light">
+                            {getDateRange()}
+                        </span>
+
+                    </div>
                     <Divider />
                     {/* <PrintButton /> */}
 
@@ -184,6 +219,53 @@ export function DataTable<TData, TValue>({
                     </div>
                 </div>
 
+                {/* Filter Tanggal */}
+                <div className="flex-row pt-4 items-center gap-4">
+                    <Label className="w-[200px]">Mulai dari:</Label>
+                    <Input
+                        className="w-[300px]"
+                        name="d1"
+                        type="date"
+                        //value={dateStart}
+                        // onChange={(e) => setDateStart(e.target.value)}
+                        onChange={(e) => {
+                            // Find the selected group2 item and use its name instead of ID
+                            setNewPeriod(false);
+                            setDateStart(e.target.value);
+                            //const start) = e.target.value;
+                            //const end = new Date();
+                            table.getColumn("date")?.setFilterValue([e.target.value, dateEnd]);
+                            console.log("date start:", e.target.value);
+                            //setCurrentGroup2Id(parseInt(e.target.value));
+                        }
+                        }
+                        placeholder="Start Date"
+
+                    />
+
+                    <Label className="w-[200px]">Sampai dengan:</Label>
+                    <Input
+                        className="w-[300px]"
+                        name="d2"
+                        type="date"
+                        //value={dateEnd}
+                        onChange={(e) => {
+                            // Find the selected group2 item and use its name instead of ID
+                            setNewPeriod(false);
+                            setDateEnd(e.target.value);
+
+                            table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
+                            console.log("date end:", e.target.value);
+                            //setCurrentGroup2Id(parseInt(e.target.value));
+                        }
+                        }
+                        placeholder="End Date"
+
+                    />
+
+                    <Button onClick={handleResetDate} variant={'ghost'}>RESET</Button>
+                </div>
+
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
 
                     <select
@@ -204,7 +286,7 @@ export function DataTable<TData, TValue>({
                             </option>
                         ))}
                     </select>
-                    
+
                     {/* <Input
                         placeholder="Akun ...."
                         value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
