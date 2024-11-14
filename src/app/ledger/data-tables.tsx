@@ -357,11 +357,15 @@ export function DataTable<TData, TValue>({
                         type="date"
                         //value={dateEnd}
                         onChange={(e) => {
-                            // Find the selected group2 item and use its name instead of ID
                             setNewPeriod(false);
+
                             setDateEnd(e.target.value);
 
-                            table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
+                            const newEnd = new Date(e.target.value);
+                            newEnd.setDate(newEnd.getDate() + 1);
+
+                            //table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
+                            table.getColumn("date")?.setFilterValue([dateStart, newEnd.toISOString().split('T')[0]]);
                             console.log("date end:", e.target.value);
                             //setCurrentGroup2Id(parseInt(e.target.value));
                         }

@@ -6,6 +6,7 @@ import { FilterFn } from "@tanstack/react-table"
 import { tanggal } from '@/lib/tanggal';
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { setDate } from "date-fns";
 
 const group2Filter: FilterFn<Transaction> = (row, columnId, filterValue) => {
     const value = row.getValue(columnId) as number;
