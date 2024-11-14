@@ -40,9 +40,10 @@ import printStyles from './PrintStyles.module.css';
 import { getAccountsByGroup2, getGroup1, getGroup2 } from "@/actions/AccountAction"
 import { PaginationInfo } from "@/components/PaginationInfo"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+//import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { Label } from "@/components/ui/label"
+import { get } from "http"
 
 
 
@@ -75,11 +76,17 @@ export function DataTable<TData, TValue>({
 
 }: DataTableProps<TData, TValue>) {
 
-    const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-    const [dateStart, setDateStart] = useState(firstDayOfMonth);
+    //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+    //const [dateStart, setDateStart] = useState(firstDayOfMonth);
+    //const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
+
+    const [newPeriod, setNewPeriod] = useState(true);
+
+    const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]);
     const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
-    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+
+    //const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
+    //const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -99,6 +106,8 @@ export function DataTable<TData, TValue>({
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
     const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
     const [subTitleGroup, setSubTitleGroup] = useState<string>('SEMUA GROUP');
+    const [subTitleDateStart, setSubTitleDateStart] = useState<string>('');
+    const [subTitleDateEnd, setSubTitleDateEnd] = useState<string>('');
 
     const [group1, setGroup1] = useState<Group1[]>([]);
     const [group2, setGroup2] = useState<Group2[]>([]);
@@ -153,6 +162,13 @@ export function DataTable<TData, TValue>({
         fetchGroup1();
         fetchGroup2();
         fetchAccounts();
+
+        //const today = new Date().toISOString().split('T')[0];
+        //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+
+        //setDateStart(firstDayOfMonth);
+        //setDateEnd(today);
+
 
     }, [currentGroup1Id, currentGroup2Id]);
 
@@ -213,6 +229,26 @@ export function DataTable<TData, TValue>({
         return selected ? ' - ' + selected.name : textAll;
     }
 
+    const getDateRange = () => {
+        if (newPeriod) return 'Semua Tanggal';
+        //setNewPeriod(false);
+        const start = new Date(dateStart);
+        const end = new Date(dateEnd);
+
+        const startDateLong = start.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+        const endDateLong = end.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+        //return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
+        return `${startDateLong} - ${endDateLong}`;
+
+    }
+
+    const handleResetDate = () => {
+        setDateStart(new Date().toISOString().split('T')[0]);
+        setDateEnd(new Date().toISOString().split('T')[0]);
+        table.getColumn("date")?.setFilterValue(["2020-01-01", new Date().toISOString().split('T')[0]]);
+        setNewPeriod(true);
+    }
+
 
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
@@ -242,6 +278,13 @@ export function DataTable<TData, TValue>({
                         <span className="text-[20px] text-blue-500 font-light">{subTitleGroup} </span>
                         <span className="text-[20px] text-blue-500 font-light">{subTitleAccount} </span>
                     </h2>
+                    <div>
+
+                        <span className="text-[18px] text-orange-500 font-light">
+                            {getDateRange()}
+                        </span>
+
+                    </div>
                     {/* {isDateFilterActive && (
                         <h2 className="ml-2 text-xl font-normal">
                             ({formatDateRange()})
@@ -288,25 +331,53 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter Tanggal */}
-                {/* <div className="text-left">
-                                        <Label>Mulai dari:</Label>
-                                        <Input
-                                            type="date"
-                                            value={dateStart}
-                                            onChange={(e) => setDateStart(e.target.value)}
-                                            placeholder="Start Date"
-                                            className="w-full"
-                                        />
-                                        <div className="h-2" />
-                                        <Label>Sampai dengan:</Label>
-                                        <Input
-                                            type="date"
-                                            value={dateEnd}
-                                            onChange={(e) => setDateEnd(e.target.value)}
-                                            placeholder="End Date"
-                                        />
-                                    </div>
-                <div className="flex pt-4 items-center gap-4">
+                <div className="flex-row pt-4 items-center gap-4">
+                    <Label className="w-[200px]">Mulai dari:</Label>
+                    <Input
+                        className="w-[300px]"
+                        name="d1"
+                        type="date"
+                        //value={dateStart}
+                        // onChange={(e) => setDateStart(e.target.value)}
+                        onChange={(e) => {
+                            // Find the selected group2 item and use its name instead of ID
+                            setNewPeriod(false);
+                            setDateStart(e.target.value);
+                            //const start) = e.target.value;
+                            //const end = new Date();
+                            table.getColumn("date")?.setFilterValue([e.target.value, dateEnd]);
+                            console.log("date start:", e.target.value);
+                            //setCurrentGroup2Id(parseInt(e.target.value));
+                        }
+                        }
+                        placeholder="Start Date"
+
+                    />
+
+                    <Label className="w-[200px]">Sampai dengan:</Label>
+                    <Input
+                        className="w-[300px]"
+                        name="d2"
+                        type="date"
+                        //value={dateEnd}
+                        onChange={(e) => {
+                            // Find the selected group2 item and use its name instead of ID
+                            setNewPeriod(false);
+                            setDateEnd(e.target.value);
+
+                            table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
+                            console.log("date end:", e.target.value);
+                            //setCurrentGroup2Id(parseInt(e.target.value));
+                        }
+                        }
+                        placeholder="End Date"
+
+                    />
+
+                    <Button onClick={handleResetDate} variant={'ghost'}>RESET</Button>
+                </div>
+
+                {/* <div className="flex pt-4 items-center gap-4">
                     <Label>Awal:</Label>
                     <Select value={selectedMonth} onValueChange={setSelectedMonth}>
                         <SelectTrigger>

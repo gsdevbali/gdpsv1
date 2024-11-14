@@ -50,11 +50,11 @@ export type AccountGroup1 = {
 }
 
 
-// const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
-//     const cellValue = row.getValue(columnId) as Date;
-//     const [start, end] = filterValue as [Date, Date];
-//     return cellValue >= start && cellValue <= end;
-// };
+const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
+    const cellValue = row.getValue(columnId) as Date;
+    const [start, end] = filterValue as [Date, Date];
+    return cellValue >= start && cellValue <= end;
+};
 
 // const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
 //     const cellValue = row.getValue(columnId) as Date;
@@ -105,9 +105,10 @@ export const columns: ColumnDef<Transaction>[] = [
         header: "Tanggal",
         cell: ({ row }) => {
             const newDate = tanggal(row.original.date)
-            return <div className="text-left">{newDate}</div>;
+            return <div className="text-left w-[90px]">{newDate}</div>;
         },
         enableSorting: true,
+        filterFn: dateRangeFilter,
     },
 
     {
@@ -126,7 +127,7 @@ export const columns: ColumnDef<Transaction>[] = [
         accessorKey: "ref",
         header: "Referensi",
         cell: ({ row }) => {
-            return <div className="text-left">{row.original.ref}</div>;
+            return <div className="text-left w-[100px]">{row.original.ref}</div>;
         },
         enableSorting: true,
     },
@@ -187,7 +188,7 @@ export const columns: ColumnDef<Transaction>[] = [
         accessorFn: (row) => row.account.accountGroup2.name,
         header: "G2name",
         cell: ({ row }) => {
-            return <div className="text-left">{row.original.account.accountGroup2.name}</div>;
+            return <div className="text-left w-[140px]">{row.original.account.accountGroup2.name}</div>;
         },
         enableHiding: true,
         enableColumnFilter: false,
@@ -220,7 +221,7 @@ export const columns: ColumnDef<Transaction>[] = [
         accessorKey: "description",
         header: "Uraian",
         cell: ({ row }) => {
-            return <div className="text-left w-[100%]">{row.original.description}</div>;
+            return <div className="text-left w-[160px]">{row.original.description}</div>;
         },
         enableHiding: true,
     },
