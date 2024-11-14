@@ -285,11 +285,7 @@ export function DataTable<TData, TValue>({
                         </span>
 
                     </div>
-                    {/* {isDateFilterActive && (
-                        <h2 className="ml-2 text-xl font-normal">
-                            ({formatDateRange()})
-                        </h2>
-                    )} */}
+
                     <Divider />
 
                 </div>
@@ -331,10 +327,10 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter Tanggal */}
-                <div className="flex-row pt-4 items-center gap-4">
-                    <Label className="w-[200px]">Mulai dari:</Label>
+                <div className="flex justify-start pt-4 items-center gap-4">
+                    <Label>Mulai dari:</Label>
                     <Input
-                        className="w-[300px]"
+                        className="w-[200px]"
                         name="d1"
                         type="date"
                         //value={dateStart}
@@ -354,9 +350,9 @@ export function DataTable<TData, TValue>({
 
                     />
 
-                    <Label className="w-[200px]">Sampai dengan:</Label>
+                    <Label>Sampai dengan:</Label>
                     <Input
-                        className="w-[300px]"
+                        className="w-[200px]"
                         name="d2"
                         type="date"
                         //value={dateEnd}
@@ -497,7 +493,7 @@ export function DataTable<TData, TValue>({
                         <option value="">Semua Grup</option>
                         {group1.map((item) => (
                             <option key={item.id} value={item.id}>
-                                {item.id} - {item.name}
+                                {item.name}
                             </option>
                         ))}
                     </select>

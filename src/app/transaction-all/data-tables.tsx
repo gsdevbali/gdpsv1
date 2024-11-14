@@ -220,10 +220,10 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter Tanggal */}
-                <div className="flex-row pt-4 items-center gap-4">
-                    <Label className="w-[200px]">Mulai dari:</Label>
+                <div className="flex justify-start pt-4 items-center gap-4">
+                    <Label>Mulai dari:</Label>
                     <Input
-                        className="w-[300px]"
+                        className="w-[200px]"
                         name="d1"
                         type="date"
                         //value={dateStart}
@@ -243,9 +243,9 @@ export function DataTable<TData, TValue>({
 
                     />
 
-                    <Label className="w-[200px]">Sampai dengan:</Label>
+                    <Label>Sampai dengan:</Label>
                     <Input
-                        className="w-[300px]"
+                        className="w-[200px]"
                         name="d2"
                         type="date"
                         //value={dateEnd}

@@ -47,6 +47,15 @@ export const columns: ColumnDef<Account>[] = [
     //     enableHiding: false,
     // },
 
+    // {
+    //     id: "date",
+    //     accessorKey: "date",
+    //     header: () => <div className="text-left w-[60px]">Tanggal</div>,
+    //     cell: ( { row }) => {
+    //         return <div className="text-left w-[60px]">{row.original.date}</div>;
+    //     },
+    //     enableSorting: true
+    // },
     {
         accessorKey: "code",
         header: () => <div className="text-left w-[60px]">Kode</div>,
