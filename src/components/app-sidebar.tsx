@@ -217,7 +217,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-       <SidebarTrigger />
+        <SidebarTrigger />
         {/* <ThemeToggle /> */}
         {/* <NavUser user={data.user} /> */}
       </SidebarFooter>

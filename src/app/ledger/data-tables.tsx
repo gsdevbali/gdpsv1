@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
         id: false,
-        g1id: true,
+        g1id: false,
         g2id: false,
         g2name: false,
         coaid: false,
@@ -95,8 +95,10 @@ export function DataTable<TData, TValue>({
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
     const [totalBalance, setBalance] = useState<number>(0);
+
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
     const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
+    const [subTitleGroup, setSubTitleGroup] = useState<string>('SEMUA GROUP');
 
     const [group1, setGroup1] = useState<Group1[]>([]);
     const [group2, setGroup2] = useState<Group2[]>([]);
@@ -120,7 +122,6 @@ export function DataTable<TData, TValue>({
 
     // Fetch data: Group2 & Accounts for Filter Lookup
     useEffect(() => {
-
 
         const fetchGroup1 = async () => {
             try {
@@ -193,6 +194,12 @@ export function DataTable<TData, TValue>({
 
     })
 
+    const getGroup1Name = (id: string) => {
+        if (!id) return 'Semua Grup';
+        const selected = group1.find(g => g.id === parseInt(id));
+        return selected ? selected.name : 'SEMUA';
+    }
+
     const getGroup2Name = (id: string) => {
         if (!id) return 'Semua Aktivitas';
         const selected = group2.find(g => g.id === parseInt(id));
@@ -200,10 +207,10 @@ export function DataTable<TData, TValue>({
     }
 
     const getAccountName = (id: string) => {
-        const textAll = 'Semua Akun';
+        const textAll = ' - Semua Akun';
         if (!id) return textAll;
         const selected = accounts.find(a => a.id === parseInt(id));
-        return selected ? selected.name : textAll;
+        return selected ? ' - ' + selected.name : textAll;
     }
 
 
@@ -211,11 +218,14 @@ export function DataTable<TData, TValue>({
         calculateTotals(table.getFilteredRowModel().rows);
         const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
         const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+
         setCurrentGroup1Id(parseInt(g1Id));
         setCurrentGroup2Id(parseInt(g2Id));
-        setSubTitle(getGroup2Name(g2Id));
+
         const coaId = table.getColumn("coaid")?.getFilterValue() as string;
+        setSubTitle(getGroup2Name(g2Id));
         setSubTitleAccount(getAccountName(coaId));
+        setSubTitleGroup(getGroup1Name(g1Id));
 
         //}, [table, getGroup2Name, getAccountName]);
     }, [table.getFilteredRowModel().rows]);
@@ -224,18 +234,20 @@ export function DataTable<TData, TValue>({
         <>
             <div className={printStyles.printContainer}>
                 <div>
-                    <h1 className="text-3xl">
+                    <h1 className="text-3xl font-bold">
                         <span className="font-bold">BUKU BESAR</span>
                         <span className="font-light"> - {subTitle} </span>
-                        <div className="font-light">{subTitleAccount} </div>
                     </h1>
+                    <h2>
+                        <span className="text-[20px] text-blue-500 font-light">{subTitleGroup} </span>
+                        <span className="text-[20px] text-blue-500 font-light">{subTitleAccount} </span>
+                    </h2>
                     {/* {isDateFilterActive && (
                         <h2 className="ml-2 text-xl font-normal">
                             ({formatDateRange()})
                         </h2>
                     )} */}
                     <Divider />
-                    {/* <PrintButton /> */}
 
                 </div>
 
@@ -359,7 +371,6 @@ export function DataTable<TData, TValue>({
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
 
                     <select
-                        //value={transaction.accountId}
                         value={(table.getColumn("g2id")?.getFilterValue() as string) ?? ""}
                         name='x'
                         onChange={(e) => {
@@ -367,15 +378,12 @@ export function DataTable<TData, TValue>({
                             table.getColumn("g2id")?.setFilterValue(e.target.value)
                             console.log("G2 ID:", e.target.value);
                             setCurrentGroup2Id(parseInt(e.target.value));
-                            // setTotalDebit(0);
-                            // setTotalCredit(0);
-                            // calculateTotals(table.getFilteredRowModel().rows);
                         }
                         }
                         //required
                         className='border p-2 rounded w-[100px] md:w-[30%] h-[40px]'
                     >
-                        <option value="">Semua Aktivitas ditampilkan</option>
+                        <option value="">Semua Aktivitas</option>
                         {group2.map((item) => (
                             <option key={item.id} value={item.id}>
                                 {item.id} - {item.name}
@@ -383,11 +391,7 @@ export function DataTable<TData, TValue>({
                         ))}
                     </select>
 
-
                     <select
-                        //value={transaction.accountId}
-                        //value={(table.getColumn("accountId")?.getFilterValue() as string) ?? ""}
-                        //name='accountId'
                         value={(table.getColumn("coaid")?.getFilterValue() as string) ?? ""}
                         onChange={(event) => {
                             table.getColumn("coaid")?.setFilterValue(event.target.value)
@@ -407,23 +411,19 @@ export function DataTable<TData, TValue>({
 
                     {/* Group 1 */}
                     <select
-                        //value={transaction.accountId}
-                        value={(table.getColumn("new-g")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("g1id")?.getFilterValue() as string) ?? ""}
                         name='x'
                         onChange={(e) => {
                             // Find the selected group2 item and use its name instead of ID
-                            table.getColumn("new-g")?.setFilterValue(e.target.value)
+                            table.getColumn("g1id")?.setFilterValue(e.target.value)
                             console.log("G1 ID:", e.target.value);
                             setCurrentGroup1Id(parseInt(e.target.value));
-                            // setTotalDebit(0);
-                            // setTotalCredit(0);
-                            // calculateTotals(table.getFilteredRowModel().rows);
                         }
                         }
                         //required
-                        className='border p-2 rounded w-[100px] md:w-[30%] h-[40px]'
+                        className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
                     >
-                        <option value="">Group Aktivitas</option>
+                        <option value="">Semua Grup</option>
                         {group1.map((item) => (
                             <option key={item.id} value={item.id}>
                                 {item.id} - {item.name}
@@ -431,51 +431,15 @@ export function DataTable<TData, TValue>({
                         ))}
                     </select>
 
-                    {/* <Input
-                        placeholder="COA"
-                        name="account.code"
-                        value={(table.getColumn("account.code")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => {
-                            table.getColumn("account.code")?.setFilterValue(event.target.value)
-                            //console.log("G2 ID:", event.target.value);
-                        }
-                        }
-                        className="w-[120px]"
-                    /> */}
-
-                    {/* <Input
-                        placeholder="G2 filter"
-                        value={(table.getColumn("g2name")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => {
-                            table.getColumn("g2name")?.setFilterValue(event.target.value)
-                            console.log("G2 Name:", event.target.value);
-                            console.log(table.getColumn("account.accountGroup2")?.getFilterValue());
-                        }
-                        }
-                        className="w-[200px]"
-                    /> */}
-
                     <Input
                         placeholder="Cari Referensi ...."
                         value={(table.getColumn("ref")?.getFilterValue() as string) ?? ""}
                         onChange={(event) => {
-
                             table.getColumn("ref")?.setFilterValue(event.target.value)
-                            // setTotalDebit(0);
-                            // setTotalCredit(0);
-                            // calculateTotals(table.getFilteredRowModel().rows);
                         }
                         }
                         className="w-[200px]"
                     />
-                    {/* <Input
-                        placeholder="Cari Uraian ...."
-                        value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("description")?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    /> */}
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

@@ -147,13 +147,27 @@ export const columns: ColumnDef<Transaction>[] = [
 
     {
 
-        id: "new-g",
-        accessorKey: "account",
+        id: "g1id",
+        header: "g1 id",
+        accessorKey: "account.accountGroup.id",
         cell: ({ row }) => {
-            return <div>{row.original.account.id}</div>
+            return <div>{row.original.account.accountGroup.id}</div>
         },
-        header: "new G"
-        
+        filterFn: "equalsString",
+        enableHiding: true,
+        enableColumnFilter: false,
+
+    },
+    {
+        id: "g1name",
+        accessorFn: (row) => row.account.accountGroup.name,
+        header: "Grup",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.account.accountGroup.name}</div>;
+        },
+        enableHiding: true,
+        enableColumnFilter: false,
+        //filterFn: "contains"
     },
     // {
     //     id: "g1id",
@@ -195,7 +209,7 @@ export const columns: ColumnDef<Transaction>[] = [
         header: "Kode",
         cell: ({ row }) => {
             return <div className="text-left">{row.original.accountId}</div>;
-        },        
+        },
         filterFn: "equalsString",
         enableSorting: true,
         enableHiding: true,
