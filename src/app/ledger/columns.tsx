@@ -34,6 +34,7 @@ export type Account = {
     code: string
     name: string
     accountGroup2: AccountGroup2
+    accountGroup: AccountGroup1
 }
 
 export type AccountGroup2 = {
@@ -41,6 +42,13 @@ export type AccountGroup2 = {
     name: string
     flag: string
 }
+
+export type AccountGroup1 = {
+    id: number
+    name: string
+    flag: string
+}
+
 
 // const dateRangeFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
 //     const cellValue = row.getValue(columnId) as Date;
@@ -57,15 +65,15 @@ export type AccountGroup2 = {
 //     return cellValue >= start && cellValue <= end;
 // };
 
-const nestedStringFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
-    const rowData = row.original;
-    if (!rowData.account?.accountGroup2?.name) return true;
+// const nestedStringFilter: FilterFn<Transaction> = (row, columnId, filterValue) => {
+//     const rowData = row.original;
+//     if (!rowData.account?.accountGroup2?.name) return true;
 
-    const value = rowData.account.accountGroup2.name;
-    if (!filterValue || !value) return true;
+//     const value = rowData.account.accountGroup2.name;
+//     if (!filterValue || !value) return true;
 
-    return value.toLowerCase().includes(String(filterValue).toLowerCase());
-};
+//     return value.toLowerCase().includes(String(filterValue).toLowerCase());
+// };
 
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -127,7 +135,7 @@ export const columns: ColumnDef<Transaction>[] = [
     {
         id: "g2id",
         accessorKey: "account.accountGroup2.id",
-        header: "x",
+        header: "g2",
         cell: ({ row }) => {
             return <div className="text-left">{row.original.account.accountGroup2.id}</div>;
         },
@@ -136,6 +144,29 @@ export const columns: ColumnDef<Transaction>[] = [
         enableColumnFilter: false,
 
     },
+
+    {
+
+        id: "new-g",
+        accessorKey: "account",
+        cell: ({ row }) => {
+            return <div>{row.original.account.id}</div>
+        },
+        header: "new G"
+        
+    },
+    // {
+    //     id: "g1id",
+    //     accessorKey: "account.accountGroup.id",
+    //     header: "g1",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">{row.original.account.accountGroup.id}</div>;
+    //     },
+    //     filterFn: "equalsString",
+    //     enableHiding: true,
+    //     enableColumnFilter: false,
+
+    // },
 
     {
         id: "g2name",

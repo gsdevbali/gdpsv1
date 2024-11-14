@@ -45,7 +45,15 @@ export async function GET(request: Request) {
                                 name: true,
                                 flag: true
                             }
-                        }
+                        },
+
+                        accountGroup: {
+                            select: {
+                                id: true,
+                                name: true,
+                                flag: true
+                            }
+                        },
                         
                     }
 

@@ -37,7 +37,7 @@ import Divider from "@/components/Divider"
 
 import styles from './DataTable.module.css';
 import printStyles from './PrintStyles.module.css';
-import { getAccounts, getAccountsByGroup2, getGroup2 } from "@/actions/AccountAction"
+import { getAccountsByGroup2, getGroup1, getGroup2 } from "@/actions/AccountAction"
 import { PaginationInfo } from "@/components/PaginationInfo"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -51,6 +51,11 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     // dateStart: string
     // dateEnd: string
+}
+
+interface Group1 {
+    id: number;
+    name: string;
 }
 
 interface Group2 {
@@ -70,6 +75,9 @@ export function DataTable<TData, TValue>({
 
 }: DataTableProps<TData, TValue>) {
 
+    const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+    const [dateStart, setDateStart] = useState(firstDayOfMonth);
+    const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
@@ -77,6 +85,7 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
         id: false,
+        g1id: true,
         g2id: false,
         g2name: false,
         coaid: false,
@@ -89,8 +98,11 @@ export function DataTable<TData, TValue>({
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
     const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
 
+    const [group1, setGroup1] = useState<Group1[]>([]);
     const [group2, setGroup2] = useState<Group2[]>([]);
     const [accounts, setAccounts] = useState<Account[]>([]);
+
+    const [currentGroup1Id, setCurrentGroup1Id] = useState<number>(0)
     const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
     // Add this helper function before the return statement
     const calculateTotals = (rows: any[]) => {
@@ -108,6 +120,17 @@ export function DataTable<TData, TValue>({
 
     // Fetch data: Group2 & Accounts for Filter Lookup
     useEffect(() => {
+
+
+        const fetchGroup1 = async () => {
+            try {
+                const fetchedGroup1 = await getGroup1();
+                setGroup1(fetchedGroup1);
+            } catch (error) {
+                console.error('Failed to fetch data Group1:', error);
+            }
+        };
+
         const fetchGroup2 = async () => {
             try {
                 const fetchedGroup2 = await getGroup2();
@@ -116,15 +139,6 @@ export function DataTable<TData, TValue>({
                 console.error('Failed to fetch data Group2:', error);
             }
         };
-
-        // const fetchAccounts = async () => {
-        //     try {
-        //         const fetchedAccounts = await getAccounts();
-        //         setAccounts(fetchedAccounts);
-        //     } catch (error) {
-        //         console.error('Failed to fetch accounts:', error);
-        //     }
-        // };
 
         const fetchAccounts = async () => {
             try {
@@ -135,22 +149,12 @@ export function DataTable<TData, TValue>({
             }
         };
 
+        fetchGroup1();
         fetchGroup2();
         fetchAccounts();
 
-    }, [currentGroup2Id]);
+    }, [currentGroup1Id, currentGroup2Id]);
 
-
-    // const handleGroup2Change = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     //setCurrentGroup2Id(parseInt(e.target.value));
-    //     //setSubTitle(getGroup2Name(e.target.value));
-    //     try {
-    //         const fetchedAccounts = await getAccountsByGroup2(currentGroup2Id);
-    //         setAccounts(fetchedAccounts);
-    //     } catch (error) {
-    //         console.error('Failed to fetch accounts:', error);
-    //     }
-    // };
 
     const table = useReactTable({
         data,
@@ -168,7 +172,6 @@ export function DataTable<TData, TValue>({
             dateRange: (row, columnId, filterValue) => {
                 const cellValue = row.getValue(columnId) as string
                 const [start, end] = filterValue as [string, string]
-
                 if (!start && !end) return true
                 if (!cellValue) return false
 
@@ -178,7 +181,6 @@ export function DataTable<TData, TValue>({
 
                 return date >= startDate && date <= endDate
             },
-
 
         },
 
@@ -207,7 +209,9 @@ export function DataTable<TData, TValue>({
 
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
+        const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
         const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+        setCurrentGroup1Id(parseInt(g1Id));
         setCurrentGroup2Id(parseInt(g2Id));
         setSubTitle(getGroup2Name(g2Id));
         const coaId = table.getColumn("coaid")?.getFilterValue() as string;
@@ -272,6 +276,24 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter Tanggal */}
+                {/* <div className="text-left">
+                                        <Label>Mulai dari:</Label>
+                                        <Input
+                                            type="date"
+                                            value={dateStart}
+                                            onChange={(e) => setDateStart(e.target.value)}
+                                            placeholder="Start Date"
+                                            className="w-full"
+                                        />
+                                        <div className="h-2" />
+                                        <Label>Sampai dengan:</Label>
+                                        <Input
+                                            type="date"
+                                            value={dateEnd}
+                                            onChange={(e) => setDateEnd(e.target.value)}
+                                            placeholder="End Date"
+                                        />
+                                    </div>
                 <div className="flex pt-4 items-center gap-4">
                     <Label>Awal:</Label>
                     <Select value={selectedMonth} onValueChange={setSelectedMonth}>
@@ -330,11 +352,11 @@ export function DataTable<TData, TValue>({
                             })}
                         </SelectContent>
                     </Select>
-                </div>
+                </div> */}
+
+                {/* End Filter Tgl */}
 
                 <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
-
-
 
                     <select
                         //value={transaction.accountId}
@@ -379,6 +401,32 @@ export function DataTable<TData, TValue>({
                         {accounts.map((account) => (
                             <option key={account.id} value={account.id}>
                                 {account.code} - {account.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* Group 1 */}
+                    <select
+                        //value={transaction.accountId}
+                        value={(table.getColumn("new-g")?.getFilterValue() as string) ?? ""}
+                        name='x'
+                        onChange={(e) => {
+                            // Find the selected group2 item and use its name instead of ID
+                            table.getColumn("new-g")?.setFilterValue(e.target.value)
+                            console.log("G1 ID:", e.target.value);
+                            setCurrentGroup1Id(parseInt(e.target.value));
+                            // setTotalDebit(0);
+                            // setTotalCredit(0);
+                            // calculateTotals(table.getFilteredRowModel().rows);
+                        }
+                        }
+                        //required
+                        className='border p-2 rounded w-[100px] md:w-[30%] h-[40px]'
+                    >
+                        <option value="">Group Aktivitas</option>
+                        {group1.map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {item.id} - {item.name}
                             </option>
                         ))}
                     </select>

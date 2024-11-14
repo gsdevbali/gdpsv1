@@ -19,7 +19,6 @@ import { columns } from "./columns";
 //     }
 // };
 
-
 async function getData(start: string, end: string) {
     // const res = await fetch(`${global.baseUrl}/api/transaction-all`, { cache: 'no-store' })
     // const data = await res.json()

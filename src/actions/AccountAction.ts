@@ -105,6 +105,24 @@ export async function getAccountsAll() {
 }
 
 
+export async function getGroup1() {
+  try {
+    const accounts = await prisma.accountGroup.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: {
+        id: 'asc',
+      },
+    })
+    return accounts
+  } catch (error) {
+    console.error('Failed to fetch data:', error)
+    throw new Error('Failed to fetch data')
+  }
+}
+
 export async function getGroup2() {
   try {
     const accounts = await prisma.accountGroup2.findMany({
