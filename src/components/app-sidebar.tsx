@@ -62,18 +62,11 @@ const data = {
           title: "Transaksi Semua",
           url: "/transaction-all",
         },
-        {
-          title: "Transaksi Periode",
-          url: "/transaction-q",
-        },
         // {
-        //   title: "List Other",
-        //   url: "/list-other",
+        //   title: "Transaksi Periode",
+        //   url: "/transaction-q",
         // },
-        // {
-        //   title: "Trans test",
-        //   url: "/list-transaction",
-        // },
+
 
       ],
     },
@@ -115,18 +108,7 @@ const data = {
           title: "Daftar (COA)",
           url: "/coa",
         },
-        // {
-        //   title: "Tipe Akun",
-        //   url: "/coa-type",
-        // },
-        // {
-        //   title: "Group Akun",
-        //   url: "/coa-group1",
-        // },
-        // {
-        //   title: "Group Akun-2",
-        //   url: "/coa-group2",
-        // },
+
       ],
     },
 
@@ -140,28 +122,13 @@ const data = {
           title: "BUKU BESAR",
           url: "/ledger",
         },
-        // {
-        //   title: "AKTIVITAS",
-        //   url: "/rep-activity",
-        // },
         {
           title: "NERACA SALDO",
           url: "/neraca",
         },
-        // {
-        //   title: "NERACA",
-        //   url: "/rep-balance",
-        // },
+
       ],
     },
-
-    // {
-    //   title: "TEST",
-    //   url: "#",
-    //   icon: Table2Icon,
-    //   isActive: true,
-    // },
-    // End App-Custom
 
 
 
