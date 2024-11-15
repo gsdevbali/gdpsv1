@@ -23,6 +23,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
 //import ThemeToggle from "./ThemeToggle"
 //import AppLogo from "./AppLogo"
 // This is sample data.
@@ -214,6 +215,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>

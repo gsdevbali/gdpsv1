@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
 
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,32 +33,37 @@ export default function RootLayout({
 }>) {
   return (
 
-    <html lang="en">
+    <ClerkProvider>
+      <html lang="en">
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Suspense fallback={<Loading />}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
 
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
+          <Suspense fallback={<Loading />}>
 
-              <AppSidebar />
-              {/* <SidebarTrigger /> */}
-              {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
 
-            </SidebarProvider>
-          </ThemeProvider>
-        </Suspense>
-      </body>
+                <AppSidebar />
+                {/* <SidebarTrigger /> */}
+
+                {children}
 
 
-    </html >
+              </SidebarProvider>
+            </ThemeProvider>
+          </Suspense>
+        </body>
+
+
+      </html >
+    </ClerkProvider>
 
   );
 }
