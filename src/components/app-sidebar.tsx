@@ -124,7 +124,11 @@ const data = {
         },
         {
           title: "NERACA SALDO",
-          url: "/neraca",
+          url: "/neraca-saldo",
+        },
+        {
+          title: "NERACA T",
+          url: "/neraca-t",
         },
 
       ],
