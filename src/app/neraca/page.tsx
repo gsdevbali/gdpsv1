@@ -56,7 +56,6 @@ export default async function Page() {
 
     return (
 
-
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
@@ -64,7 +63,6 @@ export default async function Page() {
                 <Divider />
 
                 {/* AKTIVA - KIRI */}
-
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">AKTIVA</h1>
                 <Divider />
 
