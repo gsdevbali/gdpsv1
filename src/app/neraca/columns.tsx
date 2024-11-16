@@ -58,25 +58,27 @@ export const columns: ColumnDef<Account>[] = [
     // },
     {
         accessorKey: "code",
-        header: () => <div className="text-left w-[60px]">Kode</div>,
+        header: () => <div className="text-left min-w-[60px] max-w-[80px]">Kode</div>,
         cell: ({ row }) => {
-            return <div className="text-left w-[60px]">{row.original.code}</div>;
+            return <div className="text-left min-w-[60px] max-w-[80px]">{row.original.code}</div>;
         },
         enableSorting: true,
     },
     {
+        id: "group2",
         accessorKey: "accountGroup2.name",
         header: () => <div className="text-left w-[100px]">Kelompok</div>,
         cell: ({ row }) => {
             return <div className="text-left w-[100px]">{row.original.accountGroup2.name}</div>;
         },
         enableSorting: true,
+        enableHiding: true,
     },
     {
         accessorKey: "accountGroup.name",
-        header: () => <div className="text-left">Kelompok</div>,
+        header: () => <div className="text-left w-[100px]">Kelompok</div>,
         cell: ({ row }) => {
-            return <div className="text-left">{row.original.accountGroup.name}</div>;
+            return <div className="text-left w-[100px]">{row.original.accountGroup.name}</div>;
         },
         enableSorting: true,
     },
