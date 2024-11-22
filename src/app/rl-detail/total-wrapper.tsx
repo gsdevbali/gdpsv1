@@ -3,16 +3,22 @@
 import { createContext, useContext, useState } from 'react';
 
 
-const AppContext = createContext('');
+const AppContext = createContext({
+    x1data: 'X1'
+});
 
-export function TotalWrapper({children}: {
+export function TotaRLDetaillWrapper({children}: {
     children: React.ReactNode;
 }) {
 
-    const [state, setState] = useState('X')
+    const [state, setState] = useState({
+        x1data:'X1'
+    })
 
     return (
-        <AppContext.Provider value = {state}>
+        <AppContext.Provider value = {
+            state
+        }>
             {children}
         </AppContext.Provider>
     )
@@ -20,6 +26,6 @@ export function TotalWrapper({children}: {
 }
 
 
-export function useTotalContext() {
+export function useTotalRLDetail(){
     return useContext(AppContext);
 }

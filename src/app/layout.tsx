@@ -10,6 +10,8 @@ import Loading from "./loading";
 
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
+import { TotaRLDetaillWrapper } from "./rl-detail/total-wrapper";
+
 export const dynamic = "force-dynamic";
 
 const geistSans = localFont({
@@ -36,6 +38,8 @@ export default function RootLayout({
   return (
 
     <ClerkProvider>
+
+      
       <html lang="en">
 
         <body
@@ -54,8 +58,10 @@ export default function RootLayout({
 
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
-
+                
+                <TotaRLDetaillWrapper>
                 {children}
+                </TotaRLDetaillWrapper>
 
 
               </SidebarProvider>

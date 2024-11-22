@@ -12,7 +12,7 @@ import RugiLabaData from "./rl-data";
 //import NeracaDataSub from "./neraca-data-sub";
 //import { useState } from "react";
 
-import { TotalWrapper } from "./total-wrapper";
+import {useTotalRLDetail} from "./total-wrapper";
 
 
 export default async function Page() {
@@ -27,15 +27,18 @@ export default async function Page() {
     //     return totalAktiva === totalPasiva
     // }
 
+    //const { x1data } = useTotalRLDetail()
 
     return (
 
-        <TotalWrapper>
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN R/L (AKTIVITAS)</h1>
                 <Divider />
+
+
+                {/* <h1> {x1data} </h1> */}
 
                 {/* PENERIMAAN */}
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">PENERIMAAN</h1>
@@ -82,7 +85,7 @@ export default async function Page() {
                 </div>
             </div>
         </PageLayout >
-        </TotalWrapper>
 
     )
 }
+
