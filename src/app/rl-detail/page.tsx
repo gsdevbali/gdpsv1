@@ -12,42 +12,25 @@ import RugiLabaData from "./rl-data";
 //import NeracaDataSub from "./neraca-data-sub";
 //import { useState } from "react";
 
+import { TotalWrapper } from "./total-wrapper";
+
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
 
+
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
-    //const newTotalBalance_AktivaLancar = toidr(totalBalance_AktivaLancar)
-    // const newTotalBalance_AktivaTidakLancar = toidr(totalBalance_AktivaTidakLancar)
-    // const newTotalBalance_AktivaTetap = toidr(totalBalance_AktivaTetap)
-    // const newTotalBalance_Kewajiban = toidr(totalBalance_Kewajiban1 + totalBalance_Kewajiban2)
-    // const newTotalBalance_AsetBersih = toidr(totalBalance_AsetBersih1 + totalBalance_AsetBersih2)
-    const newTotalBalance_AktivaLancar = 0
-    const bewTotalBalance_AktivaTidakLancar = 0
-    const newTotalBalance_AktivaTetap = 0
-    const newTotalBalance_Kewajiban = 0
-    const newTotalBalance_AsetBersih = 0
-
-    //const totalAktiva = totalBalance_AktivaLancar + totalBalance_AktivaTidakLancar + totalBalance_AktivaTetap
-    const totalAktiva = 0
-    // const totalPasiva = totalBalance_Kewajiban1 + totalBalance_Kewajiban2 + totalBalance_AsetBersih1 + totalBalance_AsetBersih2
-    const totalPasiva = 0
-
-    const newTotalAktiva = toidr(totalAktiva)
-    const newTotalPasiva = toidr(totalPasiva)
-
-    {/* Selisih Aset dan Pasiva */ }
-    const selisihAkhir = toidr(totalAktiva - totalPasiva)
-
-    const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
-        return totalAktiva === totalPasiva
-    }
+    // const selisihAkhir = toidr(totalAktiva - totalPasiva)
+    // const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
+    //     return totalAktiva === totalPasiva
+    // }
 
 
     return (
 
+        <TotalWrapper>
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
@@ -90,15 +73,16 @@ export default async function Page() {
                 <div className="p-4 rounded-lg bg-blue-50 dark:bg-slate-800">
                     {/* Rangkuman Neraca */}
                     <h1 className="text-xl font-bold pt-4 pb-2">TOTAL / RANGKUMAN</h1>
-                    {/* {isBalanceSheetEqual(totalAktiva, totalPasiva) ? <p className="text-green-500 pb-2">{global.pageInfo.infoNeracaBalance}</p> : <p className="text-red-500 pb-2">{global.pageInfo.infoNeracaUnbalance}</p>}
+                    {/* {isBalanceSheetEqual(totalAktiva, totalPasiva) ? <p className="text-green-500 pb-2">{global.pageInfo.infoNeracaBalance}</p> : <p className="text-red-500 pb-2">{global.pageInfo.infoNeracaUnbalance}</p>} */}
 
-                    <TulisTotalRp value={newTotalAktiva} title="ASET" />
-                    <TulisTotalRp value={newTotalPasiva} title="PASIVA (Kewajiban + Aset Bersih)" />
+                    <TulisTotalRp value={'0'} title="Total Penerimaan" />
+                    <TulisTotalRp value={'0'} title="Total Pengeluaran" />
 
-                    <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" /> */}
+                    {/* <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" /> */}
                 </div>
             </div>
         </PageLayout >
+        </TotalWrapper>
 
     )
 }

@@ -146,7 +146,7 @@ const data = {
         {
           title: "AKTIVITAS (R/L) Detail",
           url: "/rl-detail",
-        },
+        },  
         {
           title: "NERACA SALDO",
           url: "/neraca-saldo",
