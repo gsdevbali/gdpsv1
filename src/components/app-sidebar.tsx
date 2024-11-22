@@ -112,6 +112,25 @@ const data = {
       ],
     },
 
+
+    {
+      title: "Mutasi BAPEL",
+      url: "/#",
+      icon: Newspaper,
+      isActive: true,
+      items: [
+        {
+          title: "KAS BON Sementara",
+          url: "/#",
+        },
+        {
+          title: "Realisasi",
+          url: "/#",
+        },
+        
+      ],
+    },
+
     {
       title: "LAPORAN",
       url: "#",
