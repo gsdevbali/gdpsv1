@@ -96,6 +96,24 @@ const data = {
       ],
     },
 
+    {
+      title: "ENTRI BAPEL",
+      url: "/#",
+      icon: Newspaper,
+      isActive: true,
+      items: [
+        {
+          title: "KAS BON Sementara",
+          url: "/#",
+        },
+        {
+          title: "Realisasi",
+          url: "/#",
+        },
+        
+      ],
+    },
+
     // App-2
 
     {
@@ -113,23 +131,7 @@ const data = {
     },
 
 
-    {
-      title: "Mutasi BAPEL",
-      url: "/#",
-      icon: Newspaper,
-      isActive: true,
-      items: [
-        {
-          title: "KAS BON Sementara",
-          url: "/#",
-        },
-        {
-          title: "Realisasi",
-          url: "/#",
-        },
-        
-      ],
-    },
+    
 
     {
       title: "LAPORAN",
@@ -148,6 +150,10 @@ const data = {
         {
           title: "NERACA T",
           url: "/neraca-t",
+        },
+        {
+          title: "R/L",
+          url: "/#",
         },
 
       ],
