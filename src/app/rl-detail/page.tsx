@@ -12,7 +12,7 @@ import RugiLabaData from "./rl-data";
 //import NeracaDataSub from "./neraca-data-sub";
 //import { useState } from "react";
 
-import {useTotalRLDetail} from "./total-wrapper";
+//import { useTotalRLDetail } from "./total-wrapper";
 
 
 export default async function Page() {
@@ -27,7 +27,7 @@ export default async function Page() {
     //     return totalAktiva === totalPasiva
     // }
 
-    //const { x1data } = useTotalRLDetail()
+    //const { x1data } = useTotalRLDetail();
 
     return (
 
