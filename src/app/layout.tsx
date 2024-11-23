@@ -10,7 +10,7 @@ import Loading from "./loading";
 
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
-import { TotalRLDetaillWrapper } from "./rl-detail/total-wrapper";
+import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
 export const dynamic = "force-dynamic";
 
@@ -59,9 +59,9 @@ export default function RootLayout({
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
 
-                <TotalRLDetaillWrapper>
+                <TotalRLDetailContext>
                   {children}
-                </TotalRLDetaillWrapper>
+                </TotalRLDetailContext>
 
 
               </SidebarProvider>

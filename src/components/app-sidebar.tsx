@@ -110,7 +110,7 @@ const data = {
           title: "Realisasi",
           url: "/#",
         },
-        
+
       ],
     },
 
@@ -131,7 +131,7 @@ const data = {
     },
 
 
-    
+
 
     {
       title: "LAPORAN",
@@ -144,9 +144,9 @@ const data = {
           url: "/ledger",
         },
         {
-          title: "AKTIVITAS (R/L) Detail",
+          title: "Penerimaan / Pengeluaran",
           url: "/rl-detail",
-        },  
+        },
         {
           title: "NERACA SALDO",
           url: "/neraca-saldo",
@@ -155,7 +155,7 @@ const data = {
           title: "NERACA T",
           url: "/neraca-t",
         },
-        
+
 
       ],
     },
