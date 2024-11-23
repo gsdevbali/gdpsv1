@@ -34,7 +34,7 @@ export default async function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN - PENGELUARAN</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN</h1>
                 <Divider />
 
 
