@@ -8,7 +8,8 @@ import TulisTotalRp from "@/components/TulisTotalRp";
 const NeracaData = async ({ title, titleTotal, type, group2 }: { title: string; titleTotal: string; type: number; group2: number }) => {
 
     const { accounts: data, totalBalance: totalBalance } = await getNeraca(type, group2)
-    const newTotalBalance = toidr(totalBalance)
+    const newTotal = Math.abs(totalBalance);
+    const newTotalBalance = toidr(newTotal)
 
     return (
         <>
