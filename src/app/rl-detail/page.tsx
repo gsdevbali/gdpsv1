@@ -1,3 +1,5 @@
+"use client"
+
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
 
@@ -6,14 +8,15 @@ import global from "@/config.js";
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Loading from "./loading";
 import RugiLabaData from "./rl-data";
 //import NeracaDataSub from "./neraca-data-sub";
 //import { useState } from "react";
 
 //import { useTotalRLDetail } from "./total-wrapper";
-import { useTotalRLDetail } from "@/context/total-rl-detail";
+//import { useTotalRLDetail } from "@/context/total-rl-detail";
+
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -27,18 +30,17 @@ export default async function Page() {
     //     return totalAktiva === totalPasiva
     // }
 
-    //const dataContext = useTotalRLDetail();
+    const [total, setTotal] = useState(999);
 
     return (
 
         <PageLayout header={header} footer={footer}>
+
             <div className="w-full">
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN</h1>
                 <Divider />
 
-
-                {/* <h1> {dataContext} </h1> */}
 
                 {/* PENERIMAAN */}
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">PENERIMAAN</h1>
@@ -84,6 +86,7 @@ export default async function Page() {
                     {/* <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" /> */}
                 </div>
             </div>
+
         </PageLayout >
 
     )

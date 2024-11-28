@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -8,9 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-
-import { TotalRLDetailContext } from "@/context/total-rl-detail";
+import { ClerkProvider } from "@clerk/nextjs";
+//import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   description: "GSDEV",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
 
     <ClerkProvider>
+
 
 
       <html lang="en">
@@ -59,10 +61,7 @@ export default function RootLayout({
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
 
-                <TotalRLDetailContext>
-                  {children}
-                </TotalRLDetailContext>
-
+                {children}
 
               </SidebarProvider>
             </ThemeProvider>

@@ -145,7 +145,7 @@ const data = {
         },
         {
           title: "Penerimaan / Pengeluaran",
-          url: "/rl-detail",
+          url: "/cashflow",
         },
         {
           title: "NERACA SALDO",
