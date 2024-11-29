@@ -1,8 +1,12 @@
+'use client'
+
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+import { useCashFlowContext } from "@/context/cashflow-context";
 
 function WidgetPeriode() {
     const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
@@ -10,7 +14,12 @@ function WidgetPeriode() {
     const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
-    const [filterType, setFilterType] = useState("date"); // "date" or "month"
+    //const [filterType, setFilterType] = useState("all"); // "all", "date" or "month"
+
+    const { filterType, setFilterType } = useCashFlowContext();
+
+    const getData = async () => {}
+
     
     const handleDateSubmit = async () => {
         if (dateStart && dateEnd) {
@@ -41,6 +50,12 @@ function WidgetPeriode() {
 
                             <div className="flex space-x-2">
                                 <Button
+                                    onClick={() => setFilterType("all")}
+                                    variant={filterType === "all" ? "default" : "outline"}
+                                >
+                                    SEMUA
+                                </Button>
+                                <Button
                                     onClick={() => setFilterType("date")}
                                     variant={filterType === "date" ? "default" : "outline"}
                                 >
@@ -53,6 +68,8 @@ function WidgetPeriode() {
                                     Bulanan
                                 </Button>
                             </div>
+
+                            {filterType === "all" ? null: (<>
 
                             {filterType === "date" ? (
                                 <div className="text-center">
@@ -109,8 +126,16 @@ function WidgetPeriode() {
                                             })}
                                         </SelectContent>
                                     </Select>
-                                </div>
-                            )}
+
+                                    </div>
+
+                                    
+                                    
+                                    )
+                            
+                                }
+
+                            </>)}
 
                             {/* <Button onClick={handleDateSubmit}>TAMPILKAN</Button> */}
                             <Button onClick={filterType === "date" ? handleDateSubmit : handleMonthYearSubmit}>

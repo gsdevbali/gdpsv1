@@ -1,5 +1,6 @@
+"use client"
 
-import type { Metadata } from "next";
+//import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -10,6 +11,7 @@ import { Suspense } from "react";
 import Loading from "./loading";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { CashFlowProvider } from "@/context/cashflow-context";
 //import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
 export const dynamic = "force-dynamic";
@@ -25,10 +27,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "GDPS-App V1",
-  description: "GSDEV",
-};
+// export const metadata: Metadata = {
+//   title: "GDPS-App V1",
+//   description: "GSDEV",
+// };
 
 
 export default function RootLayout({
@@ -60,8 +62,10 @@ export default function RootLayout({
 
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
+                <CashFlowProvider>
+                  {children}
+                </CashFlowProvider>
 
-                {children}
 
               </SidebarProvider>
             </ThemeProvider>

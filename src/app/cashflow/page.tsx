@@ -6,6 +6,7 @@ import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
 import Loading from "./loading";
 import RugiLabaData from "./rl-data";
+import WidgetPeriode from "./widget-periode";
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -26,7 +27,9 @@ export default async function Page() {
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN</h1>
                 <Divider />
 
+                {/* Periode */}
 
+                <WidgetPeriode />
 
                 {/* <h1> {dataContext} </h1> */}
 
