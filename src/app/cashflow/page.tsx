@@ -7,6 +7,7 @@ import Divider from "@/components/Divider";
 import Loading from "./loading";
 import RugiLabaData from "./rl-data";
 import WidgetPeriode from "./widget-periode";
+import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -17,7 +18,8 @@ export default async function Page() {
     // const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
     //     return totalAktiva === totalPasiva
     // }
-    
+
+
 
     return (
 
@@ -25,10 +27,11 @@ export default async function Page() {
             <div className="w-full">
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN</h1>
+                <WidgetSubtitlePeriode />
+
                 <Divider />
 
                 {/* Periode */}
-
                 <WidgetPeriode />
 
                 {/* <h1> {dataContext} </h1> */}
