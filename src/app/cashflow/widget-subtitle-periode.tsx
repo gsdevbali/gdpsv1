@@ -1,6 +1,6 @@
 "use client"
 
-import { useCashFlowContext } from "@/context/cashflow-context";
+import useCashFlowContext from "@/context/cashflow-context";
 
 function WidgetSubtitlePeriode() {
 

@@ -9,6 +9,7 @@ import RugiLabaData from "./rl-data";
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import InfoTotal from "./info-total";
+import CashFlowData from "./rl-data-new";
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -19,8 +20,6 @@ export default async function Page() {
     // const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
     //     return totalAktiva === totalPasiva
     // }
-
-
 
     return (
 
@@ -35,6 +34,8 @@ export default async function Page() {
                 {/* Periode */}
                 <WidgetPeriode />
 
+
+
                 {/* <h1> {dataContext} </h1> */}
 
                 {/* PENERIMAAN */}
@@ -43,11 +44,12 @@ export default async function Page() {
 
 
                 <Suspense fallback={<Loading section="Penerimaan Persembahan" />}>
-                    <RugiLabaData title="Penerimaan Persembahan" titleTotal="Penerimaan Persembahan" type={4} group2={8} />
+                    {/* <RugiLabaData title="Penerimaan Persembahan" titleTotal="Penerimaan Persembahan" type={4} group2={8} /> */}
+                    <CashFlowData title="Penerimaan Persembahan X" titleTotal="Penerimaan Persembahan" type={4} group2={8} />
                 </Suspense>
 
                 <Suspense fallback={<Loading section="Penerimaan Lain-lain" />}>
-                    <RugiLabaData title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} />
+                    <CashFlowData title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} />
                 </Suspense>
 
 
@@ -57,21 +59,24 @@ export default async function Page() {
 
 
                 <Suspense fallback={<Loading section="Biaya Operasional Gereja" />}>
-                    <RugiLabaData title="Biaya Operasional Gereja" titleTotal="Biaya Operasional Gereja" type={5} group2={10} />
+                    <CashFlowData title="Biaya Operasional Gereja" titleTotal="Biaya Operasional Gereja" type={5} group2={10} />
                 </Suspense>
 
                 <Suspense fallback={<Loading section="Biaya Sekretariat" />}>
-                    <RugiLabaData title="Biaya Sekretariat" titleTotal="Biaya Sekretariat" type={5} group2={11} />
+                    <CashFlowData title="Biaya Sekretariat" titleTotal="Biaya Sekretariat" type={5} group2={11} />
                 </Suspense>
 
                 <Suspense fallback={<Loading section="Biaya Bidang/Bapel" />}>
-                    <RugiLabaData title="Biaya Bidang/Bapel" titleTotal="Biaya Bidang/Bapel" type={5} group2={12} />
+                    <CashFlowData title="Biaya Bidang/Bapel" titleTotal="Biaya Bidang/Bapel" type={5} group2={12} />
                 </Suspense>
 
+                <br />
                 <InfoTotal />
-                
+
+
             </div>
         </PageLayout >
+
 
     )
 }

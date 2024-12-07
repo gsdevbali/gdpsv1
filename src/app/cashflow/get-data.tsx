@@ -1,8 +1,10 @@
 
+
 export async function getRL(accountTypeId: number, accountGroup2Id: number) {
     // const res = await fetch(`${global.baseUrl}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
     //     cache: 'no-store'
     // })
+
     const res = await fetch(`${process.env.APP_URL}/api/neraca?accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`, {
         cache: 'no-store'
     })

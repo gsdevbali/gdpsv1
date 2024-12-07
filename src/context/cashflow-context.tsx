@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, useContext, useState } from 'react';
 
 //const CashFlowContext = createContext('dataX1');
@@ -29,6 +31,12 @@ export function CashFlowProvider({ children }: {
 
 }
 
-export function useCashFlowContext() {
-    return useContext(CashFlowContext);
+export default function useCashFlowContext() {
+    const context = useContext(CashFlowContext);
+    if (!context) {
+        throw new Error(
+            "useCashFlowContext must be used within a CashFlowContextProvider"
+        );
+    }
+    return context;
 }

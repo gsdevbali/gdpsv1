@@ -1,15 +1,29 @@
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
+
 import { getRL } from "./get-data";
+import { getRLuf } from "./get-data-uf";
 
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
+import useCashFlowContext from "@/context/cashflow-context";
+
+
 
 const RugiLabaData = async ({ title, titleTotal, type, group2 }: { title: string; titleTotal: string; type: number; group2: number }) => {
 
-    const { accounts: data, totalBalance: totalBalance } = await getRL(type, group2)
+    //const { setTotalTerima } = useCashFlowContext();
+    //const { accounts: data, totalBalance: totalBalance } = await getRL(type, group2)
+    const result = await getRL(type, group2)
+    if (!result) return null;
+
+    const { accounts: data, totalBalance } = result;
     const newTotal = Math.abs(totalBalance);
+    // if (group2 === 8) {
+    //     setTotalTerima(newTotal)
+    // }
     const newTotalBalance = toidr(newTotal)
+
 
     return (
         <>

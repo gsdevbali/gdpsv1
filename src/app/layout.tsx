@@ -14,6 +14,10 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { CashFlowProvider } from "@/context/cashflow-context";
 //import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
 export const dynamic = "force-dynamic";
 
 const geistSans = localFont({
@@ -63,7 +67,9 @@ export default function RootLayout({
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
                 <CashFlowProvider>
-                  {children}
+                  <QueryClientProvider client={queryClient}>
+                    {children}
+                  </QueryClientProvider>
                 </CashFlowProvider>
 
 

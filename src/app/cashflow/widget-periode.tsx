@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { useCashFlowContext } from "@/context/cashflow-context";
+import useCashFlowContext from "@/context/cashflow-context";
 
 function WidgetPeriode() {
     const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
@@ -18,9 +18,9 @@ function WidgetPeriode() {
 
     const { filterType, setFilterType } = useCashFlowContext();
 
-    const getData = async () => {}
+    const getData = async () => { }
 
-    
+
     const handleDateSubmit = async () => {
         if (dateStart && dateEnd) {
             // const fetchedData = await getData();
@@ -44,105 +44,105 @@ function WidgetPeriode() {
         //fetchData(start, end);
         //setIsDialogOpen(false);
     };
-    
-  return (
-    <div className="flex flex-col space-y-4">
 
-                            <div className="flex space-x-2">
-                                <Button
-                                    onClick={() => setFilterType("all")}
-                                    variant={filterType === "all" ? "default" : "outline"}
-                                >
-                                    SEMUA
-                                </Button>
-                                <Button
-                                    onClick={() => setFilterType("date")}
-                                    variant={filterType === "date" ? "default" : "outline"}
-                                >
-                                    Harian
-                                </Button>
-                                <Button
-                                    onClick={() => setFilterType("month")}
-                                    variant={filterType === "month" ? "default" : "outline"}
-                                >
-                                    Bulanan
-                                </Button>
-                            </div>
+    return (
+        <div className="flex flex-col space-y-4">
 
-                            {filterType === "all" ? null: (<>
+            <div className="flex space-x-2">
+                <Button
+                    onClick={() => setFilterType("all")}
+                    variant={filterType === "all" ? "default" : "outline"}
+                >
+                    SEMUA
+                </Button>
+                <Button
+                    onClick={() => setFilterType("date")}
+                    variant={filterType === "date" ? "default" : "outline"}
+                >
+                    Harian
+                </Button>
+                <Button
+                    onClick={() => setFilterType("month")}
+                    variant={filterType === "month" ? "default" : "outline"}
+                >
+                    Bulanan
+                </Button>
+            </div>
 
-                            {filterType === "date" ? (
-                                <div className="text-center">
-                                    {/* Existing date inputs */}
+            {filterType === "all" ? null : (<>
 
-                                    <div className="text-center">
-                                        <Label>Mulai dari:</Label>
-                                        <Input
-                                            type="date"
-                                            value={dateStart}
-                                            onChange={(e) => setDateStart(e.target.value)}
-                                            placeholder="Start Date"
-                                            className="w-full"
-                                        />
-                                        <div className="h-2" />
-                                        <Label>Sampai dengan:</Label>
-                                        <Input
-                                            type="date"
-                                            value={dateEnd}
-                                            onChange={(e) => setDateEnd(e.target.value)}
-                                            placeholder="End Date"
-                                        />
-                                    </div>
+                {filterType === "date" ? (
+                    <div className="text-center">
+                        {/* Existing date inputs */}
+
+                        <div className="text-center">
+                            <Label>Mulai dari:</Label>
+                            <Input
+                                type="date"
+                                value={dateStart}
+                                onChange={(e) => setDateStart(e.target.value)}
+                                placeholder="Start Date"
+                                className="w-full"
+                            />
+                            <div className="h-2" />
+                            <Label>Sampai dengan:</Label>
+                            <Input
+                                type="date"
+                                value={dateEnd}
+                                onChange={(e) => setDateEnd(e.target.value)}
+                                placeholder="End Date"
+                            />
+                        </div>
 
 
-                                </div>
-                            ) : (
-                                <div className="text-center space-y-2">
-                                    <Label>Pilih Bulan dan Tahun:</Label>
-                                    <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih Bulan" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {Array.from({ length: 12 }, (_, i) => (
-                                                <SelectItem key={i} value={i.toString()}>
-                                                    {new Date(0, i).toLocaleString('id-ID', { month: 'long' })}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <Select value={selectedYear} onValueChange={setSelectedYear}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih Tahun" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {Array.from({ length: 10 }, (_, i) => {
-                                                const year = new Date().getFullYear() - i;
-                                                return (
-                                                    <SelectItem key={year} value={year.toString()}>
-                                                        {year}
-                                                    </SelectItem>
-                                                );
-                                            })}
-                                        </SelectContent>
-                                    </Select>
+                    </div>
+                ) : (
+                    <div className="text-center space-y-2">
+                        <Label>Pilih Bulan dan Tahun:</Label>
+                        <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Pilih Bulan" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Array.from({ length: 12 }, (_, i) => (
+                                    <SelectItem key={i} value={i.toString()}>
+                                        {new Date(0, i).toLocaleString('id-ID', { month: 'long' })}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <Select value={selectedYear} onValueChange={setSelectedYear}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Pilih Tahun" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Array.from({ length: 10 }, (_, i) => {
+                                    const year = new Date().getFullYear() - i;
+                                    return (
+                                        <SelectItem key={year} value={year.toString()}>
+                                            {year}
+                                        </SelectItem>
+                                    );
+                                })}
+                            </SelectContent>
+                        </Select>
 
-                                    </div>
+                    </div>
 
-                                    
-                                    
-                                    )
-                            
-                                }
 
-                            </>)}
 
-                            {/* <Button onClick={handleDateSubmit}>TAMPILKAN</Button> */}
-                            <Button onClick={filterType === "date" ? handleDateSubmit : handleMonthYearSubmit}>
-                                TAMPILKAN
-                            </Button>
-                </div>
-  )
+                )
+
+                }
+
+            </>)}
+
+            {/* <Button onClick={handleDateSubmit}>TAMPILKAN</Button> */}
+            <Button onClick={filterType === "date" ? handleDateSubmit : handleMonthYearSubmit}>
+                TAMPILKAN
+            </Button>
+        </div>
+    )
 }
 
 export default WidgetPeriode
