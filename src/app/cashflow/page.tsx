@@ -8,6 +8,7 @@ import Loading from "./loading";
 import RugiLabaData from "./rl-data";
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
+import InfoTotal from "./info-total";
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -67,18 +68,8 @@ export default async function Page() {
                     <RugiLabaData title="Biaya Bidang/Bapel" titleTotal="Biaya Bidang/Bapel" type={5} group2={12} />
                 </Suspense>
 
-
-
-                <div className="p-4 rounded-lg bg-blue-50 dark:bg-slate-800">
-                    {/* Rangkuman Neraca */}
-                    <h1 className="text-xl font-bold pt-4 pb-2">TOTAL / RANGKUMAN</h1>
-                    {/* {isBalanceSheetEqual(totalAktiva, totalPasiva) ? <p className="text-green-500 pb-2">{global.pageInfo.infoNeracaBalance}</p> : <p className="text-red-500 pb-2">{global.pageInfo.infoNeracaUnbalance}</p>} */}
-
-                    <TulisTotalRp value={'0'} title="Total Penerimaan" />
-                    <TulisTotalRp value={'0'} title="Total Pengeluaran" />
-
-                    {/* <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" /> */}
-                </div>
+                <InfoTotal />
+                
             </div>
         </PageLayout >
 
