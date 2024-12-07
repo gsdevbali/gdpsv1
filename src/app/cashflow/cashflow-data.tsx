@@ -27,22 +27,27 @@ const CashFlowData = async ({ title, titleTotal, type, group2 }: { title: string
                     case 8:
                         // Handle case for group2 = 8
                         cfStore.setTotalT1(Math.abs(totalBalance))
+                        console.log('Total T1:', cfStore.setTotalT1)
                         break;
                     case 9:
                         // Handle case for group2 = 8
                         cfStore.setTotalT2(Math.abs(totalBalance))
+                        console.log('Total T2:', cfStore.setTotalT2)
                         break;
                     case 10:
                         // Handle case for group2 = 10
                         cfStore.setTotalK1(Math.abs(totalBalance))
+                        console.log('Total T3:', cfStore.setTotalT3)
                         break;
                     case 11:
                         // Handle case for group2 = 11
                         cfStore.setTotalK2(Math.abs(totalBalance))
+                        console.log('Total K1:', cfStore.setTotalK1)
                         break;
                     case 12:
                         // Handle case for group2 = 12
                         cfStore.setTotalK3(Math.abs(totalBalance))
+                        console.log('Total K2:', cfStore.setTotalK2)
                         break;
 
                     default:

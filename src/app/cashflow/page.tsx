@@ -1,15 +1,12 @@
 import { Suspense } from "react";
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
-import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRp";
 import Divider from "@/components/Divider";
 import Loading from "./loading";
-import RugiLabaData from "./rl-data";
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import InfoTotal from "./info-total";
-import CashFlowData from "./rl-data-new";
+import CashFlowData from "./cashflow-data";
 
 export default async function Page() {
     //const [loading, setLoading] = useState(false);
@@ -45,7 +42,7 @@ export default async function Page() {
 
                 <Suspense fallback={<Loading section="Penerimaan Persembahan" />}>
                     {/* <RugiLabaData title="Penerimaan Persembahan" titleTotal="Penerimaan Persembahan" type={4} group2={8} /> */}
-                    <CashFlowData title="Penerimaan Persembahan X" titleTotal="Penerimaan Persembahan" type={4} group2={8} />
+                    <CashFlowData title="Penerimaan Persembahan" titleTotal="Penerimaan Persembahan" type={4} group2={8} />
                 </Suspense>
 
                 <Suspense fallback={<Loading section="Penerimaan Lain-lain" />}>
