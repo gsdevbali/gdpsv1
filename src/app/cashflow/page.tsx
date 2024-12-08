@@ -1,22 +1,21 @@
 import { Suspense } from "react";
+
 import PageLayout from "@/components/PageLayout";
-import global from "@/config.js";
-import Divider from "@/components/Divider";
 import Loading from "./loading";
+
+import global from "@/config.js";
+import CashFlowData from "./cashflow-data";
+import Divider from "@/components/Divider";
+
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
-import InfoTotal from "./info-total";
-import CashFlowData from "./cashflow-data";
+import WidgetInfoTotal from "./widget-info-total";
+
 
 export default async function Page() {
-    //const [loading, setLoading] = useState(false);
+
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
-
-    // const selisihAkhir = toidr(totalAktiva - totalPasiva)
-    // const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
-    //     return totalAktiva === totalPasiva
-    // }
 
     return (
 
@@ -31,14 +30,9 @@ export default async function Page() {
                 {/* Periode */}
                 <WidgetPeriode />
 
-
-
-                {/* <h1> {dataContext} </h1> */}
-
                 {/* PENERIMAAN */}
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">PENERIMAAN</h1>
                 <Divider />
-
 
                 <Suspense fallback={<Loading section="Penerimaan Persembahan" />}>
                     {/* <RugiLabaData title="Penerimaan Persembahan" titleTotal="Penerimaan Persembahan" type={4} group2={8} /> */}
@@ -54,7 +48,6 @@ export default async function Page() {
                 <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">PENGELUARAN</h1>
                 <Divider />
 
-
                 <Suspense fallback={<Loading section="Biaya Operasional Gereja" />}>
                     <CashFlowData title="Biaya Operasional Gereja" titleTotal="Biaya Operasional Gereja" type={5} group2={10} />
                 </Suspense>
@@ -68,7 +61,8 @@ export default async function Page() {
                 </Suspense>
 
                 <br />
-                <InfoTotal />
+                {/* INFO TOTAL */}
+                <WidgetInfoTotal />
 
 
             </div>

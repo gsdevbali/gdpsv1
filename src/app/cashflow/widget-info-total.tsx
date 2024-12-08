@@ -6,7 +6,7 @@ import TulisTotalRp from '@/components/TulisTotalRp'
 import { useCfStore } from './cf-store'
 import toidr from '@/lib/toidr'
 
-function InfoTotal() {
+function WidgetInfoTotal() {
 
   const cfStore = useCfStore()
 
@@ -28,4 +28,4 @@ function InfoTotal() {
   )
 }
 
-export default InfoTotal
+export default WidgetInfoTotal

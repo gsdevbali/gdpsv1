@@ -46,10 +46,13 @@ export const useCfStore = create<CfStore>( (set)=>({
 
 
     // New codes:
+
+    //Set Penerimaan
     setTotalT1: (totalTerima1: number) => set((state) => state.totalTerima1 !== totalTerima1 ? { totalTerima1 } : state),
     setTotalT2: (totalTerima2: number) => set((state) => state.totalTerima2 !== totalTerima2 ? { totalTerima2 } : state),
     setTotalT3: (totalTerima3: number) => set((state) => state.totalTerima3 !== totalTerima3 ? { totalTerima3 } : state),
 
+    //Set Biaya/Pengeluaran
     setTotalK1: (totalKeluar1: number) => set((state) => state.totalKeluar1 !== totalKeluar1 ? { totalKeluar1 } : state),
     setTotalK2: (totalKeluar2: number) => set((state) => state.totalKeluar2 !== totalKeluar2 ? { totalKeluar2 } : state),
     setTotalK3: (totalKeluar3: number) => set((state) => state.totalKeluar3 !== totalKeluar3 ? { totalKeluar3 } : state),

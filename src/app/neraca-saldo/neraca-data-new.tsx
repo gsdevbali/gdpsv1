@@ -1,22 +1,19 @@
-"use client"
+import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
+import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRp";
 
-import { useQuery } from '@tanstack/react-query';
-import { useCfStore } from './cf-store'
+const NeracaData = async ({ title, titleTotal, type, group2 }: { title: string; titleTotal: string; type: number; group2: number }) => {
 
-
-const CashFlowData = ({ title, titleTotal, type, group2 }: { title: string; titleTotal: string; type: number; group2: number }) => {
-
-    const { setTotalT1, setTotalT2, setTotalK1, setTotalK2, setTotalK3 } = useCfStore();
+    // const { accounts: data, totalBalance: totalBalance } = await getNeraca(type, group2)
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['cashflow', type, group2],
+        queryKey: ['neraca', type, group2],
         queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
@@ -28,40 +25,13 @@ const CashFlowData = ({ title, titleTotal, type, group2 }: { title: string; titl
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
 
+    // const newTotal = Math.abs(totalBalance);
+    // const newTotalBalance = toidr(newTotal)
+
     //Total & data for table
     const { accounts: data, totalBalance } = result;
     const newTotal = Math.abs(totalBalance);
     const newTotalBalance = toidr(newTotal);
-
-    //Update Total global States
-    if (isSuccess) {
-        //UpdateTotalCF(group2, totalBalance);
-        const newTotal = Math.abs(totalBalance);
-
-        switch (group2) {
-
-            case 8:
-                setTotalT1(newTotal)
-                break;
-            case 9:
-                setTotalT2(newTotal)
-                break;
-            case 10:
-                setTotalK1(newTotal)
-                break;
-            case 11:
-                setTotalK2(newTotal)
-                break;
-            case 12:
-
-                setTotalK3(newTotal)
-                break;
-
-            default:
-                // Handle default case
-                break;
-        }
-    };
 
     return (
         <>
@@ -70,9 +40,12 @@ const CashFlowData = ({ title, titleTotal, type, group2 }: { title: string; titl
                 <DataTable columns={columns} data={data} />
                 <TulisTotalRp value={newTotalBalance} title={titleTotal} />
             </div>
+
         </>
 
     )
 }
 
-export default CashFlowData;
+export default NeracaData;
+
+//export default
