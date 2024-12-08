@@ -7,7 +7,7 @@ import toidr from "@/lib/toidr";
 import Divider from "@/components/Divider";
 
 import Loading from "./loading";
-import NeracaData from "./neraca-data";
+import NeracaData from "./neraca-data-new";
 import NeracaDataSub from "./neraca-data-sub";
 import WidgetInfoTotal from "./widget-info-total";
 
@@ -82,7 +82,8 @@ export default async function Page() {
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">ASET BERSIH</h2> */}
                 <Suspense fallback={<Loading section="ASET BERSIH" />}>
                     <NeracaData title="ASET BERSIH" titleTotal="Aset Bersih" type={3} group2={6} />
-                    <NeracaDataSub title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} />
+                    {/* <NeracaDataSub title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} /> */}
+                    <NeracaData title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} />
                 </Suspense>
 
 

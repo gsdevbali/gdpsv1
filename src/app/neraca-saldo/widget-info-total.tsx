@@ -3,16 +3,19 @@
 import React from 'react'
 
 import TulisTotalRp from '@/components/TulisTotalRp'
+import TulisTotalRpGreen from '@/components/TulisTotalRpGreen'
+import TulisTotalRpRed from '@/components/TulisTotalRpRed'
+
 import { useNeracaStore } from './neraca-store'
 import toidr from '@/lib/toidr'
 import global from "@/config.js";
 
 function WidgetInfoTotal() {
 
-    const { totalAL, totalATL, totalAT, totalK, totalKL, totalAB } = useNeracaStore();
+    const { totalAL, totalATL, totalAT, totalK, totalKL, totalAB, totalAB2 } = useNeracaStore();
 
     const totalAktiva = totalAL + totalATL + totalAT;
-    const totalPasiva = totalK + totalKL + totalAB;
+    const totalPasiva = totalK + totalKL + totalAB + totalAB2;
 
     {/* Selisih Aktiva dan Pasiva */ }
     const selisihAkhir = toidr(totalAktiva - totalPasiva)
@@ -30,7 +33,11 @@ function WidgetInfoTotal() {
             <TulisTotalRp value={toidr(totalAktiva)} title="ASET" />
             <TulisTotalRp value={toidr(totalPasiva)} title="PASIVA (Kewajiban + Aset Bersih)" />
 
-            <TulisTotalRp value={selisihAkhir} title="Selisih Aset dan Pasiva" />
+            {isBalanceSheetEqual(totalAktiva, totalPasiva) ?
+                <TulisTotalRpGreen value={selisihAkhir} title="Selisih Aset dan Pasiva" />
+                :
+                <TulisTotalRpRed value={selisihAkhir} title="Selisih Aset dan Pasiva" />
+            }
         </div>
     )
 
