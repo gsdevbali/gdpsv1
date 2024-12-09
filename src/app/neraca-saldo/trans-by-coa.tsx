@@ -2,14 +2,14 @@ import { Suspense } from "react";
 
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
-import Loading from "./loading";
 
-import global from "@/config.js";
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
+import global from "@/config.js";
+import Loading from "@/app/loading";
 import prisma from "@/lib/dbprisma";
 
-async function getData(accountId: string) {
+async function getData(accountId: number) {
     // const res = await fetch(`${global.baseUrl}/api/transbyid?accountId=${accountId}`, {
     //     cache: 'no-store'
     // })
@@ -22,11 +22,10 @@ async function getData(accountId: string) {
 }
 
 
-export default async function Page({ params }: { params: { accountId: string, code: string, name: string } }) {
-    const accountId = params.accountId as string
-
-    const account = await prisma.account.findUnique({ where: { id: parseInt(accountId) } })
-    const data = await getData(accountId)
+export default async function TransByCoaId({ params }: { params: { accountId: number, code: string, name: string} }) {
+    //const accountId = params.accountId
+    //const account = await prisma.account.findUnique({ where: { id: accountId } })
+    const data = await getData(params.accountId)
 
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
@@ -35,7 +34,7 @@ export default async function Page({ params }: { params: { accountId: string, co
 
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
-                <h2 className="text-lg font-bold">Daftar Transaksi Akun: {account?.code} - {account?.name}</h2>
+                <h2 className="text-lg font-bold">Daftar Transaksi Akun: {params.code} - {params.name}</h2>
 
                 <Divider />
             <Suspense fallback={<Loading />}>

@@ -8,31 +8,12 @@ import Divider from "@/components/Divider";
 
 import Loading from "./loading";
 import NeracaData from "./neraca-data-new";
-import NeracaDataSub from "./neraca-data-sub";
 import WidgetInfoTotal from "./widget-info-total";
 
-
 export default async function Page() {
-    //const [loading, setLoading] = useState(false);
 
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
-
-    //const totalAktiva = totalBalance_AktivaLancar + totalBalance_AktivaTidakLancar + totalBalance_AktivaTetap
-    // const totalAktiva = 0
-    // const totalPasiva = totalBalance_Kewajiban1 + totalBalance_Kewajiban2 + totalBalance_AsetBersih1 + totalBalance_AsetBersih2
-    // const totalPasiva = 0
-
-    // const newTotalAktiva = toidr(totalAktiva)
-    // const newTotalPasiva = toidr(totalPasiva)
-
-    {/* Selisih Aset dan Pasiva */ }
-    // const selisihAkhir = toidr(totalAktiva - totalPasiva)
-
-    // const isBalanceSheetEqual = (totalAktiva: number, totalPasiva: number) => {
-    //     return totalAktiva === totalPasiva
-    // }
-
 
     return (
 
@@ -61,9 +42,6 @@ export default async function Page() {
                     <NeracaData title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} />
                 </Suspense>
 
-
-
-
                 {/* PASIVA - KANAN */}
 
                 <h2 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">KEWAJIBAN DAN ASET BERSIH</h2>
@@ -86,11 +64,11 @@ export default async function Page() {
                     <NeracaData title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} />
                 </Suspense>
 
-
-
                 <div className="h-4"></div>
 
+                {/* TOTAL Info */}
                 <WidgetInfoTotal />
+
             </div>
         </PageLayout >
 

@@ -1,7 +1,9 @@
 'use client'
 
+import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
+import TransByCoaId from "./trans-by-coa"
 //import AccountDialog from "./AccountDialog"
 
 export type Account = {
@@ -97,6 +99,28 @@ export const columns: ColumnDef<Account>[] = [
         },
         enableSorting: true,
     },
+
+    // {
+    //     accessorKey: "name",
+    //     header: () => <div className="text-left">Akun</div>,
+    //     cell: ({ row }) => {
+    //         return (
+    //             <Link
+    //                 href={`/coa/${row.original.id}/transactions`}
+    //                 onClick={(e) => {
+    //                     e.preventDefault(); // Prevent default link behavior
+    //                     TransByCoaId({ params: { accountId: row.original.id, code: row.original.code, name: row.original.name } });
+    //                 }}
+    //                 className="text-blue-600 hover:underline"
+    //             >
+    //                 {row.original.name}
+    //             </Link>
+    //         );
+    //     },
+    //     enableSorting: true,
+    // },
+
+
     {
         accessorKey: "balance",
         header: () => <div className="text-right">Saldo</div>,
@@ -107,5 +131,20 @@ export const columns: ColumnDef<Account>[] = [
         },
         enableSorting: true,
     },
+
+    // {
+    //     accessorKey: "btn1",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">
+    //             <Link
+    //                 href={`/coa/${row.original.id}/transactions`}
+    //                 className="text-blue-600 hover:underline"
+    //             >
+    //                 test
+    //             </Link>
+    //         </div>;
+    //     },
+        
+    // }
 
 ]

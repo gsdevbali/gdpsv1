@@ -1,10 +1,11 @@
+import { Suspense } from "react";
+
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 import Loading from "@/app/loading";
-import { Suspense } from "react";
 
 async function getAccount() {
 
