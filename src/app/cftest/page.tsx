@@ -14,7 +14,7 @@ import { useCfStore } from "./cf-store";
 import ShowCFData from "./page-data";
 
 
-export default async function Page() {
+export default function Page() {
 
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
