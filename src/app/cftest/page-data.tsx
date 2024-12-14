@@ -24,7 +24,7 @@ function ShowCFData() {
             </Suspense>
 
             <Suspense fallback={<Loading section="Penerimaan Lain-lain" />}>
-                {/* <CashFlowData title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} /> */}
+                <CashFlowData title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} start={start} end={end}/>
             </Suspense>
 
 
@@ -33,15 +33,15 @@ function ShowCFData() {
             <Divider />
 
             <Suspense fallback={<Loading section="Biaya Operasional Gereja" />}>
-                {/* <CashFlowData title="Biaya Operasional Gereja" titleTotal="Biaya Operasional Gereja" type={5} group2={10} /> */}
+                <CashFlowData title="Biaya Operasional Gereja" titleTotal="Biaya Operasional Gereja" type={5} group2={10} start={start} end={end}/>
             </Suspense>
 
             <Suspense fallback={<Loading section="Biaya Sekretariat" />}>
-                {/* <CashFlowData title="Biaya Sekretariat" titleTotal="Biaya Sekretariat" type={5} group2={11} /> */}
+                <CashFlowData title="Biaya Sekretariat" titleTotal="Biaya Sekretariat" type={5} group2={11} start={start} end={end}/>
             </Suspense>
 
             <Suspense fallback={<Loading section="Biaya Bidang/Bapel" />}>
-                {/* <CashFlowData title="Biaya Bidang/Bapel" titleTotal="Biaya Bidang/Bapel" type={5} group2={12} /> */}
+                <CashFlowData title="Biaya Bidang/Bapel" titleTotal="Biaya Bidang/Bapel" type={5} group2={12} start={start} end={end}/>
             </Suspense>
 
 
