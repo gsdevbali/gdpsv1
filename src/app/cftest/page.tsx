@@ -20,7 +20,11 @@ export default function Page() {
     const footer = <p>{global.pageInfo.footerText}</p>;
 
     //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
-    const { periodeOn } = useCashFlowContext();
+    const { periodeOn, start, end, setPeriodeOn, setStartContext, setEndContext } = useCashFlowContext();
+
+    //setStartContext("01-01-2000")
+    //setEndContext("12-31-2024")
+    setPeriodeOn(false)
 
     return (
 
@@ -35,12 +39,13 @@ export default function Page() {
                 {/* Periode */}
                 <WidgetPeriode />
 
-                {
+                {/* {
                     (periodeOn) ? <ShowCFData /> : <h2 className="py-2">Periode belum ditentukan</h2>
-                }
+                } */}
+                <ShowCFData /> 
 
                 {/* INFO TOTAL */}
-                <WidgetInfoTotal />
+                {/* <WidgetInfoTotal /> */}
 
             </div>
         </PageLayout >

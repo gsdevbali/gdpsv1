@@ -1,7 +1,6 @@
 import { create } from "zustand"
 
 export interface CfStore {
-    totalCf: number;
     
     totalTerima1: number;
     totalTerima2: number;
@@ -9,9 +8,7 @@ export interface CfStore {
     totalKeluar1: number;
     totalKeluar2: number;
     totalKeluar3: number;
-    
-    setTotalCf: (totalCf: number) => void;
-    
+        
     setTotalT1: (setTotalT1: number) => void;
     setTotalT2: (setTotalT2: number) => void;
     setTotalT3: (setTotalT3: number) => void;
@@ -20,14 +17,10 @@ export interface CfStore {
     setTotalK2: (setTotalK2: number) => void;
     setTotalK3: (setTotalK3: number) => void;
     
-    isPeriodeOK: boolean;
-    setIsPeriodeOK: (isPeriodeOK: boolean) => void;
 }
 
 export const useCfStore = create<CfStore>( (set)=>({
-    totalCf: 0,
-    setTotalCf: (totalCf: number) => set( ()=>({ totalCf }) ),
-
+    
     totalTerima1: 0,
     totalTerima2: 0,
     totalTerima3: 0,
@@ -35,9 +28,6 @@ export const useCfStore = create<CfStore>( (set)=>({
     totalKeluar1: 0,
     totalKeluar2: 0,
     totalKeluar3: 0,
-
-    isPeriodeOK: false,
-    setIsPeriodeOK: (isPeriodeOK: boolean) => set((state) => state.isPeriodeOK !== isPeriodeOK ? { isPeriodeOK } : state),
 
     // setTotalT1: (totalTerima1: number) => set( ()=>({ totalTerima1 }) ),
     // setTotalT2: (totalTerima2: number) => set( ()=>({ totalTerima2 }) ),
@@ -60,6 +50,5 @@ export const useCfStore = create<CfStore>( (set)=>({
     setTotalK1: (totalKeluar1: number) => set((state) => state.totalKeluar1 !== totalKeluar1 ? { totalKeluar1 } : state),
     setTotalK2: (totalKeluar2: number) => set((state) => state.totalKeluar2 !== totalKeluar2 ? { totalKeluar2 } : state),
     setTotalK3: (totalKeluar3: number) => set((state) => state.totalKeluar3 !== totalKeluar3 ? { totalKeluar3 } : state),
-
 
 }) )
