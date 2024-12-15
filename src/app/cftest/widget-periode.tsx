@@ -251,7 +251,7 @@ function WidgetPeriode() {
                                 
                                 (value)  => {
                                     //handleMonthYearSubmit()
-                                    //setSelectedMonth(selectedMonth)
+                                    setSelectedMonth(value)
                                     //setSelectedYear(selectedYear)
 
                                     const year = parseInt(selectedYear);
