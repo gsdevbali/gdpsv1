@@ -377,7 +377,11 @@ function WidgetPeriode() {
                 </>
             )}
 
-            <Button onClick={handleRefresh}>PERBAHARUI DATA</Button>
+
+
+            {(!ready) ?
+                <Button onClick={handleRefresh}>PERBAHARUI DATA</Button> : null
+            }
 
             {/* {
                 (!loading) ? <BeforePageData isOK={loading}/> : <h2>Belum Ada Data ....</h2>
