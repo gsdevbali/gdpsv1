@@ -1,7 +1,5 @@
 "use client"
 
-import { Suspense, useState } from "react";
-
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
@@ -9,9 +7,7 @@ import useCashFlowContext from "@/context/cashflow-context";
 
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
-import WidgetInfoTotal from "./widget-info-total";
-import { useCfStore } from "./cf-store";
-import ShowCFData from "./page-data";
+
 
 
 export default function Page() {
@@ -19,11 +15,8 @@ export default function Page() {
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
-    //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
-    const { periodeOn, start, end, setPeriodeOn, setStartContext, setEndContext } = useCashFlowContext();
+    const { setPeriodeOn } = useCashFlowContext();
 
-    //setStartContext("01-01-2000")
-    //setEndContext("12-31-2024")
     setPeriodeOn(false)
 
     return (
@@ -31,12 +24,12 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN PENERIMAAN/PENGELUARAN - TEST</h1>
                 <WidgetSubtitlePeriode />
 
                 <Divider />
 
-                {/* Periode */}
+                {/* Periode & Data */}
                 <WidgetPeriode />
 
                 {/* {

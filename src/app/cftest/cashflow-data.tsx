@@ -11,13 +11,13 @@ import { useCfStore } from './cf-store'
 //import useCashFlowContext from "@/context/cashflow-context";
 
 
-const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number, start:string, end:string }) => {
+const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number, start: string, end: string }) => {
 
     const { setTotalT1, setTotalT2, setTotalK1, setTotalK2, setTotalK3 } = useCfStore();
     //const { start, end } = useCashFlowContext();
 
-    console.log('start ---:', start)
-    console.log('end ---:', end)
+    //console.log('start ---:', start)
+    //console.log('end ---:', end)
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
