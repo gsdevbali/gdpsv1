@@ -19,6 +19,7 @@ const BeforePageData = ({ isOK }: { isOK: boolean }) => {
             <h2>End: {end}</h2>
 
             <h2>--END-CHECK--</h2> */}
+
             {/* {(isOK?)<ShowCFData /> : <h2>Nope!</h2> */}
             {isOK && <ShowCFData />}
 

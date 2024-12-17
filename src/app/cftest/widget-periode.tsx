@@ -216,6 +216,7 @@ function WidgetPeriode() {
                     onClick={() => {
                         setFilterType("date")
                         //handleFilterTypeSubmit()
+                        setSubTitleCf("Tentukan Periode dan Perbaharui Data ... ")
                         setReady(false)
                     }
                     }
@@ -227,6 +228,7 @@ function WidgetPeriode() {
                     onClick={() => {
                         setFilterType("month")
                         // handleFilterTypeSubmit()
+                        setSubTitleCf("Tentukan Periode dan Perbaharui Data ... ")
                         setReady(false)
                     }
                     }
