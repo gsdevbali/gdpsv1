@@ -45,7 +45,7 @@ export default function Page() {
                 {/* <ShowCFData />  */}
 
                 {/* INFO TOTAL */}
-                <WidgetInfoTotal />
+
 
             </div>
         </PageLayout >

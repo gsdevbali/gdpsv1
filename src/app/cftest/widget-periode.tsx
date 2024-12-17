@@ -192,6 +192,9 @@ function WidgetPeriode() {
         setReady(true)
     };
 
+    useEffect(() => {
+        setReady(true);
+    }, []);
 
     return (
         <div className="flex flex-col space-y-4">
@@ -199,6 +202,7 @@ function WidgetPeriode() {
             <div className="flex space-x-2">
                 <Button
                     onClick={() => {
+
                         setFilterType("all")
                         //handleFilterTypeSubmit()
                         setReady(false)

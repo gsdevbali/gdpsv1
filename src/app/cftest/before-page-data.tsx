@@ -12,13 +12,13 @@ const BeforePageData = ({ isOK }: { isOK: boolean }) => {
     const { start, end, periodeOn } = useCashFlowContext();
     return (
         <>
-            <h2>--CHECK--</h2>
+            {/* <h2>--CHECK--</h2>
 
             {(isOK) ? <h2>READY</h2> : <h2>NOT READY</h2>}
             <h2>Start: {start}</h2>
             <h2>End: {end}</h2>
 
-            <h2>--END-CHECK--</h2>
+            <h2>--END-CHECK--</h2> */}
             {/* {(isOK?)<ShowCFData /> : <h2>Nope!</h2> */}
             {isOK && <ShowCFData />}
 
