@@ -259,6 +259,7 @@ function WidgetPeriode() {
                                         setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
                                         // handleSubTitleDate()
                                         //refreshPath()
+                                        setReady(false)
 
                                     }
                                     }
@@ -280,6 +281,7 @@ function WidgetPeriode() {
                                         //handleSubTitleDate()
                                         //handleDateSubmit()
                                         //refreshPath()
+                                        setReady(false)
 
                                     }
                                     }
