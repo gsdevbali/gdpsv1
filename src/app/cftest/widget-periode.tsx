@@ -10,9 +10,13 @@ import useCashFlowContext from "@/context/cashflow-context";
 import { getMonth, toLocalDate, toQueryDate } from '@/lib/tanggal';
 import { revalidatePath } from 'next/cache';
 import refreshPath from './refresh-path';
+import BeforePageData from './before-page-data';
 //import { useCfStore } from './cf-store';
 
 function WidgetPeriode() {
+
+    const [loading, setLoading] = useState(true);
+    const [ready, setReady] = useState(false);
     const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
 
     // First Day + 1 - supaya menampilkan di widget sesuai
@@ -83,6 +87,7 @@ function WidgetPeriode() {
     };
 
     const handleMonthYearSubmit = () => {
+        setLoading(true);
         const year = parseInt(selectedYear);
         const month = parseInt(selectedMonth);
         const monthName = getMonth(month);
@@ -94,7 +99,7 @@ function WidgetPeriode() {
         setPeriodeOn(true)
         setFilterType("month")
         //setSubTitleCf("Pilih Bulan/Tahun...")
-        setSubTitleCf('Periode: ' + monthName + ' ' + year)
+        //setSubTitleCf('Periode: ' + monthName + ' ' + year)
         //
         console.log('FilterType:', filterType)
         setStartContext(toQueryDate(start))
@@ -108,7 +113,9 @@ function WidgetPeriode() {
         //fetchData(start, end);
         //setIsDialogOpen(false);
         //setIsPeriodeOK(true);
+        setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
         //refreshPath()
+        setLoading(false);
     };
 
     const handleAllPeriode = () => {
@@ -118,7 +125,7 @@ function WidgetPeriode() {
         // setStartContext("01-01-2000")
         // setEndContext("12-31-3024")
         // console.log('End ----- HANDLE ALL:')
-
+        setLoading(true)
         setStartContext("01-01-2000")
         setEndContext("12-31-3024")
 
@@ -129,7 +136,8 @@ function WidgetPeriode() {
         console.log('ALL BUTTON - in handle:')
         console.log(start)
         console.log(end)
-        refreshPath()
+        setLoading(false)
+        //refreshPath()
     }
 
     const handleSubTitleDate = () => {
@@ -140,6 +148,49 @@ function WidgetPeriode() {
         setSubTitleCf(selectedMonth)
     }
 
+    const handleRefresh = () => {
+
+        handleFilterTypeSubmit()
+        //refreshPath()
+    }
+
+
+    const handleFilterTypeSubmit = () => {
+        //setLoading(true)
+        switch (filterType) {
+            case "all":
+                handleAllPeriode();
+                refreshPath();
+                break;
+            case "date":
+                setStartContext(dateStart);
+                setEndContext(dateEnd);
+                setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
+                refreshPath();
+                break;
+            case "month":
+                // setSubTitleCf("Pilih Bulan/Tahun...")
+                //setFilterType("month")
+                setSelectedMonth(selectedMonth)
+                const year = parseInt(selectedYear);
+                const month = parseInt(selectedMonth);
+                const monthName = getMonth(month);
+                const firstDayOfSelectedMonth = new Date(year, month, 1).toISOString().split('T')[0];
+                const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
+                const newEnd = new Date(lastDayOfSelectedMonth);
+                newEnd.setDate(newEnd.getDate() + 2);
+                const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
+                setStartContext(toQueryDate(firstDayOfSelectedMonth));
+                setEndContext(toQueryDate(newlastDayOfSelectedMonth));
+                setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear);
+                refreshPath();
+                break;
+            default:
+                console.log("Unknown filter type");
+        }
+        //setLoading(false)
+        setReady(true)
+    };
 
 
     return (
@@ -148,42 +199,33 @@ function WidgetPeriode() {
             <div className="flex space-x-2">
                 <Button
                     onClick={() => {
-                        //setPeriodeOn(false)
-                        handleAllPeriode()
-
-                    }}
+                        setFilterType("all")
+                        //handleFilterTypeSubmit()
+                        setReady(false)
+                    }
+                    }
                     variant={filterType === "all" ? "default" : "outline"}
                 >
                     SEMUA
                 </Button>
                 <Button
                     onClick={() => {
-                        //setPeriodeOn(true)
                         setFilterType("date")
-                        setStartContext(dateStart)
-                        setEndContext(dateEnd)
-                        //setSubTitleCf("Pilih Periode...")
-                        setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd))
-                        //handleDateSubmit()
-
-                        refreshPath()
-
-
-                    }}
+                        //handleFilterTypeSubmit()
+                        setReady(false)
+                    }
+                    }
                     variant={filterType === "date" ? "default" : "outline"}
                 >
                     Harian
                 </Button>
                 <Button
                     onClick={() => {
-
-                        // setPeriodeOn(true)
                         setFilterType("month")
-                        // setSubTitleCf("Pilih Bulan/Tahun...")
-                        //handleMonthYearSubmit()
-                        refreshPath()
-
-                    }}
+                        // handleFilterTypeSubmit()
+                        setReady(false)
+                    }
+                    }
                     variant={filterType === "month" ? "default" : "outline"}
                 >
                     Bulanan
@@ -210,7 +252,7 @@ function WidgetPeriode() {
                                         setStartContext(e.target.value)
                                         setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
                                         // handleSubTitleDate()
-                                        refreshPath()
+                                        //refreshPath()
 
                                     }
                                     }
@@ -231,7 +273,7 @@ function WidgetPeriode() {
                                         console.log('Date End Input: ', e.target.value)
                                         //handleSubTitleDate()
                                         //handleDateSubmit()
-                                        refreshPath()
+                                        //refreshPath()
 
                                     }
                                     }
@@ -274,7 +316,8 @@ function WidgetPeriode() {
 
                                     //subtitle
                                     setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
-                                    refreshPath()
+                                    //refreshPath()
+                                    setReady(false)
                                 }
 
                             }>
@@ -297,6 +340,7 @@ function WidgetPeriode() {
                                 () => {
                                     handleMonthYearSubmit()
                                     refreshPath()
+                                    setReady(false)
                                 }
                             }>
                                 <SelectTrigger>
@@ -325,7 +369,14 @@ function WidgetPeriode() {
                 </>
             )}
 
-            {/* <Button onClick={handleDateSubmit}>TAMPILKAN</Button> */}
+            <Button onClick={handleRefresh}>PERBAHARUI DATA</Button>
+
+            {/* {
+                (!loading) ? <BeforePageData isOK={loading}/> : <h2>Belum Ada Data ....</h2>
+            } */}
+
+            <BeforePageData isOK={ready} />
+
             {/* <Button onClick={filterType === "date" ? handleDateSubmit : handleMonthYearSubmit}>
                 PERBAHARUI DATA
             </Button> */}

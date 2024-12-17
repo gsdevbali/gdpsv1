@@ -42,7 +42,7 @@ export default function Page() {
                 {/* {
                     (periodeOn) ? <ShowCFData /> : <h2 className="py-2">Periode belum ditentukan</h2>
                 } */}
-                <ShowCFData /> 
+                {/* <ShowCFData />  */}
 
                 {/* INFO TOTAL */}
                 <WidgetInfoTotal />
