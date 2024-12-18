@@ -326,15 +326,13 @@ function WidgetPeriode() {
 
                                     // End-Date adjusted to make sure 'correct' query result
                                     const newEnd = new Date(lastDayOfSelectedMonth);
-                                    //const newStart = toQueryDate(dateStart)
-                                    //const newEnd = toQueryDate(dateEnd)
                                     newEnd.setDate(newEnd.getDate() + 2);
                                     // tranform Date to String
-                                    const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
+                                    //const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
 
                                     setStartContext(toQueryDate(firstDayOfSelectedMonth))
-                                    //setEndContext(toQueryDate(lastDayOfSelectedMonth))
-                                    setEndContext(toQueryDate(newlastDayOfSelectedMonth))
+                                    setEndContext(toQueryDate(lastDayOfSelectedMonth))
+                                    //setEndContext(toQueryDate(newlastDayOfSelectedMonth))
 
                                     //subtitle
                                     setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
