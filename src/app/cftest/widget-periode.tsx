@@ -270,7 +270,7 @@ function WidgetPeriode() {
                                     onChange={(e) => {
                                         console.log('Date Start Input: ', e.target.value)
                                         setDateStart(e.target.value)
-                                        //setStartContext(e.target.value)
+                                        setStartContext(e.target.value)
                                         setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
                                         // handleSubTitleDate()
                                         //refreshPath()
@@ -289,7 +289,7 @@ function WidgetPeriode() {
                                     value={dateEnd}
                                     onChange={(e) => {
                                         setDateEnd(e.target.value)
-                                        // setEndContext(e.target.value)
+                                        setEndContext(e.target.value)
                                         setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(e.target.value))
 
                                         console.log('Date End Input: ', e.target.value)
