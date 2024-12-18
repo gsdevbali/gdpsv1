@@ -149,7 +149,6 @@ function WidgetPeriode() {
     }
 
     const handleRefresh = () => {
-
         setStartContext(dateStart)
         setEndContext(dateEnd)
         handleFilterTypeSubmit()
@@ -173,7 +172,7 @@ function WidgetPeriode() {
             case "month":
                 // setSubTitleCf("Pilih Bulan/Tahun...")
                 //setFilterType("month")
-                setSelectedMonth(selectedMonth)
+                //setSelectedMonth(selectedMonth)
                 const year = parseInt(selectedYear);
                 const month = parseInt(selectedMonth);
                 const monthName = getMonth(month);
@@ -185,7 +184,9 @@ function WidgetPeriode() {
                 setStartContext(toQueryDate(firstDayOfSelectedMonth));
                 setEndContext(toQueryDate(newlastDayOfSelectedMonth));
                 setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear);
-                refreshPath();
+
+
+                //refreshPath();
                 break;
             default:
                 console.log("Unknown filter type");
@@ -308,7 +309,6 @@ function WidgetPeriode() {
                                     const month = parseInt(value);
                                     const monthName = getMonth(month);
 
-
                                     const firstDayOfSelectedMonth = new Date(year, month, 1).toISOString().split('T')[0];
                                     const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
 
@@ -326,6 +326,7 @@ function WidgetPeriode() {
 
                                     //subtitle
                                     setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
+                                    setSelectedMonth(value)
                                     //refreshPath()
                                     setReady(false)
                                 }
