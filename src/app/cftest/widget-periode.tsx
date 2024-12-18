@@ -41,6 +41,11 @@ function WidgetPeriode() {
     const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]); // Set default to today
     const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]); // Set default to today
 
+    //const [dateStart, setDateStart] = useState(''); // Initialize as empty string
+    //const [dateEnd, setDateEnd] = useState(''); // Initialize as empty string
+
+
+
     //const getData = async () => { }
     //const date1 = "01-01-2000"
 
@@ -50,6 +55,15 @@ function WidgetPeriode() {
     //const newEnd = toQueryDate(dateEnd)
     newEnd.setDate(newEnd.getDate() + 1);
     const newDateEnd = newEnd.toISOString().split('T')[0];
+
+    useEffect(() => {
+        //const today = new Date().toISOString().split('T')[0];
+        setReady(true);
+        //setDateStart(today); // Set default to today
+        //setDateEnd(today); // Set default to today
+
+
+    }, []); // Empty dependency array to run only once on mount
 
 
     console.log('START FilterType:', filterType)
@@ -167,7 +181,7 @@ function WidgetPeriode() {
                 setStartContext(dateStart);
                 setEndContext(dateEnd);
                 setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
-                refreshPath();
+                //refreshPath();
                 break;
             case "month":
                 // setSubTitleCf("Pilih Bulan/Tahun...")
@@ -195,9 +209,7 @@ function WidgetPeriode() {
         setReady(true)
     };
 
-    useEffect(() => {
-        setReady(true);
-    }, []);
+
 
     return (
         <div className="flex flex-col space-y-4">
