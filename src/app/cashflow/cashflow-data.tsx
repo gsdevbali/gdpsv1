@@ -30,8 +30,8 @@ const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: 
         }),
     });
     
-    // console.log('-----cek API URL-------')
-    // console.log('fetched-url',`/api/neraca-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`)
+    console.log('-----cek API URL-------')
+    console.log('fetched-url',`/api/neraca-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`)
 
     if (isLoading) return <div>Tunggu...</div>; // Handle loading state
     if (error) return <div>Error: {error.message}</div>; // Handle error state

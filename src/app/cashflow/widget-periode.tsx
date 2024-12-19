@@ -324,11 +324,11 @@ function WidgetPeriode() {
                                     // End-Date adjusted to make sure 'correct' query result
 
                                     const newStart = new Date(firstDayOfSelectedMonth)
-                                    newStart.setDate(newStart.getDate()-1);
-                                    //newStart.setDate(newStart.getDate());
+                                    //newStart.setDate(newStart.getDate()-1);
+                                    newStart.setDate(newStart.getDate());
                                     const newEnd = new Date(lastDayOfSelectedMonth);
-                                    //newEnd.setDate(newEnd.getDate() + 2);
-                                    newEnd.setDate(newEnd.getDate()+2);
+                                    //newEnd.setDate(newEnd.getDate()+2);
+                                    newEnd.setDate(newEnd.getDate());
                                     // tranform Date to String
                                     //const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
                                     const newStartX = newStart.toISOString().split('T')[0];
