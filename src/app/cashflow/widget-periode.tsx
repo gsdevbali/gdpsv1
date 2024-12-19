@@ -325,10 +325,10 @@ function WidgetPeriode() {
 
                                     const newStart = new Date(firstDayOfSelectedMonth)
                                     //newStart.setDate(newStart.getDate()-1);
-                                    newStart.setDate(newStart.getDate());
+                                    newStart.setDate(newStart.getDate()+1);
                                     const newEnd = new Date(lastDayOfSelectedMonth);
                                     //newEnd.setDate(newEnd.getDate()+2);
-                                    newEnd.setDate(newEnd.getDate());
+                                    newEnd.setDate(newEnd.getDate()+1);
                                     // tranform Date to String
                                     //const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
                                     const newStartX = newStart.toISOString().split('T')[0];
@@ -338,10 +338,10 @@ function WidgetPeriode() {
                                     // console.log('Start Cx Org',start)
                                     // console.log('End Cx Org',end)
 
-                                    // setStartContext(toQueryDate(newStartX))
-                                    // setEndContext(toQueryDate(newEndX))
-                                    setStartContext(toQueryDate(firstDayOfSelectedMonth))
-                                    setEndContext(toQueryDate(lastDayOfSelectedMonth))
+                                    setStartContext(toQueryDate(newStartX))
+                                    setEndContext(toQueryDate(newEndX))
+                                    // setStartContext(toQueryDate(firstDayOfSelectedMonth))
+                                    // setEndContext(toQueryDate(lastDayOfSelectedMonth))
 
                                     // Delay - so Start and End is correct values
                                     setTimeout(() => {
