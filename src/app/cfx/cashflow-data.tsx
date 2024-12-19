@@ -24,14 +24,11 @@ const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: 
         queryKey: ['cashflow', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        }),
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            }),
     });
-    
-    // console.log('-----cek API URL-------')
-    // console.log('fetched-url',`/api/neraca-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`)
 
     if (isLoading) return <div>Tunggu...</div>; // Handle loading state
     if (error) return <div>Error: {error.message}</div>; // Handle error state

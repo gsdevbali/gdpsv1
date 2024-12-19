@@ -265,9 +265,6 @@ function WidgetPeriode() {
                                         setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
                                         // handleSubTitleDate()
                                         //refreshPath()
-                                        console.log('----------DATE-START-CEK------------')
-                                        console.log('Start',e.target.value)
-                                        console.log('End',dateEnd)
                                         setReady(false)
 
                                     }
@@ -286,10 +283,7 @@ function WidgetPeriode() {
                                         setEndContext(e.target.value)
                                         setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(e.target.value))
 
-                                        //console.log('Date End Input: ', e.target.value)
-                                        console.log('----------DATE-END-CEK------------')
-                                        console.log('Start',dateStart)
-                                        console.log('End',e.target.value)
+                                        console.log('Date End Input: ', e.target.value)
                                         //handleSubTitleDate()
                                         //handleDateSubmit()
                                         //refreshPath()
@@ -324,40 +318,16 @@ function WidgetPeriode() {
                                     // End-Date adjusted to make sure 'correct' query result
 
                                     const newStart = new Date(firstDayOfSelectedMonth)
-                                    newStart.setDate(newStart.getDate()-1);
-                                    //newStart.setDate(newStart.getDate());
+                                    newStart.setDate(newStart.getDate() + 1);
                                     const newEnd = new Date(lastDayOfSelectedMonth);
-                                    //newEnd.setDate(newEnd.getDate() + 2);
-                                    newEnd.setDate(newEnd.getDate()+2);
+                                    newEnd.setDate(newEnd.getDate() + 2);
                                     // tranform Date to String
                                     //const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
                                     const newStartX = newStart.toISOString().split('T')[0];
                                     const newEndX = newEnd.toISOString().split('T')[0];
 
-                                    // console.log('-------CEK-START-END-CONTEXT-VALUE-ORG---------')
-                                    // console.log('Start Cx Org',start)
-                                    // console.log('End Cx Org',end)
-
                                     setStartContext(toQueryDate(newStartX))
                                     setEndContext(toQueryDate(newEndX))
-
-                                    // Delay - so Start and End is correct values
-                                    setTimeout(() => {
-                                        console.log('Delayed for 2 seconds');
-                                    }, 2000);
-
-                                    // console.log('=========================================')
-                                    // console.log('--------------CEK-ORIGINAL-DATES---------')
-                                    // console.log('Start Org',firstDayOfSelectedMonth)
-                                    // console.log('End Org',lastDayOfSelectedMonth)
-                                    // console.log('=========================================')
-                                    // console.log('--------------CEK-NEW-DATES-VALUE---------')
-                                    // console.log('Start New',newStartX)
-                                    // console.log('End New',newEndX)
-                                    // console.log('=========================================')
-                                    // console.log('--------CEK-START-END-CONTEXT-VALUE---------')
-                                    // console.log('Start Cx',start)
-                                    // console.log('End Cx',end)
                                     //setEndContext(toQueryDate(newlastDayOfSelectedMonth))
 
                                     //subtitle
