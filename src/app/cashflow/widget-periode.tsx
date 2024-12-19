@@ -338,8 +338,10 @@ function WidgetPeriode() {
                                     // console.log('Start Cx Org',start)
                                     // console.log('End Cx Org',end)
 
-                                    setStartContext(toQueryDate(newStartX))
-                                    setEndContext(toQueryDate(newEndX))
+                                    // setStartContext(toQueryDate(newStartX))
+                                    // setEndContext(toQueryDate(newEndX))
+                                    setStartContext(toQueryDate(firstDayOfSelectedMonth))
+                                    setEndContext(toQueryDate(lastDayOfSelectedMonth))
 
                                     // Delay - so Start and End is correct values
                                     setTimeout(() => {
