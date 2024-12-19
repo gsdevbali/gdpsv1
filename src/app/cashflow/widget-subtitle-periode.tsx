@@ -4,22 +4,13 @@ import useCashFlowContext from "@/context/cashflow-context";
 
 function WidgetSubtitlePeriode() {
 
-    const { filterType } = useCashFlowContext();
+    const { filterType, subTitleCf } = useCashFlowContext();
 
     return (
 
         <div>
             {filterType === "all" ? null :
-
-                (<>
-                    {filterType === "date" ?
-                        (<h2>Harian</h2>)
-                        :
-                        (<h2>Bulanan</h2>)
-
-                    }
-                </>)
-
+                <h2>{subTitleCf}</h2>
             }
         </div>
 
