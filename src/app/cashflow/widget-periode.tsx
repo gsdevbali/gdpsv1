@@ -41,7 +41,7 @@ function WidgetPeriode() {
     const newStart = toQueryDate(dateStart)
     //const newEnd = toQueryDate(dateEnd)
     newEnd.setDate(newEnd.getDate() + 1);
-    const newDateEnd = newEnd.toISOString().split('T')[0];
+    const newDateEnd = newEnd.toISOString().split('T')[0]; 
 
     useEffect(() => {
         //const today = new Date().toISOString().split('T')[0];
@@ -265,9 +265,16 @@ function WidgetPeriode() {
                                         setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
                                         // handleSubTitleDate()
                                         //refreshPath()
-                                        console.log('----------DATE-START-CEK------------')
-                                        console.log('Start',e.target.value)
-                                        console.log('End',dateEnd)
+                                        // console.log('----------DATE-START-CEK------------')
+                                        // console.log('Start',e.target.value)
+                                        // console.log('End',dateEnd)
+                                        const newDateStart = e.target.value;
+                                        if (newDateStart) { // Check if the date is not empty
+                                            console.log('Date Start Input: ', newDateStart);
+                                            setDateStart(newDateStart);
+                                            setStartContext(newDateStart);
+                                            setSubTitleCf(toLocalDate(newDateStart) + ' - ' + toLocalDate(dateEnd));
+                                        }
                                         setReady(false)
 
                                     }
@@ -282,17 +289,24 @@ function WidgetPeriode() {
                                     //value={end}
                                     value={dateEnd}
                                     onChange={(e) => {
-                                        setDateEnd(e.target.value)
-                                        setEndContext(e.target.value)
-                                        setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(e.target.value))
+                                        
+                                        // setDateEnd(e.target.value)
+                                        // setEndContext(e.target.value)
+                                        // setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(e.target.value))
 
                                         //console.log('Date End Input: ', e.target.value)
-                                        console.log('----------DATE-END-CEK------------')
-                                        console.log('Start',dateStart)
-                                        console.log('End',e.target.value)
+                                        // console.log('----------DATE-END-CEK------------')
+                                        // console.log('Start',dateStart)
+                                        // console.log('End',e.target.value)
                                         //handleSubTitleDate()
                                         //handleDateSubmit()
                                         //refreshPath()
+                                        const newDateEnd = e.target.value;
+                                        if (newDateEnd) { // Check if the date is not empty
+                                            setDateEnd(newDateEnd);
+                                            setEndContext(newDateEnd);
+                                            setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(newDateEnd));
+                                        }
                                         setReady(false)
 
                                     }
