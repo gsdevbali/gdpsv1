@@ -6,9 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import useCashFlowContext from "@/context/cashflow-context";
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import { getMonth, toLocalDate, toQueryDate } from '@/lib/tanggal';
-import { revalidatePath } from 'next/cache';
 import refreshPath from './refresh-path';
 import BeforePageData from './before-page-data';
 //import { useCfStore } from './cf-store';
@@ -29,7 +28,7 @@ function WidgetPeriode() {
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     //const [filterType, setFilterType] = useState("all"); // "all", "date" or "month"
 
-    const { subTitleCf, filterType, start, end, periodeOn, setSubTitleCf, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useCashFlowContext();
+    const { subTitle, filterType, start, end, periodeOn, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaSaldoContext();
     //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
 
 
@@ -54,9 +53,6 @@ function WidgetPeriode() {
     console.log('START FilterType:', filterType)
     console.log('START DATES: - ON WIDGET-PERIODE')
 
-    // Pakai newDateEnd disini, jadi awal
-    //setStartContext(toQueryDate(dateStart))
-    //setEndContext(toQueryDate(newDateEnd))
     console.log('start:...', start)
     console.log('end:...', end)
     console.log('Periode is: ', periodeOn)
@@ -64,24 +60,13 @@ function WidgetPeriode() {
     //setPeriodeOn(false)
 
     const handleDateSubmit = async () => {
-        // if (dateStart && dateEnd) {
 
-        // console.log('DATES SUBMIT:')
-        // console.log('Start:', toQueryDate(dateStart))
-        // console.log('End:', toQueryDate(dateEnd))
-        // console.log('Periode is: ', periodeOn)
-
-        //setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd) + ' dateStart: ' + toQueryDate(dateStart))
         setPeriodeOn(true)
         setFilterType("date")
-        setSubTitleCf("Pilih Periode...")
-        // const newStart = toQueryDate(start)
-        // const newEnd = toQueryDate(end)
+        setSubTitle("Pilih Periode...")
         setStartContext(newStart)
         setEndContext(newDateEnd)
 
-        //setSubTitleCf(toLocalDate(start) + ' - ' + toLocalDate(end) + ' dateStart: ' + toQueryDate(newStart))
-        //console.log('NEW Start:', newStart)
         // }
     };
 
@@ -92,14 +77,10 @@ function WidgetPeriode() {
         const monthName = getMonth(month);
         const start = new Date(year, month, 1).toISOString().split('T')[0];
         const end = new Date(year, month + 1, 0).toISOString().split('T')[0];
-        //const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        //const monthName = monthNames[month];
-        //setPeriodeOn(true)
+
         setPeriodeOn(true)
         setFilterType("month")
-        //setSubTitleCf("Pilih Bulan/Tahun...")
-        //setSubTitleCf('Periode: ' + monthName + ' ' + year)
-        //
+
         console.log('FilterType:', filterType)
         setStartContext(toQueryDate(start))
         setEndContext(toQueryDate(end))
@@ -109,54 +90,44 @@ function WidgetPeriode() {
         console.log('Start:', toQueryDate(start))
         console.log('End:', toQueryDate(end))
         console.log('Periode is: ', periodeOn)
-        //fetchData(start, end);
-        //setIsDialogOpen(false);
-        //setIsPeriodeOK(true);
-        setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
-        //refreshPath()
+
+        setSubTitle('Periode: ' + monthName + ' ' + selectedYear)
+
         setLoading(false);
     };
 
     const handleAllPeriode = () => {
-        // console.log('HANDLE ALL:')
-        // console.log('FilterType:',filterType)
-        // setPeriodeOn(false)
-        // setStartContext("01-01-2000")
-        // setEndContext("12-31-3024")
-        // console.log('End ----- HANDLE ALL:')
+
         setLoading(true)
         setStartContext("01-01-2000")
         setEndContext("12-31-3024")
 
         setPeriodeOn(false)
         setFilterType("all")
-        setSubTitleCf("Semua")
+        setSubTitle("Semua")
 
         console.log('ALL BUTTON - in handle:')
         console.log(start)
         console.log(end)
         setLoading(false)
-        //refreshPath()
+
     }
 
     const handleSubTitleDate = () => {
-        setSubTitleCf(toLocalDate(start) + ' - ' + toLocalDate(end) + ' dateStart: ' + toQueryDate(start))
+        setSubTitle(toLocalDate(start) + ' - ' + toLocalDate(end) + ' dateStart: ' + toQueryDate(start))
     }
 
     const handleSubTitleMonth = () => {
-        setSubTitleCf(selectedMonth)
+        setSubTitle(selectedMonth)
     }
 
     const handleRefresh = () => {
-        //setStartContext(dateStart)
-        //setEndContext(dateEnd)
         handleFilterTypeSubmit()
-        //refreshPath()
     }
 
 
     const handleFilterTypeSubmit = () => {
-        //setLoading(true)
+
         switch (filterType) {
             case "all":
                 handleAllPeriode();
@@ -165,38 +136,19 @@ function WidgetPeriode() {
             case "date":
                 setStartContext(dateStart);
                 setEndContext(dateEnd);
-                setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
+                setSubTitle(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
                 //refreshPath();
                 break;
             case "month":
-                // setSubTitleCf("Pilih Bulan/Tahun...")
-                //setFilterType("month")
-                //setSelectedMonth(selectedMonth)
-                // const year = parseInt(selectedYear);
                 const month = parseInt(selectedMonth);
                 const monthName = getMonth(month);
-                // const firstDayOfSelectedMonth = new Date(year, month, 1).toISOString().split('T')[0];
-                // const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
-                // const newEnd = new Date(lastDayOfSelectedMonth);
-                // newEnd.setDate(newEnd.getDate() + 2);
-                // const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
-                //
-                //setStartContext(toQueryDate(firstDayOfSelectedMonth));
                 setStartContext(toQueryDate(start));
-                //
-                //setEndContext(toQueryDate(newlastDayOfSelectedMonth));
                 setEndContext(toQueryDate(end));
-                //setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear);
-                //const testX = ' Data Start to End: ' + start + ' - ' + end
-                setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear)
-
-
-                //refreshPath();
+                setSubTitle('Periode: ' + monthName + ' ' + selectedYear)
                 break;
             default:
                 console.log("Unknown filter type");
         }
-        //setLoading(false)
         setReady(true)
     };
 
@@ -219,7 +171,7 @@ function WidgetPeriode() {
                 <Button
                     onClick={() => {
                         setFilterType("date")
-                        setSubTitleCf(periodeTextStart)
+                        setSubTitle(periodeTextStart)
                         setReady(false)
                     }
                     }
@@ -230,7 +182,7 @@ function WidgetPeriode() {
                 <Button
                     onClick={() => {
                         setFilterType("month")
-                        setSubTitleCf(periodeTextStart)
+                        setSubTitle(periodeTextStart)
                         setSelectedMonth('')
                         setReady(false)
                     }
@@ -256,21 +208,17 @@ function WidgetPeriode() {
                                     //value={start}
                                     value={dateStart}
                                     onChange={(e) => {
-                                        //console.log('Date Start Input: ', e.target.value)
+
                                         setDateStart(e.target.value)
                                         setStartContext(e.target.value)
-                                        setSubTitleCf(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
-                                        // handleSubTitleDate()
-                                        //refreshPath()
-                                        // console.log('----------DATE-START-CEK------------')
-                                        // console.log('Start',e.target.value)
-                                        // console.log('End',dateEnd)
+                                        setSubTitle(toLocalDate(e.target.value) + ' - ' + toLocalDate(dateEnd))
+
                                         const newDateStart = e.target.value;
                                         if (newDateStart) { // Check if the date is not empty
-                                            //console.log('Date Start Input: ', newDateStart);
+
                                             setDateStart(newDateStart);
                                             setStartContext(newDateStart);
-                                            setSubTitleCf(toLocalDate(newDateStart) + ' - ' + toLocalDate(dateEnd));
+                                            setSubTitle(toLocalDate(newDateStart) + ' - ' + toLocalDate(dateEnd));
                                         }
                                         setReady(false)
 
@@ -283,26 +231,14 @@ function WidgetPeriode() {
                                 <Label>Sampai dengan:</Label>
                                 <Input
                                     type="date"
-                                    //value={end}
                                     value={dateEnd}
                                     onChange={(e) => {
 
-                                        // setDateEnd(e.target.value)
-                                        // setEndContext(e.target.value)
-                                        // setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(e.target.value))
-
-                                        //console.log('Date End Input: ', e.target.value)
-                                        // console.log('----------DATE-END-CEK------------')
-                                        // console.log('Start',dateStart)
-                                        // console.log('End',e.target.value)
-                                        //handleSubTitleDate()
-                                        //handleDateSubmit()
-                                        //refreshPath()
                                         const newDateEnd = e.target.value;
                                         if (newDateEnd) { // Check if the date is not empty
                                             setDateEnd(newDateEnd);
                                             setEndContext(newDateEnd);
-                                            setSubTitleCf(toLocalDate(dateStart) + ' - ' + toLocalDate(newDateEnd));
+                                            setSubTitle(toLocalDate(dateStart) + ' - ' + toLocalDate(newDateEnd));
                                         }
                                         setReady(false)
 
@@ -333,27 +269,18 @@ function WidgetPeriode() {
                                     const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
 
                                     // End-Date adjusted to make sure 'correct' query result
-
                                     const newStart = new Date(firstDayOfSelectedMonth)
-                                    //newStart.setDate(newStart.getDate()-1);
+
                                     newStart.setDate(newStart.getDate() + 1);
                                     const newEnd = new Date(lastDayOfSelectedMonth);
-                                    //newEnd.setDate(newEnd.getDate()+2);
+
                                     newEnd.setDate(newEnd.getDate() + 1);
-                                    // tranform Date to String
-                                    //const newlastDayOfSelectedMonth = newEnd.toISOString().split('T')[0];
+
                                     const newStartX = newStart.toISOString().split('T')[0];
                                     const newEndX = newEnd.toISOString().split('T')[0];
 
-                                    // console.log('-------CEK-START-END-CONTEXT-VALUE-ORG---------')
-                                    // console.log('Start Cx Org',start)
-                                    // console.log('End Cx Org',end)
-
                                     setStartContext(toQueryDate(newStartX))
                                     setEndContext(toQueryDate(newEndX))
-                                    // setStartContext(toQueryDate(firstDayOfSelectedMonth))
-                                    // setEndContext(toQueryDate(lastDayOfSelectedMonth))
-
                                     // Delay - so Start and End is correct values
                                     setTimeout(() => {
                                         console.log('Delayed for 2 seconds');
@@ -373,11 +300,7 @@ function WidgetPeriode() {
                                     // console.log('End Cx',end)
                                     //setEndContext(toQueryDate(newlastDayOfSelectedMonth))
 
-                                    //subtitle
-                                    // const testX = ' Data Start to End: ' + newStartX + ' - ' + newEndX
-                                    // setSubTitleCf('Periode: ' + monthName + ' ' + selectedYear + testX)
                                     setSelectedMonth(value)
-                                    //refreshPath()
                                     setReady(false)
                                 }
 
@@ -436,15 +359,8 @@ function WidgetPeriode() {
                 <Button onClick={handleRefresh}>PERBAHARUI DATA</Button> : null
             }
 
-            {/* {
-                (!loading) ? <BeforePageData isOK={loading}/> : <h2>Belum Ada Data ....</h2>
-            } */}
-
             <BeforePageData isOK={ready} month={parseInt(selectedMonth)} />
 
-            {/* <Button onClick={filterType === "date" ? handleDateSubmit : handleMonthYearSubmit}>
-                PERBAHARUI DATA
-            </Button> */}
         </div>
     );
 
