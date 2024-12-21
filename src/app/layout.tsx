@@ -6,15 +6,16 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Suspense } from "react";
 import Loading from "./loading";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { CashFlowProvider } from "@/context/cashflow-context";
+import { NeracaSaldoProvider } from "@/context/neraca-saldo-context";
 //import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
@@ -67,9 +68,14 @@ export default function RootLayout({
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
                 <CashFlowProvider>
-                  <QueryClientProvider client={queryClient}>
-                    {children}
-                  </QueryClientProvider>
+                  <NeracaSaldoProvider>
+
+
+                    <QueryClientProvider client={queryClient}>
+                      {children}
+                    </QueryClientProvider>
+
+                  </NeracaSaldoProvider>
                 </CashFlowProvider>
 
 

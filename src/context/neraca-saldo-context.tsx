@@ -29,7 +29,7 @@ const NeracaSaldoContext = createContext
 
     });
 
-export function NeracaSaldoContextProvider({ children }: {
+export function NeracaSaldoProvider({ children }: {
     children: React.ReactNode;
 }) {
 
@@ -59,7 +59,7 @@ export default function useNeracaSaldoContext() {
     const context = useContext(NeracaSaldoContext);
     if (!context) {
         throw new Error(
-            "useNeracaSaldoContext must be used within a NeracaSaldoContextProvider"
+            "useNeracaSaldoContext must be used within a NeracaSaldoProvider"
         );
     }
     return context;
