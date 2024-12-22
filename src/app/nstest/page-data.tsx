@@ -10,7 +10,7 @@ import WidgetInfoTotal from "./widget-info-total";
 import { toQueryDate } from "@/lib/tanggal";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
-export default async function ShowNSData() {
+export default function ShowNSData() {
 
     const { start, end, periodeOn } = useNeracaSaldoContext();
     console.log('SHOW-NS-DATA:')
