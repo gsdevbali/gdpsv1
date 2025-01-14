@@ -184,6 +184,7 @@ function WidgetPeriode() {
                         setFilterType("month")
                         setSubTitle(periodeTextStart)
                         setSelectedMonth('')
+                        //setSelectedYear('')
                         setReady(false)
                     }
                     }
@@ -321,9 +322,40 @@ function WidgetPeriode() {
 
                             {/* <Select value={selectedYear} onValueChange={setSelectedYear}> */}
                             <Select value={selectedYear} onValueChange={
-                                () => {
-                                    handleMonthYearSubmit()
-                                    refreshPath()
+                                (value) => {
+                                    // handleMonthYearSubmit()
+                                    // refreshPath()
+                                    // setReady(false)
+
+                                    const year = parseInt(selectedYear);
+                                    const month = parseInt(selectedMonth);
+                                    const monthName = getMonth(month);
+
+                                    const firstDayOfSelectedMonth = new Date(year, month, 1).toISOString().split('T')[0];
+                                    const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
+
+                                    console.log('CEK year: ',year);
+                                    console.log('CEK lastDayOfSelectedMonth: ',lastDayOfSelectedMonth);
+
+                                    // End-Date adjusted to make sure 'correct' query result
+                                    const newStart = new Date(firstDayOfSelectedMonth);
+
+                                    newStart.setDate(newStart.getDate() + 1);
+                                    const newEnd = new Date(lastDayOfSelectedMonth);
+
+                                    newEnd.setDate(newEnd.getDate() + 1);
+
+                                    const newStartX = newStart.toISOString().split('T')[0];
+                                    const newEndX = newEnd.toISOString().split('T')[0];
+
+                                    setStartContext(toQueryDate(newStartX))
+                                    setEndContext(toQueryDate(newEndX))
+                                    // Delay - so Start and End is correct values
+                                    setTimeout(() => {
+                                        console.log('Delayed for 2 seconds');
+                                    }, 2000);
+
+                                    setSelectedYear(value)
                                     setReady(false)
                                 }
                             }>
