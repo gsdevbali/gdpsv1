@@ -152,8 +152,8 @@ const data = {
           url: "/neraca-saldo",
         },
         {
-          title: "NERACA T",
-          url: "/neraca-t",
+          title: "NERACA",
+          url: "/neraca-new",
         },
 
 

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import useNeracaSaldoContext from '@/context/neraca-saldo-context';
+import useNeracaNewContext from '@/context/neraca-new-context';
 import ShowNSData from './page-data';
 import { getMonth } from '@/lib/tanggal';
 
@@ -10,7 +10,7 @@ import { getMonth } from '@/lib/tanggal';
 const BeforePageData = ({ isOK, month }: { isOK: boolean; month: number }) => {
 
 
-    const { start, end, periodeOn } = useNeracaSaldoContext();
+    const { start, end, periodeOn } = useNeracaNewContext();
     const monthName = getMonth(month)
     return (
         <>

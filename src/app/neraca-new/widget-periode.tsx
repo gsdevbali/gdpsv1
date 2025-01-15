@@ -45,7 +45,7 @@ function WidgetPeriode() {
 
     useEffect(() => {
         //const today = new Date().toISOString().split('T')[0];
-        setReady(false);
+        setReady(true);
 
     }, []); // Empty dependency array to run only once on mount
 
