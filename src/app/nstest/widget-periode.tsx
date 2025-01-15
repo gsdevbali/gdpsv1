@@ -55,6 +55,7 @@ function WidgetPeriode() {
 
     console.log('start:...', start)
     console.log('end:...', end)
+    console.log('newDateEnd:...', newDateEnd)
     console.log('Periode is: ', periodeOn)
 
     //setPeriodeOn(false)
@@ -359,9 +360,18 @@ function WidgetPeriode() {
                                     setReady(false)
                                 }
                             }>
-                                <SelectTrigger>
+
+                                {selectedMonth !== '' && (
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Pilih Tahun" />
+                                    </SelectTrigger>
+
+                                    
+                                )}
+                                
+                                {/* <SelectTrigger>
                                     <SelectValue placeholder="Pilih Tahun" />
-                                </SelectTrigger>
+                                </SelectTrigger> */}
                                 <SelectContent>
                                     {Array.from({ length: 10 }, (_, i) => {
                                         const year = new Date().getFullYear() - i;
