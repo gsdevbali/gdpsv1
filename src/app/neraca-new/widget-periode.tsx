@@ -360,7 +360,7 @@ function WidgetPeriode() {
                                     }, 2000);
 
                                     setSelectedYear(value)
-                                    setReady(false)
+                                    setReady(true)
                                 }
                             }>
 

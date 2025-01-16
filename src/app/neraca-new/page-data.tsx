@@ -8,11 +8,12 @@ import Loading from "./loading";
 import NeracaData from "./neraca-data-new";
 import WidgetInfoTotal from "./widget-info-total";
 import { toQueryDate } from "@/lib/tanggal";
-import useNeracaNewContext from "@/context/neraca-new-context";
+//import useNeracaNewContext from "@/context/neraca-new-context";
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 export default function ShowNSData() {
 
-    const { start, end, periodeOn } = useNeracaNewContext();
+    const { start, end, periodeOn } = useNeracaSaldoContext();
     console.log('SHOW-NS-DATA:')
     console.log('Start:', toQueryDate(start))
     console.log('End:', toQueryDate(end))
