@@ -133,14 +133,14 @@ function WidgetPeriode() {
             case "all":
                 handleAllPeriode();
                 refreshPath();
-                setReady(true);
+                setReady(false);
                 break;
             case "date":
                 setStartContext(dateStart);
                 setEndContext(dateEnd);
                 setSubTitle(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
                 //refreshPath();
-                setReady(false);
+                setReady(true);
                 break;
             case "month":
                 const month = parseInt(selectedMonth);
@@ -225,7 +225,7 @@ function WidgetPeriode() {
                                             setStartContext(newDateStart);
                                             setSubTitle(toLocalDate(newDateStart) + ' - ' + toLocalDate(dateEnd));
                                         }
-                                        setReady(false)
+                                        setReady(true)
 
                                     }
                                     }
@@ -245,7 +245,7 @@ function WidgetPeriode() {
                                             setEndContext(newDateEnd);
                                             setSubTitle(toLocalDate(dateStart) + ' - ' + toLocalDate(newDateEnd));
                                         }
-                                        setReady(false)
+                                        setReady(true)
 
                                     }
                                     }
