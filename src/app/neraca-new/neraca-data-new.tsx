@@ -3,7 +3,8 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns";
+//import { columns } from "./columns";
+import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";
@@ -18,7 +19,7 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
     const { data: result, isLoading, error, isSuccess } = useQuery({
         queryKey: ['cashflow', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-new?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();

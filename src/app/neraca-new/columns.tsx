@@ -25,6 +25,7 @@ export type Account = {
 
 }
 
+
 export const columns: ColumnDef<Account>[] = [
     // {
     //     id: "select",
@@ -144,7 +145,7 @@ export const columns: ColumnDef<Account>[] = [
     //             </Link>
     //         </div>;
     //     },
-        
+
     // }
 
 ]

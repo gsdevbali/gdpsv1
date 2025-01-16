@@ -155,6 +155,10 @@ const data = {
           title: "NERACA",
           url: "/neraca-new",
         },
+        {
+          title: "AKTIVITAS",
+          url: "#",
+        },
 
 
       ],
