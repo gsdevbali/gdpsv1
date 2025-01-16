@@ -3,7 +3,7 @@
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
-import useNeracaNewContext from "@/context/neraca-new-context";
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
@@ -14,7 +14,7 @@ export default function Page() {
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
-    const { setPeriodeOn } = useNeracaNewContext();
+    const { setPeriodeOn } = useNeracaSaldoContext();
 
     setPeriodeOn(false)
 
@@ -23,9 +23,7 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                {/* <h1 className="text-3xl font-bold dark:text-blue-500">NERACA</h1> */}
-                <h1 className="text-3xl font-bold dark:text-blue-500">GKI DENPASAR</h1>
-                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN KEUANGAN</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">NERACA NEW</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
 

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import useNeracaNewContext from '@/context/neraca-new-context';
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import { getMonth, toLocalDate, toQueryDate } from '@/lib/tanggal';
 import refreshPath from './refresh-path';
 import BeforePageData from './before-page-data';
@@ -28,7 +28,7 @@ function WidgetPeriode() {
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     //const [filterType, setFilterType] = useState("all"); // "all", "date" or "month"
 
-    const { subTitle, filterType, start, end, periodeOn, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaNewContext();
+    const { subTitle, filterType, start, end, periodeOn, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaSaldoContext();
     //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
 
 
@@ -133,19 +133,22 @@ function WidgetPeriode() {
             case "all":
                 handleAllPeriode();
                 refreshPath();
+                setReady(true);
                 break;
             case "date":
                 setStartContext(dateStart);
                 setEndContext(dateEnd);
                 setSubTitle(toLocalDate(dateStart) + ' - ' + toLocalDate(dateEnd));
                 //refreshPath();
+                setReady(false);
                 break;
             case "month":
                 const month = parseInt(selectedMonth);
                 const monthName = getMonth(month);
                 setStartContext(toQueryDate(start));
                 setEndContext(toQueryDate(end));
-                setSubTitle('Periode: ' + monthName + ' ' + selectedYear)
+                setSubTitle('Periode: ' + monthName + ' ' + selectedYear);
+                setReady(false);
                 break;
             default:
                 console.log("Unknown filter type");
@@ -303,7 +306,6 @@ function WidgetPeriode() {
                                     //setEndContext(toQueryDate(newlastDayOfSelectedMonth))
 
                                     setSelectedMonth(value)
-                                    setSelectedYear('')
                                     setReady(false)
                                 }
 
@@ -336,8 +338,8 @@ function WidgetPeriode() {
                                     const firstDayOfSelectedMonth = new Date(year, month, 1).toISOString().split('T')[0];
                                     const lastDayOfSelectedMonth = new Date(year, month + 1, 0).toISOString().split('T')[0];
 
-                                    console.log('CEK year: ', year);
-                                    console.log('CEK lastDayOfSelectedMonth: ', lastDayOfSelectedMonth);
+                                    console.log('CEK year: ',year);
+                                    console.log('CEK lastDayOfSelectedMonth: ',lastDayOfSelectedMonth);
 
                                     // End-Date adjusted to make sure 'correct' query result
                                     const newStart = new Date(firstDayOfSelectedMonth);
@@ -355,7 +357,6 @@ function WidgetPeriode() {
                                     // Delay - so Start and End is correct values
                                     setTimeout(() => {
                                         console.log('Delayed for 2 seconds');
-                                        console.log('selectedYear: ', selectedYear);
                                     }, 2000);
 
                                     setSelectedYear(value)
@@ -368,9 +369,9 @@ function WidgetPeriode() {
                                         <SelectValue placeholder="Pilih Tahun" />
                                     </SelectTrigger>
 
-
+                                    
                                 )}
-
+                                
                                 {/* <SelectTrigger>
                                     <SelectValue placeholder="Pilih Tahun" />
                                 </SelectTrigger> */}
