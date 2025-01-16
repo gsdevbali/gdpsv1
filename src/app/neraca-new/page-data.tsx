@@ -27,7 +27,7 @@ export default function ShowNSData() {
             
             <div className="w-1/2 pr-4">
                 {/* AKTIVA - KIRI */}
-                <h1 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">AKTIVA</h1>
+                <h1 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500">AKTIVA</h1>
                 <Divider />
 
                 <Suspense fallback={<Loading section="AKTIVA LANCAR" />}>
@@ -50,7 +50,7 @@ export default function ShowNSData() {
             <div className="w-1/2">
                 {/* PASIVA - KANAN */}
 
-                <h2 className="text-xl font-bold pt-4 pb-2 dark:text-blue-500">KEWAJIBAN DAN ASET BERSIH</h2>
+                <h2 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500">KEWAJIBAN DAN ASET BERSIH</h2>
                 <Divider />
 
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2> */}
