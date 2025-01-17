@@ -59,14 +59,7 @@ export const columns: ColumnDef<Account>[] = [
     //     },
     //     enableSorting: true
     // },
-    {
-        accessorKey: "code",
-        header: () => <div className="text-left min-w-[60px] max-w-[80px]">Kode</div>,
-        cell: ({ row }) => {
-            return <div className="text-left min-w-[60px] max-w-[80px]">{row.original.code}</div>;
-        },
-        enableSorting: true,
-    },
+    // 
     {
         id: "group2",
         accessorKey: "accountGroup2.name",
