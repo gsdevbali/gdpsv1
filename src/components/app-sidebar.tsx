@@ -159,6 +159,10 @@ const data = {
           title: "AKTIVITAS",
           url: "#",
         },
+        {
+          title: "BUKU BESAR 2",
+          url: "/ledger2",
+        },
 
 
       ],
