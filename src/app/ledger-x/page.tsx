@@ -106,7 +106,7 @@ export default async function RepActivity() {
         <>
             <PageLayout header={header} footer={footer}>
 
-                <DataTable columns={columns} data={data} />
+                <DataTable columns={columns} data={data} dataX={dataX} />
                 {/* <h1 className="text-2xl font-bold">PERSEMBAHAN:</h1>
                 <DataTable columns={columns} data={data_persembahan} />
                 <TulisTotalRp value={newTotalBalance_Persembahan} title={"Penerimaan Persembahan"} />
