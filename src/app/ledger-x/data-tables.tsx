@@ -50,7 +50,7 @@ import { get } from "http"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    dataX: number
+    dataX: TData[]
     // dateStart: string
     // dateEnd: string
 }
@@ -74,6 +74,7 @@ interface Account {
 export function DataTable<TData, TValue>({
     columns,
     data,
+    dataX,
 
 }: DataTableProps<TData, TValue>) {
 
@@ -118,6 +119,8 @@ export function DataTable<TData, TValue>({
     const [currentGroup1Id, setCurrentGroup1Id] = useState<number>(0)
     const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
     // Add this helper function before the return statement
+
+    const xNumber = dataX;
     const calculateTotals = (rows: any[]) => {
         const totals = rows.reduce((acc, row) => {
             return {
@@ -129,7 +132,21 @@ export function DataTable<TData, TValue>({
         setTotalDebit(totals.debit);
         setTotalCredit(totals.credit);
         setBalance(totals.debit - totals.credit);
-        setBalanceX(9999);
+
+    };
+
+    const calculateTotalsX = (rows: any[]) => {
+        const totals = rows.reduce((acc, row) => {
+            return {
+                debit: acc.debit + (Number(row.original.debit) || 0),
+                credit: acc.credit + (Number(row.original.credit) || 0)
+            };
+        }, { debit: 0, credit: 0 });
+
+        setTotalDebit(totals.debit);
+        setTotalCredit(totals.credit);
+        setBalanceX(totals.debit - totals.credit);
+
     };
 
     // Fetch data: Group2 & Accounts for Filter Lookup
