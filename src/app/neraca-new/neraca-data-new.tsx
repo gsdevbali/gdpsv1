@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
-//import { columns } from "./columns-new";
+// import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";

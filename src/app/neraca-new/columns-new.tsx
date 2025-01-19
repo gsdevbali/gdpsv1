@@ -1,7 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 // Define the types for our data structure
-interface Account {
+//interface Account {
+export type Account = {
+    //GroupedAccount
     id: number
     code: string
     name: string
@@ -19,7 +21,8 @@ interface Account {
     }
 }
 
-interface GroupedAccount {
+//export type GroupedAccount {
+export type GroupedAccount = {
     groupName: string
     accounts: Account[]
     subtotal: number
