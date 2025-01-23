@@ -83,7 +83,7 @@ const MonthYearSelector = () => {
     React.useEffect(() => {
 
         updateStartAndEndDate(month, year); // Calculate start and end dates, including previous month
-        setSubTitle('Periode: ' + selectedPeriod + ' CEK: ' + startDate + '-' + endDate + '**** PREVIOUS:' + previousStartDate + '-' + previousEndDate);
+        setSubTitle('Periode: ' + selectedPeriod);
 
     }, [month, year]);
 
@@ -91,18 +91,18 @@ const MonthYearSelector = () => {
         setMonth(value);
         setSelectedPeriod(`${value} ${year}`); // Update selected period
         updateStartAndEndDate(value, year); // Update start date
-        setSubTitle('Periode: ' + selectedPeriod + ' CEK: ' + startDate + '-' + endDate + '**** PREVIOUS:' + previousStartDate + '-' + previousEndDate);
+        setSubTitle('Periode: ' + selectedPeriod);
     };
 
     const handleYearChange = (value: string) => {
         setYear(value);
         setSelectedPeriod(`${month} ${value}`); // Update selected period
         updateStartAndEndDate(month, value); // Update start date
-        setSubTitle('Periode: ' + selectedPeriod + ' CEK: ' + startDate + '-' + endDate + '**** PREVIOUS:' + previousStartDate + '-' + previousEndDate);
+        setSubTitle('Periode: ' + selectedPeriod);
     };
 
     const handleButtonClick = () => {
-        setSubTitle('Periode: ' + selectedPeriod + ' CEK: ' + startDate + '-' + endDate + '**** PREVIOUS:' + previousStartDate + '-' + previousEndDate);
+        setSubTitle('Periode: ' + selectedPeriod);
         setShowComponent(true);
     };
 
@@ -111,7 +111,7 @@ const MonthYearSelector = () => {
             <div className="flex justify-normal space-x-2 mt-2 mb-2">
                 <Select onValueChange={handleMonthChange} value={month}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Select Month" />
+                        <SelectValue placeholder="Pilih Bulan" />
                     </SelectTrigger>
                     <SelectContent>
                         {monthNames.map((monthName, index) => (
@@ -124,7 +124,7 @@ const MonthYearSelector = () => {
 
                 <Select onValueChange={handleYearChange} value={year}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Select Year" />
+                        <SelectValue placeholder="Pilih Tahun" />
                     </SelectTrigger>
                     <SelectContent>
                         {years.map((yearValue) => (

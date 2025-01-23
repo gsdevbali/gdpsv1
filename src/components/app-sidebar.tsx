@@ -140,12 +140,16 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "BUKU BESAR",
-          url: "/ledger",
+          title: "AKTIVITAS",
+          url: "/aktivitas",
         },
         {
           title: "Penerimaan / Pengeluaran",
           url: "/cashflow",
+        },
+        {
+          title: "BUKU BESAR",
+          url: "/ledger",
         },
         {
           title: "NERACA SALDO",
@@ -154,10 +158,6 @@ const data = {
         {
           title: "NERACA",
           url: "/neraca-new",
-        },
-        {
-          title: "AKTIVITAS",
-          url: "/aktivitas",
         },
         {
           title: "BUKU BESAR 2",

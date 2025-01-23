@@ -18,7 +18,7 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['cashflow', type, group2],
+        queryKey: ['nscurrent', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
