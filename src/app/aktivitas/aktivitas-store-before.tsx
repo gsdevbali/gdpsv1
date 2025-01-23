@@ -9,7 +9,7 @@ export interface AktivasStore {
     totalAsetAwal: number;
     totalAsetAkhir: number;
     setTotalTerima1: (setTotalTerima1: number) => void;
-    setTotalTerima2: (setTotalTerima1: number) => void;
+    setTotalTerima2: (setTotalTerima2: number) => void;
     setTotalBebanOp: (setTotalBebanOp: number) => void;
     setTotalSelisihAB: (setTotalSelisihAB: number) => void;
     setTotalAsetAwal: (setTotalAsetAwal: number) => void;

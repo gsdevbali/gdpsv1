@@ -5,8 +5,8 @@ import Divider from "@/components/Divider";
 import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
-import WidgetPeriode from "./widget-periode";
-import WidgetSubtitlePeriode from "./widget-subtitle-periode";
+//import WidgetPeriode from "./widget-periode";
+//import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import MonthYearSelector from "./widget-monthly";
 
 

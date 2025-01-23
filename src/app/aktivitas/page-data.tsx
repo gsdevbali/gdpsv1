@@ -2,25 +2,26 @@
 
 import { Suspense } from "react";
 
-import Divider from "@/components/Divider";
+import { toQueryDate } from "@/lib/tanggal";
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 import Loading from "./loading";
-import NeracaData from "./neraca-data-new";
-import NeracaDataX from "./hitung-ab-selisih";
-//import WidgetInfoTotal from "./widget-info-total";
-import { toQueryDate } from "@/lib/tanggal";
-//import useNeracaNewContext from "@/context/neraca-new-context";
-import useNeracaSaldoContext from "@/context/neraca-saldo-context";
-import NeracaDataBefore from "./neraca-data-before";
 import JustTitle from "./just-title";
+import NeracaData from "./neraca-data-current";
+import NeracaDataBefore from "./neraca-data-before";
+import NeracaDataX from "./hitung-ab-selisih";
+
+//import WidgetInfoTotal from "./widget-info-total";
+//import useNeracaNewContext from "@/context/neraca-new-context";
 
 export default function ShowNSData() {
 
     const { start, end, startPrev, endPrev, periodeOn, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
-    console.log('SHOW-AKTIVITAS-DATA:')
-    console.log('Start:', toQueryDate(start))
-    console.log('End:', toQueryDate(end))
-    console.log('Periode is: ', periodeOn)
+    console.log('SHOW-NS-DATA:')
+    console.log('Start:', start)
+    console.log('End:', end)
+    console.log('StartPrev:', startPrev)
+    console.log('EndPrev:', endPrev)
 
     return (
 

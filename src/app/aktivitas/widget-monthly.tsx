@@ -34,7 +34,7 @@ const MonthYearSelector = () => {
     const [showComponent, setShowComponent] = useState(false);
 
     const [selectedPeriod, setSelectedPeriod] = useState(`${month} ${year}`); // New state for selected period
-    const [prevSelectedPeriod, setPrevSelectedPeriod] = useState(``); // state for prev Title
+    //const [prevSelectedPeriod, setPrevSelectedPeriod] = useState(``); // state for prev Title
 
     const [startDate, setStartDate] = useState(`${currentYearString}-01-01`); // Initialize with the first day of the current year
     const [endDate, setEndDate] = useState(`${currentYearString}-01-31`); // Initialize with the last day of January
@@ -61,16 +61,20 @@ const MonthYearSelector = () => {
         setPreviousStartDate(`${previousYear}-${formattedPreviousMonth}-01`); // Set previous start date
         setPreviousEndDate(`${previousYear}-${formattedPreviousMonth}-${lastDayOfPreviousMonth}`); // Set previous end date
 
+        // set: start - end date-range
         setStartContext(`${year}-${formattedMonth}-01`);
         setEndContext(`${year}-${formattedMonth}-${lastDay}`);
+
+        // set: startPrev - endPrev date-range
         setPrevStartContext(`${previousYear}-${formattedPreviousMonth}-01`);
         setPrevEndContext(`${previousYear}-${formattedPreviousMonth}-${lastDayOfPreviousMonth}`);
 
+        // Convert formattedPreviousMonth to local month name
         const localPreviousMonthName = monthNames[previousMonthIndex - 1];
         const previousYearString = previousYear.toString();
-        // Convert formattedPreviousMonth to local month name
         setTitleMonthYear(selectedPeriod);
         setPrevTitleMonthYear(localPreviousMonthName + ' ' + previousYearString);
+
         //console.log('----------START context: ', start);
         //console.log('----------END context: ', end);
 
@@ -104,7 +108,7 @@ const MonthYearSelector = () => {
 
     return (
         <>
-            <div className="flex flex-row space-x-2 mt-2 mb-2">
+            <div className="flex justify-normal space-x-2 mt-2 mb-2">
                 <Select onValueChange={handleMonthChange} value={month}>
                     <SelectTrigger>
                         <SelectValue placeholder="Select Month" />
@@ -142,8 +146,5 @@ const MonthYearSelector = () => {
     );
 };
 
-const OtherComponent = () => {
-    return <div>This is another component!</div>;
-};
 
 export default MonthYearSelector;
