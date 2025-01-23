@@ -10,8 +10,8 @@ import { columns } from "./columns";
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
 //import { useAktivitasStore } from './aktivitas-store';
-import SubTotalAktivitas from './total-aktivitas';
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
+import SubTotalAktivitasBefore from './total-aktivitas-before';
 
 const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
@@ -75,7 +75,7 @@ const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { tit
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
                 {/* <DataTable columns={columns} data={data} /> */}
                 {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
-                <SubTotalAktivitas value={newTotalBalance} title={titleTotal} />
+                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
 
             </div>
 
