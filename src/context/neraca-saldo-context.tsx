@@ -11,6 +11,10 @@ const NeracaSaldoContext = createContext
         periodeOn: boolean; setPeriodeOn: (type: boolean) => void;
         start: string; setStartContext: (type: string) => void;
         end: string; setEndContext: (type: string) => void;
+        startPrev: string; setPrevStartContext: (type: string) => void;
+        endPrev: string; setPrevEndContext: (type: string) => void;
+        titleMonthYear: string; setTitleMonthYear: (type: string) => void;
+        titlePrevMonthYear: string; setPrevTitleMonthYear: (type: string) => void;
     }>
 
     ({
@@ -20,12 +24,20 @@ const NeracaSaldoContext = createContext
         periodeOn: false,
         start: '',
         end: '',
+        startPrev: '',
+        endPrev: '',
+        titleMonthYear: '',
+        titlePrevMonthYear: '',
         setFilterType: () => { },
         setSubTitle: () => { },
         setTotalTerima: () => { },
         setPeriodeOn: () => { },
         setStartContext: () => { },
         setEndContext: () => { },
+        setPrevStartContext: () => { },
+        setPrevEndContext: () => { },
+        setTitleMonthYear: () => { },
+        setPrevTitleMonthYear: () => { },
 
     });
 
@@ -38,7 +50,11 @@ export function NeracaSaldoProvider({ children }: {
     const [totalTerima, setTotalTerima] = useState(0);
     const [periodeOn, setPeriodeOn] = useState(false);
     const [start, setStartContext] = useState('01-01-2000');
-    const [end, setEndContext] = useState('12-31-3024');
+    const [end, setEndContext] = useState('12-31-9924');
+    const [startPrev, setPrevStartContext] = useState('01-01-2000');
+    const [endPrev, setPrevEndContext] = useState('12-31-9924');
+    const [titleMonthYear, setTitleMonthYear] = useState('');
+    const [titlePrevMonthYear, setPrevTitleMonthYear] = useState('')
 
     return (
         <NeracaSaldoContext.Provider value={{
@@ -48,6 +64,10 @@ export function NeracaSaldoProvider({ children }: {
             periodeOn, setPeriodeOn,
             start, setStartContext,
             end, setEndContext,
+            startPrev, setPrevStartContext,
+            endPrev, setPrevEndContext,
+            titleMonthYear, setTitleMonthYear,
+            titlePrevMonthYear, setPrevTitleMonthYear,
         }}>
             {children}
         </NeracaSaldoContext.Provider>

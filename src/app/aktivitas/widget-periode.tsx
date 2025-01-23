@@ -28,7 +28,7 @@ function WidgetPeriode() {
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     //const [filterType, setFilterType] = useState("all"); // "all", "date" or "month"
 
-    const { subTitle, filterType, start, end, periodeOn, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaSaldoContext();
+    const { subTitle, filterType, periodeOn, start, end, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaSaldoContext();
     //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
 
 
@@ -47,15 +47,19 @@ function WidgetPeriode() {
         //const today = new Date().toISOString().split('T')[0];
         setFilterType("month");
 
+        //default: Bulan dan Tahun sekarang
         setSelectedMonth(new Date().getMonth().toString());
         setSelectedYear(new Date().getFullYear().toString());
         const year = parseInt(selectedYear);
         const month = parseInt(selectedMonth);
 
-        const start = new Date(year, month, 1).toISOString().split('T')[0];
-        const end = new Date(year, month + 1, 0).toISOString().split('T')[0];
-        setStartContext(toQueryDate(start))
-        setEndContext(toQueryDate(end))
+        const start1 = new Date(year, month, 1).toISOString().split('T')[0];
+        const end1 = new Date(year, month + 1, 0).toISOString().split('T')[0];
+        setStartContext(toQueryDate(start1))
+        setEndContext(toQueryDate(end1))
+
+        console.log('start1 in useEffect:...', start1)
+        console.log('end1 in useEffect:...', end1)
 
         setReady(true);
 
@@ -65,8 +69,9 @@ function WidgetPeriode() {
     console.log('START FilterType:', filterType)
     console.log('START DATES: - ON WIDGET-PERIODE')
 
-    console.log('start:...', start)
-    console.log('end:...', end)
+    console.log('start global-context:...', start)
+    console.log('end global-context:...', end)
+
     console.log('newDateEnd:...', newDateEnd)
     console.log('Periode is: ', periodeOn)
 
@@ -142,8 +147,21 @@ function WidgetPeriode() {
         //handleFilterTypeSubmit();
         const month = parseInt(selectedMonth);
         const monthName = getMonth(month);
-        setStartContext(toQueryDate(start));
-        setEndContext(toQueryDate(end));
+        const year = parseInt(selectedYear);
+
+        // set START and END dates range here 
+        const startDate = `${year}-${month.toString().padStart(2, '0')}-01`;
+        const endDate = `${year}-${month.toString().padStart(2, '0')}-${new Date(year, month, 0).getDate()}`;
+
+        // setStartContext(toQueryDate(start));
+        // setEndContext(toQueryDate(end));
+
+        setStartContext(toQueryDate(startDate));
+        setEndContext(toQueryDate(endDate));
+
+        console.log('startDate in refresh: ', startDate);
+        console.log('endDate in refresh', endDate);
+
         setSubTitle('Periode: ' + monthName + ' ' + selectedYear);
         setReady(false);
         refreshPath();

@@ -16,7 +16,7 @@ import JustTitle from "./just-title";
 
 export default function ShowNSData() {
 
-    const { start, end, periodeOn } = useNeracaSaldoContext();
+    const { start, end, startPrev, endPrev, periodeOn, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
     console.log('SHOW-AKTIVITAS-DATA:')
     console.log('Start:', toQueryDate(start))
     console.log('End:', toQueryDate(end))
@@ -45,17 +45,17 @@ export default function ShowNSData() {
                         <JustTitle title="Aset Bersih Awal" />
                     </div>
                     <div className="w-1/4">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">BEFORE</h2>
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
                         <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
-                            <NeracaDataBefore title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
+                            <NeracaDataBefore title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
-                            <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
+                            <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>
-                            <NeracaDataBefore title="PENERIMAAN LAIN" titleTotal="Penerimaan Lain-lain/Khusus" type={4} group2={9} start={start} end={end} />
+                            <NeracaDataBefore title="PENERIMAAN LAIN" titleTotal="Penerimaan Lain-lain/Khusus" type={4} group2={9} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
@@ -63,13 +63,13 @@ export default function ShowNSData() {
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
-                            <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
+                            <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startPrev} end={endPrev} />
                         </Suspense>
 
                     </div>
                     <div className="w-1/4">
                         {/* <Divider /> */}
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">CURRENT</h2>
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titleMonthYear}</h2>
                         <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
                             <NeracaData title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
                         </Suspense>
