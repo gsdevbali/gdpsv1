@@ -11,6 +11,8 @@ import NeracaDataX from "./hitung-ab-selisih";
 import { toQueryDate } from "@/lib/tanggal";
 //import useNeracaNewContext from "@/context/neraca-new-context";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
+import NeracaDataBefore from "./neraca-data-before";
+import JustTitle from "./just-title";
 
 export default function ShowNSData() {
 
@@ -24,34 +26,73 @@ export default function ShowNSData() {
 
         <>
 
-            <div className="flex flex-wrap">
-
-                <h1 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500">LAPORAN AKTIVITAS Bulan: </h1>
-                <Divider />
-
-                <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
-                    <NeracaData title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
-                </Suspense>
-
-                <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
-                    <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
-                </Suspense>
-
-                <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>
-                    <NeracaData title="PENERIMAAN LAIN" titleTotal="Penerimaan Lain-lain/Khusus" type={4} group2={9} start={start} end={end} />
-                </Suspense>
-
-                <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
-                    <NeracaDataX title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
-                </Suspense>
-
-                <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
-                    <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
-                </Suspense>
+            <div>
 
 
-                {/* <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2> */}
-                {/* <Suspense fallback={<Loading section="PENDAPATAN" />}>
+
+                <div className="flex flex-wrap">
+
+                    {/* <h1 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500">LAPORAN AKTIVITAS Bulan: </h1> */}
+
+
+
+                    <div className="w-1/2">
+                        <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKUN</h2>
+                        <JustTitle title="Penerimaan Persembahan" />
+                        <JustTitle title="Beban Operasional" />
+                        <JustTitle title="Penerimaan Lain-lain/Khusus" />
+                        <JustTitle title="Kenaikan (Penurunan) Aset Bersih" />
+                        <JustTitle title="Aset Bersih Awal" />
+                    </div>
+                    <div className="w-1/4">
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">BEFORE</h2>
+                        <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
+                            <NeracaDataBefore title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                            <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>
+                            <NeracaDataBefore title="PENERIMAAN LAIN" titleTotal="Penerimaan Lain-lain/Khusus" type={4} group2={9} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
+                            <NeracaDataX title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
+                            <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
+                        </Suspense>
+
+                    </div>
+                    <div className="w-1/4">
+                        {/* <Divider /> */}
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">CURRENT</h2>
+                        <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
+                            <NeracaData title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                            <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>
+                            <NeracaData title="PENERIMAAN LAIN" titleTotal="Penerimaan Lain-lain/Khusus" type={4} group2={9} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
+                            <NeracaDataX title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
+                            <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
+                        </Suspense>
+                    </div>
+
+                    {/* <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2> */}
+                    {/* <Suspense fallback={<Loading section="PENDAPATAN" />}>
                     <NeracaData title="PENDAPATAN" titleTotal="Pendapatan" type={4} group2={8} start={start} end={end} />
                 </Suspense>
 
@@ -60,13 +101,17 @@ export default function ShowNSData() {
                 </Suspense> */}
 
 
+
+                </div>
+
+
+                <div className="h-4"></div>
+
+                {/* TOTAL Info */}
+                {/* <WidgetInfoTotal /> */}
+
+
             </div>
-
-
-            <div className="h-4"></div>
-
-            {/* TOTAL Info */}
-            {/* <WidgetInfoTotal /> */}
 
         </>
     )

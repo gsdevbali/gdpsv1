@@ -9,12 +9,14 @@ import { columns } from "./columns";
 
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
-import { useAktivitasStore } from './aktivitas-store';
+//import { useAktivitasStore } from './aktivitas-store';
 import SubTotalAktivitas from './total-aktivitas';
+import { useAktivitasStoreBefore } from './aktivitas-store-before';
 
-const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
-    const { totalSelisihAB, totalTerima1, totalTerima2, totalBebanOp, setTotalAsetAwal, setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalSelisihAB } = useAktivitasStore();
+    const { totalSelisihAB, totalTerima1, totalTerima2, totalBebanOp, setTotalAsetAwal, setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalSelisihAB } = useAktivitasStoreBefore();
+
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
@@ -82,6 +84,6 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
     )
 }
 
-export default NeracaData;
+export default NeracaDataBefore;
 
 //export default
