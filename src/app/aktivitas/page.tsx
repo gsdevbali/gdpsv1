@@ -6,7 +6,7 @@ import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 import WidgetPeriode from "./widget-periode";
-// import WidgetSubtitlePeriode from "./widget-subtitle-periode";
+import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
 
     const { setPeriodeOn } = useNeracaSaldoContext();
 
-    setPeriodeOn(false)
+    setPeriodeOn(false);
 
     return (
 
@@ -25,7 +25,7 @@ export default function Page() {
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN AKTIVITAS</h1>
                 {/* <Divider /> */}
-                {/* <WidgetSubtitlePeriode /> */}
+                <WidgetSubtitlePeriode />
 
                 <Divider />
 

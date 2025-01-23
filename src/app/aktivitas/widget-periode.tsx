@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import { getMonth, toLocalDate, toQueryDate } from '@/lib/tanggal';
-// import refreshPath from './refresh-path';
+import refreshPath from './refresh-path';
 import BeforePageData from './before-page-data';
 //import { useCfStore } from './cf-store';
 
@@ -45,10 +45,19 @@ function WidgetPeriode() {
 
     useEffect(() => {
         //const today = new Date().toISOString().split('T')[0];
-        setReady(false);
         setFilterType("month");
-        setSelectedMonth("");
 
+        setSelectedMonth(new Date().getMonth().toString());
+        setSelectedYear(new Date().getFullYear().toString());
+        const year = parseInt(selectedYear);
+        const month = parseInt(selectedMonth);
+
+        const start = new Date(year, month, 1).toISOString().split('T')[0];
+        const end = new Date(year, month + 1, 0).toISOString().split('T')[0];
+        setStartContext(toQueryDate(start))
+        setEndContext(toQueryDate(end))
+
+        setReady(true);
 
     }, []); // Empty dependency array to run only once on mount
 
@@ -126,7 +135,18 @@ function WidgetPeriode() {
     }
 
     const handleRefresh = () => {
-        handleFilterTypeSubmit()
+        console.log("-------------------------");
+        console.log('MONTH', selectedMonth);
+        console.log('YEAR', selectedYear);
+        console.log("-------------------------");
+        //handleFilterTypeSubmit();
+        const month = parseInt(selectedMonth);
+        const monthName = getMonth(month);
+        setStartContext(toQueryDate(start));
+        setEndContext(toQueryDate(end));
+        setSubTitle('Periode: ' + monthName + ' ' + selectedYear);
+        setReady(false);
+        refreshPath();
     }
 
 
@@ -260,7 +280,7 @@ function WidgetPeriode() {
                         </div>
                     ) : (
                         <div className="text-center space-y-2">
-                            <Label>Pilih Bulan dan Tahun:</Label>
+                            {/* <Label>Pilih Bulan dan Tahun:</Label> */}
                             {/* <Select value={selectedMonth} onValueChange={setSelectedMonth}> */}
                             <Select value={selectedMonth} onValueChange={
 

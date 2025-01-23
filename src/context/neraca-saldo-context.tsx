@@ -34,7 +34,7 @@ export function NeracaSaldoProvider({ children }: {
 }) {
 
     const [filterType, setFilterType] = useState('all'); // 'all', 'date', 'monthly'
-    const [subTitle, setSubTitle] = useState('Semua');
+    const [subTitle, setSubTitle] = useState('-');
     const [totalTerima, setTotalTerima] = useState(0);
     const [periodeOn, setPeriodeOn] = useState(false);
     const [start, setStartContext] = useState('01-01-2000');
