@@ -104,6 +104,9 @@ export function DataTable<TData, TValue>({
     const [totalDebit, setTotalDebit] = useState<number>(0);
     const [totalCredit, setTotalCredit] = useState<number>(0);
     const [totalBalance, setBalance] = useState<number>(0);
+    //BalanceX -> Saldo Periode yg lalu
+    const [totalDebitX, setTotalDebitX] = useState<number>(0);
+    const [totalCreditX, setTotalCreditX] = useState<number>(0);
     const [totalBalanceX, setBalanceX] = useState<number>(0);
 
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
@@ -143,8 +146,8 @@ export function DataTable<TData, TValue>({
             };
         }, { debit: 0, credit: 0 });
 
-        setTotalDebit(totals.debit);
-        setTotalCredit(totals.credit);
+        setTotalDebitX(totals.debit);
+        setTotalCreditX(totals.credit);
         setBalanceX(totals.debit - totals.credit);
 
     };
@@ -272,6 +275,7 @@ export function DataTable<TData, TValue>({
 
     useEffect(() => {
         calculateTotals(table.getFilteredRowModel().rows);
+        calculateTotalsX(table.getFilteredRowModel().rows);
         const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
         const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
 

@@ -32,7 +32,7 @@ async function getData(start: string, end: string) {
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`)
         }
-
+        console.log('getData:', res.url);
         const data = await res.json()
         return data
     } catch (error) {
@@ -42,19 +42,14 @@ async function getData(start: string, end: string) {
 }
 
 async function getDataX(start: string, end: string) {
-    // const res = await fetch(`${global.baseUrl}/api/transaction-all`, { cache: 'no-store' })
-    // const data = await res.json()
-    // //console.log(data)
-    // return data
+
     try {
-        //const res = await fetch(`${global.baseUrl}/api/transaction-all`, { cache: 'no-store' })
-        //const res = await fetch(`${process.env.APP_URL}/api/transaction-act?startDate=${start}&endDate=${end}&accountGroup2Id=${group2Id}`, { cache: 'no-store' })
         const res = await fetch(`${process.env.APP_URL}/api/transaction-act?startDate=${start}&endDate=${end}`, { cache: 'no-store' })
 
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`)
         }
-
+        console.log('getDataX:', res.url);
         const data = await res.json()
         return data
     } catch (error) {
@@ -64,7 +59,7 @@ async function getDataX(start: string, end: string) {
 }
 
 
-export default async function RepActivity() {
+export default async function LedgerXPage() {
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
@@ -96,10 +91,12 @@ export default async function RepActivity() {
     // 11: Biaya Sekretariat
     // 12: BIaya Bidang & Bapel
 
-    const start = "2020-01-01"
+    const start = "2020-01-01";
     const today = new Date().toISOString().split('T')[0];
-    const data = await getData(start, today)
-    const dataX = await getDataX(start, today)
+    const data = await getData(start, today);
+
+    // dataZ -> query untuk Saldo Periode yg lalu
+    const dataX = await getDataX(start, "2024-09-30");
     //console.log('data Query First:', data)
 
     return (
