@@ -157,7 +157,7 @@ const data = {
         },
         {
           title: "AKTIVITAS",
-          url: "#",
+          url: "/aktivitas",
         },
         {
           title: "BUKU BESAR 2",

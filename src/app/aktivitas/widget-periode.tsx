@@ -45,7 +45,10 @@ function WidgetPeriode() {
 
     useEffect(() => {
         //const today = new Date().toISOString().split('T')[0];
-        setReady(true);
+        setReady(false);
+        setFilterType("month");
+        setSelectedMonth("");
+
 
     }, []); // Empty dependency array to run only once on mount
 
@@ -161,7 +164,7 @@ function WidgetPeriode() {
     return (
         <div className="flex flex-col space-y-4">
 
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
                 <Button
                     onClick={() => {
                         setFilterType("all")
@@ -196,7 +199,7 @@ function WidgetPeriode() {
                 >
                     Bulanan
                 </Button>
-            </div>
+            </div> */}
 
             {filterType === "all" ? (
                 <div onClick={handleAllPeriode}></div>
@@ -306,7 +309,7 @@ function WidgetPeriode() {
                                     //setEndContext(toQueryDate(newlastDayOfSelectedMonth))
 
                                     setSelectedMonth(value)
-                                    setReady(false)
+                                    setReady(true)
                                 }
 
                             }>
