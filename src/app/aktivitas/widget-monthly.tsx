@@ -11,6 +11,7 @@ import {
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import React, { useState } from 'react';
 import ShowNSData from "./page-data";
+import refreshPath from "./refresh-path";
 
 
 
@@ -84,6 +85,7 @@ const MonthYearSelector = () => {
 
         updateStartAndEndDate(month, year); // Calculate start and end dates, including previous month
         setSubTitle('Periode: ' + selectedPeriod);
+        setShowComponent(false);
 
     }, [month, year]);
 
@@ -92,6 +94,8 @@ const MonthYearSelector = () => {
         setSelectedPeriod(`${value} ${year}`); // Update selected period
         updateStartAndEndDate(value, year); // Update start date
         setSubTitle('Periode: ' + selectedPeriod);
+        setShowComponent(true);
+        refreshPath();
     };
 
     const handleYearChange = (value: string) => {
@@ -99,11 +103,14 @@ const MonthYearSelector = () => {
         setSelectedPeriod(`${month} ${value}`); // Update selected period
         updateStartAndEndDate(month, value); // Update start date
         setSubTitle('Periode: ' + selectedPeriod);
+        setShowComponent(true);
+        refreshPath();
     };
 
     const handleButtonClick = () => {
         setSubTitle('Periode: ' + selectedPeriod);
         setShowComponent(true);
+        refreshPath();
     };
 
     return (
