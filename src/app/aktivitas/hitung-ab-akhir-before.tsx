@@ -14,7 +14,7 @@ import { useAktivitasStoreBefore } from './aktivitas-store-before';
 
 const NeracaDataAkhirBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalAsetAwal, totalSelisihAB } = useAktivitasStoreBefore();
+    const { totalAsetAwalX, totalSelisihABX } = useAktivitasStoreBefore();
 
     // const newTotal = Math.abs(totalBalance);
     // const newTotalBalance = toidr(newTotal)
@@ -23,7 +23,7 @@ const NeracaDataAkhirBefore = ({ title, titleTotal }: { title: string; titleTota
     //const newTotal = Math.abs(totalTerima1 - totalBebanOp + totalTerima2);
     //setTotalSelisihAB(newTotal);
 
-    const newTotalBalance = toidr(totalSelisihAB+totalAsetAwal);
+    const newTotalBalance = toidr(totalSelisihABX + totalAsetAwalX);
 
     return (
         <>

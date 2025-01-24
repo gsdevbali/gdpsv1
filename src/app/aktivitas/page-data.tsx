@@ -13,6 +13,7 @@ import NeracaDataSelisih from "./hitung-ab-selisih";
 import NeracaDataSelisihBefore from "./hitung-ab-selisih-before";
 import NeracaDataAkhir from "./hitung-ab-akhir";
 import NeracaDataAkhirBefore from "./hitung-ab-akhir-before";
+import NeracaDataMoM from "./hitung-MoM";
 
 //import WidgetInfoTotal from "./widget-info-total";
 //import useNeracaNewContext from "@/context/neraca-new-context";
@@ -40,7 +41,7 @@ export default function ShowNSData() {
 
 
 
-                    <div className="w-1/2">
+                    <div className="w-1/3">
                         <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKUN</h2>
                         <JustTitle title="Penerimaan Persembahan" />
                         <JustTitle title="Beban Operasional" />
@@ -103,6 +104,35 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
                             <NeracaDataAkhir title="ASET BERSIH AKHIR" titleTotal="Aset Bersih Akhir" />
                         </Suspense>
+                    </div>
+
+
+                    <div className="w-1/6">
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">MoM (%)</h2>
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={1} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={2} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={3} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={4} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={5} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={6} />
+                        </Suspense>
+
                     </div>
 
                     {/* <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2> */}

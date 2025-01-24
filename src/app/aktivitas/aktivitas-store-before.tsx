@@ -2,48 +2,48 @@ import { create } from "zustand"
 
 export interface AktivasStore {
 
-    totalTerima1: number;
-    totalTerima2: number;
-    totalBebanOp: number;
-    totalSelisihAB: number;
-    totalAsetAwal: number;
-    totalAsetAkhir: number;
-    setTotalTerima1: (setTotalTerima1: number) => void;
-    setTotalTerima2: (setTotalTerima2: number) => void;
-    setTotalBebanOp: (setTotalBebanOp: number) => void;
-    setTotalSelisihAB: (setTotalSelisihAB: number) => void;
-    setTotalAsetAwal: (setTotalAsetAwal: number) => void;
-    setTotalAsetAkhir: (setTotalAsetAkhir: number) => void;
+    totalTerima1X: number;
+    totalTerima2X: number;
+    totalBebanOpX: number;
+    totalSelisihABX: number;
+    totalAsetAwalX: number;
+    totalAsetAkhirX: number;
+    setTotalTerima1X: (setTotalTerima1X: number) => void;
+    setTotalTerima2X: (setTotalTerima2X: number) => void;
+    setTotalBebanOpX: (setTotalBebanOpX: number) => void;
+    setTotalSelisihABX: (setTotalSelisihABX: number) => void;
+    setTotalAsetAwalX: (setTotalAsetAwalX: number) => void;
+    setTotalAsetAkhirX: (setTotalAsetAkhirX: number) => void;
 
 }
 
 export const useAktivitasStoreBefore = create<AktivasStore>((set) => ({
 
-    totalTerima1: 0, // persembahan
-    totalTerima2: 0, // lain-lain/khusus
-    totalBebanOp: 0,
-    totalSelisihAB: 0,
-    totalAsetAwal: 0,
-    totalAsetAkhir: 0,
+    totalTerima1X: 0, // persembahan
+    totalTerima2X: 0, // lain-lain/khusus
+    totalBebanOpX: 0,
+    totalSelisihABX: 0,
+    totalAsetAwalX: 0,
+    totalAsetAkhirX: 0,
     //setTotalTerima1: (totalTerima1) => set({ totalTerima1 }),
-    setTotalTerima1: (totalTerima1: number) => set((state) =>
-        state.totalTerima1 !== totalTerima1 ? { totalTerima1 } : state
+    setTotalTerima1X: (totalTerima1X: number) => set((state) =>
+        state.totalTerima1X !== totalTerima1X ? { totalTerima1X } : state
     ),
-    setTotalTerima2: (totalTerima2: number) => set((state) =>
-        state.totalTerima2 !== totalTerima2 ? { totalTerima2 } : state
+    setTotalTerima2X: (totalTerima2X: number) => set((state) =>
+        state.totalTerima2X !== totalTerima2X ? { totalTerima2X } : state
     ),
-    setTotalBebanOp: (totalBebanOp: number) => set((state) =>
-        state.totalBebanOp !== totalBebanOp ? { totalBebanOp } : state
+    setTotalBebanOpX: (totalBebanOpX: number) => set((state) =>
+        state.totalBebanOpX !== totalBebanOpX ? { totalBebanOpX } : state
     ),
-    setTotalSelisihAB: (totalSelisihAB: number) => set((state) =>
-        state.totalSelisihAB !== totalSelisihAB ? { totalSelisihAB } : state
+    setTotalSelisihABX: (totalSelisihABX: number) => set((state) =>
+        state.totalSelisihABX !== totalSelisihABX ? { totalSelisihABX } : state
     ),
 
-    setTotalAsetAwal: (totalAsetAwal: number) => set((state) =>
-        state.totalAsetAwal !== totalAsetAwal ? { totalAsetAwal } : state
+    setTotalAsetAwalX: (totalAsetAwalX: number) => set((state) =>
+        state.totalAsetAwalX !== totalAsetAwalX ? { totalAsetAwalX } : state
     ),
-    setTotalAsetAkhir: (totalAsetAkhir: number) => set((state) =>
-        state.totalAsetAkhir !== totalAsetAkhir ? { totalAsetAkhir } : state
+    setTotalAsetAkhirX: (totalAsetAkhirX: number) => set((state) =>
+        state.totalAsetAkhirX !== totalAsetAkhirX ? { totalAsetAkhirX } : state
     ),
 
 }))
