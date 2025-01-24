@@ -95,7 +95,7 @@ const MonthYearSelector = () => {
         updateStartAndEndDate(value, year); // Update start date
         setSubTitle('Periode: ' + selectedPeriod);
         setShowComponent(true);
-        refreshPath();
+        //refreshPath();
     };
 
     const handleYearChange = (value: string) => {
@@ -104,13 +104,13 @@ const MonthYearSelector = () => {
         updateStartAndEndDate(month, value); // Update start date
         setSubTitle('Periode: ' + selectedPeriod);
         setShowComponent(true);
-        refreshPath();
+        //refreshPath();
     };
 
     const handleButtonClick = () => {
         setSubTitle('Periode: ' + selectedPeriod);
         setShowComponent(true);
-        refreshPath();
+        //refreshPath();
     };
 
     return (
