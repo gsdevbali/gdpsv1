@@ -1,13 +1,13 @@
 "use client"
 
-import { useAktivitasStore } from './aktivitas-store';
+import { useCashflowRecStore } from './cashflowrec-store';
+import { useCashflowRecStoreBefore } from './cashflowrec-store-before';
 import SubTotalAktivitas from './total-aktivitas';
-import { useAktivitasStoreBefore } from './aktivitas-store-before';
 
 const NeracaDataMoM = ({ row }: { row: number }) => {
 
-    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalAsetAwalX, totalSelisihABX, totalAsetAkhirX } = useAktivitasStoreBefore();
-    const { totalTerima1, totalTerima2, totalBebanOp, totalAsetAwal, totalSelisihAB, totalAsetAkhir } = useAktivitasStore();
+    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalSurplus1X, totalSurplus2X, totalBebanPsuX } = useCashflowRecStoreBefore();
+    const { totalTerima1, totalTerima2, totalBebanOp, totalSurplus1, totalSurplus2, totalBebanPsu } = useCashflowRecStore();
 
 
     let calculatedValue = 0;
@@ -16,19 +16,22 @@ const NeracaDataMoM = ({ row }: { row: number }) => {
             calculatedValue = (totalTerima1 - totalTerima1X) / totalTerima1X;
             break;
         case 2:
-            calculatedValue = (totalBebanOp - totalBebanOpX) / totalBebanOpX;
+            calculatedValue = (totalTerima2 - totalTerima2X) / totalTerima2X;
             break;
         case 3:
             calculatedValue = (totalTerima2 - totalTerima2X) / totalTerima2X;
             break;
         case 4:
-            calculatedValue = (totalSelisihAB - totalSelisihABX) / totalSelisihABX;
+            calculatedValue = (totalBebanOp - totalBebanOpX) / totalBebanOpX;
             break;
         case 5:
-            calculatedValue = (totalAsetAwal - totalAsetAwalX) / totalAsetAwalX;
+            calculatedValue = (totalSurplus1 - totalSurplus1X) / totalSurplus1X;
             break;
         case 6:
-            calculatedValue = (totalAsetAkhir - totalAsetAkhirX) / totalAsetAkhirX;
+            calculatedValue = (totalBebanPsu - totalBebanPsuX) / totalBebanPsuX;
+            break;
+        case 7:
+            calculatedValue = (totalSurplus2 - totalSurplus2X) / totalSurplus2X;
             break;
         default:
             calculatedValue = 0;

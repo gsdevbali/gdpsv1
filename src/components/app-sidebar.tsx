@@ -144,6 +144,10 @@ const data = {
           url: "/aktivitas",
         },
         {
+          title: "ARUS KAS",
+          url: "/cashflow-recap",
+        },
+        {
           title: "Penerimaan / Pengeluaran",
           url: "/cashflow",
         },
