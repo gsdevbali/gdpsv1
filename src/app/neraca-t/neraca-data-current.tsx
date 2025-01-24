@@ -1,0 +1,85 @@
+"use client"
+
+import { useQuery } from '@tanstack/react-query';
+
+import toidr from "@/lib/toidr";
+// import TulisTotalRp from "@/components/TulisTotalRp";
+import { useNeracaTStore } from './neraca-store';
+import SubTotalAktivitas from './total-aktivitas';
+
+const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
+
+    const { setKas, setBank, setDeposito, setPiutang, setPiutangLain, setBonSem, setBiayaMuka, setTotalAL } = useNeracaTStore();
+
+    // Fetch data using TanStack Query
+    // API : Neraca-X - filter by Type and GroupId
+    const { data: result, isLoading, error, isSuccess } = useQuery({
+        queryKey: ['nst-a', type, group],
+        //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-x?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            }),
+    });
+
+    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (error) return <div>Error: {error.message}</div>; // Handle error state
+    if (!result) return <div>Tidak ada data (null)</div>;
+
+    //Total & data for table
+    const { accounts: data, totalBalance } = result;
+    const newTotal = Math.abs(totalBalance);
+    const newTotalBalance = toidr(newTotal);
+
+    //Update Total global States
+    if (isSuccess) {
+
+        const newTotal = Math.abs(totalBalance);
+
+        switch (group) {
+
+            case 1:
+                setKas(newTotal)
+                break;
+            case 2:
+                setBank(newTotal)
+                break;
+            case 3:
+                setDeposito(newTotal)
+                break;
+            case 4: // 5
+                setBonSem(newTotal)
+                break;
+            case 6: // 7
+                setPiutang(newTotal)
+                break;
+            case 8:
+                setPiutangLain(newTotal)
+                break;
+
+            default:
+                // Handle default case
+                break;
+        }
+
+    };
+
+    return (
+        <>
+            <div className="w-full">
+                {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
+                {/* <DataTable columns={columns} data={data} /> */}
+                {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
+                <SubTotalAktivitas value={newTotalBalance} title={titleTotal} />
+
+            </div>
+
+        </>
+
+    )
+}
+
+export default NeracaData;
+
+//export default
