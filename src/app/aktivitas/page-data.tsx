@@ -11,6 +11,8 @@ import NeracaData from "./neraca-data-current";
 import NeracaDataBefore from "./neraca-data-before";
 import NeracaDataSelisih from "./hitung-ab-selisih";
 import NeracaDataSelisihBefore from "./hitung-ab-selisih-before";
+import NeracaDataAkhir from "./hitung-ab-akhir";
+import NeracaDataAkhirBefore from "./hitung-ab-akhir-before";
 
 //import WidgetInfoTotal from "./widget-info-total";
 //import useNeracaNewContext from "@/context/neraca-new-context";
@@ -45,6 +47,7 @@ export default function ShowNSData() {
                         <JustTitle title="Penerimaan Lain-lain/Khusus" />
                         <JustTitle title="Kenaikan (Penurunan) Aset Bersih" />
                         <JustTitle title="Aset Bersih Awal" />
+                        <JustTitle title="Aset Bersih Akhir" />
                     </div>
                     <div className="w-1/4">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
@@ -68,6 +71,11 @@ export default function ShowNSData() {
                             <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startPrev} end={endPrev} />
                         </Suspense>
 
+                        <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
+                            <NeracaDataAkhirBefore title="ASET BERSIH AKHIR" titleTotal="Aset Bersih Akhir" />
+                        </Suspense>
+
+
                     </div>
                     <div className="w-1/4">
                         {/* <Divider /> */}
@@ -90,6 +98,10 @@ export default function ShowNSData() {
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
                             <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
+                            <NeracaDataAkhir title="ASET BERSIH AKHIR" titleTotal="Aset Bersih Akhir" />
                         </Suspense>
                     </div>
 
