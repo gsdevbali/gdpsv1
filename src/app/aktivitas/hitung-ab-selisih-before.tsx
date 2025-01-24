@@ -9,12 +9,12 @@ import { columns } from "./columns";
 
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
-import { useAktivitasStore } from './aktivitas-store';
+import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitas from './total-aktivitas';
 
-const NeracaDataSelisih = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
+const NeracaDataSelisihBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalSelisihAB, totalAsetAwal, totalTerima1, totalTerima2, totalBebanOp, setTotalSelisihAB, setTotalAsetAkhir } = useAktivitasStore();
+    const { totalSelisihAB, totalAsetAwal, totalTerima1, totalTerima2, totalBebanOp, setTotalSelisihAB, setTotalAsetAkhir } = useAktivitasStoreBefore();
 
     // const newTotal = Math.abs(totalBalance);
     // const newTotalBalance = toidr(newTotal)
@@ -45,6 +45,6 @@ const NeracaDataSelisih = ({ title, titleTotal }: { title: string; titleTotal: s
     )
 }
 
-export default NeracaDataSelisih;
+export default NeracaDataSelisihBefore;
 
 //export default

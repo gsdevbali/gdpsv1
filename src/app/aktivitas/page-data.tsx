@@ -9,14 +9,15 @@ import Loading from "./loading";
 import JustTitle from "./just-title";
 import NeracaData from "./neraca-data-current";
 import NeracaDataBefore from "./neraca-data-before";
-import NeracaDataX from "./hitung-ab-selisih";
+import NeracaDataSelisih from "./hitung-ab-selisih";
+import NeracaDataSelisihBefore from "./hitung-ab-selisih-before";
 
 //import WidgetInfoTotal from "./widget-info-total";
 //import useNeracaNewContext from "@/context/neraca-new-context";
 
 export default function ShowNSData() {
 
-    const { start, end, startPrev, endPrev, periodeOn, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
+    const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
     console.log('SHOW-NS-DATA:')
     console.log('Start:', start)
     console.log('End:', end)
@@ -60,7 +61,7 @@ export default function ShowNSData() {
                         </Suspense>
 
                         <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
-                            <NeracaDataX title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
+                            <NeracaDataSelisihBefore title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
@@ -84,7 +85,7 @@ export default function ShowNSData() {
                         </Suspense>
 
                         <Suspense fallback={<Loading section="KENAIKAN/PENURUNAN AB" />}>
-                            <NeracaDataX title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
+                            <NeracaDataSelisih title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
