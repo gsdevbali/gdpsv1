@@ -41,8 +41,9 @@ export default function ShowNSDataNew() {
                         <JustTitle title="Piutang" />
                         <JustTitle title="Piutang Lain-Lain" />
                         <JustTitle title="Biaya Dibayar Dimuka" />
+                        <br />
                         <JustTitle title="TOTAL AKTIVA LANCAR" />
-
+                        <br />
                         <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKTIVA TIDAK LANCAR</h2>
                         <JustTitle title="Bangunan Dalam Penyelesaian" />
 
@@ -109,22 +110,15 @@ export default function ShowNSDataNew() {
 
                     <div>
 
-                        <JustTitle title="KAS" />
-                        <JustTitle title="BANK" />
-                        <JustTitle title="Deposito" />
-                        <JustTitle title="Piutang Jemaat" />
-                        <JustTitle title="Piutang Karyawan" />
-                        <JustTitle title="Piutang Lain (Relokasi)" />
-                        <JustTitle title="Biaya Dibayar Dimuka" />
-                        <JustTitle title="TOTAL AKTIVA LANCAR" />
-                        <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKTIVA TIDAK LANCAR</h2>
-                        <JustTitle title="...." />
-                        <JustTitle title="......" />
-                        <JustTitle title="........" />
-                        <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKTIVA TETAP</h2>
-                        <JustTitle title="...." />
-                        <JustTitle title="......" />
-                        <JustTitle title="........" />
+                        <JustTitle title="Hutang Biaya" />
+                        <JustTitle title="Hutang Lain-lain" />
+
+                        <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">ASET BERSIH</h2>
+                        <JustTitle title="Aset Bersih Awal" />
+                        <JustTitle title="Kenaikan ( Penurunan ) Aset Bersih" />
+
+                        <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">JUMLAH KEWAJIBAN & ASET BERSIH</h2>
+
                     </div>
 
                     <div>
