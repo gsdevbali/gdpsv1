@@ -8,6 +8,7 @@ import Loading from "./loading";
 import JustTitle from "./just-title";
 import NeracaData from "./neraca-data-current";
 import NeracaDataBefore from "./neraca-data-before";
+import NeracaDataGroup2Before from "./neraca-data-before-group2";
 
 
 export default function ShowNSDataNew() {
@@ -18,11 +19,13 @@ export default function ShowNSDataNew() {
 
         <>
             <div className="grid grid-cols-2 gap-4">
+                {/* KOLOM 1 */}
                 <div className="grid grid-cols-3">
                     <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKTIVA LANCAR</h2>
                     <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
                     <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titleMonthYear}</h2>
                 </div>
+                {/* KOLOM 2 */}
                 <div className="grid grid-cols-3">
                     <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">KEWAJIBAN & ASET BERSIH</h2>
                     <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
@@ -90,6 +93,10 @@ export default function ShowNSDataNew() {
 
                         <Suspense fallback={<Loading section="BIAYA D MUKA" />}>
                             <NeracaDataBefore title="" titleTotal="" type={1} group={3} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="TOTAL AL" />}>
+                            <NeracaDataGroup2Before title="" titleTotal="" type={1} group={1} start={startPrev} end={endPrev} />
                         </Suspense>
                     </div>
 

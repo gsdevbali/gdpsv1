@@ -3,20 +3,20 @@
 import { useQuery } from '@tanstack/react-query';
 
 import toidr from "@/lib/toidr";
+// import TulisTotalRp from "@/components/TulisTotalRp";
 import { useNeracaTStoreBefore } from './neraca-store-before';
 import SubTotalAktivitas from './total-aktivitas';
 
-const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
+const NeracaDataGroup2Before = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
-    //Siapkan variable Context dari useNeracaTStoreBefore()
     const { setKasX, setBankX, setDepositoX, setPiutangX, setPiutangLainX, setBonSemX, setBiayaMukaX, setTotalALX } = useNeracaTStoreBefore();
 
     // Fetch data using TanStack Query
     // API : Neraca-X - filter by Type and GroupId
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nst-b', type, group],
+        queryKey: ['n-group2-before', type, group],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-x?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-new?accountTypeId=${type}&accountGroup2Id=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -72,6 +72,6 @@ const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: str
     )
 }
 
-export default NeracaData;
+export default NeracaDataGroup2Before;
 
 //export default

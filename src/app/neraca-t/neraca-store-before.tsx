@@ -1,5 +1,7 @@
 import { create } from "zustand"
 
+// Definisi untuk varibel Context/Global
+ 
 export interface NeracaTStoreBefore {
 
     totalKasX: number;

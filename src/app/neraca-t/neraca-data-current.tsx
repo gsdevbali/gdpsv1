@@ -3,12 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 
 import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
 import { useNeracaTStore } from './neraca-store';
 import SubTotalAktivitas from './total-aktivitas';
 
 const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
+    //Siapkan variable Context dari useNeracaTStore()
     const { setKas, setBank, setDeposito, setPiutang, setPiutangLain, setBonSem, setBiayaMuka, setTotalAL } = useNeracaTStore();
 
     // Fetch data using TanStack Query
@@ -37,6 +37,7 @@ const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: str
 
         const newTotal = Math.abs(totalBalance);
 
+        // Simpan Saldo di variable Context/Global berdasar group
         switch (group) {
 
             case 1:

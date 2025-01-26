@@ -161,12 +161,9 @@ const data = {
         },
         {
           title: "NERACA",
-          url: "/neraca-new",
+          url: "/neraca-new2",
         },
-        {
-          title: "BUKU BESAR 2",
-          url: "/ledger2",
-        },
+ 
 
 
       ],
