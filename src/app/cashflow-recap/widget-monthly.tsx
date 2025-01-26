@@ -11,9 +11,6 @@ import {
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import React, { useState } from 'react';
 import ShowNSData from "./page-data";
-import refreshPath from "./refresh-path";
-
-
 
 const MonthYearSelector = () => {
     const { start, end, setSubTitle, setStartContext, setEndContext, setPrevStartContext, setPrevEndContext,
@@ -35,7 +32,6 @@ const MonthYearSelector = () => {
     const [showComponent, setShowComponent] = useState(false);
 
     const [selectedPeriod, setSelectedPeriod] = useState(`${month} ${year}`); // New state for selected period
-    //const [prevSelectedPeriod, setPrevSelectedPeriod] = useState(``); // state for prev Title
 
     const [startDate, setStartDate] = useState(`${currentYearString}-01-01`); // Initialize with the first day of the current year
     const [endDate, setEndDate] = useState(`${currentYearString}-01-31`); // Initialize with the last day of January
@@ -76,9 +72,6 @@ const MonthYearSelector = () => {
         setTitleMonthYear(selectedPeriod);
         setPrevTitleMonthYear(localPreviousMonthName + ' ' + previousYearString);
 
-        //console.log('----------START context: ', start);
-        //console.log('----------END context: ', end);
-
     };
 
     React.useEffect(() => {
@@ -115,37 +108,39 @@ const MonthYearSelector = () => {
 
     return (
         <>
-            <div className="flex justify-normal space-x-2 mt-2 mb-2">
-                <Select onValueChange={handleMonthChange} value={month}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Pilih Bulan" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {monthNames.map((monthName, index) => (
-                            <SelectItem key={index} value={monthName}>
-                                {monthName}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-
-                <Select onValueChange={handleYearChange} value={year}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Pilih Tahun" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {years.map((yearValue) => (
-                            <SelectItem key={yearValue} value={yearValue}>
-                                {yearValue}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-
-                <Button onClick={handleButtonClick}>REFRESH</Button>
-
-
+            <div className="flex gap-3 py-2">
+                <div className="w-600 flex-none">
+                    {/* <div className="flex justify-normal space-x-2 mt-2 mb-2"> */}
+                    <Select onValueChange={handleMonthChange} value={month}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Bulan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {monthNames.map((monthName, index) => (
+                                <SelectItem key={index} value={monthName}>
+                                    {monthName}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="w-300 flex-none">
+                    <Select onValueChange={handleYearChange} value={year}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Pilih Tahun" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {years.map((yearValue) => (
+                                <SelectItem key={yearValue} value={yearValue}>
+                                    {yearValue}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+                <Button variant={'outline'} onClick={handleButtonClick}>REFRESH</Button>
             </div>
+
             <div>
                 {showComponent && <ShowNSData />}
             </div>

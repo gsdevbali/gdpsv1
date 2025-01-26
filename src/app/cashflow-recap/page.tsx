@@ -6,7 +6,7 @@ import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 //import WidgetPeriode from "./widget-periode";
-//import WidgetSubtitlePeriode from "./widget-subtitle-periode";
+import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import MonthYearSelector from "./widget-monthly";
 
 
@@ -26,8 +26,8 @@ export default function Page() {
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN ARUS KAS</h1>
                 {/* <Divider /> */}
-                {/* <WidgetSubtitlePeriode /> */}
-                {subTitle}
+                <WidgetSubtitlePeriode />
+                {/* {subTitle} */}
 
                 <Divider />
 
