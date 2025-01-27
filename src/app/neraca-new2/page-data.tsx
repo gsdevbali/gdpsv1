@@ -127,7 +127,7 @@ export default function ShowNSData() {
 
                         <Suspense fallback={<Loading section="Akumulasi Penyusutan" />}>
                             {/* <AktivaTidakLancar /> */}
-                            <NeracaDataAllgroup title="AK.PENY." titleTotal="Akumulasi Penyusutan" type={1} group={14} group2={2} start={startPrev} end={endPrev} />
+                            <NeracaDataAllgroup title="AK.PENY." titleTotal="Akumulasi Penyusutan" type={1} group={14} group2={2} start={start} end={end} />
                         </Suspense>
                     </div>
 
