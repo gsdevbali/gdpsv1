@@ -78,6 +78,11 @@ export default function ShowNSData() {
                             {/* <AktivaTidakLancar /> */}
                             <NeracaDataAllgroupX title="AKTIVA TETAP - INVENTARIS" titleTotal="Inventaris" type={1} group={13} group2={2} start={startPrev} end={endPrev} />
                         </Suspense>
+
+                        <Suspense fallback={<Loading section="Akumulasi Penyusutan" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroupX title="AKUMULASI PENYUSUTAN" titleTotal="Akumulasi Penyusutan" type={1} group={14} group2={2} start={startPrev} end={endPrev} />
+                        </Suspense>
                     </div>
                     <div className="basis-1/4">
                         <h1 className="text-right text-[1.2em] pt-4 pb-2 text-blue-600 dark:text-orange-500">{titleMonthYear}</h1>
@@ -118,6 +123,11 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="AT4" />}>
                             {/* <AktivaTidakLancar /> */}
                             <NeracaDataAllgroup title="Test" titleTotal="Inventaris" type={1} group={13} group2={2} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="Akumulasi Penyusutan" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroup title="AK.PENY." titleTotal="Akumulasi Penyusutan" type={1} group={14} group2={2} start={startPrev} end={endPrev} />
                         </Suspense>
                     </div>
 
