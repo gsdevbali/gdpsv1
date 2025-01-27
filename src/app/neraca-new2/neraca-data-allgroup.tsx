@@ -60,6 +60,9 @@ const NeracaDataAllgroup = ({ title, titleTotal, type, group, group2, start, end
             case 12:
                 setTotalAT4(newTotal)
                 break;
+            case 14:
+                setTotalAP(newTotal)
+                break;
 
 
             default:
