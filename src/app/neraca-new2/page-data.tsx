@@ -11,6 +11,8 @@ import { toQueryDate } from "@/lib/tanggal";
 //import useNeracaNewContext from "@/context/neraca-new-context";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import NeracaDataX from "./neraca-dataX";
+import NeracaDataAllgroup from "./neraca-data-allgroup";
+import NeracaDataAllgroupX from "./neraca-data-allgroupX";
 
 export default function ShowNSData() {
 
@@ -52,9 +54,29 @@ export default function ShowNSData() {
                             <NeracaDataX title="AKTIVA TIDAK LANCAR" titleTotal="Aktiva Tidak Lancar" type={1} group2={3} start={startPrev} end={endPrev} />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="AKTIVA TETAP" />}>
+                        {/* <Suspense fallback={<Loading section="AKTIVA TETAP" />}> */}
+                        {/* <AktivaTidakLancar /> */}
+                        {/* <NeracaDataX title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} start={startPrev} end={endPrev} /> */}
+                        {/* </Suspense> */}
+
+                        <Suspense fallback={<Loading section="AT1" />}>
                             {/* <AktivaTidakLancar /> */}
-                            <NeracaDataX title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} start={startPrev} end={endPrev} />
+                            <NeracaDataAllgroupX title="AKTIVA TETAP - TANAH" titleTotal="Tanah" type={1} group={10} group2={2} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT2" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroupX title="AKTIVA TETAP - BANGUNAN" titleTotal="Bangunan" type={1} group={11} group2={2} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT3" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroupX title="AKTIVA TETAP - KENDARAAN" titleTotal="Kendaraan" type={1} group={12} group2={2} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT4" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroupX title="AKTIVA TETAP - INVENTARIS" titleTotal="Inventaris" type={1} group={13} group2={2} start={startPrev} end={endPrev} />
                         </Suspense>
                     </div>
                     <div className="basis-1/4">
@@ -72,9 +94,30 @@ export default function ShowNSData() {
                             <NeracaData title="AKTIVA TL" titleTotal="Aktiva Tidak Lancar" type={1} group2={3} start={start} end={end} />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="AKTIVA TETAP" />}>
+
+                        {/* <Suspense fallback={<Loading section="AKTIVA TETAP" />}> */}
+                        {/* <AktivaTidakLancar /> */}
+                        {/* <NeracaData title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} start={start} end={end} /> */}
+                        {/* </Suspense> */}
+
+                        <Suspense fallback={<Loading section="AT1" />}>
                             {/* <AktivaTidakLancar /> */}
-                            <NeracaData title="AKTIVA TETAP" titleTotal="Aktiva Tetap" type={1} group2={2} start={start} end={end} />
+                            <NeracaDataAllgroup title="Test" titleTotal="Tanah" type={1} group={10} group2={2} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT2" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroup title="Test" titleTotal="Bangunan" type={1} group={11} group2={2} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT3" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroup title="Test" titleTotal="Kendaraan" type={1} group={12} group2={2} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="AT4" />}>
+                            {/* <AktivaTidakLancar /> */}
+                            <NeracaDataAllgroup title="Test" titleTotal="Inventaris" type={1} group={13} group2={2} start={start} end={end} />
                         </Suspense>
                     </div>
 
@@ -130,7 +173,7 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="ASET BERSIH" />}>
                             <NeracaData title="ASET BERSIH" titleTotal="Aset Bersih" type={3} group2={6} start={start} end={end} />
                             {/* <NeracaDataSub title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} /> */}
-                            <NeracaData title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} start={start} end={end} />
+                            <NeracaData title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={10} group2={7} start={start} end={end} />
                         </Suspense>
                     </div>
 

@@ -15,14 +15,20 @@ export async function GET(request: Request) {
         // Extract accountTypeId from the request query parameters
         const { searchParams } = new URL(request.url);
         const accountTypeId = searchParams.get('accountTypeId');
+        const accountGroupId = searchParams.get('accountGroupId');
+        const startDate = searchParams.get('startDate');
+        const endDate = searchParams.get('endDate');
 
         if (!accountTypeId) {
             return NextResponse.json({ error: 'accountTypeId is required' }, { status: 400 });
         }
 
-        const accountGroup1Id = searchParams.get('accountGroup1Id');
-        if (!accountGroup1Id) {
+        if (!accountGroupId) {
             return NextResponse.json({ error: 'accountGroup2Id is required' }, { status: 400 });
+        }
+
+        if (!startDate || !endDate) {
+            return NextResponse.json({ error: 'startDate and endDate are required' }, { status: 400 });
         }
 
         const query = await dbprisma.account.findMany({
@@ -33,23 +39,25 @@ export async function GET(request: Request) {
                 accountGroup: true,
                 accountGroup2: true,
                 transactionAlls: {
-                    
                   select: {
                     date: true,
                     description: true,
                     debit: true,
                     credit: true,
                     flag: true,
-
                   },
-                  
+                  where: {
+                    date: {
+                        gte: new Date(startDate),
+                        lte: new Date(endDate),
+                    },
+                },
                 },
                 
               },
               where: {
                 accountTypeId: parseInt(accountTypeId),
-                accountGroup2Id: parseInt(accountGroup1Id),
-                
+                accountGroupId: parseInt(accountGroupId),
 
               },
         });

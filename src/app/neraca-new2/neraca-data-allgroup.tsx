@@ -11,15 +11,17 @@ import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRpNeraca";
 import { useNeracaStore } from './neraca-store';
 
-const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataAllgroup = ({ title, titleTotal, type, group, group2, start, end }: { title: string; titleTotal: string; type: number; group: number; group2: number; start: string, end: string }) => {
 
-    const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    //const { setTotalAP } = useNeracaStore();
+    const { setTotalAP, setTotalAT1, setTotalAT2, setTotalAT3, setTotalAT4 } = useNeracaStore();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['ns-current', type, group2],
+        queryKey: ['ns-', type, group],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        //queryFn: () => fetch(`/api/neraca-allgroup?accountTypeId=${type}&accountGroupId=${group}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -43,29 +45,22 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
         //UpdateTotalCF(group2, totalBalance);
         const newTotal = Math.abs(totalBalance);
 
-        switch (group2) {
+        //setTotalAP(newTotal)
+        switch (group) {
 
-            case 1:
-                setTotalAL(newTotal)
+            case 10:
+                setTotalAT1(newTotal)
                 break;
-            case 3:
-                setTotalATL(newTotal)
+            case 11:
+                setTotalAT2(newTotal)
                 break;
-            case 2:
-                setTotalAT(newTotal)
+            case 12:
+                setTotalAT3(newTotal)
                 break;
-            case 4:
-                setTotalK(newTotal)
+            case 12:
+                setTotalAT4(newTotal)
                 break;
-            case 5:
-                setTotalKL(newTotal)
-                break;
-            case 6:
-                setTotalAB(newTotal)
-                break;
-            case 7:
-                setTotalAB2(newTotal)
-                break;
+
 
             default:
                 // Handle default case
@@ -87,6 +82,6 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
     )
 }
 
-export default NeracaData;
+export default NeracaDataAllgroup;
 
 //export default
