@@ -161,7 +161,7 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="ASET BERSIH" />}>
                             <NeracaDataX title="ASET BERSIH" titleTotal="Aset Bersih" type={3} group2={6} start={startPrev} end={endPrev} />
                             {/* <NeracaDataSub title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} /> */}
-                            <NeracaDataX title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} start={startPrev} end={endPrev} />
+                            <NeracaDataX title="Kenaikan (Penurunan)" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group2={7} start={startPrev} end={endPrev} />
                         </Suspense>
                     </div>
 
@@ -181,9 +181,9 @@ export default function ShowNSData() {
 
                         {/* <h2 className="text-lg font-bold pt-2 pb-2">ASET BERSIH</h2> */}
                         <Suspense fallback={<Loading section="ASET BERSIH" />}>
-                            <NeracaData title="ASET BERSIH" titleTotal="Aset Bersih" type={3} group2={6} start={start} end={end} />
+                            <NeracaData title="ASET BERSIH" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
                             {/* <NeracaDataSub title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={3} group2={7} /> */}
-                            <NeracaData title="ASET BERSIH 2" titleTotal="Aset Bersih 2" type={10} group2={7} start={start} end={end} />
+                            <NeracaData title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group2={7} start={start} end={end} />
                         </Suspense>
                     </div>
 

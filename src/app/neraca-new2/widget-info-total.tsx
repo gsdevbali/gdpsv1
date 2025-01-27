@@ -53,7 +53,11 @@ function WidgetInfoTotal() {
 
             <TulisTotalRpBig value={toidr(totalAktiva)} title="ASET" />
 
-            <TulisTotalRpBig value={toidr(totalPasiva)} title="PASIVA (Kewajiban + Aset Bersih)" />
+            <TulisTotalRp value={toidr(totalK)} title="KEWAJIBAN" />
+            <TulisTotalRp value={toidr(totalKL)} title="KEWAJIBAN LANCAR" />
+            <TulisTotalRp value={toidr(totalAB + totalAB2)} title="ASET BERSIH AKHIR (Aset Bersih + Kenaikan/Penurunan)" />
+
+            <TulisTotalRpBig value={toidr(totalPasiva)} title="PASIVA (Kewajiban + Aset Bersih Akhir)" />
 
             {isBalanceSheetEqual(totalAktiva, totalPasiva) ?
                 <TulisTotalRpGreen value={selisihAkhir} title="Selisih Aset dan Pasiva" />
