@@ -156,14 +156,14 @@ const data = {
           url: "/ledger",
         },
         {
-          title: "NERACA SALDO",
-          url: "/neraca-saldo",
-        },
-        {
           title: "NERACA",
-          url: "/neraca-new2",
+          url: "/neraca-t",
         },
- 
+        // {
+        //   title: "NERACA SALDO",
+        //   url: "/neraca-saldo",
+        // },
+
 
 
       ],

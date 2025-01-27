@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
-import TransByCoaId from "./trans-by-coa"
+// import TransByCoaId from "./trans-by-coa"
 //import AccountDialog from "./AccountDialog"
 
 export type Account = {
@@ -60,39 +60,39 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true
     // },
     // 
-    // {
-    //     id: "group2",
-    //     accessorKey: "accountGroup2.name",
-    //     header: () => <div className="text-left">Kelompok</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-left">{row.original.accountGroup2.name}</div>;
-    //     },
-    //     enableSorting: true,
-    //     enableHiding: true,
-    // },
-    // {
-    //     accessorKey: "accountGroup.name",
-    //     header: () => <div className="text-left w-[100px]">Kelompok</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-left w-[100px]">{row.original.accountGroup.name}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
-    // {
-    //     accessorKey: "name",
-    //     header: () => <div className="text-left">Akun</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-left">
-    //             <Link
-    //                 href={`/coa/${row.original.id}/transactions`}
-    //                 className="text-blue-600 hover:underline"
-    //             >
-    //                 {row.original.name}
-    //             </Link>
-    //         </div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        id: "group2",
+        accessorKey: "accountGroup2.name",
+        header: () => <div className="text-left">Kelompok</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.accountGroup2.name}</div>;
+        },
+        enableSorting: true,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "accountGroup.name",
+        header: () => <div className="text-left w-[100px]">Kelompok</div>,
+        cell: ({ row }) => {
+            return <div className="text-left w-[100px]">{row.original.accountGroup.name}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "name",
+        header: () => <div className="text-left">Akun</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">
+                <Link
+                    href={`/coa/${row.original.id}/transactions`}
+                    className="text-blue-600 hover:underline"
+                >
+                    {row.original.name}
+                </Link>
+            </div>;
+        },
+        enableSorting: true,
+    },
 
     // {
     //     accessorKey: "name",
@@ -117,7 +117,7 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "balance",
-        header: () => <div className="text-right text-[1.2em]">Saldo</div>,
+        header: () => <div className="text-right">Saldo</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);

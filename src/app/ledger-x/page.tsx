@@ -2,28 +2,13 @@ import React from 'react'
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
-import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRp";
-import Divider from "@/components/Divider";
+
 import { DataTable } from "./data-tables";
 import { columns } from "./columns";
 
 
-// const getActivity = async (start: string, end: string, accountTypeId: number, accountGroup2Id: number) => {
-//     //const res = await fetch(`${global.baseUrl}/api/activity?startDate=${start}&endDate=${end}&accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`);
-//     const res = await fetch(`${process.env.APP_URL}/api/activity?startDate=${start}&endDate=${end}&accountTypeId=${accountTypeId}&accountGroup2Id=${accountGroup2Id}`);
-//     const data = await res.json()
-//     return {
-//         accounts: data.accounts,
-//         totalBalance: data.totalBalance
-//     }
-// };
-
 async function getData(start: string, end: string) {
-    // const res = await fetch(`${global.baseUrl}/api/transaction-all`, { cache: 'no-store' })
-    // const data = await res.json()
-    // //console.log(data)
-    // return data
+
     try {
         //const res = await fetch(`${global.baseUrl}/api/transaction-all`, { cache: 'no-store' })
         //const res = await fetch(`${process.env.APP_URL}/api/transaction-act?startDate=${start}&endDate=${end}&accountGroup2Id=${group2Id}`, { cache: 'no-store' })
