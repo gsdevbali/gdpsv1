@@ -55,6 +55,8 @@ function WidgetInfoTotal() {
 
             <TulisTotalRp value={toidr(totalK)} title="KEWAJIBAN" />
             <TulisTotalRp value={toidr(totalKL)} title="KEWAJIBAN LANCAR" />
+            <TulisTotalRp value={toidr(totalAB)} title="ASET BERSIH" />
+            <TulisTotalRp value={toidr(totalAB2)} title="KENAIKAN/PENURUNAN ASET BERSIH" />
             <TulisTotalRp value={toidr(totalAB + totalAB2)} title="ASET BERSIH AKHIR (Aset Bersih + Kenaikan/Penurunan)" />
 
             <TulisTotalRpBig value={toidr(totalPasiva)} title="PASIVA (Kewajiban + Aset Bersih Akhir)" />
