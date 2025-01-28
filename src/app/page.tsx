@@ -2,6 +2,8 @@
 
 import Divider from "@/components/Divider";
 import PageLayout from "@/components/PageLayout";
+import MenuBox1 from "@/components/MenuBox1";
+import MenuBox2 from "@/components/MenuBox2";
 import global from "@/config.js";
 
 export default function Home() {
@@ -14,14 +16,26 @@ export default function Home() {
       <PageLayout header={header} footer={footer}>
 
         <h1 className="text-3xl font-bold">Selamat datang!</h1>
-        <p className="pt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. </p>
+        <p className="pt-3">GDPSApp - Anda pemakai Aplikasi Keuangan GKI Denpasar - Bali. Aplikasi ini membantu: Mencatat Transaksi, Pembukuan dan Membuat Laporan Posisi Keuangan. </p>
 
         <Divider />
-        <div className="flex flex-1 flex-col gap-4 pt-4 pb-4">
+        <div className="flex flex-1 flex-col gap-4 pt-4 pb-5">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+            <MenuBox1 title="JURNAL" desc="Entri Jurnal Umum" menulink='/jurnal'/>
+            <MenuBox1 title="KAS KERK" desc="Entri KAS KERK" menulink='/receive-keb'/>
+            <MenuBox1 title="BANK" desc="Entri Penerimaan BANK" menulink='/receive-other'/>
+            <MenuBox1 title="AKUN" desc="Daftar Akun" menulink='/coa'/>
+          </div>
+
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-blue-100" />
-            <div className="aspect-video rounded-xl bg-blue-100" />
-            <div className="aspect-video rounded-xl bg-blue-100" />
+            <MenuBox1 title="AKTIVITAS" desc="Laporan Aktivitas Bulanan" menulink='/jurnal'/>
+            <MenuBox1 title="ARUS KAS" desc="Laporan Arus Kas Bulanan" menulink='/receive-other'/>
+            <MenuBox1 title="BUKU BESAR" desc="Laporan Transaksi Buku Besar" menulink='/ledger'/>
+          </div>
+
+          <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+            <MenuBox2 title="PENERIMAAN/PENGELUARAN" desc="Laporan Penerimaan/Pengeluaran Bulanan" menulink='/cashflow'/>
+            <MenuBox2 title="NERACA" desc="Laporan Neraca Bulanan" menulink='/neraca-t'/>
           </div>
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
