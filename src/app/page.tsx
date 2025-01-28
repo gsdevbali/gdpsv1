@@ -4,6 +4,7 @@ import Divider from "@/components/Divider";
 import PageLayout from "@/components/PageLayout";
 import MenuBox1 from "@/components/MenuBox1";
 import MenuBox2 from "@/components/MenuBox2";
+import MenuBox3 from "@/components/MenuBox3";
 import global from "@/config.js";
 
 export default function Home() {
@@ -29,14 +30,14 @@ export default function Home() {
           </div>
 
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <MenuBox1 title="AKTIVITAS" desc="Laporan Aktivitas Bulanan" menulink='/aktivitas'/>
-            <MenuBox1 title="ARUS KAS" desc="Laporan Arus Kas Bulanan" menulink='/cashflow-recap'/>
-            <MenuBox1 title="BUKU BESAR" desc="Laporan Transaksi Buku Besar" menulink='/ledger'/>
+            <MenuBox2 title="AKTIVITAS" desc="Laporan Aktivitas Bulanan" menulink='/aktivitas'/>
+            <MenuBox2 title="ARUS KAS" desc="Laporan Arus Kas Bulanan" menulink='/cashflow-recap'/>
+            <MenuBox2 title="BUKU BESAR" desc="Laporan Transaksi Buku Besar" menulink='/ledger'/>
           </div>
 
           <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-            <MenuBox2 title="PENERIMAAN/PENGELUARAN" desc="Laporan Penerimaan/Pengeluaran Bulanan" menulink='/cashflow'/>
-            <MenuBox2 title="NERACA" desc="Laporan Neraca Bulanan" menulink='/neraca-t'/>
+            <MenuBox3 title="PENERIMAAN/PENGELUARAN" desc="Laporan Penerimaan/Pengeluaran Bulanan" menulink='/cashflow'/>
+            <MenuBox3 title="NERACA" desc="Laporan Neraca Bulanan" menulink='/neraca-t'/>
           </div>
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>

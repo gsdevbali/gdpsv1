@@ -7,7 +7,7 @@ interface MenuBoxButtonProps {
     menulink: string;
   }
 
-function MenuBox1({ title, desc, menulink }: MenuBoxButtonProps) {
+function MenuBox2({ title, desc, menulink }: MenuBoxButtonProps) {
 
     const handleClick = () => {
         console.log('Button clicked');
@@ -15,12 +15,11 @@ function MenuBox1({ title, desc, menulink }: MenuBoxButtonProps) {
       };
 
   return (
-    // <div className="aspect-video rounded-xl bg-blue-100 hover:bg-blue-200 cursor-pointer h-[200px] w-full max-w-xs" >
-    <div className="aspect-auto rounded-xl bg-blue-300 hover:bg-green-200 cursor-pointer h-[180px]" >
-      <div onClick={handleClick} className="flex flex-col justify-center items-center h-full p-2">
-        <h3 className="text-[1.8em] font-bold text-orange-900">{title}</h3>
-        <p className="text-sm font-bold text-orange-800 text-center">{desc}</p>
-      </div>
+    <div className="aspect-video rounded-xl bg-blue-300 hover:bg-green-300 cursor-pointer" >
+        <div onClick={handleClick} className="flex flex-col justify-center items-center h-full p-4">
+            <h3 className="text-[1.8em] font-bold text-orange-900">{title}</h3>
+            <p className="text-sm font-bold text-orange-800 text-center">{desc}</p>
+        </div>
     </div>
   )
 }
@@ -30,4 +29,4 @@ function handleClick() {
     
 }
 
-export default MenuBox1
+export default MenuBox2
