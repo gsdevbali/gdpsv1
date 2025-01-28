@@ -11,7 +11,7 @@ function MenuBox1({ title, desc, menulink }: MenuBoxButtonProps) {
 
     const handleClick = () => {
         console.log('Button clicked');
-        window.open(menulink, '_blank');
+        window.open(menulink, '_self');
       };
 
   return (
