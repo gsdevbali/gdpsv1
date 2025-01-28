@@ -16,10 +16,10 @@ function MenuBox1({ title, desc, menulink }: MenuBoxButtonProps) {
 
   return (
     // <div className="aspect-video rounded-xl bg-blue-100 hover:bg-blue-200 cursor-pointer h-[200px] w-full max-w-xs" >
-    <div className="aspect-auto rounded-xl bg-blue-100 hover:bg-blue-500 cursor-pointer h-[180px]" >
+    <div className="aspect-auto rounded-xl bg-blue-300 hover:bg-green-200 cursor-pointer h-[180px]" >
       <div onClick={handleClick} className="flex flex-col justify-center items-center h-full p-2">
-        <h3 className="text-[1.8em] font-bold text-orange-700">{title}</h3>
-        <p className="text-sm font-bold text-orange-700 text-center">{desc}</p>
+        <h3 className="text-[1.8em] font-bold text-orange-900">{title}</h3>
+        <p className="text-sm font-bold text-orange-800 text-center">{desc}</p>
       </div>
     </div>
   )
