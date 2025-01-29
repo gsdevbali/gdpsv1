@@ -81,14 +81,14 @@ export default async function LedgerXPage() {
     const data = await getData(start, today);
 
     // dataZ -> query untuk Saldo Periode yg lalu
-    const dataX = await getDataX(start, "2024-09-30");
+    //const dataX = await getDataX(start, "2024-09-30");
     //console.log('data Query First:', data)
 
     return (
         <>
             <PageLayout header={header} footer={footer}>
 
-                <DataTable columns={columns} data={data} dataX={dataX} />
+                <DataTable columns={columns} data={data} />
                 {/* <h1 className="text-2xl font-bold">PERSEMBAHAN:</h1>
                 <DataTable columns={columns} data={data_persembahan} />
                 <TulisTotalRp value={newTotalBalance_Persembahan} title={"Penerimaan Persembahan"} />
