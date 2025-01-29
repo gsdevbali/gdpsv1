@@ -105,9 +105,9 @@ export function DataTable<TData, TValue>({
     const [totalCredit, setTotalCredit] = useState<number>(0);
     const [totalBalance, setBalance] = useState<number>(0);
     //BalanceX -> Saldo Periode yg lalu
-    const [totalDebitX, setTotalDebitX] = useState<number>(0);
-    const [totalCreditX, setTotalCreditX] = useState<number>(0);
-    const [totalBalanceX, setBalanceX] = useState<number>(0);
+    // const [totalDebitX, setTotalDebitX] = useState<number>(0);
+    // const [totalCreditX, setTotalCreditX] = useState<number>(0);
+    // const [totalBalanceX, setBalanceX] = useState<number>(0);
 
     const [subTitle, setSubTitle] = useState<string>('SEMUA');
     const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
@@ -123,37 +123,159 @@ export function DataTable<TData, TValue>({
     const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
     // Add this helper function before the return statement
 
+    const [previousPeriodBalance, setPreviousPeriodBalance] = useState<number>(0);
+    const [previousPeriodDebit, setPreviousPeriodDebit] = useState<number>(0);
+    const [previousPeriodCredit, setPreviousPeriodCredit] = useState<number>(0);
+
     const xNumber = dataX;
-    const calculateTotals = (rows: any[]) => {
+
+    const table = useReactTable({
+        data,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        getPaginationRowModel: getPaginationRowModel(),
+
+        filterFns: {
+            dateRange: (row, columnId, filterValue) => {
+                const cellValue = row.getValue(columnId) as string;
+                const [start, end] = filterValue as [string, string];
+
+                if (!start && !end) return true;
+                if (!cellValue) return false;
+
+                const date = new Date(cellValue);
+                const startDate = start ? new Date(start) : startOfYear(new Date());
+                const endDate = end ? new Date(end) : endOfYear(new Date());
+
+                // Normalize times for comparison
+                date.setHours(0, 0, 0, 0);
+                startDate.setHours(0, 0, 0, 0);
+                endDate.setHours(23, 59, 59, 999);
+
+                return date >= startDate && date <= endDate;
+            },
+        },
+
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
+        },
+
+    })
+
+    // NEW calculateTotals
+    // Modify calculateTotals to handle different periods
+    const calculateTotals = (rows: any[], isPreviousPeriod: boolean = false) => {
+
+        // Define fixed start date for previous period calculations
+        const FIXED_START_DATE = new Date('2020-01-01');
+
+        // Important: We need to work with the raw data for previous period
+        // instead of filtered rows
+        const rowsToProcess = isPreviousPeriod ? data : rows;
+
         const totals = rows.reduce((acc, row) => {
+            // Get the date from either row.original (filtered) or row (raw data)
+            const rowData = row.original || row;
+            const rowDate = new Date(rowData.date);
+            const currentPeriodStart = new Date(dateStart);
+            const currentPeriodEnd = new Date(dateEnd);
+
+            // Normalize all dates to start of day
+            rowDate.setHours(0, 0, 0, 0);
+            currentPeriodStart.setHours(0, 0, 0, 0);
+            currentPeriodEnd.setHours(23, 59, 59, 999);
+            FIXED_START_DATE.setHours(0, 0, 0, 0);
+
+            // For previous period, include only rows before start date
+            if (isPreviousPeriod) {
+                // For previous period: include rows from FIXED_START_DATE up to day before currentPeriodStart
+                if (rowDate < FIXED_START_DATE || rowDate >= currentPeriodStart) {
+                    return acc;
+                }
+            } else {
+                // For current period: include only rows between start and end dates
+                if (rowDate < currentPeriodStart || rowDate > currentPeriodEnd) {
+                    return acc;
+                }
+            }
+
+            // Add debugging logs
+            console.log(`Processing row for ${isPreviousPeriod ? 'previous' : 'current'} period:`, {
+                // date: rowDate.toISOString(),
+                debit: row.debit,
+                credit: row.credit,
+                included: isPreviousPeriod ?
+                    (rowDate >= FIXED_START_DATE && rowDate < currentPeriodStart) :
+                    (rowDate >= currentPeriodStart && rowDate <= currentPeriodEnd)
+            });
+
             return {
-                debit: acc.debit + (Number(row.original.debit) || 0),
-                credit: acc.credit + (Number(row.original.credit) || 0)
+                debit: acc.debit + (Number(row.debit) || 0),
+                credit: acc.credit + (Number(row.credit) || 0)
             };
         }, { debit: 0, credit: 0 });
 
-        setTotalDebit(totals.debit);
-        setTotalCredit(totals.credit);
-        setBalance(totals.debit - totals.credit);
 
+        // Add debugging logs for totals
+        console.log(`${isPreviousPeriod ? 'Previous' : 'Current'} period totals:`, {
+            debit: totals.debit,
+            credit: totals.credit,
+            balance: totals.debit - totals.credit,
+            periodType: isPreviousPeriod ? 'Previous' : 'Current',
+            dateRange: isPreviousPeriod ?
+                `2020-01-01 to ${new Date(dateStart).toISOString().split('T')[0]}` :
+                `${dateStart} to ${dateEnd}`
+        });
+
+        if (isPreviousPeriod) {
+            setPreviousPeriodDebit(totals.debit);
+            setPreviousPeriodCredit(totals.credit);
+            setPreviousPeriodBalance(totals.debit - totals.credit);
+        } else {
+            setTotalDebit(totals.debit);
+            setTotalCredit(totals.credit);
+            setBalance(totals.debit - totals.credit);
+        }
     };
 
-    const calculateTotalsX = (rows: any[]) => {
-        const totals = rows.reduce((acc, row) => {
-            return {
-                debit: acc.debit + (Number(row.original.debit) || 0),
-                credit: acc.credit + (Number(row.original.credit) || 0)
-            };
-        }, { debit: 0, credit: 0 });
 
-        setTotalDebitX(totals.debit);
-        setTotalCreditX(totals.credit);
-        setBalanceX(totals.debit - totals.credit);
+    // const calculateTotalsX = (rows: any[]) => {
+    //     const totals = rows.reduce((acc, row) => {
+    //         return {
+    //             debit: acc.debit + (Number(row.original.debit) || 0),
+    //             credit: acc.credit + (Number(row.original.credit) || 0)
+    //         };
+    //     }, { debit: 0, credit: 0 });
 
-    };
+    //     setTotalDebitX(totals.debit);
+    //     setTotalCreditX(totals.credit);
+    //     setBalanceX(totals.debit - totals.credit);
+
+    // };
 
     // Fetch data: Group2 & Accounts for Filter Lookup
     useEffect(() => {
+        const rows = table.getFilteredRowModel().rows;
+
+        // Log the current filter state
+        console.log('Current filters:', {
+            dateStart,
+            dateEnd,
+            rowCount: rows.length,
+            filters: table.getState().columnFilters
+        });
+
+        calculateTotals(rows, false); // Current period using filtered rows
+        calculateTotals(data, true);  // Previous period using raw data
 
         const fetchGroup1 = async () => {
             try {
@@ -193,45 +315,32 @@ export function DataTable<TData, TValue>({
         //setDateEnd(today);
 
 
-    }, [currentGroup1Id, currentGroup2Id]);
+    }, [
+        // currentGroup1Id,
+        // currentGroup2Id,
+        dateStart,
+        dateEnd,
+        data, // Add dependency on raw data
+        table.getFilteredRowModel().rows,
+        table.getState().columnFilters
+    ]);
 
+    useEffect(() => {
+        calculateTotals(table.getFilteredRowModel().rows);
+        // calculateTotalsX(table.getFilteredRowModel().rows);
+        const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
+        const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
 
-    const table = useReactTable({
-        data,
-        columns,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
-        getPaginationRowModel: getPaginationRowModel(),
+        setCurrentGroup1Id(parseInt(g1Id));
+        setCurrentGroup2Id(parseInt(g2Id));
 
-        filterFns: {
-            dateRange: (row, columnId, filterValue) => {
-                const cellValue = row.getValue(columnId) as string
-                const [start, end] = filterValue as [string, string]
-                if (!start && !end) return true
-                if (!cellValue) return false
+        const coaId = table.getColumn("coaid")?.getFilterValue() as string;
+        setSubTitle(getGroup2Name(g2Id));
+        setSubTitleAccount(getAccountName(coaId));
+        setSubTitleGroup(getGroup1Name(g1Id));
 
-                const date = parseISO(cellValue)
-                const startDate = start ? parseISO(start) : startOfYear(new Date())
-                const endDate = end ? parseISO(end) : endOfYear(new Date())
-
-                return date >= startDate && date <= endDate
-            },
-
-        },
-
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-        },
-
-    })
+        //}, [table, getGroup2Name, getAccountName]);
+    }, [table.getFilteredRowModel().rows]);
 
     const getGroup1Name = (id: string) => {
         if (!id) return 'Semua Grup';
@@ -272,24 +381,6 @@ export function DataTable<TData, TValue>({
         setNewPeriod(true);
     }
 
-
-    useEffect(() => {
-        calculateTotals(table.getFilteredRowModel().rows);
-        calculateTotalsX(table.getFilteredRowModel().rows);
-        const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
-        const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
-
-        setCurrentGroup1Id(parseInt(g1Id));
-        setCurrentGroup2Id(parseInt(g2Id));
-
-        const coaId = table.getColumn("coaid")?.getFilterValue() as string;
-        setSubTitle(getGroup2Name(g2Id));
-        setSubTitleAccount(getAccountName(coaId));
-        setSubTitleGroup(getGroup1Name(g1Id));
-
-        //}, [table, getGroup2Name, getAccountName]);
-    }, [table.getFilteredRowModel().rows]);
-
     return (
         <>
             <div className={printStyles.printContainer}>
@@ -311,6 +402,19 @@ export function DataTable<TData, TValue>({
                     </div>
 
                     <Divider />
+                    <div className="text-sm text-gray-500">
+                        <div>Debug Info:</div>
+                        <div>Start Date: {dateStart}</div>
+                        <div>End Date: {dateEnd}</div>
+                        <div>Total Rows: {table.getFilteredRowModel().rows.length}</div>
+                        <div>Total Raw Data Rows: {data.length}</div>
+                        <div>Current Period Debit: {totalDebit}</div>
+                        <div>Current Period Credit: {totalCredit}</div>
+                        <div>Current Period Balance: {totalBalance}</div>
+                        <div>Previous Period Debit: {previousPeriodDebit}</div>
+                        <div>Previous Period Credit: {previousPeriodCredit}</div>
+                        <div>Previous Period Balance: {previousPeriodBalance}</div>
+                    </div>
 
                 </div>
 
@@ -350,15 +454,31 @@ export function DataTable<TData, TValue>({
                     </div>
 
                     <div className="text-xl">
-                        <span className="font-semibold">Total Saldo Akhir: </span>
+                        <span className="font-semibold">Total Saldo Sebelumnya: </span>
 
                         <span className="font-bold text-orange-500">
                             {new Intl.NumberFormat('id-ID', {
                                 style: 'currency',
                                 currency: 'IDR'
-                            }).format(totalBalanceX)}
+                                // }).format(totalBalanceX)}
+                            }).format(previousPeriodBalance)}
                         </span>
                     </div>
+
+                    {/* Add previous period balance display */}
+                    {/* <div className="ml-auto flex gap-4 mr-4">
+                 <div className="text-xl">
+                    <span className="font-semibold">Saldo Periode Sebelumnya: </span>
+                    <span className="font-bold text-blue-500">
+                        {new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(previousPeriodBalance)}
+                    </span>
+                      </div> */}
+                    {/* ... existing total displays ... */}
+
+                    {/* </div> */}
                 </div>
 
                 {/* Filter Tanggal */}
