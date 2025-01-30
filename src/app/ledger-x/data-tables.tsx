@@ -136,6 +136,10 @@ export function DataTable<TData, TValue>({
     const [newDateStart, setNewDateStart] = useState<string>("2020-01-01");
     const [newDateEnd, setNewDateEnd] = useState<string>("");
 
+    // Total D & C Previous Date Range
+    const [previousPeriodDebit, setPreviousPeriodDebit] = useState<number>(0);
+    const [previousPeriodCredit, setPreviousPeriodCredit] = useState<number>(0);
+
     // Add this helper function to calculate the new period balance
     const calculateNewPeriodBalance = (rows: any[]) => {
         try {
@@ -148,15 +152,25 @@ export function DataTable<TData, TValue>({
             setNewDateEnd(endOfNewPeriod.toISOString().split('T')[0]);
 
             // Log the start and end dates for the new period
-            console.log("New Period Start Date:", "2020-01-01");
-            console.log("New Period End Date:", endOfNewPeriod.toISOString().split('T')[0]);
+            console.log("New PREVIOUS Start Date:", "2020-01-01");
+            console.log("New PREVIOUS End Date:", endOfNewPeriod.toISOString().split('T')[0]);
 
-            const newPeriodRows = rows.filter(row => {
+            // const newPeriodRows = rows.filter(row => {
+            //     try {
+            //         const date = parseISO(row.original.date);
+            //         return date >= parseISO("2020-01-01") && date <= endOfNewPeriod;
+            //     } catch (error) {
+            //         console.error("Invalid date in row:", row.original.date);
+            //         return false;
+            //     }
+            // });
+            // Important: Use the original unfiltered data, not the filtered rows
+            const newPeriodRows = data.filter(row => {
                 try {
-                    const date = parseISO(row.original.date);
-                    return date >= parseISO("2020-01-01") && date <= endOfNewPeriod;
+                    const rowDate = parseISO(row.date);
+                    return rowDate >= parseISO("2020-01-01") && rowDate <= endOfNewPeriod;
                 } catch (error) {
-                    console.error("Invalid date in row:", row.original.date);
+                    console.error("Invalid date in row:", row.date);
                     return false;
                 }
             });
@@ -164,14 +178,30 @@ export function DataTable<TData, TValue>({
             // Log the rows being considered for the new period balance
             console.log("New Period Rows:", newPeriodRows);
 
-            const totals = newPeriodRows.reduce((acc, row) => {
-                return {
-                    debit: acc.debit + (Number(row.original.debit) || 0),
-                    credit: acc.credit + (Number(row.original.credit) || 0)
-                };
-            }, { debit: 0, credit: 0 });
+            // const totals = newPeriodRows.reduce((acc, row) => {
+            //     return {
+            //         debit: acc.debit + (Number(row.original.debit) || 0),
+            //         credit: acc.credit + (Number(row.original.credit) || 0)
+            //     };
+            // }, { debit: 0, credit: 0 });
+            const totals = newPeriodRows.reduce((acc, row) => ({
+                debit: acc.debit + (Number(row.debit) || 0),
+                credit: acc.credit + (Number(row.credit) || 0)
+            }), { debit: 0, credit: 0 });
 
+
+            console.log("New Period Rows Count:", newPeriodRows.length);
+            console.log("Sample Row:", newPeriodRows[0]);
+            console.log("Calculated Totals:", totals);
+
+            // Set the previous values of D and C
+
+            setPreviousPeriodDebit(totals.debit);
+            setPreviousPeriodCredit(totals.credit);
+
+            // Set Balance
             setNewPeriodBalance(totals.debit - totals.credit);
+
         } catch (error) {
             console.error("Error calculating new period balance:", error);
         }
@@ -304,8 +334,8 @@ export function DataTable<TData, TValue>({
     };
 
     useEffect(() => {
-        calculateTotals(table.getFilteredRowModel().rows);
 
+        calculateTotals(table.getFilteredRowModel().rows);
         calculateNewPeriodBalance(table.getFilteredRowModel().rows);
 
         const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
@@ -348,9 +378,13 @@ export function DataTable<TData, TValue>({
                         <ul className="list-disc pl-5">
                             <li>Date Start: {dateStart}</li>
                             <li>Date End: {dateEnd}</li>
-                            <li>New Date Start: {newDateStart}</li>
-                            <li>New Date End: {newDateEnd}</li>
-                            <li>New Period Balance: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(newPeriodBalance)}</li>
+                            <li>Previous Date Start: {newDateStart}</li>
+                            <li>Previous Date End: {newDateEnd}</li>
+
+                            <li>Previous Total Debit: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(previousPeriodDebit)}</li>
+                            <li>Previous Total Credit: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(previousPeriodCredit)}</li>
+                            <li>Previous Total Balance: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(newPeriodBalance)}</li>
+
                             <li>Total Debit: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalDebit)}</li>
                             <li>Total Credit: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalCredit)}</li>
                             <li>Total Balance: {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalBalance)}</li>
@@ -404,7 +438,7 @@ export function DataTable<TData, TValue>({
                     </div>
 
                     <div className="text-xl">
-                        <span className="font-semibold">Saldo Periode Sebelumnya: </span>
+                        <span className="font-semibold">Saldo Sebelumnya: </span>
                         <span className="font-bold text-orange-500">
                             {new Intl.NumberFormat('id-ID', {
                                 style: 'currency',
@@ -430,6 +464,9 @@ export function DataTable<TData, TValue>({
                             setNewPeriod(false);
                             handleDateChange(setDateStart, e.target.value);
                             table.getColumn("date")?.setFilterValue([e.target.value, dateEnd]);
+
+                            //Hitung Saldo Previous
+                            //calculateNewPeriodBalance(table.getFilteredRowModel().rows);
                         }
                         }
                         placeholder="Start Date"
@@ -451,6 +488,9 @@ export function DataTable<TData, TValue>({
                             const newEnd = new Date(e.target.value);
                             newEnd.setDate(newEnd.getDate() + 1);
                             table.getColumn("date")?.setFilterValue([dateStart, newEnd.toISOString().split('T')[0]]);
+
+                            //Hitung Saldo Previous
+                            //calculateNewPeriodBalance(table.getFilteredRowModel().rows);
                         }}
                         placeholder="End Date"
 
@@ -488,6 +528,8 @@ export function DataTable<TData, TValue>({
                         onChange={(event) => {
                             table.getColumn("coaid")?.setFilterValue(event.target.value)
                             console.log("COA ID:", event.target.value);
+                            //Hitung Saldo Previous
+                            //calculateNewPeriodBalance(table.getFilteredRowModel().rows);
                         }
                         }
                         required
@@ -510,6 +552,9 @@ export function DataTable<TData, TValue>({
                             table.getColumn("g1id")?.setFilterValue(e.target.value)
                             console.log("G1 ID:", e.target.value);
                             setCurrentGroup1Id(parseInt(e.target.value));
+
+                            //Hitung Saldo Previous
+                            //calculateNewPeriodBalance(table.getFilteredRowModel().rows);
                         }
                         }
                         //required
