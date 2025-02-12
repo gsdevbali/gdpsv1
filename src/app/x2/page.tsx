@@ -27,21 +27,10 @@ export default function Page() {
                 <h1 className="text-3xl font-bold dark:text-blue-500">LEDGER X2</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
-                {/* {subTitle} */}
 
                 <Divider />
 
-                {/* Periode & Data */}
-                {/* <WidgetPeriode /> */}
                 <MonthYearSelector />
-
-                {/* {
-                    (periodeOn) ? <ShowCFData /> : <h2 className="py-2">Periode belum ditentukan</h2>
-                } */}
-                {/* <ShowCFData />  */}
-
-                {/* INFO TOTAL */}
-
 
             </div>
         </PageLayout >
