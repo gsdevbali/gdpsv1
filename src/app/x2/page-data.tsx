@@ -33,7 +33,7 @@ export default function ShowNSData() {
                 <div className="flex flex-wrap">
                     <div className="w-1/2">
                         <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
-                        <JustTitle title="Penerimaan Persembahan Saldo Akhir"/>
+                        <JustTitle title="Saldo Akhir"/>
    
                         <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
                             <NeracaDataX title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start="2020-01-01" end={endPrev} />

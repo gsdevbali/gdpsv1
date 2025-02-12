@@ -3,5 +3,5 @@
 import { revalidateTag } from "next/cache";
 
 export default async function refreshPath() {
-  revalidateTag("/cftest");
+  revalidateTag("/cashflow");
 }
