@@ -5,9 +5,10 @@ import Divider from "@/components/Divider";
 import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
-// import WidgetPeriode from "./widget-periode";
-import MonthYearSelector from "./widget-monthly";
+//import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
+import MonthYearSelector from "./widget-monthly";
+
 
 export default function Page() {
 
@@ -16,17 +17,17 @@ export default function Page() {
 
     const { subTitle, setPeriodeOn } = useNeracaSaldoContext();
 
-    setPeriodeOn(false)
+    setPeriodeOn(false);
 
     return (
 
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">BUKU BESAR X2</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">LEDGER X2</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
-
+                {/* {subTitle} */}
 
                 <Divider />
 

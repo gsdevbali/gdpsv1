@@ -8,18 +8,22 @@ import { columns } from "./columns";
 //import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRpNeraca";
-import { useNeracaStore } from './neraca-store';
+// import TulisTotalRp from "@/components/TulisTotalRp";
+//import { useAktivitasStore } from './aktivitas-store';
+import { useAktivitasStoreBefore } from './aktivitas-store-before';
+import SubTotalAktivitasBefore from './total-aktivitas-before';
 
-const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
-    const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    // const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX,
+    //     setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalSelisihABX } = useAktivitasStoreBefore();
+
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['ns-current', type, group2],
+        queryKey: ['nsX', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -43,43 +47,37 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
         //UpdateTotalCF(group2, totalBalance);
         const newTotal = Math.abs(totalBalance);
 
-        switch (group2) {
+        // switch (group2) {
 
-            case 1:
-                setTotalAL(newTotal)
-                break;
-            case 3:
-                setTotalATL(newTotal)
-                break;
-            case 2:
-                setTotalAT(newTotal)
-                break;
-            case 4:
-                setTotalK(newTotal)
-                break;
-            case 5:
-                setTotalKL(newTotal)
-                break;
-            case 6:
-                setTotalAB(newTotal)
-                break;
-            case 7:
-                setTotalAB2(newTotal)
-                break;
+        //     case 8:
+        //         setTotalTerima1X(newTotal)
+        //         break;
+        //     case 9:
+        //         setTotalTerima2X(newTotal)
+        //         break;
 
-            default:
-                // Handle default case
-                break;
-        }
+        //     case 6:
+        //         setTotalAsetAwalX(newTotal)
+        //         break;
+
+        //     case 10:
+        //         setTotalBebanOpX(newTotal)
+
+        //     default:
+        //         // Handle default case
+        //         break;
+        // }
+
     };
 
     return (
         <>
             <div className="w-full">
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
-                <h2 className="text-lg font-bold pt-2 pb-2 opacity-0">{title}</h2>
                 <DataTable columns={columns} data={data} />
-                <TulisTotalRp value={newTotalBalance} title={titleTotal} />
+                {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
+                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
+
             </div>
 
         </>
@@ -87,6 +85,6 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
     )
 }
 
-export default NeracaData;
+export default NeracaDataX;
 
 //export default
