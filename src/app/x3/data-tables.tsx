@@ -25,6 +25,11 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
+import { Button } from "@/components/ui/button"
+import { PaginationInfo } from "@/components/PaginationInfo"
+import printStyles from './PrintStyles.module.css';
+import { ArrowLeft, ArrowRight } from "lucide-react"
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
@@ -149,30 +154,37 @@ export function DataTable<TData, TValue>({
 
 
             {/* Pagination */}
-            {/* <div className="flex items-center justify-end space-x-2 py-4">
-                <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
+            <div className={printStyles.printHide}>
+                <div className="flex items-center justify-end space-x-2 py-4">
+                    {/* Current Page Information */}
+                    <div className="flex text-sm">
+                        Hal. <p className="font-bold">{table.getState().pagination.pageIndex + 1}&nbsp;</p> dari {table.getPageCount()}
+                    </div>
+                    {/* <div className="flex-1 text-sm text-foreground"> */}
+                    {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
+                    {/* <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan. */}
+                    {/* </div> */}
+                    <h2> - </h2><PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
+                    <div className="space-x-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            <ArrowRight className="mr-2 h-4 w-4" />
+                        </Button>
+                    </div>
                 </div>
-                <div className="space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Next
-                    </Button>
-                </div>
-            </div> */}
+            </div>
         </>
     )
 }

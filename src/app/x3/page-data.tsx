@@ -25,7 +25,7 @@ export default function ShowNSData() {
         <>
             <div>
                 <div className="flex flex-wrap">
-                    <div className="w-3/4 pr-2">
+                    <div className="w-2/3 pr-2">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo s/d {formattedEndPrev}</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
@@ -34,7 +34,7 @@ export default function ShowNSData() {
                             <NeracaDataX title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start="2020-01-01" end={endPrev} />
                         </Suspense>
                     </div>
-                    <div className="w-1/4">
+                    <div className="w-1/3">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Periode {titleMonthYear}</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}

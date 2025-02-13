@@ -23,8 +23,9 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
     const { data: result, isLoading, error, isSuccess } = useQuery({
         queryKey: ['nsX', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-            .then(response => {
+        //queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-saldo-all?&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             }),

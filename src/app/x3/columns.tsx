@@ -80,21 +80,21 @@ export const columns: ColumnDef<Account>[] = [
     //     },
     //     enableSorting: true,
     // },
-    // {
-    //     accessorKey: "name",
-    //     header: () => <div className="text-left">Akun</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-left">
-    //             <Link
-    //                 href={`/coa/${row.original.id}/transactions`}
-    //                 className="text-blue-600 hover:underline"
-    //             >
-    //                 {row.original.name}
-    //             </Link>
-    //         </div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "name",
+        header: () => <div className="text-left">Akun</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">
+                <Link
+                    href={`/coa/${row.original.id}/transactions`}
+                    className="text-blue-600 hover:underline"
+                >
+                    {row.original.name}
+                </Link>
+            </div>;
+        },
+        enableSorting: true,
+    },
 
     // {
     //     accessorKey: "name",
