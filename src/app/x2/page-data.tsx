@@ -15,6 +15,8 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
 
     const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
     const startPrevX = "2020-01-01";
+
+    const newTitle = title.toUpperCase();
     // const accGroup = 1;
     // console.log('SHOW-NS-DATA:')
     // console.log('Start:', start)
@@ -31,7 +33,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                     <div className="w-3/6 pr-2">
 
                         <div className="flex justify-between">
-                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">{title}</h2>
+                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">{newTitle}</h2>
                             <h2 className="text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
                         </div>
                         <Divider />
