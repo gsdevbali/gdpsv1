@@ -48,7 +48,7 @@ export default function ShowNSData() {
                     </div> */}
 
                     <div className="w-1/2">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir {titleMonthYear}</h2>
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
 
