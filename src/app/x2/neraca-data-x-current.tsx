@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns";
+import { columns } from "./columns-x1";
 // import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
@@ -13,7 +13,7 @@ import toidr from "@/lib/toidr";
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitasBefore from './total-aktivitas-before';
 
-const NeracaDataXcurrent = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataX1 = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
     // const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX,
     //     setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalSelisihABX } = useAktivitasStoreBefore();
@@ -76,7 +76,8 @@ const NeracaDataXcurrent = ({ title, titleTotal, type, group2, start, end }: { t
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
                 <DataTable columns={columns} data={data} />
                 {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
-                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
+                {/* <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} /> */}
+                <SubTotalAktivitasBefore value={' '} title={titleTotal} />
 
             </div>
 
@@ -85,6 +86,6 @@ const NeracaDataXcurrent = ({ title, titleTotal, type, group2, start, end }: { t
     )
 }
 
-export default NeracaDataXcurrent;
+export default NeracaDataX1;
 
 //export default

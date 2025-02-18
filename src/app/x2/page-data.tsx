@@ -7,7 +7,7 @@ import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import Loading from "./loading";
 import JustTitle from "./just-title";
 import NeracaDataX from "./neraca-data-x";
-import NeracaDataXcurrent from "./neraca-data-x-current";
+import NeracaDataX1 from "./neraca-data-x-current";
 import NeracaDataX2 from "./neraca-data-x-2";
 import Divider from "@/components/Divider";
 
@@ -28,7 +28,7 @@ export default function ShowNSData() {
         <>
             <div>
                 <div className="flex flex-wrap">
-                    <div className="w-1/2 pr-2">
+                    <div className="w-3/6 pr-2">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
@@ -38,16 +38,17 @@ export default function ShowNSData() {
                         </Suspense>
                     </div>
 
-                    {/* <div className="w-1/4 pr-2">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir {titleMonthYear}</h2>
+                    <div className="w-2/6 pr-2">
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">D / K</h2>
                         <Divider />
 
                         <Suspense fallback={<Loading section="AKTIVA LANCAR - current" />}>
-                            <NeracaDataXcurrent title="AL" titleTotal="AL" type={accType} group2={accGroup} start={start} end={end} />
+                            <NeracaDataX1 title="AL" titleTotal="AL" type={accType} group2={accGroup} start={start} end={end} />
                         </Suspense>
-                    </div> */}
+                    </div>
 
-                    <div className="w-1/2">
+                    <div className="w-1/6">
+                        {/* {titleMonthYear} */}
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
