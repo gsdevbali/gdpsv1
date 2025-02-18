@@ -119,27 +119,27 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     // },
 
-    // {
-    //     accessorKey: "debit",
-    //     header: () => <div className="text-right">Debet</div>,
-    //     cell: ({ row }) => {
-    //         //const balance = row.original.balance;
-    //         const value = Math.abs(row.original.debit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "debit",
+        header: () => <div className="text-right">Debet</div>,
+        cell: ({ row }) => {
+            //const balance = row.original.balance;
+            const value = Math.abs(row.original.debit);
+            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
 
-    // {
-    //     accessorKey: "credit",
-    //     header: () => <div className="text-right">Kredit</div>,
-    //     cell: ({ row }) => {
-    //         //const balance = row.original.balance;
-    //         const value = Math.abs(row.original.credit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "credit",
+        header: () => <div className="text-right">Kredit</div>,
+        cell: ({ row }) => {
+            //const balance = row.original.balance;
+            const value = Math.abs(row.original.credit);
+            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
 
     {
         accessorKey: "balance",
