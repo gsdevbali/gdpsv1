@@ -29,7 +29,10 @@ export default function ShowNSData() {
             <div>
                 <div className="flex flex-wrap">
                     <div className="w-3/6 pr-2">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
+                        <div className="flex justify-between">
+                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">AKTIVA LANCAR</h2>
+                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
+                        </div>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
 
