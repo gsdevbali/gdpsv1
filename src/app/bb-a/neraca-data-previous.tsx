@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns-x";
+import { columns } from "./columns";
 // import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
@@ -13,7 +13,7 @@ import toidr from "@/lib/toidr";
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitasBefore from './total-aktivitas-before';
 
-const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataPrevious = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
     // const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX,
     //     setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalSelisihABX } = useAktivitasStoreBefore();
@@ -21,9 +21,10 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsX', type, group2],
+        queryKey: ['nsXnow', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+        queryFn: () => fetch(`/api/neraca-saldo-type?accountTypeId=${type}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            //queryFn: () => fetch(`/api/neraca-saldo-all?&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -85,6 +86,6 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
     )
 }
 
-export default NeracaDataX;
+export default NeracaDataPrevious;
 
 //export default

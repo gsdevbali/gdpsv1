@@ -8,11 +8,15 @@ import Loading from "./loading";
 import JustTitle from "./just-title";
 import NeracaDataX from "./neraca-data-x";
 import NeracaDataXcurrent from "./neraca-data-x-current";
+import NeracaDataX2 from "./neraca-data-x-2";
 import Divider from "@/components/Divider";
 
 export default function ShowNSData() {
 
     const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
+    const startPrevX = "2020-01-01";
+    const accType = 1;
+    const accGroup = 1;
     // console.log('SHOW-NS-DATA:')
     // console.log('Start:', start)
     // console.log('End:', end)
@@ -28,22 +32,32 @@ export default function ShowNSData() {
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
-   
-                        <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
-                            <NeracaDataX title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start="2020-01-01" end={endPrev} />
+
+                        <Suspense fallback={<Loading section="AKTIVA LANCAR X" />}>
+                            <NeracaDataX title="ALX" titleTotal="ALX" type={accType} group2={accGroup} start={startPrevX} end={endPrev} />
                         </Suspense>
                     </div>
-                    <div className="w-1/2">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo {titleMonthYear}</h2>
+                    <div className="w-1/4 pr-2">
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir {titleMonthYear}</h2>
                         <Divider />
                         {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
 
-                        <Suspense fallback={<Loading section="PENERIMAAN PERSEMBAHAN" />}>
-                            <NeracaDataXcurrent title="PENERIMAAN PERSEMBAHAN" titleTotal="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
+                        <Suspense fallback={<Loading section="AKTIVA LANCAR - current" />}>
+                            <NeracaDataXcurrent title="AL" titleTotal="AL" type={accType} group2={accGroup} start={start} end={end} />
                         </Suspense>
 
                     </div>
-                    
+                    <div className="w-1/4">
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir +</h2>
+                        <Divider />
+                        {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
+
+                        <Suspense fallback={<Loading section="AKTIVA LANCAR X2 - SALDO+" />}>
+                            <NeracaDataX2 title="AL" titleTotal="AL" type={accType} group2={accGroup} start={startPrevX} end={end} />
+                        </Suspense>
+
+                    </div>
+
 
                 </div>
 

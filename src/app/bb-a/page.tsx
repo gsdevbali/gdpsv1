@@ -11,6 +11,7 @@ import MonthYearSelector from "./widget-monthly";
 
 
 export default function Page() {
+
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
@@ -23,7 +24,7 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">BUKU BESAR Akun: AKTIVA LANCAR</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">BUKU BESAR AKUN AKTIVA</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
 

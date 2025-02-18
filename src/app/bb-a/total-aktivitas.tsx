@@ -1,11 +1,11 @@
 import React from 'react'
 import Divider from '@/components/Divider'
 
-function SubTotalAktivitasBefore({ value, title }: { value: string, title: string }) {
+function SubTotalAktivitas({ value, title }: { value: string, title: string }) {
     return (
         <>
             <Divider />
-            <div className='pr-2'>
+            <div>
                 {/* <p className='text-lg font-bold'>{title}</p> */}
                 <p className='text-end font-bold'>{value}</p>
             </div>
@@ -13,4 +13,4 @@ function SubTotalAktivitasBefore({ value, title }: { value: string, title: strin
     )
 }
 
-export default SubTotalAktivitasBefore
+export default SubTotalAktivitas

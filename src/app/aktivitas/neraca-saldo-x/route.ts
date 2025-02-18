@@ -15,7 +15,7 @@ export async function GET(request: Request) {
         // Extract accountTypeId from the request query parameters
         const { searchParams } = new URL(request.url);
         const accountTypeId = searchParams.get('accountTypeId');
-        // const accountGroup2Id = searchParams.get('accountGroup2Id');
+        const accountGroup2Id = searchParams.get('accountGroup2Id');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
 
@@ -23,9 +23,9 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'accountTypeId is required' }, { status: 400 });
         }
 
-        // if (!accountGroup2Id) {
-        //     return NextResponse.json({ error: 'accountGroup2Id is required' }, { status: 400 });
-        // }
+        if (!accountGroup2Id) {
+            return NextResponse.json({ error: 'accountGroup2Id is required' }, { status: 400 });
+        }
 
         if (!startDate || !endDate) {
             return NextResponse.json({ error: 'startDate and endDate are required' }, { status: 400 });
@@ -57,7 +57,7 @@ export async function GET(request: Request) {
               },
               where: {
                 accountTypeId: parseInt(accountTypeId),
-                // accountGroup2Id: parseInt(accountGroup2Id),
+                accountGroup2Id: parseInt(accountGroup2Id),
 
               },
         });

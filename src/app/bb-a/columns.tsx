@@ -62,7 +62,6 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true
     // },
     // 
-
     // {
     //     id: "group2",
     //     accessorKey: "accountGroup2.name",
@@ -73,7 +72,6 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     //     enableHiding: true,
     // },
-
     // {
     //     accessorKey: "accountGroup.name",
     //     header: () => <div className="text-left w-[100px]">Kelompok</div>,
@@ -82,7 +80,6 @@ export const columns: ColumnDef<Account>[] = [
     //     },
     //     enableSorting: true,
     // },
-
     // {
     //     accessorKey: "name",
     //     header: () => <div className="text-left">Akun</div>,
@@ -119,27 +116,27 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     // },
 
-    // {
-    //     accessorKey: "debit",
-    //     header: () => <div className="text-right">Debet</div>,
-    //     cell: ({ row }) => {
-    //         //const balance = row.original.balance;
-    //         const value = Math.abs(row.original.debit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "debit",
+        header: () => <div className="text-right">Debet</div>,
+        cell: ({ row }) => {
+            //const balance = row.original.balance;
+            const value = Math.abs(row.original.debit);
+            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
 
-    // {
-    //     accessorKey: "credit",
-    //     header: () => <div className="text-right">Kredit</div>,
-    //     cell: ({ row }) => {
-    //         //const balance = row.original.balance;
-    //         const value = Math.abs(row.original.credit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "credit",
+        header: () => <div className="text-right">Kredit</div>,
+        cell: ({ row }) => {
+            //const balance = row.original.balance;
+            const value = Math.abs(row.original.credit);
+            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
 
     {
         accessorKey: "balance",
@@ -147,7 +144,7 @@ export const columns: ColumnDef<Account>[] = [
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);
-            return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+            return <div className="text-right font-bold">Rp. {balance.toLocaleString()}</div>;
         },
         enableSorting: true,
     },

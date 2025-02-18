@@ -5,7 +5,7 @@ function SubTotalAktivitasBefore({ value, title }: { value: string, title: strin
     return (
         <>
             <Divider />
-            <div className='pr-2'>
+            <div>
                 {/* <p className='text-lg font-bold'>{title}</p> */}
                 <p className='text-end font-bold'>{value}</p>
             </div>
