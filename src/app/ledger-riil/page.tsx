@@ -22,9 +22,15 @@ export default function Home() {
                 <Divider />
                 <div className="flex flex-1 flex-col gap-4 pt-4 pb-5">
                     <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                        <MenuBox1 title="AKTIVA LANCAR" desc="Akun Kas/Bank/dll" menulink='/x2?title=Aktiva+Lancar&type=1&group=1' />
+                        <MenuBox1 title="AKTIVA LANCAR" desc="Akun Kas/Bank/dll" menulink='/xAktiva Lainnya2?title=Aktiva+Lancar&type=1&group=1' />
                         <MenuBox1 title="AKTIVA TETAP" desc="Akun Aset" menulink='/x2?title=Aktiva+Tetap&type=1&group=2' />
                         <MenuBox1 title="AKTIVA LAIN-LAIN" desc="Akun Aktiva Lainnya" menulink='/x2?title=Aktiva+Lain-lain&type=1&group=3' />
+                    </div>
+
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                        <MenuBox1 title="KEWAJIBAN" desc="Akun Dana Titipan/Hutang/dll" menulink='/x2?title=Kewajiban&type=2&group=4' />
+                        <MenuBox1 title="ASET BERSIH" desc="Akun Aset Bersih" menulink='/x2?title=Aset+Bersih&type=3&group=6' />
+                        <MenuBox1 title="KENAIKAN/PENURUNAN ASET BERSIH" desc="Akun Kenaikan/Penurunan Aset Bersih" menulink='/x2?title=Aset+Bersih&type=3&group=7' />
                     </div>
 
 
