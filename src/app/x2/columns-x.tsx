@@ -63,16 +63,16 @@ export const columns: ColumnDef<Account>[] = [
     // },
     // 
 
-    {
-        id: "group2",
-        accessorKey: "accountGroup2.name",
-        header: () => <div className="text-left">Kelompok</div>,
-        cell: ({ row }) => {
-            return <div className="text-left">{row.original.accountGroup2.name}</div>;
-        },
-        enableSorting: true,
-        enableHiding: true,
-    },
+    // {
+    //     id: "group2",
+    //     accessorKey: "accountGroup2.name",
+    //     header: () => <div className="text-left">Kelompok</div>,
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">{row.original.accountGroup2.name}</div>;
+    //     },
+    //     enableSorting: true,
+    //     enableHiding: true,
+    // },
 
     // {
     //     accessorKey: "accountGroup.name",

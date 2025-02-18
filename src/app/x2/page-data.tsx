@@ -11,12 +11,11 @@ import NeracaDataX1 from "./neraca-data-x-current";
 import NeracaDataX2 from "./neraca-data-x-2";
 import Divider from "@/components/Divider";
 
-export default function ShowNSData() {
+export default function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
 
     const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
     const startPrevX = "2020-01-01";
-    const accType = 1;
-    const accGroup = 1;
+    // const accGroup = 1;
     // console.log('SHOW-NS-DATA:')
     // console.log('Start:', start)
     // console.log('End:', end)
@@ -28,9 +27,11 @@ export default function ShowNSData() {
         <>
             <div>
                 <div className="flex flex-wrap">
+
                     <div className="w-3/6 pr-2">
+
                         <div className="flex justify-between">
-                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">AKTIVA LANCAR</h2>
+                            <h2 className="text-blue-600 dark:text-orange-600 font-bold">{title}</h2>
                             <h2 className="text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
                         </div>
                         <Divider />

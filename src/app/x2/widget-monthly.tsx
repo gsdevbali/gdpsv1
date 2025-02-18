@@ -11,8 +11,9 @@ import {
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import React, { useState } from 'react';
 import ShowNSData from "./page-data";
+import Divider from "@/components/Divider";
 
-const MonthYearSelector = () => {
+const MonthYearSelector = ({ title, type, group }: { title: string, type: number; group: number }) => {
     const { start, end, setSubTitle, setStartContext, setEndContext, setPrevStartContext, setPrevEndContext,
         setTitleMonthYear, setPrevTitleMonthYear } = useNeracaSaldoContext();
 
@@ -142,7 +143,10 @@ const MonthYearSelector = () => {
             </div>
 
             <div>
-                {showComponent && <ShowNSData />}
+
+                <Divider />
+                {showComponent && <ShowNSData title={title} accType={type} accGroup={group} />}
+
             </div>
         </>
     );

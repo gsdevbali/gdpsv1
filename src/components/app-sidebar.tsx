@@ -151,6 +151,12 @@ const data = {
           title: "Penerimaan / Pengeluaran",
           url: "/cashflow",
         },
+
+        {
+          title: "BUKU BESAR RIIL",
+          url: "/ledger-riil",
+        },
+
         {
           title: "BUKU BESAR",
           url: "/ledger",

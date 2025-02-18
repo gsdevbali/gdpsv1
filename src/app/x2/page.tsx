@@ -1,5 +1,9 @@
 "use client"
 
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation'
+
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
@@ -11,6 +15,12 @@ import MonthYearSelector from "./widget-monthly";
 
 
 export default function Page() {
+
+    const searchParams = useSearchParams();
+    const title = searchParams.get('title');
+    const type = searchParams.get('type');
+    const group = searchParams.get('group');
+
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 
@@ -23,13 +33,13 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">BUKU BESAR Akun: AKTIVA</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">BUKU BESAR Akun: {title}</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
 
                 <Divider />
 
-                <MonthYearSelector />
+                <MonthYearSelector type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} />
 
             </div>
         </PageLayout >
