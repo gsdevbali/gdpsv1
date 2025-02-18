@@ -39,7 +39,7 @@ export default function Page() {
 
                 <Divider />
 
-                <MonthYearSelector type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} />
+                <MonthYearSelector title={title || ''} type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} />
 
             </div>
         </PageLayout >
