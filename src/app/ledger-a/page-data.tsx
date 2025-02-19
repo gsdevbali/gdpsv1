@@ -37,10 +37,9 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                             <h2 className="text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2>
                         </div>
                         <Divider />
-                        {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
 
-                        <Suspense fallback={<Loading section="AKTIVA LANCAR X" />}>
-                            <NeracaDataX title="ALX" titleTotal="ALX" type={accType} group2={accGroup} start={startPrevX} end={endPrev} />
+                        <Suspense fallback={<Loading section="Tab1" />}>
+                            <NeracaDataX title="Tab1" titleTotal="Tab1" type={accType} group2={accGroup} start={startPrevX} end={endPrev} />
                         </Suspense>
                     </div>
 
@@ -48,8 +47,8 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">D / K</h2>
                         <Divider />
 
-                        <Suspense fallback={<Loading section="AKTIVA LANCAR - current" />}>
-                            <NeracaDataX1 title="AL" titleTotal="AL" type={accType} group2={accGroup} start={start} end={end} />
+                        <Suspense fallback={<Loading section="Tab2" />}>
+                            <NeracaDataX1 title="Tab2" titleTotal="Tab2" type={accType} group2={accGroup} start={start} end={end} />
                         </Suspense>
                     </div>
 
@@ -57,10 +56,9 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                         {/* {titleMonthYear} */}
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir</h2>
                         <Divider />
-                        {/* <JustTitle title="Daftar Kelompok dan Akun"/> */}
 
-                        <Suspense fallback={<Loading section="AKTIVA LANCAR X2 - SALDO+" />}>
-                            <NeracaDataX2 title="AL" titleTotal="AL" type={accType} group2={accGroup} start={startPrevX} end={end} />
+                        <Suspense fallback={<Loading section="Tab3" />}>
+                            <NeracaDataX2 title="Tab3" titleTotal="Tab3" type={accType} group2={accGroup} start={startPrevX} end={end} />
                         </Suspense>
 
                     </div>

@@ -1,4 +1,4 @@
-import { Link } from 'lucide-react'
+// import { Link } from 'lucide-react'
 import React from 'react'
 
 interface MenuBoxButtonProps {
@@ -24,9 +24,9 @@ function MenuBox1({ title, desc, menulink }: MenuBoxButtonProps) {
   )
 }
 
-function handleClick() {
-  window.open('/neraca-t', '_blank');
+// function handleClick() {
+//   window.open('/neraca-t', '_blank');
 
-}
+// }
 
 export default MenuBox1

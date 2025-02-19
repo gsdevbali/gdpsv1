@@ -158,6 +158,11 @@ const data = {
         },
 
         {
+          title: "BUKU BESAR NOMINAL",
+          url: "/ledger-nom",
+        },
+
+        {
           title: "BUKU BESAR",
           url: "/ledger",
         },
