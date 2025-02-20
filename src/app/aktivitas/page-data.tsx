@@ -32,6 +32,8 @@ export default function ShowNSData() {
                         <h2 className="text-start text-blue-600 dark:text-orange-600 font-bold">AKUN</h2>
                         <JustTitle title="Penerimaan Persembahan" />
                         <JustTitle title="Beban Operasional" />
+                        <JustTitle title="Beban Sekretariat" />
+                        <JustTitle title="Beban Bidang & Bapel" />
                         <JustTitle title="Penerimaan Lain-lain/Khusus" />
                         <JustTitle title="Kenaikan (Penurunan) Aset Bersih" />
                         <JustTitle title="Aset Bersih Awal" />
@@ -45,6 +47,14 @@ export default function ShowNSData() {
 
                         <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
                             <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL 2" />}>
+                            <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Sekretariat" type={5} group2={11} start={startPrev} end={endPrev} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL 3" />}>
+                            <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Bidang & Bapel" type={5} group2={12} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>
@@ -74,6 +84,14 @@ export default function ShowNSData() {
 
                         <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
                             <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL 2" />}>
+                            <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Sekretariat" type={5} group2={11} start={start} end={end} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL 3" />}>
+                            <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Bidang & Bapel" type={5} group2={12} start={start} end={end} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="PENERIMAAN LAIN / KHUSUS" />}>

@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import Divider from '@/components/Divider'
 import CashFlowData from './cashflow-data'
+import CashFlowData2 from './cashflow-data2';
 import Loading from './loading'
 import useCashFlowContext from '@/context/cashflow-context';
 import { toQueryDate } from '@/lib/tanggal';
@@ -25,7 +26,7 @@ function ShowCFData() {
             </Suspense>
 
             <Suspense fallback={<Loading section="Penerimaan Lain-lain" />}>
-                <CashFlowData title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} start={start} end={end} />
+                <CashFlowData2 title="Penerimaan Lain-lain" titleTotal="Penerimaan Lain-lain" type={4} group2={9} start={start} end={end} />
             </Suspense>
 
 

@@ -11,7 +11,7 @@ import { useCfStore } from './cf-store'
 //import useCashFlowContext from "@/context/cashflow-context";
 
 
-const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number, start: string, end: string }) => {
+const CashFlowData2 = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number, start: string, end: string }) => {
 
     const { setTotalT1, setTotalT2, setTotalK1, setTotalK2, setTotalK3 } = useCfStore();
     //const { start, end } = useCashFlowContext();
@@ -21,7 +21,7 @@ const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: 
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['cf1', type, group2],
+        queryKey: ['cf2', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         ///api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}
         ///api/neraca-xx?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}
@@ -87,4 +87,4 @@ const CashFlowData = ({ title, titleTotal, type, group2, start, end }: { title: 
     )
 }
 
-export default CashFlowData;
+export default CashFlowData2;
