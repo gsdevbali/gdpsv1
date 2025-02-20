@@ -14,13 +14,13 @@ import SubTotalAktivitas from './total-aktivitas';
 
 const NeracaDataSelisihBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalSelisihABX, totalAsetAwalX, totalTerima1X, totalTerima2X, totalBebanOpX, setTotalSelisihABX, setTotalAsetAkhirX } = useAktivitasStoreBefore();
+    const { totalSelisihABX, totalAsetAwalX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, setTotalSelisihABX, setTotalAsetAkhirX } = useAktivitasStoreBefore();
 
     // const newTotal = Math.abs(totalBalance);
     // const newTotalBalance = toidr(newTotal)
 
     //Hitung Kenaikan/Penurunan Aset Bersih
-    const newTotal = Math.abs(totalTerima1X - totalBebanOpX + totalTerima2X);
+    const newTotal = Math.abs(totalTerima1X - totalBebanOpX + totalBeban2X + totalBeban3X + totalTerima2X);
 
     //set Kenaikan/Penurunan Aset Bersih
     setTotalSelisihABX(newTotal);

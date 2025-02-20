@@ -140,7 +140,11 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "AKTIVITAS",
+          title: "NERACA",
+          url: "/neraca-t",
+        },
+        {
+          title: "AKTIVITAS & ARUS KAS",
           url: "/aktivitas",
         },
         {
@@ -165,10 +169,6 @@ const data = {
         {
           title: "BUKU BESAR",
           url: "/ledger",
-        },
-        {
-          title: "NERACA",
-          url: "/neraca-t",
         },
         // {
         //   title: "NERACA SALDO",

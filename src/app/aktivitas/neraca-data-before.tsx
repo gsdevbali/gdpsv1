@@ -15,8 +15,8 @@ import SubTotalAktivitasBefore from './total-aktivitas-before';
 
 const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
-    const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX,
-        setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalSelisihABX } = useAktivitasStoreBefore();
+    const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X,
+        setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasStoreBefore();
 
 
     // Fetch data using TanStack Query
@@ -62,6 +62,14 @@ const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { tit
 
             case 10:
                 setTotalBebanOpX(newTotal)
+
+            case 11:
+                setTotalBeban2X(newTotal)
+                break;
+
+            case 12:
+                setTotalBeban3X(newTotal)
+                break;
 
             default:
                 // Handle default case

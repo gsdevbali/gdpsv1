@@ -138,6 +138,14 @@ export default function ShowNSData() {
                             <NeracaDataMoM row={6} />
                         </Suspense>
 
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={7} />
+                        </Suspense>
+
+                        <Suspense fallback={<Loading section="MoM" />}>
+                            <NeracaDataMoM row={8} />
+                        </Suspense>
+
                     </div>
 
                     {/* <h2 className="text-lg font-bold pt-2 pb-2">KEWAJIBAN</h2> */}
