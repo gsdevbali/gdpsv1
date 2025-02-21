@@ -1,14 +1,15 @@
 "use client"
 
-import { useAktivitasStore } from './aktivitas-store';
+//import { useAktivitasStore } from './aktivitas-store';
 import SubTotalAktivitas from './total-aktivitas';
-import { useAktivitasStoreBefore } from './aktivitas-store-before';
+//import { useAktivitasStoreBefore } from './aktivitas-store-before';
+
+import useAktivitasContext from "@/context/aktivitas-context";
 
 const NeracaDataMoM = ({ row }: { row: number }) => {
 
-    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, totalAsetAwalX, totalSelisihABX, totalAsetAkhirX } = useAktivitasStoreBefore();
-    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, totalAsetAwal, totalSelisihAB, totalAsetAkhir } = useAktivitasStore();
-
+    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, totalAsetAwalX, totalSelisihABX, totalAsetAkhirX } = useAktivitasContext();
+    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, totalAsetAwal, totalSelisihAB, totalAsetAkhir } = useAktivitasContext();
 
     let calculatedValue = 0;
     switch (row) {
