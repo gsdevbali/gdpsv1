@@ -11,16 +11,15 @@ import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitas from './total-aktivitas';
+import useAktivitasContext from '@/context/aktivitas-context';
 
 const NeracaDataSelisihBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalSelisihABX, totalAsetAwalX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, setTotalSelisihABX, setTotalAsetAkhirX } = useAktivitasStoreBefore();
+    const { totalSelisihABX, totalAsetAwalX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, setTotalSelisihABX, setTotalAsetAkhirX } = useAktivitasContext();
 
-    // const newTotal = Math.abs(totalBalance);
-    // const newTotalBalance = toidr(newTotal)
-
+    const totalBeban = Math.abs(totalBebanOpX + totalBeban2X + totalBeban3X);
     //Hitung Kenaikan/Penurunan Aset Bersih
-    const newTotal = Math.abs(totalTerima1X - totalBebanOpX + totalBeban2X + totalBeban3X + totalTerima2X);
+    const newTotal = Math.abs(totalTerima1X - totalBeban + totalTerima2X);
 
     //set Kenaikan/Penurunan Aset Bersih
     setTotalSelisihABX(newTotal);
