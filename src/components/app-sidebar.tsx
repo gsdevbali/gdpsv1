@@ -141,16 +141,16 @@ const data = {
       items: [
         {
           title: "NERACA",
-          url: "/neraca-t",
+          url: "/neraca-t-new",
         },
         {
           title: "AKTIVITAS & ARUS KAS",
           url: "/aktivitas",
         },
-        {
-          title: "ARUS KAS",
-          url: "/cashflow-recap",
-        },
+        // {
+        //   title: "ARUS KAS",
+        //   url: "/cashflow-recap",
+        // },
         {
           title: "Penerimaan / Pengeluaran",
           url: "/cashflow",
