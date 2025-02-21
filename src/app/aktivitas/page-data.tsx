@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
+import Divider from "@/components/Divider";
 import Loading from "./loading";
 import JustTitle from "./just-title";
 import NeracaData from "./neraca-data-current";
@@ -13,7 +14,6 @@ import NeracaDataSelisihBefore from "./hitung-ab-selisih-before";
 import NeracaDataAkhir from "./hitung-ab-akhir";
 import NeracaDataAkhirBefore from "./hitung-ab-akhir-before";
 import NeracaDataMoM from "./hitung-MoM";
-import Divider from "@/components/Divider";
 import NeracaDataPendapatanBefore from "./hitung-pendapatan-before";
 import NeracaDataSurplus1Before from "./hitung-surplus1-before";
 import NeracaDataSurplus2Before from "./hitung-surplus2-before";
@@ -34,6 +34,7 @@ export default function ShowNSData() {
 
         <>
             <div>
+
                 <Divider />
                 <h1 className="text-2xl font-bold dark:text-blue-500">AKTIVITAS {titleMonthYear}</h1>
                 <div className="flex flex-wrap">
@@ -278,7 +279,7 @@ export default function ShowNSData() {
 
                 </div>
 
-                <div className="h-8"></div>
+                MonthYearSelector
 
             </div>
 
