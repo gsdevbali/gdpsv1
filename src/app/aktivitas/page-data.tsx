@@ -38,6 +38,8 @@ export default function ShowNSData() {
                         <JustTitle title="Kenaikan (Penurunan) Aset Bersih" />
                         <JustTitle title="Aset Bersih Awal" />
                         <JustTitle title="Aset Bersih Akhir" />
+                        {/* 
+                        */}
                     </div>
                     <div className="w-1/4">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
@@ -72,6 +74,7 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
                             <NeracaDataAkhirBefore title="ASET BERSIH AKHIR" titleTotal="Aset Bersih Akhir" />
                         </Suspense>
+
 
 
                     </div>
@@ -109,6 +112,7 @@ export default function ShowNSData() {
                         <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
                             <NeracaDataAkhir title="ASET BERSIH AKHIR" titleTotal="Aset Bersih Akhir" />
                         </Suspense>
+
                     </div>
 
 

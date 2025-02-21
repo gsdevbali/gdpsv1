@@ -33,16 +33,30 @@ export const useAktivitasStore = create<AktivasStore>((set) => ({
     totalAsetAkhir: 0,
     //setTotalTerima1: (totalTerima1) => set({ totalTerima1 }),
     setTotalTerima1: (totalTerima1: number) => set((state) =>
-        state.totalTerima1 !== totalTerima1 ? { totalTerima1 } : state
+    // state.totalTerima1 !== totalTerima1 ? { totalTerima1 } : state
+    {
+        if (state.totalTerima1 !== totalTerima1) {
+            return { totalTerima1 };
+        }
+        return state; // Return the unchanged state to prevent re-render
+    }
     ),
     setTotalTerima2: (totalTerima2: number) => set((state) =>
         state.totalTerima2 !== totalTerima2 ? { totalTerima2 } : state
+
+
     ),
     setTotalBebanOp: (totalBebanOp: number) => set((state) =>
         state.totalBebanOp !== totalBebanOp ? { totalBebanOp } : state
     ),
     setTotalBeban2: (totalBeban2: number) => set((state) =>
-        state.totalBeban2 !== totalBeban2 ? { totalBeban2 } : state
+    // state.totalBeban2 !== totalBeban2 ? { totalBeban2 } : state
+    {
+        if (state.totalBeban2 !== totalBeban2) {
+            return { totalBeban2 };
+        }
+        return state; // Return the unchanged state to prevent re-render
+    }
     ),
     setTotalBeban3: (totalBeban3: number) => set((state) =>
         state.totalBeban3 !== totalBeban3 ? { totalBeban3 } : state

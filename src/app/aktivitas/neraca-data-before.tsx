@@ -13,11 +13,14 @@ import toidr from "@/lib/toidr";
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitasBefore from './total-aktivitas-before';
 
+import useAktivitasContext from "@/context/aktivitas-context";
+
 const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
+    // const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X,
+    //     setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasStoreBefore();
     const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X,
-        setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasStoreBefore();
-
+        setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
