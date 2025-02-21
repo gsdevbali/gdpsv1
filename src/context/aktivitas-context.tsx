@@ -33,6 +33,7 @@ const AktivitasContext = createContext
         totalSelisihAB: number; setTotalSelisihAB: (type: number) => void;
         totalAsetAwal: number; setTotalAsetAwal: (type: number) => void;
         totalAsetAkhir: number; setTotalAsetAkhir: (type: number) => void;
+        totalBP: number; setTotalBP: (type: number) => void;
 
         //before
         totalTerima1X: number; setTotalTerima1X: (type: number) => void;
@@ -43,6 +44,7 @@ const AktivitasContext = createContext
         totalSelisihABX: number; setTotalSelisihABX: (type: number) => void;
         totalAsetAwalX: number; setTotalAsetAwalX: (type: number) => void;
         totalAsetAkhirX: number; setTotalAsetAkhirX: (type: number) => void;
+        totalBPX: number; setTotalBPX: (type: number) => void;
 
     }>
 
@@ -55,6 +57,7 @@ const AktivitasContext = createContext
         totalSelisihAB: 0, setTotalSelisihAB: () => { },
         totalAsetAwal: 0, setTotalAsetAwal: () => { },
         totalAsetAkhir: 0, setTotalAsetAkhir: () => { },
+        totalBP: 0, setTotalBP: () => { },
 
         totalTerima1X: 0, setTotalTerima1X: () => { },
         totalTerima2X: 0, setTotalTerima2X: () => { },
@@ -64,6 +67,7 @@ const AktivitasContext = createContext
         totalSelisihABX: 0, setTotalSelisihABX: () => { },
         totalAsetAwalX: 0, setTotalAsetAwalX: () => { },
         totalAsetAkhirX: 0, setTotalAsetAkhirX: () => { },
+        totalBPX: 0, setTotalBPX: () => { },
 
     });
 
@@ -79,6 +83,7 @@ export function AktivitasProvider({ children }: {
     const [totalSelisihAB, setTotalSelisihAB] = useState(0);
     const [totalAsetAwal, setTotalAsetAwal] = useState(0);
     const [totalAsetAkhir, setTotalAsetAkhir] = useState(0);
+    const [totalBP, setTotalBP] = useState(0);
 
     const [totalTerima1X, setTotalTerima1X] = useState(0);
     const [totalTerima2X, setTotalTerima2X] = useState(0);
@@ -88,6 +93,7 @@ export function AktivitasProvider({ children }: {
     const [totalSelisihABX, setTotalSelisihABX] = useState(0);
     const [totalAsetAwalX, setTotalAsetAwalX] = useState(0);
     const [totalAsetAkhirX, setTotalAsetAkhirX] = useState(0);
+    const [totalBPX, setTotalBPX] = useState(0);
 
     // const [filterType, setFilterType] = useState('all'); // 'all', 'date', 'monthly'
     // const [subTitleCf, setSubTitleCf] = useState('Semua');
@@ -106,6 +112,7 @@ export function AktivitasProvider({ children }: {
             totalSelisihAB, setTotalSelisihAB,
             totalAsetAwal, setTotalAsetAwal,
             totalAsetAkhir, setTotalAsetAkhir,
+            totalBP, setTotalBP,
 
             totalTerima1X, setTotalTerima1X,
             totalTerima2X, setTotalTerima2X,
@@ -115,6 +122,7 @@ export function AktivitasProvider({ children }: {
             totalSelisihABX, setTotalSelisihABX,
             totalAsetAwalX, setTotalAsetAwalX,
             totalAsetAkhirX, setTotalAsetAkhirX,
+            totalBPX, setTotalBPX,
         }}>
             {children}
         </AktivitasContext.Provider>

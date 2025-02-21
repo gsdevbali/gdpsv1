@@ -3,16 +3,19 @@
 import toidr from "@/lib/toidr";
 import { useCashflowRecStore } from './cashflowrec-store';
 import SubTotalAktivitas from './total-aktivitas';
+import useAktivitasContext from "@/context/aktivitas-context";
 
 const NeracaDataSurplus1 = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalTerimaAll, totalBebanOp, setTotalSurplus1 } = useCashflowRecStore();
+    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3 } = useAktivitasContext();
 
     //Hitung Total Pendapatan/Penerimaan
-    const newTotal = Math.abs(totalTerimaAll - totalBebanOp);
+    const totalPendapatan = Math.abs(totalTerima1 + totalTerima2);
+    const totalBeban = Math.abs(totalBebanOp + totalBeban2 + totalBeban3);
+    const newTotal = Math.abs(totalPendapatan - totalBeban);
 
     //Set Total Pendapatan/Penerimaan
-    setTotalSurplus1(newTotal);
+    //setTotalSurplus1(newTotal);
 
     const newTotalBalance = toidr(newTotal);
 

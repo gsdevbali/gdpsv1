@@ -20,6 +20,8 @@ import NeracaDataSurplus2Before from "./hitung-surplus2-before";
 import NeracaDataPendapatan from "./hitung-pendapatan";
 import NeracaDataSurplus1 from "./hitung-surplus1";
 import NeracaDataSurplus2 from "./hitung-surplus2";
+import NeracaDataBebanTotal from "./hitung-beban-total";
+import NeracaDataBebanTotalX from "./hitung-beban-total-before";
 
 export default function ShowNSData() {
 
@@ -173,10 +175,10 @@ export default function ShowNSData() {
                         <JustTitle title="Penerimaan Persembahan" />
                         <JustTitle title="Penerimaan Lain-lain/Khusus" />
                         <JustTitle title="Jumlah Penerimaan" />
-                        <JustTitle title="Beban Operasional" />
+                        <JustTitle title="Beban Operasional (total)" />
                         <JustTitle title="Surplus (Defisit)" />
-                        <JustTitle title="Beban Penyusutan" />
-                        <JustTitle title="--- Surplus (Defisit)" />
+                        {/* <JustTitle title="Beban Penyusutan" />
+                        <JustTitle title="--- Surplus (Defisit)" /> */}
                     </div>
                     <div className="w-1/4">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titlePrevMonthYear}</h2>
@@ -192,21 +194,24 @@ export default function ShowNSData() {
                             <NeracaDataPendapatanBefore title="" titleTotal="" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                        {/* <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
                             <NeracaDataBefore title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={startPrev} end={endPrev} />
+                        </Suspense> */}
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                            <NeracaDataBebanTotalX title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="SURPLUS 1" />}>
+                        <Suspense fallback={<Loading section="SURPLUS (Def)" />}>
                             <NeracaDataSurplus1Before title="" titleTotal="" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="BEBAN" />}>
+                        {/* <Suspense fallback={<Loading section="BEBAN" />}>
                             <NeracaDataBefore title="BEBAN" titleTotal="Beban Penyusutan" type={1} group2={2} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="SURPLUS 2" />}>
                             <NeracaDataSurplus2Before title="" titleTotal="" />
-                        </Suspense>
+                        </Suspense> */}
 
 
                     </div>
@@ -225,21 +230,24 @@ export default function ShowNSData() {
                             <NeracaDataPendapatan title="" titleTotal="" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                        {/* <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
                             <NeracaData title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" type={5} group2={10} start={start} end={end} />
+                        </Suspense> */}
+                        <Suspense fallback={<Loading section="BEBAN OPERASIONAL" />}>
+                            <NeracaDataBebanTotal title="BEBAN OPERASIONAL" titleTotal="Beban Operasional" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="SURPLUS 1" />}>
+                        <Suspense fallback={<Loading section="SURPLUS (Def)" />}>
                             <NeracaDataSurplus1 title="" titleTotal="" />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="BEBAN" />}>
+                        {/* <Suspense fallback={<Loading section="BEBAN" />}>
                             <NeracaData title="BEBAN" titleTotal="Beban Penyusutan" type={1} group2={2} start={start} end={end} />
-                        </Suspense>
+                        </Suspense> */}
 
-                        <Suspense fallback={<Loading section="SURPLUS 2" />}>
+                        {/* <Suspense fallback={<Loading section="SURPLUS 2" />}>
                             <NeracaDataSurplus2 title="" titleTotal="" />
-                        </Suspense>
+                        </Suspense> */}
                     </div>
 
 
@@ -265,13 +273,13 @@ export default function ShowNSData() {
                             <NeracaDataMoM row={5} />
                         </Suspense>
 
-                        <Suspense fallback={<Loading section="MoM" />}>
+                        {/* <Suspense fallback={<Loading section="MoM" />}>
                             <NeracaDataMoM row={6} />
-                        </Suspense>
+                        </Suspense> */}
 
-                        <Suspense fallback={<Loading section="MoM" />}>
+                        {/* <Suspense fallback={<Loading section="MoM" />}>
                             <NeracaDataMoM row={7} />
-                        </Suspense>
+                        </Suspense> */}
 
                     </div>
 
@@ -279,7 +287,9 @@ export default function ShowNSData() {
 
                 </div>
 
-                MonthYearSelector
+                <div className="h-6"></div>
+
+                {/* MonthYearSelector */}
 
             </div>
 

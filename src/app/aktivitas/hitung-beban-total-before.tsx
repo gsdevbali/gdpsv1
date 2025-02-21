@@ -1,19 +1,19 @@
 "use client"
 
 import toidr from "@/lib/toidr";
-import { useCashflowRecStoreBefore } from './cashflowrec-store-before';
+// import { useCashflowRecStore } from './cashflowrec-store';
 import SubTotalAktivitas from './total-aktivitas';
 import useAktivitasContext from "@/context/aktivitas-context";
 
-const NeracaDataPendapatanBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
+const NeracaDataBebanTotalX = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalTerima1X, totalTerima2X } = useAktivitasContext();
+    const { totalBebanOpX, totalBeban2X, totalBeban3X } = useAktivitasContext();
 
     //Hitung Total Pendapatan/Penerimaan
-    const newTotal = Math.abs(totalTerima1X + totalTerima2X);
+    const newTotal = Math.abs(totalBebanOpX + totalBeban2X + totalBeban3X);
 
     //Set Total Pendapatan/Penerimaan
-    //setTotalTerimaAllX(newTotal);
+    //setTotalTerimaAll(newTotal);
 
     const newTotalBalance = toidr(newTotal);
 
@@ -30,6 +30,6 @@ const NeracaDataPendapatanBefore = ({ title, titleTotal }: { title: string; titl
     )
 }
 
-export default NeracaDataPendapatanBefore;
+export default NeracaDataBebanTotalX;
 
 //export default
