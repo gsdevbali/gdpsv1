@@ -9,20 +9,19 @@ import { columns } from "./columns";
 
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
-import SubTotalAktivitas from './total-aktivitas';
+import SubTotalAktivitasBefore from './total-aktivitas-before';
 import useAktivitasContext from "@/context/aktivitas-context";
 
 const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
-    // const { totalSelisihAB, totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3,
-    //     setTotalAsetAwal, setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3, setTotalSelisihAB } = useAktivitasStore();
+    // const { totalSelisihABX, totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X,
+    //     setTotalAsetAwalX, setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasStoreBefore();
     const { totalSelisihAB, totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3,
-        setTotalAsetAwal, setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3, setTotalSelisihAB } = useAktivitasContext();
-
+        setTotalAsetAwal, setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsnow', type, group2],
+        queryKey: ['ns1', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
@@ -85,7 +84,7 @@ const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: st
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
                 {/* <DataTable columns={columns} data={data} /> */}
                 {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
-                <SubTotalAktivitas value={newTotalBalance} title={titleTotal} />
+                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
 
             </div>
 

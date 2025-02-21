@@ -11,10 +11,11 @@ import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
 import SubTotalAktivitas from './total-aktivitas';
 import { useAktivitasStoreBefore } from './aktivitas-store-before';
+import useAktivitasContext from '@/context/aktivitas-context';
 
 const NeracaDataAkhirBefore = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
-    const { totalAsetAwalX, totalSelisihABX } = useAktivitasStoreBefore();
+    const { totalAsetAwalX, totalSelisihABX } = useAktivitasContext();
 
     // const newTotal = Math.abs(totalBalance);
     // const newTotalBalance = toidr(newTotal)

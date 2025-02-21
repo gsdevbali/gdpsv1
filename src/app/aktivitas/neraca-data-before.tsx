@@ -9,10 +9,7 @@ import { columns } from "./columns";
 
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
-//import { useAktivitasStore } from './aktivitas-store';
-import { useAktivitasStoreBefore } from './aktivitas-store-before';
 import SubTotalAktivitasBefore from './total-aktivitas-before';
-
 import useAktivitasContext from "@/context/aktivitas-context";
 
 const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
@@ -24,7 +21,7 @@ const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { tit
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsbefore', type, group2],
+        queryKey: ['ns2', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
