@@ -24,7 +24,7 @@ export async function GET(request: Request) {
         }
 
         if (!accountGroupId) {
-            return NextResponse.json({ error: 'accountGroup2Id is required' }, { status: 400 });
+            return NextResponse.json({ error: 'accountGroupId is required' }, { status: 400 });
         }
 
         if (!startDate || !endDate) {

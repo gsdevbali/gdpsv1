@@ -5,16 +5,18 @@ import { Suspense } from "react";
 import Divider from "@/components/Divider";
 
 import Loading from "./loading";
-import NeracaData from "./neraca-data-new";
+import NeracaData from "./neraca-data";
 import WidgetInfoTotal from "./widget-info-total";
 import { toQueryDate } from "@/lib/tanggal";
-//import useNeracaNewContext from "@/context/neraca-new-context";
+
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import NeracaDataX from "./neraca-dataX";
-import NeracaDataAllgroup from "./neraca-data-allgroup";
-import NeracaDataAllgroupX from "./neraca-data-allgroupX";
+
 import NeracaDataSub from "./neraca-data-sub";
 import NeracaDataSubX from "./neraca-data-subX";
+import NeracaDataABX from "./neraca-data-ABX";
+import NeracaDataAB from "./neraca-data-AB";
+
 
 export default function ShowNSData() {
 
@@ -181,6 +183,8 @@ export default function ShowNSData() {
                             <NeracaDataX title="KW" titleTotal="HUTANG BIAYA" type={2} group={16} start={startPrev} end={endPrev} />
                             <NeracaDataX title="KW" titleTotal="HUTANG LAIN-LAIN" type={2} group={17} start={startPrev} end={endPrev} />
                             <NeracaDataX title="KW" titleTotal="KEWAJIBAN JANGKA PANJANG" type={2} group={18} start={startPrev} end={endPrev} />
+
+                            <NeracaDataSubX title="KW" titleTotal="KW" type={2} group={4} start={startPrev} end={endPrev} />
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -188,15 +192,20 @@ export default function ShowNSData() {
                         <Divider />
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">ASET BERSIH</h2>
                         <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaDataX title="AB" titleTotal="Aset Bersih" type={3} group={26} start={startPrev} end={endPrev} />
+                            <NeracaDataABX title="AB" titleTotal="Aset Bersih" type={3} group={6} start={startPrev} end={endPrev} />
+
+                            {/* <NeracaDataSubX title="AB" titleTotal="AB" type={3} group={6} start={startPrev} end={endPrev} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
 
                         <Divider />
+                        <div className="h-2"></div>
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">KENAIKAN (PENURUNAN) ASET BERSIH</h2>
                         <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaDataX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={19} start={startPrev} end={endPrev} />
+                            <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startPrev} end={endPrev} />
+
+                            {/* <NeracaDataSubX title="KW" titleTotal="KW" type={2} group={6} start={startPrev} end={endPrev} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -207,15 +216,17 @@ export default function ShowNSData() {
 
                         <div className="flex justify-between">
                             <h2 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500 opacity-0">K&AB</h2>
-                            <h1 className="text-right text-[1.2em] pt-4 pb-2 text-blue-600 dark:text-orange-500">{titlePrevMonthYear}</h1>
+                            <h1 className="text-right text-[1.2em] pt-4 pb-2 text-blue-600 dark:text-orange-500">{titleMonthYear}</h1>
                         </div>
 
                         <Divider />
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">KEWAJIBAN</h2>
                         <Suspense fallback={<Loading section="KEWAJIBAN" />}>
-                            <NeracaData title="KW" titleTotal="HUTANG BIAYA" type={2} group={16} start={startPrev} end={endPrev} />
-                            <NeracaData title="KW" titleTotal="HUTANG LAIN-LAIN" type={2} group={17} start={startPrev} end={endPrev} />
-                            <NeracaData title="KW" titleTotal="KEWAJIBAN JANGKA PANJANG" type={2} group={18} start={startPrev} end={endPrev} />
+                            <NeracaData title="KW" titleTotal="HUTANG BIAYA" type={2} group={16} start={start} end={end} />
+                            <NeracaData title="KW" titleTotal="HUTANG LAIN-LAIN" type={2} group={17} start={start} end={end} />
+                            <NeracaData title="KW" titleTotal="KEWAJIBAN JANGKA PANJANG" type={2} group={18} start={start} end={end} />
+
+                            <NeracaDataSub title="KW" titleTotal="KW" type={2} group={4} start={start} end={end} />
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -223,15 +234,20 @@ export default function ShowNSData() {
                         <Divider />
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">ASET BERSIH</h2>
                         <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaData title="AB" titleTotal="Aset Bersih" type={3} group={26} start={startPrev} end={endPrev} />
+                            <NeracaDataAB title="AB" titleTotal="Aset Bersih" type={3} group={6} start={start} end={end} />
+
+                            {/* <NeracaDataSub title="AB" titleTotal="AB" type={2} group={14} start={start} end={end} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
 
                         <Divider />
+                        <div className="h-2"></div>
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">K&AB</h2>
                         <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaData title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={19} start={startPrev} end={endPrev} />
+                            <NeracaDataAB title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={start} end={end} />
+
+                            {/* <NeracaDataSub title="AB2" titleTotal="AB2" type={3} group={6} start={start} end={end} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>

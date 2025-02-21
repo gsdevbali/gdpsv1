@@ -2,14 +2,15 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { DataTable } from "./data-tables";
-import { columns } from "./columns";
+import { DataTable } from "./data-tablesX";
+import { columns } from "./columnsX";
 // import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRpNeraca";
-import { useNeracaStore } from './neraca-store';
+import TulisTotalRp from "@/components/TulisTotalRpNeracaX";
+//import { useNeracaStore } from './neraca-storeX';
+import { useNeracaStoreX } from './neraca-storeX';
 import useNeracaTContext from '@/context/neraca-t-context';
 
 
@@ -25,18 +26,18 @@ function TulisRekapRp({ value, title }: { value: string, title: string }) {
     )
 }
 
+const NeracaDataAB = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
-const NeracaDataSub = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
-
-    //const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
-    const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalAB, setTotalAB2 } = useNeracaTContext();
+    //const { setTotalAL, setTotalATL, setTotalAT, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    const { setTotalAL, setTotalATL, setTotalAT, setTotalK, setTotalAB, setTotalAB2 } = useNeracaTContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['ns-sub', type, group],
+        queryKey: ['ns-ab', type, group],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-            //queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            // queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -74,9 +75,9 @@ const NeracaDataSub = ({ title, titleTotal, type, group, start, end }: { title: 
             case 4:
                 setTotalK(newTotal)
                 break;
-            case 14:
-                setTotalAP(newTotal)
-                break;
+            // case 5:
+            //     setTotalKLX(newTotal)
+            //     break;
             case 6:
                 setTotalAB(newTotal)
                 break;
@@ -94,9 +95,8 @@ const NeracaDataSub = ({ title, titleTotal, type, group, start, end }: { title: 
         <>
             <div className="w-full">
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
-                {/* <h2 className="text-lg font-bold pt-2 pb-2 opacity-0">{title}</h2> */}
                 {/* <DataTable columns={columns} data={data} /> */}
-                <TulisTotalRp value={newTotalBalance} title={titleTotal} />
+                <TulisRekapRp value={newTotalBalance} title={titleTotal} />
             </div>
 
         </>
@@ -104,6 +104,6 @@ const NeracaDataSub = ({ title, titleTotal, type, group, start, end }: { title: 
     )
 }
 
-export default NeracaDataSub;
+export default NeracaDataAB;
 
 //export default
