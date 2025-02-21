@@ -24,7 +24,7 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN AKTIVITAS</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">LAPORAN AKTIVITAS & ARUS KAS</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
                 {/* {subTitle} */}
