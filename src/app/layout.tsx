@@ -15,6 +15,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { CashFlowProvider } from "@/context/cashflow-context";
 import { NeracaSaldoProvider } from "@/context/neraca-saldo-context";
 import { AktivitasProvider } from "@/context/aktivitas-context"
+import { NeracaTProvider } from "@/context/neraca-t-context";
 //import { TotalRLDetailContext } from "@/context/total-rl-detail";
 
 
@@ -68,18 +69,20 @@ export default function RootLayout({
 
                 <AppSidebar />
                 {/* <SidebarTrigger /> */}
-                <AktivitasProvider>
-                  <CashFlowProvider>
-                    <NeracaSaldoProvider>
+                <NeracaTProvider>
+                  <AktivitasProvider>
+                    <CashFlowProvider>
+                      <NeracaSaldoProvider>
 
 
-                      <QueryClientProvider client={queryClient}>
-                        {children}
-                      </QueryClientProvider>
+                        <QueryClientProvider client={queryClient}>
+                          {children}
+                        </QueryClientProvider>
 
-                    </NeracaSaldoProvider>
-                  </CashFlowProvider>
-                </AktivitasProvider>
+                      </NeracaSaldoProvider>
+                    </CashFlowProvider>
+                  </AktivitasProvider>
+                </NeracaTProvider>
 
 
               </SidebarProvider>

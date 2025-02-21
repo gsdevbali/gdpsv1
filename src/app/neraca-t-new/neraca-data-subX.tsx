@@ -2,15 +2,14 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { DataTable } from "./data-tablesX";
-import { columns } from "./columnsX";
+import { DataTable } from "./data-tables";
+import { columns } from "./columns";
 // import { columns } from "./columns-new";
 //import { getNeraca } from "./get-data";
 
 import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRpNeracaX";
-//import { useNeracaStore } from './neraca-storeX';
-import { useNeracaStoreX } from './neraca-storeX';
+import TulisTotalRp from "@/components/TulisTotalRpNeraca";
+import { useNeracaStore } from './neraca-store';
 import useNeracaTContext from '@/context/neraca-t-context';
 
 
@@ -18,25 +17,26 @@ function TulisRekapRp({ value, title }: { value: string, title: string }) {
     return (
         <>
             <div className='flex justify-between p-0.4'>
-                <p className='text-lg font-medium'>{title}</p>
+                {/* <p className='text-lg font-medium'>{title}</p> */}
+                <p> </p>
                 <p className='text-lg font-medium'>{value}</p>
             </div>
         </>
     )
 }
 
-const NeracaDataX = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
-    //const { setTotalAL, setTotalATL, setTotalAT, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
-    const { setTotalALX, setTotalATLX, setTotalATX, setTotalKX, setTotalABX, setTotalAB2X } = useNeracaTContext();
+const NeracaDataSubX = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
+
+    //const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    const { setTotalALX, setTotalATLX, setTotalATX, setTotalAPX, setTotalKX, setTotalABX, setTotalAB2X } = useNeracaTContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsx', type, group],
+        queryKey: ['ns-subx', type, group],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
-        // queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-        queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-
+        queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            // queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -74,9 +74,9 @@ const NeracaDataX = ({ title, titleTotal, type, group, start, end }: { title: st
             case 4:
                 setTotalKX(newTotal)
                 break;
-            // case 5:
-            //     setTotalKLX(newTotal)
-            //     break;
+            case 14:
+                setTotalAPX(newTotal)
+                break;
             case 6:
                 setTotalABX(newTotal)
                 break;
@@ -94,8 +94,9 @@ const NeracaDataX = ({ title, titleTotal, type, group, start, end }: { title: st
         <>
             <div className="w-full">
                 {/* <h2 className="text-lg font-bold pt-2 pb-2">{title}</h2> */}
+                {/* <h2 className="text-lg font-bold pt-2 pb-2 opacity-0">{title}</h2> */}
                 {/* <DataTable columns={columns} data={data} /> */}
-                <TulisRekapRp value={newTotalBalance} title={titleTotal} />
+                <TulisTotalRp value={newTotalBalance} title={titleTotal} />
             </div>
 
         </>
@@ -103,6 +104,6 @@ const NeracaDataX = ({ title, titleTotal, type, group, start, end }: { title: st
     )
 }
 
-export default NeracaDataX;
+export default NeracaDataSubX;
 
 //export default

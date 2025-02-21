@@ -10,6 +10,7 @@ import { columns } from "./columns";
 import toidr from "@/lib/toidr";
 import TulisTotalRp from "@/components/TulisTotalRpNeraca";
 import { useNeracaStore } from './neraca-store';
+import useNeracaTContext from '@/context/neraca-t-context';
 
 
 function TulisRekapRp({ value, title }: { value: string, title: string }) {
@@ -27,11 +28,12 @@ function TulisRekapRp({ value, title }: { value: string, title: string }) {
 
 const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
-    const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    //const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
+    const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalAB, setTotalAB2 } = useNeracaTContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['ns-current', type, group],
+        queryKey: ['nsnow', type, group],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         //queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
@@ -72,9 +74,9 @@ const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: str
             case 4:
                 setTotalK(newTotal)
                 break;
-            case 5:
-                setTotalKL(newTotal)
-                break;
+            // case 5:
+            //     setTotalKL(newTotal)
+            //     break;
             case 6:
                 setTotalAB(newTotal)
                 break;
