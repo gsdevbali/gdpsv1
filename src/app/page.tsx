@@ -29,7 +29,8 @@ export default function Home() {
             <MenuBox1 title="AKUN" desc="Daftar Akun" menulink='/coa' />
           </div>
 
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+            <MenuBox2 title="SEMUA TRANSAKSI" desc="Semua Transaksi Per-Periode/Akun" menulink='/transaction-all' />
             <MenuBox2 title="AKTIVITAS & ARUS KAS" desc="Laporan Aktivitas & Arus Kas Bulanan" menulink='/aktivitas' />
             {/* <MenuBox2 title="ARUS KAS" desc="Laporan Arus Kas Bulanan" menulink='/cashflow-recap' /> */}
             <MenuBox2 title="BUKU BESAR RIIL" desc="Lap. Buku Besar Akun Riil" menulink='/ledger-riil' />
