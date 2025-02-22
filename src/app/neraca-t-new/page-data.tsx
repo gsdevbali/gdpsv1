@@ -32,11 +32,8 @@ export default function ShowNSData() {
 
         <>
 
-            {/* <div className="flex flex-wrap"> */}
             <div className="grid grid-cols-2 gap-4">
 
-                {/* <div className="w-1/2 pr-4"> */}
-                {/* <div className="grid grid-cols-2 gap-4"> */}
                 <div className="flex flex-row gap-4">
 
                     <div className="basis-4/5">
@@ -165,9 +162,8 @@ export default function ShowNSData() {
 
                 </div>
 
-                {/* <div className="grid grid-cols-2 gap-4"> */}
                 <div className="flex flex-row gap-3">
-                    {/* <div className="w-1/2"> */}
+
                     {/* PASIVA - KANAN */}
                     {/* --------------------------------------------- */}
                     <div className="basis-4/5">

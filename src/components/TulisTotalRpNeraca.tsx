@@ -8,7 +8,7 @@ function TulisTotalRp({ value, title }: { value: string, title: string }) {
             <div className='flex justify-between p-0'>
                 {/* <p className='text-lg font-bold'>Total {title}:</p> */}
                 <p> </p>
-                <p className='text-lg font-medium'>{value}</p>
+                <p className='text-m font-medium'>{value}</p>
             </div>
         </>
     )

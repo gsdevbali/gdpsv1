@@ -2,28 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { DataTable } from "./data-tablesX";
-import { columns } from "./columnsX";
-// import { columns } from "./columns-new";
-//import { getNeraca } from "./get-data";
-
 import toidr from "@/lib/toidr";
-import TulisTotalRp from "@/components/TulisTotalRpNeracaX";
-//import { useNeracaStore } from './neraca-storeX';
+
 import { useNeracaStoreX } from './neraca-storeX';
 import useNeracaTContext from '@/context/neraca-t-context';
+import TulisRekapRp from '@/components/TulisRekapRpNeraca';
 
-
-function TulisRekapRp({ value, title }: { value: string, title: string }) {
-    return (
-        <>
-            <div className='flex justify-between p-0.4'>
-                <p className='text-lg font-medium'>{title}</p>
-                <p className='text-lg font-medium'>{value}</p>
-            </div>
-        </>
-    )
-}
 
 const NeracaDataABX = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
@@ -36,7 +20,6 @@ const NeracaDataABX = ({ title, titleTotal, type, group, start, end }: { title: 
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo?accountTypeId=${type}&accountGroup2Id=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             // queryFn: () => fetch(`/api/neraca-group1?accountTypeId=${type}&accountGroupId=${group}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
-
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -46,9 +29,6 @@ const NeracaDataABX = ({ title, titleTotal, type, group, start, end }: { title: 
     if (isLoading) return <div>Tunggu...</div>; // Handle loading state
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
-
-    // const newTotal = Math.abs(totalBalance);
-    // const newTotalBalance = toidr(newTotal)
 
     //Total & data for table
     const { accounts: data, totalBalance } = result;
