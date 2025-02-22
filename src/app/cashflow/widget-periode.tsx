@@ -227,7 +227,7 @@ function WidgetPeriode() {
                 >
                     Harian
                 </Button>
-                <Button
+                {/* <Button
                     onClick={() => {
                         setFilterType("month")
                         setSubTitleCf(periodeTextStart)
@@ -238,7 +238,7 @@ function WidgetPeriode() {
                     variant={filterType === "month" ? "default" : "outline"}
                 >
                     Bulanan
-                </Button>
+                </Button> */}
             </div>
 
             {filterType === "all" ? (
