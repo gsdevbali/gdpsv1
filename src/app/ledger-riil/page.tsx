@@ -27,11 +27,14 @@ export default function Home() {
                         <MenuBox1 title="AKTIVA LAIN-LAIN" desc="Akun Aktiva Lainnya" menulink='/ledger-a?title=Aktiva+Lain-lain&type=1&group=3' />
                     </div>
 
-                    <div className="grid auto-rows-min gap-4 md:grid-cols-4">
-                        <MenuBox1 title="KEWAJIBAN LANCAR" desc="Akun Kewajiban Lancar" menulink='/ledger-a?title=Kewajiban+Lancar&type=2&group=4' />
-                        <MenuBox1 title="KEWAJIBAN JANGKA PANJANG" desc="Akun Kewajiban Jangka Panjang" menulink='/ledger-a?title=Kewajiban+Jangka+Panjang&type=2&group=5' />
-                        <MenuBox1 title="ASET BERSIH" desc="Akun Aset Bersih" menulink='/ledger-a?title=Aset+Bersih&type=3&group=6' />
-                        <MenuBox1 title="KENAIKAN/PENURUNAN ASET" desc="Akun Kenaikan/Penurunan Aset Bersih" menulink='/ledger-a?title=Kenaikan/Penurunan+Aset+Bersih&type=3&group=7' />
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+                        <MenuBox3 title="KEWAJIBAN LANCAR" desc="Akun Kewajiban Lancar" menulink='/ledger-a?title=Kewajiban+Lancar&type=2&group=4' />
+                        <MenuBox3 title="KEWAJIBAN JANGKA PANJANG" desc="Akun Kewajiban Jangka Panjang" menulink='/ledger-a?title=Kewajiban+Jangka+Panjang&type=2&group=5' />
+                    </div>
+
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+                        <MenuBox3 title="ASET BERSIH" desc="Akun Aset Bersih" menulink='/ledger-a?title=Aset+Bersih&type=3&group=6' />
+                        <MenuBox3 title="KENAIKAN/PENURUNAN ASET" desc="Akun Kenaikan/Penurunan Aset Bersih" menulink='/ledger-a?title=Kenaikan/Penurunan+Aset+Bersih&type=3&group=7' />
                     </div>
 
 
