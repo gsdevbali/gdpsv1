@@ -33,6 +33,9 @@ export default function ShowNSData() {
     console.log('StartPrev:', startPrev)
     console.log('EndPrev:', endPrev)
 
+    // TANGGAL AWAL
+    const startFirst = "2020-01-01"
+
     return (
 
         <>
@@ -81,7 +84,8 @@ export default function ShowNSData() {
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
-                            <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startPrev} end={endPrev} />
+                            {/* <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startPrev} end={endPrev} /> */}
+                            <NeracaDataBefore title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startFirst} end={endPrev} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>
@@ -117,7 +121,8 @@ export default function ShowNSData() {
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AWAL" />}>
-                            <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} />
+                            {/* <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={start} end={end} /> */}
+                            <NeracaData title="ASET BERSIH AWAL" titleTotal="Aset Bersih Awal" type={3} group2={6} start={startFirst} end={end} />
                         </Suspense>
 
                         <Suspense fallback={<Loading section="ASET BERSIH AKHIR" />}>

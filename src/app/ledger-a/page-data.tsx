@@ -30,6 +30,8 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
             <div>
                 <div className="flex flex-wrap">
 
+
+                    {/* KOL 1 - INFO AKUN DAN SALDO AWAL*/}
                     <div className="w-3/6 pr-2">
 
                         <div className="flex justify-between">
@@ -43,6 +45,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                         </Suspense>
                     </div>
 
+                    {/* KOL 2 - INFO D/K */}
                     <div className="w-2/6 pr-2">
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">D / K</h2>
                         <Divider />
@@ -52,6 +55,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                         </Suspense>
                     </div>
 
+                    {/* KOL 3 - INFO SALDO AKHIR */}
                     <div className="w-1/6">
                         {/* {titleMonthYear} */}
                         <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">Saldo Akhir</h2>
@@ -59,6 +63,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
 
                         <Suspense fallback={<Loading section="Tab3" />}>
                             <NeracaDataX2 title="Tab3" titleTotal="Tab3" type={accType} group2={accGroup} start={startPrevX} end={end} />
+                            {/* <NeracaDataX2 title="Tab3" titleTotal="Tab3" type={accType} group2={accGroup} start={startPrev} end={end} /> */}
                         </Suspense>
 
                     </div>
