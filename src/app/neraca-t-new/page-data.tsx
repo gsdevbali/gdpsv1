@@ -2,21 +2,23 @@
 
 import { Suspense } from "react";
 
+import { toQueryDate } from "@/lib/tanggal";
 import Divider from "@/components/Divider";
+import useAktivitasContext from "@/context/aktivitas-context";
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 import Loading from "./loading";
 import NeracaData from "./neraca-data";
 import WidgetInfoTotal from "./widget-info-total";
-import { toQueryDate } from "@/lib/tanggal";
+import WidgetInfoTotalNew from "./widget-info-total-new";
 
-import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import NeracaDataX from "./neraca-dataX";
-
 import NeracaDataSub from "./neraca-data-sub";
 import NeracaDataSubX from "./neraca-data-subX";
 import NeracaDataABX from "./neraca-data-ABX";
 import NeracaDataAB from "./neraca-data-AB";
-import useAktivitasContext from "@/context/aktivitas-context";
+import NeracaDataSelisih from "../aktivitas/hitung-ab-selisih";
+import AktivitasSelisihAB from "./hitung-aktivitas";
 
 
 export default function ShowNSData() {
@@ -209,6 +211,7 @@ export default function ShowNSData() {
                             <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} />
 
                             {/* <NeracaDataSubX title="KW" titleTotal="KW" type={2} group={6} start={startPrev} end={endPrev} /> */}
+                            {/* <NeracaDataSelisih title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -253,6 +256,7 @@ export default function ShowNSData() {
                             {/* Hitung Selisih ambil dari Hitungan NERACA-T */}
                             {/* <h2>{totalSelisihAB}</h2> */}
                             {/* <NeracaDataSub title="AB2" titleTotal="AB2" type={3} group={6} start={start} end={end} /> */}
+                            {/* <AktivitasSelisihAB title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -269,7 +273,8 @@ export default function ShowNSData() {
             <div className="h-4"></div>
 
             {/* TOTAL Info */}
-            <WidgetInfoTotal />
+            {/* <WidgetInfoTotal /> */}
+            <WidgetInfoTotalNew />
 
         </>
     )

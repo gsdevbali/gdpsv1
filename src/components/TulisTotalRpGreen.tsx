@@ -6,8 +6,8 @@ function TulisTotalRpGreen({ value, title }: { value: string, title: string }) {
         <>
             <Divider />
             <div className='flex justify-between p-2 text-green-500 pb-2'>
-                <p className='text-lg font-bold'>Total {title}:</p>
-                <p className='text-lg font-bold'>{value}</p>
+                <p className='text-[1.3em] font-bold'>Total {title}:</p>
+                <p className='text-[1.3em] font-bold'>{value}</p>
             </div>
         </>
     )
