@@ -148,6 +148,10 @@ const data = {
           url: "/neraca-saldo-nom",
         },
         {
+          title: "NERACA SALDO ASET BERSIH",
+          url: "/neraca-saldo-ab",
+        },
+        {
           title: "AKTIVITAS & ARUS KAS",
           url: "/aktivitas",
         },
