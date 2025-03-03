@@ -141,13 +141,25 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     // },
 
+    // {
+    //     accessorKey: "balance",
+    //     header: () => <div className="text-right">Saldo</div>,
+    //     cell: ({ row }) => {
+    //         //const balance = row.original.balance;
+    //         const balance = Math.abs(row.original.balance);
+    //         return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+    //     },
+    //     enableSorting: true,
+    // },
+
+    // Untuk Saldo Nol
     {
         accessorKey: "balance",
         header: () => <div className="text-right">Saldo</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);
-            return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+            return <div className="text-right">Rp. 0</div>;
         },
         enableSorting: true,
     },

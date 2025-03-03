@@ -7,6 +7,7 @@ import { columns } from "./columns-x";
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
 import SubTotalAktivitasBefore from './total-aktivitas-before';
+import SubTotalNol from './total-saldo-nol';
 
 const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
@@ -73,8 +74,9 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
                 {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
                 {/* <SubTotalAktivitasBefore value={newTotalDebit} title={titleTotal} />
                 <SubTotalAktivitasBefore value={newTotalCredit} title={titleTotal} /> */}
-                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
-
+                {/* <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} /> */}
+                <SubTotalNol />
+                
             </div>
 
         </>
