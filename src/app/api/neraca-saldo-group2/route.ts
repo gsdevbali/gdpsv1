@@ -81,10 +81,17 @@ export async function GET(request: Request) {
         // Calculate the sum of all balances
         const totalBalance = accountsWithBalance.reduce((sum, account) => sum + account.balance, 0);
 
+         // Calculate total debit and credit
+         const totalDebit = accountsWithBalance.reduce((sum, account) => sum + account.debit, 0);
+         const totalCredit = accountsWithBalance.reduce((sum, account) => sum + account.credit, 0);
+  
         // return NextResponse.json(accountsWithBalance, { status: 200 });
         return NextResponse.json({
             accounts: accountsWithBalance,
-            totalBalance: totalBalance
+            totalBalance: totalBalance,
+            totalDebit: totalDebit, // Total Debit
+            totalCredit: totalCredit  // Total Credit
+            
         }, { status: 200 });
     }
     catch (e) {

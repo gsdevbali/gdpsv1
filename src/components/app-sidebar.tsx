@@ -144,6 +144,10 @@ const data = {
           url: "/neraca-t-new",
         },
         {
+          title: "NERACA SALDO NOMINAL",
+          url: "/neraca-saldo-nom",
+        },
+        {
           title: "AKTIVITAS & ARUS KAS",
           url: "/aktivitas",
         },
