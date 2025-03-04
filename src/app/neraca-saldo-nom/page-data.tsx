@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import Divider from "@/components/Divider";
-import Loading from "@/components/loading"
+import Loading from "@/components/Loading";
 
 import NeracaDataX from "./neraca-data-x";
 import NeracaDataX2 from "./neraca-data-x-2";
