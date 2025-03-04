@@ -6,7 +6,7 @@ import { columns } from "./columns";
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
-import Loading from "@/app/loading";
+import Loading from "@/components/Loading";
 import prisma from "@/lib/dbprisma";
 
 async function getData(accountId: number) {
@@ -37,7 +37,7 @@ export default async function TransByCoaId({ params }: { params: { accountId: nu
                 <h2 className="text-lg font-bold">Daftar Transaksi Akun: {params.code} - {params.name}</h2>
 
                 <Divider />
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading section="Transaksi" />}>
                 <DataTable columns={columns} data={data} />
             </Suspense>        
 

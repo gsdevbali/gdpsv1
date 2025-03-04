@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import Divider from "@/components/Divider";
 
-import Loading from "./loading";
+import Loading from "@/components/Loading";
 import NeracaData from "./neraca-data-new";
 import WidgetInfoTotal from "./widget-info-total";
 import { toQueryDate } from "@/lib/tanggal";
