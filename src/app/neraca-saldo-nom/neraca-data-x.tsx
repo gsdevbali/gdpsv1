@@ -1,16 +1,16 @@
 "use client"
 
 import { useQuery } from '@tanstack/react-query';
+import useAktivitasContext from '@/context/aktivitas-context';
 
 import { DataTable } from "./data-tables";
 import { columns } from "./columns-saldo-nol";
-import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
-import SubTotalAktivitasBefore from './total-aktivitas-before';
 import SubTotalNol from './total-saldo-nol';
 
 const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
+    // declare here: Var context for AktivitasContext
+    const { setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
         queryKey: ['nsX', type, group2],
@@ -32,7 +32,7 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
 
     //Total & data for table
     const { accounts: data, totalBalance, totalDebit, totalCredit } = result;
-    const newTotal = Math.abs(totalBalance);
+    //const newTotal = Math.abs(totalBalance);
     // const newTotalBalance = toidr(newTotal);
     // const newTotalDebit = toidr(Math.abs(totalDebit));
     // const newTotalCredit = toidr(Math.abs(totalCredit));
@@ -41,6 +41,36 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
     // if (isSuccess) {
     //     const newTotal = Math.abs(totalBalance);
     // };
+    //Update Total global States
+    if (isSuccess) {
+        //UpdateTotalCF(group2, totalBalance);
+        const newTotal = Math.abs(totalBalance);
+
+        switch (group2) {
+
+            case 8:
+                setTotalTerima1(newTotal)
+                break;
+            case 9:
+                setTotalTerima2(newTotal)
+                break;
+
+            case 10:
+                setTotalBebanOp(newTotal)
+
+            case 11:
+                setTotalBeban2(newTotal)
+                break;
+
+            case 12:
+                setTotalBeban3(newTotal)
+                break;
+
+            default:
+                // Handle default case
+                break;
+        }
+    }
 
     return (
         <>

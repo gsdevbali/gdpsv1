@@ -10,6 +10,10 @@ import NeracaDataX from "./neraca-data-x";
 import NeracaDataX2 from "./neraca-data-x-2";
 import NeracaDataDebit from "./neraca-data-x-debit";
 import NeracaDataCredit from "./neraca-data-x-credit";
+import useAktivitasContext from "@/context/aktivitas-context";
+import SubTotalDK from "./total-dk";
+import toidr from "@/lib/toidr";
+import SubTotalRekap from "./total-rekap";
 
 export default function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
 
@@ -19,6 +23,8 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
     return (
         <>
             <div>
+                <div className="h-4"></div>
+                <ShowDataCalculate />
                 <div className="h-4"></div>
                 <ShowData title='Penerimaan Persembahan' accType={4} accGroup={8} />
                 <div className="h-8"></div>
@@ -30,6 +36,9 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                 <div className="h-8"></div>
                 <ShowData title='Biaya Bidang & Bapel' accType={5} accGroup={12} />
                 <div className="h-4"></div>
+                <ShowDataCalculate />
+                <div className="h-4"></div>
+
             </div>
         </>
     )
@@ -97,4 +106,31 @@ function ShowData({ title, accType, accGroup }: { title: string, accType: number
             </div>
         </>
     )
+}
+
+
+
+function ShowDataCalculate() {
+    
+    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, } = useAktivitasContext();
+
+    const totalPenerimaan = totalTerima1 + totalTerima2;
+    const totalBiaya = totalBebanOp + totalBeban2 + totalBeban3;
+    const totalSelisih = totalPenerimaan - (totalBiaya);
+
+    const selisih = totalTerima1 + totalTerima2 - (totalBebanOp + totalBeban2 + totalBeban3);
+
+    return (
+        <>
+
+        {/* <h2>Total Penerimaan: {totalTerima1+totalTerima2}</h2> */}
+        <SubTotalRekap value={toidr(totalPenerimaan)} title="Total Penerimaan" />
+        {/* <h2>Total Biaya{totalBebanOp+totalBeban2+totalBeban3}</h2> */}
+        <SubTotalRekap value={toidr(totalBiaya)} title="Total Biaya" />
+        {/* <h2>Surplus/Defisit{selisih}</h2> */}
+        <SubTotalRekap value={toidr(totalSelisih)} title="Surplus/Defisit" />
+
+
+        </>
+    );
 }

@@ -2,12 +2,16 @@
 
 import { useQuery } from '@tanstack/react-query';
 import toidr from "@/lib/toidr";
+import useAktivitasContext from '@/context/aktivitas-context';
 
 import { DataTable } from "./data-tables";
 import { columns } from "./columns-debit";
 import SubTotalDK from './total-dk';
 
 const NeracaDataDebit = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+
+    // declare here: Var context for AktivitasContext
+    const { setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
@@ -37,6 +41,36 @@ const NeracaDataDebit = ({ title, titleTotal, type, group2, start, end }: { titl
     //     const newTotal = Math.abs(totalBalance);
     //     //const newTotalDebit = toidr(Math.abs(totalDebit));
     // };
+    //Update Total global States
+    if (isSuccess) {
+        //UpdateTotalCF(group2, totalBalance);
+        const newTotal = Math.abs(totalBalance);
+
+        switch (group2) {
+
+            case 8:
+                setTotalTerima1(newTotal)
+                break;
+            case 9:
+                setTotalTerima2(newTotal)
+                break;
+
+            case 10:
+                setTotalBebanOp(newTotal)
+
+            case 11:
+                setTotalBeban2(newTotal)
+                break;
+
+            case 12:
+                setTotalBeban3(newTotal)
+                break;
+
+            default:
+                // Handle default case
+                break;
+        }
+    }
 
     return (
         <>
