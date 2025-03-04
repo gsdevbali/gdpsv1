@@ -110,7 +110,7 @@ function ShowData({ title, accType, accGroup }: { title: string, accType: number
                 </div>
 
                 <div className="w-2/6 pr-2">
-                    <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">D / K</h2>
+                    <h2 className="text-center text-blue-600 dark:text-orange-600 font-bold">MUTASI</h2>
                     <Divider />
 
                     <Suspense fallback={<Loading section="Tab2" />}>

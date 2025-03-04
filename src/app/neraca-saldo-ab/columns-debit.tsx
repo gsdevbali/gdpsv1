@@ -121,25 +121,25 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "debit",
-        header: () => <div className="text-right">Debet</div>,
+        header: () => <div className="text-right font-bold">Debet</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const value = Math.abs(row.original.debit);
-            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+            return <div className="text-end">Rp. {value.toLocaleString()}</div>;
         },
         enableSorting: true,
     },
 
-    {
-        accessorKey: "credit",
-        header: () => <div className="text-right">Kredit</div>,
-        cell: ({ row }) => {
-            //const balance = row.original.balance;
-            const value = Math.abs(row.original.credit);
-            return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-        },
-        enableSorting: true,
-    },
+    // {
+    //     accessorKey: "credit",
+    //     header: () => <div className="text-right font-bold">Kredit</div>,
+    //     cell: ({ row }) => {
+    //         //const balance = row.original.balance;
+    //         const value = Math.abs(row.original.credit);
+    //         return <div className="text-end">Rp. {value.toLocaleString()}</div>;
+    //     },
+    //     enableSorting: true,
+    // },
 
     // {
     //     accessorKey: "balance",

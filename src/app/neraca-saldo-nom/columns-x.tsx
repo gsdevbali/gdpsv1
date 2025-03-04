@@ -85,7 +85,7 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "name",
-        header: () => <div className="text-left">Akun</div>,
+        header: () => <div className="text-left font-bold">Akun</div>,
         cell: ({ row }) => {
             return <div className="text-left">
                 <Link
@@ -155,7 +155,7 @@ export const columns: ColumnDef<Account>[] = [
     // Untuk Saldo Nol
     {
         accessorKey: "balance",
-        header: () => <div className="text-right">Saldo</div>,
+        header: () => <div className="text-right font-bold">Saldo</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);

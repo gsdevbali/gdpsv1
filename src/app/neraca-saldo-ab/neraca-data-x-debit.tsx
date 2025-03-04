@@ -3,17 +3,17 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns-x1";
+import { columns } from "./columns-debit";
 import toidr from "@/lib/toidr";
 // import TulisTotalRp from "@/components/TulisTotalRp";
 import SubTotalAktivitasBefore from './total-aktivitas-before';
 import SubTotalDK from './total-dk';
 
-const NeracaDataX1 = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataDebit = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsXnow', type, group2],
+        queryKey: ['nsDebit', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         //queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
@@ -43,27 +43,6 @@ const NeracaDataX1 = ({ title, titleTotal, type, group2, start, end }: { title: 
         //UpdateTotalCF(group2, totalBalance);
         const newTotal = Math.abs(totalBalance);
 
-        // switch (group2) {
-
-        //     case 8:
-        //         setTotalTerima1X(newTotal)
-        //         break;
-        //     case 9:
-        //         setTotalTerima2X(newTotal)
-        //         break;
-
-        //     case 6:
-        //         setTotalAsetAwalX(newTotal)
-        //         break;
-
-        //     case 10:
-        //         setTotalBebanOpX(newTotal)
-
-        //     default:
-        //         // Handle default case
-        //         break;
-        // }
-
     };
 
     return (
@@ -73,7 +52,8 @@ const NeracaDataX1 = ({ title, titleTotal, type, group2, start, end }: { title: 
                 <DataTable columns={columns} data={data} />
                 {/* <TulisTotalRp value={newTotalBalance} title={titleTotal} /> */}
                 {/* <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} /> */}
-                <SubTotalDK valueD={newTotalDebit} valueK={newTotalCredit} />
+                {/* <SubTotalDK valueD={newTotalDebit} valueK={newTotalCredit} /> */}
+                <SubTotalDK value={newTotalDebit} />
                 {/* <SubTotalAktivitasBefore value={newTotalCredit} title={titleTotal} /> */}
                 {/* <SubTotalAktivitasBefore value={' '} title={titleTotal} /> */}
 
@@ -84,6 +64,6 @@ const NeracaDataX1 = ({ title, titleTotal, type, group2, start, end }: { title: 
     )
 }
 
-export default NeracaDataX1;
+export default NeracaDataDebit;
 
 //export default

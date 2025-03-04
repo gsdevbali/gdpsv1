@@ -1,10 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
-import Link from "next/link"
-// import TransByCoaId from "./trans-by-coa"
-//import AccountDialog from "./AccountDialog"
 
 export type Account = {
     id: number
@@ -83,21 +79,21 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     // },
 
-    {
-        accessorKey: "name",
-        header: () => <div className="text-left font-bold">Akun</div>,
-        cell: ({ row }) => {
-            return <div className="text-left">
-                <Link
-                    href={`/coa/${row.original.id}/transactions`}
-                    className="text-blue-600 hover:underline"
-                >
-                    {row.original.name}
-                </Link>
-            </div>;
-        },
-        enableSorting: true,
-    },
+    // {
+    //     accessorKey: "name",
+    //     header: () => <div className="text-left">Akun</div>,
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">
+    //             <Link
+    //                 href={`/coa/${row.original.id}/transactions`}
+    //                 className="text-blue-600 hover:underline"
+    //             >
+    //                 {row.original.name}
+    //             </Link>
+    //         </div>;
+    //     },
+    //     enableSorting: true,
+    // },
 
     // {
     //     accessorKey: "name",
@@ -121,36 +117,36 @@ export const columns: ColumnDef<Account>[] = [
 
     // {
     //     accessorKey: "debit",
-    //     header: () => <div className="text-right">Debet</div>,
+    //     header: () => <div className="text-right font-bold">Debet</div>,
     //     cell: ({ row }) => {
     //         //const balance = row.original.balance;
     //         const value = Math.abs(row.original.debit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
-    //     },
-    //     enableSorting: true,
-    // },
-
-    // {
-    //     accessorKey: "credit",
-    //     header: () => <div className="text-right">Kredit</div>,
-    //     cell: ({ row }) => {
-    //         //const balance = row.original.balance;
-    //         const value = Math.abs(row.original.credit);
-    //         return <div className="text-right">Rp. {value.toLocaleString()}</div>;
+    //         return <div className="text-end">Rp. {value.toLocaleString()}</div>;
     //     },
     //     enableSorting: true,
     // },
 
     {
-        accessorKey: "balance",
-        header: () => <div className="text-right font-bold">Saldo</div>,
+        accessorKey: "credit",
+        header: () => <div className="text-right font-bold">Kredit</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
-            const balance = Math.abs(row.original.balance);
-            return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+            const value = Math.abs(row.original.credit);
+            return <div className="text-end">Rp. {value.toLocaleString()}</div>;
         },
         enableSorting: true,
     },
+
+    // {
+    //     accessorKey: "balance",
+    //     header: () => <div className="text-right">Saldo</div>,
+    //     cell: ({ row }) => {
+    //         //const balance = row.original.balance;
+    //         const balance = Math.abs(row.original.balance);
+    //         return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+    //     },
+    //     enableSorting: true,
+    // },
 
     // {
     //     accessorKey: "btn1",
