@@ -1,19 +1,17 @@
 "use client"
 
 import { useQuery } from '@tanstack/react-query';
+import toidr from "@/lib/toidr";
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns-saldo-nol";
-import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
-import SubTotalAktivitasBefore from './total-aktivitas-before';
-import SubTotalNol from './total-saldo-nol';
+import { columns } from "./columns-debit";
+import SubTotalDK from './total-dk';
 
-const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+const NeracaDataDebit = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['nsX', type, group2],
+        queryKey: ['nsDebit', type, group2],
         //queryFn: () => fetch(`/api/neraca?accountTypeId=${type}&accountGroup2Id=${group2}`, { cache: 'no-store' })
         //queryFn: () => fetch(`/api/neraca-saldo-x?accountTypeId=${type}&accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
         queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
@@ -27,29 +25,28 @@ const NeracaDataX = ({ title, titleTotal, type, group2, start, end }: { title: s
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
 
-    // const newTotal = Math.abs(totalBalance);
-    // const newTotalBalance = toidr(newTotal)
-
     //Total & data for table
     const { accounts: data, totalBalance, totalDebit, totalCredit } = result;
-    const newTotal = Math.abs(totalBalance);
-    // const newTotalBalance = toidr(newTotal);
-    // const newTotalDebit = toidr(Math.abs(totalDebit));
-    // const newTotalCredit = toidr(Math.abs(totalCredit));
+    //const newTotal = Math.abs(totalBalance);
+    //const newTotalBalance = toidr(newTotal);
 
-    //Update Total global States
+    const newTotalDebit = toidr(Math.abs(totalDebit));
+
     // if (isSuccess) {
+    //     //UpdateTotalCF(group2, totalBalance);
     //     const newTotal = Math.abs(totalBalance);
+    //     //const newTotalDebit = toidr(Math.abs(totalDebit));
     // };
 
     return (
         <>
             <div className="w-full">
                 <DataTable columns={columns} data={data} />
-                <SubTotalNol />                
+                <SubTotalDK value={newTotalDebit} />
             </div>
         </>
+
     )
 }
 
-export default NeracaDataX;
+export default NeracaDataDebit;
