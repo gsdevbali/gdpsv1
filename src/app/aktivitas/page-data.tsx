@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
 import Divider from "@/components/Divider";
-import Loading from "./loading";
+import Loading from "@/components/Loading";
 import JustTitle from "./just-title";
 // import NeracaData from "./neraca-data-current";
 import NeracaData from "./neraca-data";
@@ -17,10 +17,8 @@ import NeracaDataAkhirBefore from "./hitung-ab-akhir-before";
 import NeracaDataMoM from "./hitung-MoM";
 import NeracaDataPendapatanBefore from "./hitung-pendapatan-before";
 import NeracaDataSurplus1Before from "./hitung-surplus1-before";
-import NeracaDataSurplus2Before from "./hitung-surplus2-before";
 import NeracaDataPendapatan from "./hitung-pendapatan";
 import NeracaDataSurplus1 from "./hitung-surplus1";
-import NeracaDataSurplus2 from "./hitung-surplus2";
 import NeracaDataBebanTotal from "./hitung-beban-total";
 import NeracaDataBebanTotalX from "./hitung-beban-total-before";
 

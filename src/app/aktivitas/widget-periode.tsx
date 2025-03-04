@@ -1,17 +1,18 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import { getMonth, toLocalDate, toQueryDate } from '@/lib/tanggal';
+
 import refreshPath from './refresh-path';
 import BeforePageData from './before-page-data';
-//import { useCfStore } from './cf-store';
 
+//
 function WidgetPeriode() {
 
     const periodeTextStart = "Tentukan Periode dan Perbaharui Data ... ";
@@ -30,7 +31,6 @@ function WidgetPeriode() {
 
     const { subTitle, filterType, periodeOn, start, end, setSubTitle, setFilterType, setPeriodeOn, setStartContext, setEndContext } = useNeracaSaldoContext();
     //const { isPeriodeOK, setIsPeriodeOK } = useCfStore();
-
 
     // Set dateStart - dateEnd = today
     const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]); // Set default to today

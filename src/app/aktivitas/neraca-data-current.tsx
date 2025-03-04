@@ -2,15 +2,10 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { DataTable } from "./data-tables";
-import { columns } from "./columns";
-// import { columns } from "./columns-new";
-//import { getNeraca } from "./get-data";
-
 import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
-import SubTotalAktivitas from './total-aktivitas';
 import useAktivitasContext from "@/context/aktivitas-context";
+
+import SubTotalAktivitas from './total-aktivitas';
 
 const NeracaData = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 

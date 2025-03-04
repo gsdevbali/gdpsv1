@@ -1,10 +1,9 @@
 "use client"
 
-//import { useAktivitasStore } from './aktivitas-store';
-import SubTotalAktivitas from './total-aktivitas';
-//import { useAktivitasStoreBefore } from './aktivitas-store-before';
-
 import useAktivitasContext from "@/context/aktivitas-context";
+
+import SubTotalAktivitas from './total-aktivitas';
+
 
 const NeracaDataMoM = ({ row }: { row: number }) => {
 
@@ -46,9 +45,7 @@ const NeracaDataMoM = ({ row }: { row: number }) => {
     return (
         <>
             <div className="w-full">
-
                 <SubTotalAktivitas value={formattedValue} title={''} />
-
             </div>
 
         </>
@@ -57,5 +54,3 @@ const NeracaDataMoM = ({ row }: { row: number }) => {
 }
 
 export default NeracaDataMoM;
-
-//export default

@@ -2,15 +2,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { DataTable } from "./data-tables";
-import { columns } from "./columns";
-// import { columns } from "./columns-new";
-//import { getNeraca } from "./get-data";
-
 import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
-import SubTotalAktivitasBefore from './total-aktivitas-before';
 import useAktivitasContext from "@/context/aktivitas-context";
+
+import SubTotalAktivitasBefore from './total-aktivitas-before';
+
 
 const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
 
@@ -34,8 +30,6 @@ const NeracaDataBefore = ({ title, titleTotal, type, group2, start, end }: { tit
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
 
-    // const newTotal = Math.abs(totalBalance);
-    // const newTotalBalance = toidr(newTotal)
 
     //Total & data for table
     const { accounts: data, totalBalance } = result;

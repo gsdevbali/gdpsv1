@@ -1,17 +1,9 @@
 "use client"
 
-import { useQuery } from '@tanstack/react-query';
-
-import { DataTable } from "./data-tables";
-import { columns } from "./columns";
-// import { columns } from "./columns-new";
-//import { getNeraca } from "./get-data";
-
 import toidr from "@/lib/toidr";
-// import TulisTotalRp from "@/components/TulisTotalRp";
-import { useAktivitasStore } from './aktivitas-store';
-import SubTotalAktivitas from './total-aktivitas';
 import useAktivitasContext from '@/context/aktivitas-context';
+
+import SubTotalAktivitas from './total-aktivitas';
 
 const NeracaDataSelisih = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 

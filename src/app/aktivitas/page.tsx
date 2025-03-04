@@ -5,7 +5,6 @@ import Divider from "@/components/Divider";
 import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
-//import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import MonthYearSelector from "./widget-monthly";
 
@@ -34,14 +33,6 @@ export default function Page() {
                 {/* Periode & Data */}
                 {/* <WidgetPeriode /> */}
                 <MonthYearSelector />
-
-                {/* {
-                    (periodeOn) ? <ShowCFData /> : <h2 className="py-2">Periode belum ditentukan</h2>
-                } */}
-                {/* <ShowCFData />  */}
-
-                {/* INFO TOTAL */}
-
 
             </div>
         </PageLayout >

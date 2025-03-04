@@ -1,6 +1,7 @@
 "use client"
 
 import toidr from "@/lib/toidr";
+
 import { useCashflowRecStore } from './cashflowrec-store';
 import SubTotalAktivitas from './total-aktivitas';
 
@@ -19,16 +20,10 @@ const NeracaDataSurplus2 = ({ title, titleTotal }: { title: string; titleTotal: 
     return (
         <>
             <div className="w-full">
-
                 <SubTotalAktivitas value={newTotalBalance} title={titleTotal} />
-
             </div>
-
         </>
-
     )
 }
 
 export default NeracaDataSurplus2;
-
-//export default

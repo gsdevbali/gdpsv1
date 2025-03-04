@@ -1,9 +1,9 @@
 "use client"
 
 import toidr from "@/lib/toidr";
-import { useCashflowRecStore } from './cashflowrec-store';
-import SubTotalAktivitas from './total-aktivitas';
 import useAktivitasContext from "@/context/aktivitas-context";
+
+import SubTotalAktivitas from './total-aktivitas';
 
 const NeracaDataSurplus1 = ({ title, titleTotal }: { title: string; titleTotal: string }) => {
 
@@ -14,24 +14,16 @@ const NeracaDataSurplus1 = ({ title, titleTotal }: { title: string; titleTotal: 
     const totalBeban = Math.abs(totalBebanOp + totalBeban2 + totalBeban3);
     const newTotal = Math.abs(totalPendapatan - totalBeban);
 
-    //Set Total Pendapatan/Penerimaan
-    //setTotalSurplus1(newTotal);
-
     const newTotalBalance = toidr(newTotal);
 
     return (
         <>
             <div className="w-full">
-
                 <SubTotalAktivitas value={newTotalBalance} title={titleTotal} />
-
             </div>
-
         </>
 
     )
 }
 
 export default NeracaDataSurplus1;
-
-//export default
