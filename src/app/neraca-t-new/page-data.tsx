@@ -217,11 +217,11 @@ export default function ShowNSData() {
                             {/* <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} /> */}
 
                             {/* Hitung AB */}
-                            <CalculateOnlyX title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={startFirst} end={endPrev} />
-                            <CalculateOnlyX title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={startFirst} end={endPrev} />
-                            <CalculateOnlyX title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={startFirst} end={endPrev} />
-                            <CalculateOnlyX title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={startFirst} end={endPrev} />
-                            <CalculateOnlyX title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={startFirst} end={endPrev} />
+                            <CalculateOnlyX title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={startPrev} end={endPrev} />
+                            <CalculateOnlyX title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={startPrev} end={endPrev} />
+                            <CalculateOnlyX title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={startPrev} end={endPrev} />
+                            <CalculateOnlyX title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={startPrev} end={endPrev} />
+                            <CalculateOnlyX title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={startPrev} end={endPrev} />
 
                             {/* Show AB */}
                             <ShowABX title="Kenaikan (Penurunan) Aset Bersih" />
