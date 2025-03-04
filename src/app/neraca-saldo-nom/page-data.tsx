@@ -8,7 +8,6 @@ import Divider from "@/components/Divider";
 import Loading from "./loading";
 
 import NeracaDataX from "./neraca-data-x";
-import NeracaDataX1 from "./neraca-data-x-current";
 import NeracaDataX2 from "./neraca-data-x-2";
 import NeracaDataDebit from "./neraca-data-x-debit";
 import NeracaDataCredit from "./neraca-data-x-credit";
