@@ -257,6 +257,8 @@ export default function ShowNSData() {
                             {/* <h2>{totalSelisihAB}</h2> */}
                             {/* <NeracaDataSub title="AB2" titleTotal="AB2" type={3} group={6} start={start} end={end} /> */}
                             {/* <AktivitasSelisihAB title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" /> */}
+                            {/* TODO: 
+                            - HITUNG SELISIH PENERIMAAN/BIAYA */}
                         </Suspense>
 
                         <div className="h-2"></div>
