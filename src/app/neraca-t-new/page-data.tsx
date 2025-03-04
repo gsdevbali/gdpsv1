@@ -1,15 +1,17 @@
 "use client"
 
 import { Suspense } from "react";
+import { useQuery } from '@tanstack/react-query';
 
 import { toQueryDate } from "@/lib/tanggal";
 import Divider from "@/components/Divider";
 import useAktivitasContext from "@/context/aktivitas-context";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
+import toidr from "@/lib/toidr";
 
-import Loading from "./loading";
+import Loading from "@/components/Loading";
 import NeracaData from "./neraca-data";
-import WidgetInfoTotal from "./widget-info-total";
+// import WidgetInfoTotal from "./widget-info-total";
 import WidgetInfoTotalNew from "./widget-info-total-new";
 
 import NeracaDataX from "./neraca-dataX";
@@ -17,8 +19,11 @@ import NeracaDataSub from "./neraca-data-sub";
 import NeracaDataSubX from "./neraca-data-subX";
 import NeracaDataABX from "./neraca-data-ABX";
 import NeracaDataAB from "./neraca-data-AB";
-import NeracaDataSelisih from "../aktivitas/hitung-ab-selisih";
-import AktivitasSelisihAB from "./hitung-aktivitas";
+//import NeracaDataSelisih from "../aktivitas/hitung-ab-selisih";
+//import AktivitasSelisihAB from "./hitung-aktivitas";
+//import SubTotalRekap from "../neraca-saldo-nom/total-rekap";
+import SubTotalAB from "./total-ab";
+import SubTotalABX from "./total-abX";
 
 
 export default function ShowNSData() {
@@ -195,23 +200,32 @@ export default function ShowNSData() {
                         <div className="h-2"></div>
 
                         <Divider />
-                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">ASET BERSIH</h2>
+                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">ASET BERSIH</h2>                        
                         <Suspense fallback={<Loading section="AB" />}>
                             <NeracaDataABX title="AB" titleTotal="Aset Bersih" type={3} group={6} start={startFirst} end={endPrev} />
-
                             {/* <NeracaDataSubX title="AB" titleTotal="AB" type={3} group={6} start={startPrev} end={endPrev} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
 
                         <Divider />
+                        
                         <div className="h-2"></div>
-                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">KENAIKAN (PENURUNAN) ASET BERSIH</h2>
-                        <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} />
 
-                            {/* <NeracaDataSubX title="KW" titleTotal="KW" type={2} group={6} start={startPrev} end={endPrev} /> */}
-                            {/* <NeracaDataSelisih title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" /> */}
+                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">KENAIKAN (PENURUNAN) ASET BERSIH</h2>
+                        <Suspense fallback={<Loading section="AB2X" />}>
+                            {/* <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} /> */}
+
+                            {/* Hitung AB */}
+                            <CalculateOnlyX title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={startFirst} end={endPrev} />
+                            <CalculateOnlyX title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={startFirst} end={endPrev} />
+                            <CalculateOnlyX title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={startFirst} end={endPrev} />
+                            <CalculateOnlyX title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={startFirst} end={endPrev} />
+                            <CalculateOnlyX title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={startFirst} end={endPrev} />
+
+                            {/* Show AB */}
+                            <ShowABX title="Kenaikan (Penurunan) Aset Bersih" />
+                            <Divider />
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -250,15 +264,29 @@ export default function ShowNSData() {
                         <Divider />
                         <div className="h-2"></div>
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">K&AB</h2>
-                        <Suspense fallback={<Loading section="AB" />}>
-                            <NeracaDataAB title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={end} />
+                        <Suspense fallback={<Loading section="AB2" />}>
+                            {/* <NeracaDataAB title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={end} /> */}
 
-                            {/* Hitung Selisih ambil dari Hitungan NERACA-T */}
-                            {/* <h2>{totalSelisihAB}</h2> */}
-                            {/* <NeracaDataSub title="AB2" titleTotal="AB2" type={3} group={6} start={start} end={end} /> */}
-                            {/* <AktivitasSelisihAB title="KENAIKAN/PENURUNAN AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" /> */}
-                            {/* TODO: 
-                            - HITUNG SELISIH PENERIMAAN/BIAYA */}
+                            {/* Hitung AB */}
+                            <CalculateOnly title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={start} end={end} />
+                            <CalculateOnly title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={start} end={end} />
+                            <CalculateOnly title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={start} end={end} />
+                            <CalculateOnly title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={start} end={end} />
+                            <CalculateOnly title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={start} end={end} />
+
+                            {/* Show AB */}
+                            <ShowAB title="Kenaikan (Penurunan) Aset Bersih" />
+                            <Divider />
+
+                            {/* <ShowData title='Penerimaan Persembahan' accType={4} accGroup={8} />
+                            <div className="h-8"></div>
+                            <ShowData title='Penerimaan Lain-lain' accType={4} accGroup={9} />
+                            <div className="h-8"></div>
+                            <ShowData title='Biaya Operasional' accType={5} accGroup={10} />
+                            <div className="h-8"></div>
+                            <ShowData title='Biaya Sekretariat' accType={5} accGroup={11} />
+                            <div className="h-8"></div>
+                            <ShowData title='Biaya Bidang & Bapel' accType={5} accGroup={12} /> */}
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -277,6 +305,168 @@ export default function ShowNSData() {
             {/* TOTAL Info */}
             {/* <WidgetInfoTotal /> */}
             <WidgetInfoTotalNew />
+
+        </>
+    )
+}
+
+
+//Show AB - current
+function ShowAB({ title }: { title: string }) {
+
+    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3 } = useAktivitasContext();
+
+    const totalPenerimaan = totalTerima1 + totalTerima2;
+    const totalBiaya = totalBebanOp + totalBeban2 + totalBeban3;
+    const totalSelisih = totalPenerimaan - (totalBiaya);
+
+    return (
+        <>
+            <div className="w-full">
+                <SubTotalAB value={toidr(totalSelisih)} title={title} />
+            </div>
+        </>
+    )
+}
+
+
+
+//Show AB - previous
+function ShowABX({ title }: { title: string }) {
+
+    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X } = useAktivitasContext();
+
+    const totalPenerimaan = totalTerima1X + totalTerima2X;
+    const totalBiaya = totalBebanOpX + totalBeban2X + totalBeban3X;
+    const totalSelisih = totalPenerimaan - (totalBiaya);
+
+    return (
+        <>
+            <div className="w-full">
+                <SubTotalABX value={toidr(totalSelisih)} title={title} />
+            </div>
+        </>
+    )
+}
+
+//Calculate current AB
+function CalculateOnly({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) {
+
+    const { setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
+
+    // Fetch data using TanStack Query
+    const { data: result, isLoading, error, isSuccess } = useQuery({
+        queryKey: ['calc', type, group2],
+        queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            }),
+    });
+
+    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (error) return <div>Error: {error.message}</div>; // Handle error state
+    if (!result) return <div>Tidak ada data (null)</div>;
+
+    //Total & data for table
+    const { accounts: data, totalBalance } = result;
+    const newTotal = Math.abs(totalBalance);
+
+    //Update Total global States
+    if (isSuccess) {
+        //UpdateTotalCF(group2, totalBalance);
+        const newTotal = Math.abs(totalBalance);
+
+        switch (group2) {
+
+            case 8:
+                setTotalTerima1(newTotal)
+                break;
+            case 9:
+                setTotalTerima2(newTotal)
+                break;
+            case 10:
+                setTotalBebanOp(newTotal)
+
+            case 11:
+                setTotalBeban2(newTotal)
+                break;
+
+            case 12:
+                setTotalBeban3(newTotal)
+                break;
+
+            default:
+                // Handle default case
+                break;
+        }
+
+    };
+
+    return (
+        <>
+
+        </>
+    )
+}
+
+
+//Calculate previous AB
+function CalculateOnlyX({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) {
+
+    const { setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X } = useAktivitasContext();
+
+    // Fetch data using TanStack Query
+    const { data: result, isLoading, error, isSuccess } = useQuery({
+        queryKey: ['calcX', type, group2],
+        queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            }),
+    });
+
+    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (error) return <div>Error: {error.message}</div>; // Handle error state
+    if (!result) return <div>Tidak ada data (null)</div>;
+
+    //Total & data for table
+    const { accounts: data, totalBalance } = result;
+    const newTotal = Math.abs(totalBalance);
+
+    //Update Total global States
+    if (isSuccess) {
+        //UpdateTotalCF(group2, totalBalance);
+        const newTotal = Math.abs(totalBalance);
+
+        switch (group2) {
+
+            case 8:
+                setTotalTerima1X(newTotal)
+                break;
+            case 9:
+                setTotalTerima2X(newTotal)
+                break;
+            case 10:
+                setTotalBebanOpX(newTotal)
+
+            case 11:
+                setTotalBeban2X(newTotal)
+                break;
+
+            case 12:
+                setTotalBeban3X(newTotal)
+                break;
+
+            default:
+                // Handle default case
+                break;
+        }
+
+    };
+
+    return (
+        <>
 
         </>
     )

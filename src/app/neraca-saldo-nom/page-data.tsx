@@ -4,27 +4,24 @@ import { Suspense } from "react";
 
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import Divider from "@/components/Divider";
+import toidr from "@/lib/toidr";
 import Loading from "@/components/Loading";
+import useAktivitasContext from "@/context/aktivitas-context";
 
 import NeracaDataX from "./neraca-data-x";
 import NeracaDataX2 from "./neraca-data-x-2";
 import NeracaDataDebit from "./neraca-data-x-debit";
 import NeracaDataCredit from "./neraca-data-x-credit";
-import useAktivitasContext from "@/context/aktivitas-context";
 import SubTotalDK from "./total-dk";
-import toidr from "@/lib/toidr";
 import SubTotalRekap from "./total-rekap";
 
 export default function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
 
-    // const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
-    // const startPrevX = "2020-01-01";
-    // const newTitle = title.toUpperCase();
     return (
         <>
             <div>
                 <div className="h-4"></div>
-                <ShowDataCalculate />
+                <ShowDataAB />
                 <div className="h-4"></div>
                 <ShowData title='Penerimaan Persembahan' accType={4} accGroup={8} />
                 <div className="h-8"></div>
@@ -36,7 +33,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                 <div className="h-8"></div>
                 <ShowData title='Biaya Bidang & Bapel' accType={5} accGroup={12} />
                 <div className="h-4"></div>
-                <ShowDataCalculate />
+                <ShowDataAB />
                 <div className="h-4"></div>
 
             </div>
@@ -109,8 +106,8 @@ function ShowData({ title, accType, accGroup }: { title: string, accType: number
 }
 
 
-
-function ShowDataCalculate() {
+//
+function ShowDataAB() {
     
     const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, } = useAktivitasContext();
 
