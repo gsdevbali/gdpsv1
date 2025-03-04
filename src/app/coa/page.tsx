@@ -5,7 +5,7 @@ import { columns } from "./columns";
 
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
-import Loading from "@/app/loading";
+import Loading from "@/components/Loading";
 
 async function getAccount() {
 
@@ -30,7 +30,7 @@ export default async function AccountPage() {
     return (
 
         <PageLayout header={header} footer={footer}>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<Loading section="Akun" />}>
                 <div className="w-full">
                     {/* <Divider /> */}
                     {/* <AccountDialog mode="create">
