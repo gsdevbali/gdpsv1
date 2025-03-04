@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Suspense } from "react";
-import Loading from "@/components/Loading";
+import Loading from "./LoadingRoot";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { CashFlowProvider } from "@/context/cashflow-context";
@@ -57,7 +57,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
 
-          <Suspense fallback={<Loading section="Layout" />}>
+          <Suspense fallback={<Loading />}>
 
             <ThemeProvider
               attribute="class"
