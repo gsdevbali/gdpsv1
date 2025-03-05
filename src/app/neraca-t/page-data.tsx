@@ -1,19 +1,21 @@
 "use client"
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 
 import { toQueryDate } from "@/lib/tanggal";
+import toidr from "@/lib/toidr";
 import Divider from "@/components/Divider";
+import Loading from "@/components/Loading";
+
 import useAktivitasContext from "@/context/aktivitas-context";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
-import toidr from "@/lib/toidr";
+import useNeracaTContext from "@/context/neraca-t-context";
 
-import Loading from "@/components/Loading";
-import NeracaData from "./neraca-data";
 // import WidgetInfoTotal from "./widget-info-total";
 import WidgetInfoTotalNew from "./widget-info-total-new";
 
+import NeracaData from "./neraca-data";
 import NeracaDataX from "./neraca-dataX";
 import NeracaDataSub from "./neraca-data-sub";
 import NeracaDataSubX from "./neraca-data-subX";
@@ -24,14 +26,16 @@ import NeracaDataAB from "./neraca-data-AB";
 //import SubTotalRekap from "../neraca-saldo-nom/total-rekap";
 import SubTotalAB from "./total-ab";
 import SubTotalABX from "./total-abX";
+import { Half2Icon } from "@radix-ui/react-icons";
+import { Spinner } from "@/components/ui/spinner";
+import SubTotalAll from "./total-all";
 
 
 export default function ShowNSData() {
 
     // const { start, end, periodeOn, titlePrevMonthYear, titleMonthYear } = useNeracaSaldoContext();
     const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
-    const { totalSelisihAB } = useAktivitasContext();
-
+    //const { totalSelisihAB } = useAktivitasContext();
 
     console.log('SHOW-NS-DATA:')
     console.log('Start:', toQueryDate(start))
@@ -43,7 +47,6 @@ export default function ShowNSData() {
     return (
 
         <>
-
             <div className="grid grid-cols-2 gap-4">
 
                 <div className="flex flex-row gap-4">
@@ -110,8 +113,9 @@ export default function ShowNSData() {
                             <NeracaDataSubX title="AP" titleTotal="Aktiva P" type={1} group={14} start={startFirst} end={endPrev} />
                         </Suspense>
 
-
                     </div>
+
+
                     <div className="basis-2/5">
                         <h1 className="text-right text-[1.2em] pt-4 pb-2 text-blue-600 dark:text-orange-500">{titleMonthYear}</h1>
                         <Divider />
@@ -167,15 +171,14 @@ export default function ShowNSData() {
 
                             <NeracaDataSub title="AP" titleTotal="AP" type={1} group={14} start={startFirst} end={end} />
                         </Suspense>
-
+                        
                         <div className="h-4"></div>
 
-                    </div>
-
-
+                    </div>                
 
                 </div>
-
+                
+                
                 <div className="flex flex-row gap-3">
 
                     {/* PASIVA - KANAN */}
@@ -200,7 +203,7 @@ export default function ShowNSData() {
                         <div className="h-2"></div>
 
                         <Divider />
-                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">ASET BERSIH</h2>                        
+                        <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">ASET BERSIH</h2>
                         <Suspense fallback={<Loading section="AB" />}>
                             <NeracaDataABX title="AB" titleTotal="Aset Bersih" type={3} group={6} start={startFirst} end={endPrev} />
                             {/* <NeracaDataSubX title="AB" titleTotal="AB" type={3} group={6} start={startPrev} end={endPrev} /> */}
@@ -209,24 +212,27 @@ export default function ShowNSData() {
                         <div className="h-2"></div>
 
                         <Divider />
-                        
+
                         <div className="h-2"></div>
 
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">KENAIKAN (PENURUNAN) ASET BERSIH</h2>
-                        <Suspense fallback={<Loading section="AB2X" />}>
-                            {/* <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} /> */}
+                        {/* <Suspense fallback={<Loading section="AB2X" />}> */}
+                        {/* <NeracaDataABX title="AB" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={endPrev} /> */}
 
+                        <Suspense fallback={<Loading section="...Menghitung..." />}>
                             {/* Hitung AB */}
-                            <CalculateOnlyX title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={startPrev} end={endPrev} />
-                            <CalculateOnlyX title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={startPrev} end={endPrev} />
-                            <CalculateOnlyX title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={startPrev} end={endPrev} />
-                            <CalculateOnlyX title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={startPrev} end={endPrev} />
-                            <CalculateOnlyX title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={startPrev} end={endPrev} />
-
-                            {/* Show AB */}
-                            <ShowABX title="Kenaikan (Penurunan) Aset Bersih" />
-                            <Divider />
+                            <HitungABX title="Penerimaan Persembahan" type={4} group2={8} start={startPrev} end={endPrev} />
+                            <HitungABX title="Penerimaan Lain" type={4} group2={9} start={startPrev} end={endPrev} />
+                            <HitungABX title="Biaya Operasional" type={5} group2={10} start={startPrev} end={endPrev} />
+                            <HitungABX title="Biaya Sekre" type={5} group2={11} start={startPrev} end={endPrev} />
+                            <HitungABX title="Biaya BidangBapel" type={5} group2={12} start={startPrev} end={endPrev} />
                         </Suspense>
+
+                        {/* Show AB */}
+                        <ShowABX title="Kenaikan (Penurunan) Aset Bersih" />
+
+                        <Divider />
+                        {/* </Suspense> */}
 
                         <div className="h-2"></div>
 
@@ -235,7 +241,7 @@ export default function ShowNSData() {
                     <div className="basis-1/3">
 
                         <div className="flex justify-between">
-                            <h2 className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500 opacity-0">K&AB</h2>
+                            <p className="text-xl font-bold pt-4 pb-2 text-blue-600 dark:text-orange-500 opacity-0">X</p>
                             <h1 className="text-right text-[1.2em] pt-4 pb-2 text-blue-600 dark:text-orange-500">{titleMonthYear}</h1>
                         </div>
 
@@ -264,47 +270,55 @@ export default function ShowNSData() {
                         <Divider />
                         <div className="h-2"></div>
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">K&AB</h2>
-                        <Suspense fallback={<Loading section="AB2" />}>
-                            {/* <NeracaDataAB title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={end} /> */}
+                        {/* <Suspense fallback={<Loading section="AB2" />}> */}
+                        {/* <NeracaDataAB title="AB2" titleTotal="Kenaikan (Penurunan) Aset Bersih" type={3} group={7} start={startFirst} end={end} /> */}
 
-                            {/* Hitung AB */}
-                            <CalculateOnly title="Penerimaan Persembahan" titleTotal="t1" type={4} group2={8} start={start} end={end} />
-                            <CalculateOnly title="Penerimaan Lain" titleTotal="t2" type={4} group2={9} start={start} end={end} />
-                            <CalculateOnly title="Biaya Operasional" titleTotal="b1" type={5} group2={10} start={start} end={end} />
-                            <CalculateOnly title="Biaya Sekre" titleTotal="b2" type={5} group2={11} start={start} end={end} />
-                            <CalculateOnly title="Biaya BidangBapel" titleTotal="b3" type={5} group2={12} start={start} end={end} />
-
-                            {/* Show AB */}
-                            <ShowAB title="Kenaikan (Penurunan) Aset Bersih" />
-                            <Divider />
-
-                            {/* <ShowData title='Penerimaan Persembahan' accType={4} accGroup={8} />
-                            <div className="h-8"></div>
-                            <ShowData title='Penerimaan Lain-lain' accType={4} accGroup={9} />
-                            <div className="h-8"></div>
-                            <ShowData title='Biaya Operasional' accType={5} accGroup={10} />
-                            <div className="h-8"></div>
-                            <ShowData title='Biaya Sekretariat' accType={5} accGroup={11} />
-                            <div className="h-8"></div>
-                            <ShowData title='Biaya Bidang & Bapel' accType={5} accGroup={12} /> */}
+                        {/* Hitung AB */}
+                        <Suspense fallback={<Loading section="...Menghitung..." />}>
+                            <HitungAB title="Penerimaan Persembahan" type={4} group2={8} start={start} end={end} />
+                            <HitungAB title="Penerimaan Lain" type={4} group2={9} start={start} end={end} />
+                            <HitungAB title="Biaya Operasional" type={5} group2={10} start={start} end={end} />
+                            <HitungAB title="Biaya Sekre" type={5} group2={11} start={start} end={end} />
+                            <HitungAB title="Biaya BidangBapel" type={5} group2={12} start={start} end={end} />
                         </Suspense>
+
+                        {/* Show AB */}
+                        <ShowAB title="Kenaikan (Penurunan) Aset Bersih" />
+
+                        <Divider />
+
+
+                        {/* </Suspense> */}
 
                         <div className="h-2"></div>
 
                     </div>
 
+                    
                 </div>
 
+
+            </div>
+            
+            <div className="h-8"></div>
+            <Divider />
+
+            <div className="flex justify-between bg-slate-200 dark:bg-blue-600 p-2">
+            <div className="w-1/2 pr-2">
+                <TotalAktiva />
+            </div>
+            <div className="w-1/2 pr-2">
+                <TotalPasiva />
+            </div>
             </div>
 
             <Divider />
-
 
             <div className="h-4"></div>
 
             {/* TOTAL Info */}
             {/* <WidgetInfoTotal /> */}
-            <WidgetInfoTotalNew />
+            {/* <WidgetInfoTotalNew /> */}
 
         </>
     )
@@ -329,8 +343,6 @@ function ShowAB({ title }: { title: string }) {
     )
 }
 
-
-
 //Show AB - previous
 function ShowABX({ title }: { title: string }) {
 
@@ -350,7 +362,7 @@ function ShowABX({ title }: { title: string }) {
 }
 
 //Calculate current AB
-function CalculateOnly({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) {
+function HitungAB({ title, type, group2, start, end }: { title: string; type: number; group2: number; start: string, end: string }) {
 
     const { setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
 
@@ -364,7 +376,7 @@ function CalculateOnly({ title, titleTotal, type, group2, start, end }: { title:
             }),
     });
 
-    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (isLoading) return <div><Spinner size="small" /></div>; // Handle loading state
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
 
@@ -375,7 +387,7 @@ function CalculateOnly({ title, titleTotal, type, group2, start, end }: { title:
     //Update Total global States
     if (isSuccess) {
         //UpdateTotalCF(group2, totalBalance);
-        const newTotal = Math.abs(totalBalance);
+        //const newTotal = Math.abs(totalBalance);
 
         switch (group2) {
 
@@ -412,7 +424,7 @@ function CalculateOnly({ title, titleTotal, type, group2, start, end }: { title:
 
 
 //Calculate previous AB
-function CalculateOnlyX({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) {
+function HitungABX({ title, type, group2, start, end }: { title: string; type: number; group2: number; start: string, end: string }) {
 
     const { setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X } = useAktivitasContext();
 
@@ -426,7 +438,7 @@ function CalculateOnlyX({ title, titleTotal, type, group2, start, end }: { title
             }),
     });
 
-    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (isLoading) return <div><Spinner size="small" /></div>; // Handle loading state
     if (error) return <div>Error: {error.message}</div>; // Handle error state
     if (!result) return <div>Tidak ada data (null)</div>;
 
@@ -437,7 +449,7 @@ function CalculateOnlyX({ title, titleTotal, type, group2, start, end }: { title
     //Update Total global States
     if (isSuccess) {
         //UpdateTotalCF(group2, totalBalance);
-        const newTotal = Math.abs(totalBalance);
+        //const newTotal = Math.abs(totalBalance);
 
         switch (group2) {
 
@@ -468,6 +480,52 @@ function CalculateOnlyX({ title, titleTotal, type, group2, start, end }: { title
     return (
         <>
 
+        </>
+    )
+}
+
+
+//
+function TotalAktiva() {
+
+    const {
+        totalAL, totalAT, totalATL, totalAP, setTotalA, setTotalAL, setTotalAT, setTotalATL,
+        totalK, setTotalK,
+        totalAB, totalAB2, setTotalAB, setTotalAB2
+    } = useNeracaTContext();
+
+    const totalAktiva = totalAL + totalAT + totalATL + totalAP;
+    const totalPasiva = totalK + totalAB + totalAB2;
+    const totalSelisih = totalAktiva - totalPasiva;
+
+    return (
+        <>
+            <SubTotalAll title="Total AKTIVA" value={toidr(totalAktiva)} />
+        </>
+    )
+}
+
+
+//
+function TotalPasiva() {
+
+    const {
+        // totalA, 
+        totalAL, totalAT, totalATL, totalAP, setTotalA, setTotalAL, setTotalAT, setTotalATL,
+        totalK, setTotalK,
+        totalAB, totalAB2, setTotalAB, setTotalAB2
+        // totalAX, totalALX, totalATX, totalATLX, totalAPX, setTotalAX, setTotalALX, setTotalATX, setTotalATLX,
+        // totalKX, setTotalKX, 
+        // totalABX, totalAB2X,  setTotalABX, setTotalAB2X
+    } = useNeracaTContext();
+
+    const totalAktiva = totalAL + totalAT + totalATL + totalAP;
+    const totalPasiva = totalK + totalAB + totalAB2;
+    const totalSelisih = totalAktiva - totalPasiva;
+
+    return (
+        <>
+            <SubTotalAll title="Total PASIVA" value={toidr(totalPasiva)} />
         </>
     )
 }

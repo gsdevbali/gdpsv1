@@ -54,7 +54,7 @@ const data = {
     // APP-CUSTOM
     {
       title: "DAFTAR",
-      url: "/transaction-all",
+      url: "#",
       icon: Table2Icon,
       isActive: true,
       items: [
@@ -73,7 +73,7 @@ const data = {
 
     {
       title: "ENTRI",
-      url: "/jurnal",
+      url: "#",
       icon: Newspaper,
       isActive: true,
       items: [
@@ -118,7 +118,7 @@ const data = {
 
     {
       title: "AKUN",
-      url: "/coa",
+      url: "#",
       icon: Table2Icon,
       isActive: true,
       items: [
@@ -130,9 +130,6 @@ const data = {
       ],
     },
 
-
-
-
     {
       title: "LAPORAN",
       url: "#",
@@ -141,7 +138,7 @@ const data = {
       items: [
         {
           title: "NERACA",
-          url: "/neraca-t-new",
+          url: "/neraca-t",
         },
         {
           title: "NERACA SALDO NOMINAL",
