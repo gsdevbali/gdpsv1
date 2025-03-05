@@ -27,6 +27,11 @@ const NeracaTContext = createContext
         totalAT: number; setTotalAT: (type: number) => void;
         totalAP: number; setTotalAP: (type: number) => void;
 
+        totalAT1: number; setTotalAT1: (type: number) => void;
+        totalAT2: number; setTotalAT2: (type: number) => void;
+        totalAT3: number; setTotalAT3: (type: number) => void;
+        totalAT4: number; setTotalAT4: (type: number) => void;
+
         totalK: number; setTotalK: (type: number) => void;
         totalAB: number; setTotalAB: (type: number) => void;
         totalAB2: number; setTotalAB2: (type: number) => void;
@@ -36,6 +41,11 @@ const NeracaTContext = createContext
         totalATLX: number; setTotalATLX: (type: number) => void;
         totalATX: number; setTotalATX: (type: number) => void;
         totalAPX: number; setTotalAPX: (type: number) => void;
+
+        totalAT1X: number; setTotalAT1X: (type: number) => void;
+        totalAT2X: number; setTotalAT2X: (type: number) => void;
+        totalAT3X: number; setTotalAT3X: (type: number) => void;
+        totalAT4X: number; setTotalAT4X: (type: number) => void;
 
         totalKX: number; setTotalKX: (type: number) => void;
         totalABX: number; setTotalABX: (type: number) => void;
@@ -60,6 +70,11 @@ const NeracaTContext = createContext
         totalAT: 0, setTotalAT: () => { },
         totalAP: 0, setTotalAP: () => { },
 
+        totalAT1:0, setTotalAT1: () => {},
+        totalAT2: 0, setTotalAT2: () => { },
+        totalAT3: 0, setTotalAT3: () => { },
+        totalAT4: 0, setTotalAT4: () => { },
+
         totalK: 0, setTotalK: () => { },
         totalAB: 0, setTotalAB: () => { },
         totalAB2: 0, setTotalAB2: () => { },
@@ -69,6 +84,11 @@ const NeracaTContext = createContext
         totalATLX: 0, setTotalATLX: () => { },
         totalATX: 0, setTotalATX: () => { },
         totalAPX: 0, setTotalAPX: () => { },
+
+        totalAT1X:0, setTotalAT1X: () => {},
+        totalAT2X:0, setTotalAT2X: () => {},
+        totalAT3X:0, setTotalAT3X: () => {},
+        totalAT4X:0, setTotalAT4X: () => {},
 
         totalKX: 0, setTotalKX: () => { },
         totalABX: 0, setTotalABX: () => { },
@@ -87,6 +107,11 @@ export function NeracaTProvider({ children }: {
     const [totalAT, setTotalAT] = useState(0);
     const [totalAP, setTotalAP] = useState(0);
 
+    const [totalAT1, setTotalAT1] = useState(0);
+    const [totalAT2, setTotalAT2] = useState(0);
+    const [totalAT3, setTotalAT3] = useState(0);
+    const [totalAT4, setTotalAT4] = useState(0);
+
     const [totalK, setTotalK] = useState(0);
     const [totalAB, setTotalAB] = useState(0);
     const [totalAB2, setTotalAB2] = useState(0);
@@ -96,6 +121,11 @@ export function NeracaTProvider({ children }: {
     const [totalATLX, setTotalATLX] = useState(0);
     const [totalATX, setTotalATX] = useState(0);
     const [totalAPX, setTotalAPX] = useState(0);
+
+    const [totalAT1X, setTotalAT1X] = useState(0);
+    const [totalAT2X, setTotalAT2X] = useState(0);
+    const [totalAT3X, setTotalAT3X] = useState(0);
+    const [totalAT4X, setTotalAT4X] = useState(0);
 
     const [totalKX, setTotalKX] = useState(0);
     const [totalABX, setTotalABX] = useState(0);
@@ -108,6 +138,12 @@ export function NeracaTProvider({ children }: {
             totalAL, setTotalAL,
             totalATL, setTotalATL,
             totalAT, setTotalAT,
+
+            totalAT1, setTotalAT1,
+            totalAT2, setTotalAT2,
+            totalAT3, setTotalAT3,
+            totalAT4, setTotalAT4,
+
             totalAP, setTotalAP,
             totalK, setTotalK,
             totalAB, setTotalAB,
@@ -117,6 +153,12 @@ export function NeracaTProvider({ children }: {
             totalALX, setTotalALX,
             totalATLX, setTotalATLX,
             totalATX, setTotalATX,
+
+            totalAT1X, setTotalAT1X,
+            totalAT2X, setTotalAT2X,
+            totalAT3X, setTotalAT3X,
+            totalAT4X, setTotalAT4X,
+
             totalAPX, setTotalAPX,
             totalKX, setTotalKX,
             totalABX, setTotalABX,

@@ -59,6 +59,7 @@ const NeracaDataSub = ({ title, titleTotal, type, group, start, end }: { title: 
     if (isSuccess) {
         //UpdateTotalCF(group2, totalBalance);
         const newTotal = Math.abs(totalBalance);
+         
 
         switch (group) {
 

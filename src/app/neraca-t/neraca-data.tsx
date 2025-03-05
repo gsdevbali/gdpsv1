@@ -9,7 +9,7 @@ import TulisRekapRp from '@/components/TulisRekapRpNeracaCurrent';
 const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: string; titleTotal: string; type: number; group: number; start: string, end: string }) => {
 
     //const { setTotalAL, setTotalATL, setTotalAT, setTotalAP, setTotalK, setTotalKL, setTotalAB, setTotalAB2 } = useNeracaStore();
-    const { setTotalAL, setTotalATL, setTotalAT, setTotalK, setTotalAB, setTotalAB2 } = useNeracaTContext();
+    const { setTotalAL, setTotalATL, setTotalAT, setTotalK, setTotalAB, setTotalAB2, setTotalAT1, setTotalAT2, setTotalAT3, setTotalAT4 } = useNeracaTContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
@@ -59,6 +59,20 @@ const NeracaData = ({ title, titleTotal, type, group, start, end }: { title: str
                 break;
             case 7:
                 setTotalAB2(newTotal)
+                break;
+
+            //Tanah, Gedung, Kendaraan, Inventaris
+            case 10:
+                setTotalAT1(newTotal)
+                break;
+            case 11:
+                setTotalAT2(newTotal)
+                break;
+            case 12:
+                setTotalAT3(newTotal)
+                break;
+            case 13:
+                setTotalAT4(newTotal)
                 break;
 
             default:

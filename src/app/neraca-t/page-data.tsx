@@ -13,7 +13,7 @@ import useAktivitasContext from "@/context/aktivitas-context";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import useNeracaTContext from "@/context/neraca-t-context";
 
-// import WidgetInfoTotal from "./widget-info-total";
+//import WidgetInfoTotal from "./widget-info-total";
 //import WidgetInfoTotalNew from "./widget-info-total-new";
 
 import NeracaData from "./neraca-data";
@@ -30,6 +30,8 @@ import NeracaDataAPX from "./neraca-data-apX";
 import SubTotalAB from "./total-ab";
 import SubTotalABX from "./total-abX";
 import SubTotalAll from "./total-all";
+import NeracaDataTotalAT from "./neraca-data-total-at";
+import NeracaDataTotalATX from "./neraca-data-total-atX";
 
 
 export default function ShowNSData() {
@@ -100,7 +102,8 @@ export default function ShowNSData() {
                             <NeracaDataX title="AT" titleTotal="KENDARAAN" type={1} group={12} start={startFirst} end={endPrev} />
                             <NeracaDataX title="AT" titleTotal="INVENTARIS" type={1} group={13} start={startFirst} end={endPrev} />
 
-                            <NeracaDataSubX title="AT" titleTotal="AT" type={1} group={2} start={startFirst} end={endPrev} />
+                            {/* <NeracaDataSubX title="AT" titleTotal="AT" type={1} group={2} start={startFirst} end={endPrev} /> */}
+                            <NeracaDataTotalATX title="Aktiva Tetap" start={startFirst} end={end} />
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -160,7 +163,8 @@ export default function ShowNSData() {
                             <NeracaData title="AT" titleTotal="KENDARAAN" type={1} group={12} start={startFirst} end={end} />
                             <NeracaData title="AT" titleTotal="INVENTARIS" type={1} group={13} start={startFirst} end={end} />
 
-                            <NeracaDataSub title="AT" titleTotal="AT" type={1} group={2} start={startFirst} end={end} />
+                            {/* <NeracaDataSub title="AT" titleTotal="AT" type={1} group={2} start={startFirst} end={end} /> */}
+                            <NeracaDataTotalAT title="Aktiva Tetap" start={startFirst} end={end} />
                         </Suspense>
 
                         <div className="h-2"></div>
@@ -508,9 +512,9 @@ function HitungABX({ title, type, group2, start, end }: { title: string; type: n
 //
 function TotalAktiva() {
 
-    const { totalAL, totalAT, totalATL, totalAP } = useNeracaTContext();
+    const { totalAL, totalATL, totalAT1, totalAT2, totalAT3, totalAT4, totalAP } = useNeracaTContext();
 
-    const totalAktiva = totalAL + totalAT + totalATL;
+    const totalAktiva = totalAL + totalATL + totalAT1 + totalAT2 + totalAT3 + totalAT4 + totalAP ;
 
     return (
         <>
