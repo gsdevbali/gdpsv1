@@ -510,7 +510,7 @@ function TotalAktiva() {
 
     const { totalAL, totalAT, totalATL, totalAP } = useNeracaTContext();
 
-    const totalAktiva = totalAL + totalAT + totalATL + totalAP;
+    const totalAktiva = totalAL + totalAT + totalATL;
 
     return (
         <>
