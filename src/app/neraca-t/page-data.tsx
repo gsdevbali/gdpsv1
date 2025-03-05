@@ -1,7 +1,8 @@
 "use client"
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { useQuery } from '@tanstack/react-query';
+import { Spinner } from "@/components/ui/spinner";
 
 import { toQueryDate } from "@/lib/tanggal";
 import toidr from "@/lib/toidr";
@@ -13,7 +14,7 @@ import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import useNeracaTContext from "@/context/neraca-t-context";
 
 // import WidgetInfoTotal from "./widget-info-total";
-import WidgetInfoTotalNew from "./widget-info-total-new";
+//import WidgetInfoTotalNew from "./widget-info-total-new";
 
 import NeracaData from "./neraca-data";
 import NeracaDataX from "./neraca-dataX";
@@ -21,13 +22,13 @@ import NeracaDataSub from "./neraca-data-sub";
 import NeracaDataSubX from "./neraca-data-subX";
 import NeracaDataABX from "./neraca-data-ABX";
 import NeracaDataAB from "./neraca-data-AB";
+import NeracaDataAP from "./neraca-data-ap";
+import NeracaDataAPX from "./neraca-data-apX";
 //import NeracaDataSelisih from "../aktivitas/hitung-ab-selisih";
 //import AktivitasSelisihAB from "./hitung-aktivitas";
 //import SubTotalRekap from "../neraca-saldo-nom/total-rekap";
 import SubTotalAB from "./total-ab";
 import SubTotalABX from "./total-abX";
-import { Half2Icon } from "@radix-ui/react-icons";
-import { Spinner } from "@/components/ui/spinner";
 import SubTotalAll from "./total-all";
 
 
@@ -108,9 +109,10 @@ export default function ShowNSData() {
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500">PENYUSUTAN</h2>
                         <Suspense fallback={<Loading section="AP" />}>
                             {/* <AkumPenyusutan /> */}
-                            <NeracaDataX title="AP" titleTotal="AKUMULASI PENYUSUTAN" type={1} group={14} start={startFirst} end={endPrev} />
-
-                            <NeracaDataSubX title="AP" titleTotal="Aktiva P" type={1} group={14} start={startFirst} end={endPrev} />
+                            {/* <NeracaDataX title="AP" titleTotal="AKUMULASI PENYUSUTAN" type={1} group={14} start={startFirst} end={endPrev} />
+                            <NeracaDataSubX title="AP" titleTotal="Aktiva P" type={1} group={14} start={startFirst} end={endPrev} /> */}
+                            <NeracaDataAPX title="Akumulasi Penyusutan" titleTotal="AKUMULASI PENYUSUTAN" start={startFirst} end={endPrev} />
+                            <Divider />
                         </Suspense>
 
                     </div>
@@ -167,9 +169,10 @@ export default function ShowNSData() {
                         <h2 className="text-lg font-bold pt-2 pb-2 text-blue-600 dark:text-orange-500 opacity-0">PENYUSUTAN</h2>
                         <Suspense fallback={<Loading section="AP" />}>
                             {/* <AkumPenyusutan /> */}
-                            <NeracaData title="AP" titleTotal="AKUMULASI PENYUSUTAN" type={1} group={14} start={startFirst} end={end} />
-
-                            <NeracaDataSub title="AP" titleTotal="AP" type={1} group={14} start={startFirst} end={end} />
+                            {/* <NeracaData title="AP" titleTotal="AKUMULASI PENYUSUTAN" type={1} group={14} start={startFirst} end={end} /> */}
+                            <NeracaDataAP title="AP" titleTotal="AKUMULASI PENYUSUTAN" start={startFirst} end={end} />
+                            <Divider />
+                            {/* <NeracaDataSub title="AP" titleTotal="AP" type={1} group={14} start={startFirst} end={end} /> */}
                         </Suspense>
                         
                         <div className="h-4"></div>
@@ -364,11 +367,13 @@ function ShowABX({ title }: { title: string }) {
 //Calculate current AB
 function HitungAB({ title, type, group2, start, end }: { title: string; type: number; group2: number; start: string, end: string }) {
 
-    const { setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3 } = useAktivitasContext();
+    const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, totalSelisihAB,
+        setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3, setTotalSelisihAB } = useAktivitasContext();
+    //const { setTotalSelisihAB } = useAktivitasContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['calc', type, group2],
+        queryKey: ['ab', type, group2],
         queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
@@ -384,10 +389,17 @@ function HitungAB({ title, type, group2, start, end }: { title: string; type: nu
     const { accounts: data, totalBalance } = result;
     const newTotal = Math.abs(totalBalance);
 
+    //Set AB
+    const totalTerima = totalTerima1+totalTerima2;
+    const totalBeban = totalBebanOp+totalBeban2+totalBeban3;
+    setTotalSelisihAB(totalTerima-totalBeban);
+
     //Update Total global States
     if (isSuccess) {
         //UpdateTotalCF(group2, totalBalance);
         //const newTotal = Math.abs(totalBalance);
+        
+        
 
         switch (group2) {
 
@@ -417,7 +429,7 @@ function HitungAB({ title, type, group2, start, end }: { title: string; type: nu
 
     return (
         <>
-
+        {/* <h1>SelisihAB: {toidr(totalSelisihAB)}</h1> */}
         </>
     )
 }
@@ -426,11 +438,14 @@ function HitungAB({ title, type, group2, start, end }: { title: string; type: nu
 //Calculate previous AB
 function HitungABX({ title, type, group2, start, end }: { title: string; type: number; group2: number; start: string, end: string }) {
 
-    const { setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X } = useAktivitasContext();
+    const { totalTerima1X, totalTerima2X, totalBebanOpX, totalBeban2X, totalBeban3X, totalSelisihABX,
+        setTotalTerima1X, setTotalTerima2X, setTotalBebanOpX, setTotalBeban2X, setTotalBeban3X, setTotalSelisihABX } = useAktivitasContext();
+    // const { totalTerima1, totalTerima2, totalBebanOp, totalBeban2, totalBeban3, totalSelisihAB,
+        // setTotalTerima1, setTotalTerima2, setTotalBebanOp, setTotalBeban2, setTotalBeban3, setTotalSelisihAB } = useAktivitasContext();
 
     // Fetch data using TanStack Query
     const { data: result, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['calcX', type, group2],
+        queryKey: ['abx', type, group2],
         queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
@@ -445,6 +460,11 @@ function HitungABX({ title, type, group2, start, end }: { title: string; type: n
     //Total & data for table
     const { accounts: data, totalBalance } = result;
     const newTotal = Math.abs(totalBalance);
+
+    //Set AB
+    const totalTerima = totalTerima1X+totalTerima2X;
+    const totalBeban = totalBebanOpX+totalBeban2X+totalBeban3X;
+    setTotalSelisihABX(totalTerima-totalBeban);
 
     //Update Total global States
     if (isSuccess) {
@@ -488,15 +508,9 @@ function HitungABX({ title, type, group2, start, end }: { title: string; type: n
 //
 function TotalAktiva() {
 
-    const {
-        totalAL, totalAT, totalATL, totalAP, setTotalA, setTotalAL, setTotalAT, setTotalATL,
-        totalK, setTotalK,
-        totalAB, totalAB2, setTotalAB, setTotalAB2
-    } = useNeracaTContext();
+    const { totalAL, totalAT, totalATL, totalAP } = useNeracaTContext();
 
     const totalAktiva = totalAL + totalAT + totalATL + totalAP;
-    const totalPasiva = totalK + totalAB + totalAB2;
-    const totalSelisih = totalAktiva - totalPasiva;
 
     return (
         <>
@@ -509,19 +523,10 @@ function TotalAktiva() {
 //
 function TotalPasiva() {
 
-    const {
-        // totalA, 
-        totalAL, totalAT, totalATL, totalAP, setTotalA, setTotalAL, setTotalAT, setTotalATL,
-        totalK, setTotalK,
-        totalAB, totalAB2, setTotalAB, setTotalAB2
-        // totalAX, totalALX, totalATX, totalATLX, totalAPX, setTotalAX, setTotalALX, setTotalATX, setTotalATLX,
-        // totalKX, setTotalKX, 
-        // totalABX, totalAB2X,  setTotalABX, setTotalAB2X
-    } = useNeracaTContext();
+    const { totalK, totalAB, totalAB2 } = useNeracaTContext();
+    const { totalSelisihAB } = useAktivitasContext();
 
-    const totalAktiva = totalAL + totalAT + totalATL + totalAP;
-    const totalPasiva = totalK + totalAB + totalAB2;
-    const totalSelisih = totalAktiva - totalPasiva;
+    const totalPasiva = totalK + totalAB + totalSelisihAB;
 
     return (
         <>
