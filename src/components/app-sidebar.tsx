@@ -52,24 +52,6 @@ const data = {
   ],
   navMain: [
     // APP-CUSTOM
-    {
-      title: "DAFTAR",
-      url: "#",
-      icon: Table2Icon,
-      isActive: true,
-      items: [
-        {
-          title: "Transaksi Semua",
-          url: "/transaction-all",
-        },
-        // {
-        //   title: "Transaksi Periode",
-        //   url: "/transaction-q",
-        // },
-
-
-      ],
-    },
 
     {
       title: "ENTRI",
@@ -93,6 +75,25 @@ const data = {
           title: "Pengeluaran",
           url: "/expense",
         },
+      ],
+    },
+
+    {
+      title: "DAFTAR",
+      url: "#",
+      icon: Table2Icon,
+      isActive: true,
+      items: [
+        {
+          title: "Transaksi Semua",
+          url: "/transaction-all",
+        },
+        // {
+        //   title: "Transaksi Periode",
+        //   url: "/transaction-q",
+        // },
+
+
       ],
     },
 
