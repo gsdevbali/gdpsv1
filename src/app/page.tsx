@@ -42,8 +42,14 @@ export default function Home() {
             <MenuBox3 title="PENERIMAAN/PENGELUARAN" desc="Laporan Penerimaan/Pengeluaran Bulanan" menulink='/cashflow' />
             <MenuBox3 title="NERACA" desc="Laporan Neraca Bulanan" menulink='/neraca-t' />
           </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+            {/* <MenuBox2 title="BUKU BESAR UMUM" desc="Laporan Buku Besar Umum" menulink='/ledger' /> */}
+            <MenuBox3 title="NERACA SALDO NOMINAL" desc="Laporan Neraca Bulanan Akun Nominal" menulink='/neraca-saldo-nom' />
+            <MenuBox3 title="NERACA SALDO ASET BERSIH" desc="Laporan Neraca Bulanan Aset Bersih" menulink='/neraca-saldo-ab' />
+          </div>
         </div>
+
+        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
 
       </PageLayout>
 
