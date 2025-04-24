@@ -2,6 +2,29 @@
 
 import prisma from '@/lib/dbprisma'
 
+export async function updateAccount(formData: FormData) {
+  try {
+      const id = parseInt(formData.get("id") as string)
+      const code = formData.get("code") as string
+      const name = formData.get("name") as string
+
+      const updatedAccount = await prisma.account.update({
+          where: { id },
+          data: {
+              code,
+              name,
+              // Add other fields as needed
+          },
+      })
+
+      return { success: true, data: updatedAccount }
+  } catch (error) {
+      console.error("Error updating account:", error)
+      return { error: "Failed to update account" }
+  }
+}
+
+
 export async function getAccounts() {
   try {
     const accounts = await prisma.account.findMany({

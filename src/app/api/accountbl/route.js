@@ -5,20 +5,33 @@ export async function GET() {
     try
     {
         const query = await dbprisma.account.findMany({
-            include: {
-                accountType: true,
-                accountGroup: true,
-                accountGroup2: true,
-                transactionAlls: {
-                  select: {
-                    date: true,
-                    description: true,
-                    debit: true,
-                    credit: true,
-                    flag: true,
-                  },
+            select: {
+                id: true,
+                accountType: {
+                    select: {
+                        id: true,
+                    }
                 },
-              },
+                accountGroup: {
+                    select: {
+                        id: true,
+                    }
+                },
+                accountGroup2: {
+                    select: {
+                        id: true,
+                    }
+                },
+                transactionAlls: {
+                    select: {
+                        date: true,
+                        description: true,
+                        debit: true,
+                        credit: true,
+                        flag: true,
+                    }
+                }
+            }
         });
 
         // Hitung Balance

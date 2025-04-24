@@ -5,15 +5,39 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 //import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
+import { EditDialog } from "./edit-dialog"
+import { PencilIcon } from "lucide-react";
 //import AccountDialog from "./AccountDialog"
+
+// export type Account = {
+//     id: number
+//     code: string
+//     name: string
+//     accountType: { name: string, id: string  } 
+//     accountGroup: { name: string, id: string } 
+//     accountGroup2: { name: string, id: string } 
+//     balance: number
+// }
 
 export type Account = {
     id: number
     code: string
     name: string
-    accountType: { name: string } 
-    accountGroup: { name: string } 
-    accountGroup2: { name: string } 
+    accountType: { 
+        id: string
+        name: string 
+    }
+    accountGroup: { 
+        id: string
+        name: string 
+    }
+    accountGroup2: { 
+        id: string
+        name: string 
+    }
+    accountTypeId: number
+    accountGroupId: number
+    accountGroup2Id: number
     balance: number
 }
 
@@ -41,6 +65,15 @@ export const columns: ColumnDef<Account>[] = [
     //     enableHiding: false,
     // },
 
+    {
+        id: "idcoa",
+        accessorKey: "accountId",
+        header: () => <div className="text-right w-[100%]">id</div>,
+        cell: ({ row }) => {
+            return <div className="text-right w-[100%]">{row.original.id}</div>;
+        },
+        enableSorting: true,
+    },
     {
         accessorKey: "code",
         header: () => <div className="text-left">Kode</div>,
@@ -73,6 +106,15 @@ export const columns: ColumnDef<Account>[] = [
         enableSorting: true,
     },
     {
+        id: "codeAccountGroup",
+        accessorKey: "accountGroup.code",
+        header: () => <div className="text-right w-[100%]">id</div>,
+        cell: ({ row }) => {
+            return <div className="text-right w-[100%]">{row.original.accountGroup.id}</div>;
+        },
+        enableSorting: true,
+    },
+    {
         id: "accountGroup",
         accessorKey: "accountGroup.name",
         header: "Grup",
@@ -82,11 +124,29 @@ export const columns: ColumnDef<Account>[] = [
         enableSorting: true,
     },
     {
+        id: "codeAccountGroup2",
+        accessorKey: "accountGroup2.code",
+        header: () => <div className="text-right w-[100%]">id</div>,
+        cell: ({ row }) => {
+            return <div className="text-right w-[100%]">{row.original.accountGroup2.id}</div>;
+        },
+        enableSorting: true,
+    },
+    {
         id: "accountGroup2",
         accessorKey: "accountGroup2.name",
         header: "Grup 2",
         cell: ({ row }) => {
             return <div className="text-left w-[100%]">{row.original.accountGroup2.name}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        id: "codeAccountType",
+        accessorKey: "accountType.id",
+        header: () => <div className="text-right w-[100%]">id</div>,
+        cell: ({ row }) => {
+            return <div className="text-right w-[100%]">{row.original.accountType.id}</div>;
         },
         enableSorting: true,
     },
@@ -108,5 +168,19 @@ export const columns: ColumnDef<Account>[] = [
         },
         enableSorting: true,
     },
+    {
+            id: "actions",
+            cell: ({ row }) => {
+                return (
+                    <div className="text-right">
+                        <EditDialog account={row.original}>
+                            <Button variant="ghost" size="icon">
+                                <PencilIcon />
+                            </Button>
+                        </EditDialog>
+                    </div>
+                )
+            },
+        },
 
 ]
