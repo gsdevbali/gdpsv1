@@ -54,7 +54,7 @@ const data = {
     // APP-CUSTOM
 
     {
-      title: "ENTRI",
+      title: "ENTRI DATA",
       url: "#",
       icon: Newspaper,
       isActive: true,
@@ -79,7 +79,7 @@ const data = {
     },
 
     {
-      title: "DAFTAR",
+      title: "RIWAYAT TRANSAKSI",
       url: "#",
       icon: Table2Icon,
       isActive: true,
@@ -118,13 +118,13 @@ const data = {
     // App-2
 
     {
-      title: "AKUN",
+      title: "AKUN (COA)",
       url: "#",
       icon: Table2Icon,
       isActive: true,
       items: [
         {
-          title: "Daftar (COA)",
+          title: "Daftar Akun",
           url: "/coa",
         },
 

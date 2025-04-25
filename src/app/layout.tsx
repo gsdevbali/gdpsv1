@@ -49,10 +49,7 @@ export default function RootLayout({
 
     <ClerkProvider>
 
-
-
       <html lang="en">
-
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -74,7 +71,6 @@ export default function RootLayout({
                     <CashFlowProvider>
                       <NeracaSaldoProvider>
 
-
                         <QueryClientProvider client={queryClient}>
                           {children}
                         </QueryClientProvider>
@@ -84,14 +80,12 @@ export default function RootLayout({
                   </AktivitasProvider>
                 </NeracaTProvider>
 
-
               </SidebarProvider>
             </ThemeProvider>
           </Suspense>
         </body>
-
-
       </html >
+
     </ClerkProvider>
 
   );
