@@ -12,16 +12,19 @@ export async function GET() {
                 accountType: {
                     select: {
                         id: true,
+                        name: true,
                     }
                 },
                 accountGroup: {
                     select: {
                         id: true,
+                        name: true,
                     }
                 },
                 accountGroup2: {
                     select: {
                         id: true,
+                        name: true,
                     }
                 },
                 transactionAlls: {
