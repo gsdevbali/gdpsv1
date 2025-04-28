@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 //import { EditDialog } from "./edit-dialog"
 import { Button } from "@/components/ui/button"
-import { EditDialog } from "./edit-dialog"
+import { EditDialog2 } from "./edit-dialog2"
 import { PencilIcon } from "lucide-react";
 //import AccountDialog from "./AccountDialog"
 
@@ -41,8 +41,13 @@ export type Account = {
     balance: number
 }
 
-export const columns: ColumnDef<Account>[] = [
-// export const columns = (onSuccess: () => void): ColumnDef<Account>[] => [
+// export const columns2: ColumnDef<Account>[] = [
+// export const columns = (refreshData: () => void): ColumnDef<Account>[] => [
+// export const columns = (refreshData: (editedId: number) => void): ColumnDef<Account>[] => [
+export const columns = (
+        refreshData: (editedId: number) => void, 
+        highlightedId: number | null
+    ): ColumnDef<Account>[] => [
 
     // {
     //     id: "select",
@@ -79,15 +84,25 @@ export const columns: ColumnDef<Account>[] = [
     {
         accessorKey: "code",
         header: () => <div className="text-left">Kode</div>,
+        // cell: ({ row }) => {
+        //     return <div className="text-left">
+        //         {row.original.code}
+        //         {/* <EditDialog transaction={row.original}>
+        //             <Button variant="custom1" size="custom1">
+        //                 {row.original.code}
+        //             </Button>
+        //         </EditDialog> */}
+        //     </div>;
+        // },
         cell: ({ row }) => {
-            return <div className="text-left">
-                {row.original.code}
-                {/* <EditDialog transaction={row.original}>
-                    <Button variant="custom1" size="custom1">
-                        {row.original.code}
-                    </Button>
-                </EditDialog> */}
-            </div>;
+            const isHighlighted = row.original.id === highlightedId;
+            return (
+                <div className={`text-left w-[100%] ${
+                    isHighlighted ? "bg-slate-700 transition-colors duration-1000" : ""
+                }`}>
+                    {row.original.code}
+                </div>
+            );
         },
         enableSorting: true,
         filterFn: "includesString",
@@ -186,11 +201,16 @@ export const columns: ColumnDef<Account>[] = [
             cell: ({ row }) => {
                 return (
                     <div className="text-right">
-                        <EditDialog account={row.original}>
+                        {/* <EditDialog2 
+                            account={row.original} onSuccess={refreshData}> */}
+                        <EditDialog2 
+                        account={row.original} 
+                        onSuccess={() => refreshData(row.original.id)}
+                        >
                             <Button variant="ghost" size="icon">
                                 <PencilIcon />
                             </Button>
-                        </EditDialog>
+                        </EditDialog2>
                     </div>
                 )
             },

@@ -59,10 +59,12 @@ interface Account {
 interface EditDialogProps {
   children: React.ReactNode;
   account: Account;
-  // onSuccess?: () => void; 
+  onSuccess?: () => void; 
 }
 
-export function EditDialog({ children, account }: EditDialogProps) {
+// export function EditDialog({ children, account }: EditDialogProps) {
+export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
+
   // Add loading state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -133,9 +135,9 @@ export function EditDialog({ children, account }: EditDialogProps) {
 
       setOpen(false);
       // Call the success callback to refresh the table
-      // if (onSuccess) {
-      //   onSuccess();
-      // }
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       toast({
         title: "Gagal",
