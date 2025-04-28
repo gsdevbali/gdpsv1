@@ -160,9 +160,20 @@ export const columns: ColumnDef<Account>[] = [
     },
     {
         accessorKey: "balance",
-        header: () => <div className="text-right w-[100%]">Saldo</div>,
+        header: () => <div className="text-right w-[100%]">Saldo Berjalan</div>,
         cell: ({ row }) => {
             const balance = row.original.balance;
+            const positiveBalance = Math.abs(balance);
+            return <div className="text-right w-[100%]">Rp. {positiveBalance.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "balance1",
+        header: () => <div className="text-right w-[100%]">Saldo Awal</div>,
+        cell: ({ row }) => {
+            // const balance = row.original.balance;
+            const balance = 0;
             const positiveBalance = Math.abs(balance);
             return <div className="text-right w-[100%]">Rp. {positiveBalance.toLocaleString()}</div>;
         },

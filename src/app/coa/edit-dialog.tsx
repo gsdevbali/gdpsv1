@@ -59,6 +59,7 @@ interface Account {
 interface EditDialogProps {
   children: React.ReactNode;
   account: Account;
+  onSuccess?: () => void; 
 }
 
 export function EditDialog({ children, account }: EditDialogProps) {
@@ -73,6 +74,7 @@ export function EditDialog({ children, account }: EditDialogProps) {
   const [selectedAccountId, setSelectedAccountId] = useState(
     account.id
   );
+  const balancedefault = 0; // Set default value for balance
 
 //   useEffect(() => {
 //     const fetchAccounts = async () => {
@@ -130,6 +132,10 @@ export function EditDialog({ children, account }: EditDialogProps) {
       });
 
       setOpen(false);
+      // Call the success callback to refresh the table
+      // if (onSuccess) {
+      //   onSuccess();
+      // }
     } catch (error) {
       toast({
         title: "Gagal",
@@ -211,6 +217,18 @@ export function EditDialog({ children, account }: EditDialogProps) {
                   className="col-span-3"
                 />
               </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="balance1" className="text-left w-[100%]">
+                  Saldo Awal
+                </Label>
+                <Input
+                  id="balance1"
+                  name="balance1"
+                  defaultValue={balancedefault}
+                  className="col-span-3"
+                />
+              </div>
+
             </div>
             <div className="flex justify-between space-x-2">
               <Button variant="link" onClick={handleDeleteClick}>
