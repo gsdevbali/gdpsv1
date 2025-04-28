@@ -7,23 +7,47 @@ import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 import Loading from "@/components/Loading";
 
+// async function getAccount() {
+
+//     // const res = await fetch(`${global.baseUrl}/api/accountbl`, {
+//     //     cache: 'no-store'
+//     // })
+//     const res = await fetch(`${process.env.APP_URL}/api/abl`, {
+//         cache: 'no-store'
+//     })
+
+//     const data = await res.json()
+//     //console.log(data)
+//     return data
+// }
+
 async function getAccount() {
+    try {
+        const url = `${process.env.APP_URL}/api/abl`;
+        console.log('Fetching from:', url);
+        
+        const res = await fetch(url, {
+            cache: 'no-store'
+        });
 
-    // const res = await fetch(`${global.baseUrl}/api/accountbl`, {
-    //     cache: 'no-store'
-    // })
-    const res = await fetch(`${process.env.APP_URL}/api/accountbl`, {
-        cache: 'no-store'
-    })
+        if (!res.ok) {
+            console.log('Response status:', res.status);
+            console.log('Response headers:', Object.fromEntries(res.headers));
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
 
-    const data = await res.json()
-    //console.log(data)
-    return data
+        const data = await res.json();
+        // Ensure we return an array, even if empty
+        return Array.isArray(data) ? data : [];
+
+    } catch (error) {
+        console.error('Error fetching accounts:', error);
+        return [];
+    }
 }
 
-
 export default async function AccountPage() {
-    const data = await getAccount()
+    const data = await getAccount() || []; // Ensure data is always an array
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
 

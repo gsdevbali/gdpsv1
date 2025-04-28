@@ -37,7 +37,7 @@ const data = {
     {
       name: "GDPS-APP",
       logo: GalleryVerticalEnd,
-      plan: "v1.0",
+      plan: "v1.1",
     },
     {
       name: "dev2",
