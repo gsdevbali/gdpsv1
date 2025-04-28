@@ -9,6 +9,7 @@ export async function GET() {
                 id: true,
                 code: true,
                 name: true,
+                balance1: true,
                 accountType: {
                     select: {
                         id: true,

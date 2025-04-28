@@ -7,12 +7,15 @@ export async function updateAccount(formData: FormData) {
       const id = parseInt(formData.get("id") as string)
       const code = formData.get("code") as string
       const name = formData.get("name") as string
+      // const balance1 = formData.get("balance1") as string
+      const balance1 = parseFloat(formData.get('balance1') as string) || 0; // Add this line
 
       const updatedAccount = await prisma.account.update({
           where: { id },
           data: {
               code,
               name,
+              balance1,
               // Add other fields as needed
           },
       })

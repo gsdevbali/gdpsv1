@@ -46,6 +46,7 @@ interface Account {
   id: number;
   code: string;
   name: string;
+  balance1: number;
   accountTypeId: number;
   accountGroupId: number;
   accountGroup2Id: number;
@@ -226,7 +227,9 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
                 <Input
                   id="balance1"
                   name="balance1"
-                  defaultValue={balancedefault}
+                  type="number"
+                  step="0.01"
+                  defaultValue={account.balance1 || 0}
                   className="col-span-3"
                 />
               </div>
