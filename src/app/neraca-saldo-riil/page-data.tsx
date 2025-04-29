@@ -19,7 +19,7 @@ interface AccountGroup {
     id: number;
     name: string;
 }
-//
+
 export default function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
     const [accountGroups, setAccountGroups] = useState<AccountGroup[]>([]);
 
@@ -67,7 +67,7 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                     </React.Fragment>
                 ))}
 
-//         <div className="h-4"></div>
+         <div className="h-4"></div>
                 <div className="h-4"></div>
             </div>
         </>
