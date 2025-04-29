@@ -143,7 +143,7 @@ const data = {
         },
         {
           title: "LAMPIRAN NERACA",
-          url: "#",
+          url: "/lamp-neraca",
         },
         {
           title: "NERACA SALDO RIIL",
