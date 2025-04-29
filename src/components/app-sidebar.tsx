@@ -142,17 +142,25 @@ const data = {
           url: "/neraca-t",
         },
         {
-          title: "NERACA SALDO NOMINAL",
-          url: "/neraca-saldo-nom",
+          title: "LAMPIRAN NERACA",
+          url: "#",
         },
         {
-          title: "NERACA SALDO ASET BERSIH",
-          url: "/neraca-saldo-ab",
+          title: "NERACA SALDO RIIL",
+          url: "/neraca-saldo-riil",
+        },
+        {
+          title: "NERACA SALDO NOMINAL",
+          url: "/neraca-saldo-nom",
         },
         {
           title: "AKTIVITAS & ARUS KAS",
           url: "/aktivitas",
         },
+        // {
+        //   title: "NERACA SALDO ASET BERSIH",
+        //   url: "/neraca-saldo-ab",
+        // },
         // {
         //   title: "ARUS KAS",
         //   url: "/cashflow-recap",
