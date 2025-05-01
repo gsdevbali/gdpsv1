@@ -142,19 +142,23 @@ const data = {
           url: "/neraca-t",
         },
         {
-          title: "LAMPIRAN NERACA",
+          title: "Lampiran NERACA",
           url: "/lamp-neraca",
         },
         {
-          title: "NERACA SALDO RIIL",
+          title: "Neraca Saldo",
+          url: "/neraca-saldo",
+        },
+        {
+          title: "Neraca Saldo RIIL",
           url: "/neraca-saldo-riil",
         },
         {
-          title: "NERACA SALDO NOMINAL",
+          title: "Neraca Saldo NOMINAL",
           url: "/neraca-saldo-nom",
         },
         {
-          title: "AKTIVITAS & ARUS KAS",
+          title: "Aktivitas & Arus Kas",
           url: "/aktivitas",
         },
         // {
@@ -171,17 +175,17 @@ const data = {
         },
 
         {
-          title: "BUKU BESAR RIIL",
+          title: "Buku Besar RIIL",
           url: "/ledger-riil",
         },
 
         {
-          title: "BUKU BESAR NOMINAL",
+          title: "Buku Besar NOMINAL",
           url: "/ledger-nom",
         },
 
         {
-          title: "BUKU BESAR",
+          title: "Buku Besar",
           url: "/ledger",
         },
         // {
