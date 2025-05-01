@@ -43,7 +43,7 @@ const NeracaDataX = ({ title, titleTotal, type, group, start, end }: { title: st
         <>
             <div className="w-full">
                 <DataTable columns={columns} data={data} />
-                <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} />
+                {/* <SubTotalAktivitasBefore value={newTotalBalance} title={titleTotal} /> */}
             </div>
         </>
     )
