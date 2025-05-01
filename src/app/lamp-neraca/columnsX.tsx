@@ -75,9 +75,11 @@ export const columns: ColumnDef<Account>[] = [
     //     },
     //     enableSorting: true,
     // },
+    
     {
         accessorKey: "name",
-        header: () => <div className="text-left text-[1.2em]">Akun</div>,
+        // header: () => <div className="text-left text-[1.2em]">Akun</div>,
+        header: () => null,
         cell: ({ row }) => {
             return <div className="text-left">
                 <Link
@@ -114,11 +116,13 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "balance",
-        header: () => <div className="text-right text-[1.2em]">Saldo</div>,
+        // header: () => <div className="text-right text-[1.2em]">Saldo</div>,
+        header: () => null,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);
-            return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+            return <div className="text-right  text-gray-700 dark:text-gray-400 ">Rp. {balance.toLocaleString()}</div>;
+            return <div className="text-right ">Rp. {balance.toLocaleString()}</div>;
         },
         enableSorting: true,
     },

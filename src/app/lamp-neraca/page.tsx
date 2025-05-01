@@ -26,7 +26,7 @@ export default function Page() {
         <PageLayout header={header} footer={footer}>
             <div className="w-full">
 
-                <h1 className="text-3xl font-bold dark:text-blue-500">NERACA</h1>
+                <h1 className="text-3xl font-bold dark:text-blue-500">LAMPIRAN NERACA</h1>
                 {/* <Divider /> */}
                 <WidgetSubtitlePeriode />
                 <Divider />

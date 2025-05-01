@@ -78,6 +78,7 @@ export const columns: ColumnDef<Account>[] = [
     //     },
     //     enableSorting: true,
     // },
+
     // {
     //     accessorKey: "name",
     //     header: () => <div className="text-left">Akun</div>,
