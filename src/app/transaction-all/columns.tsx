@@ -86,12 +86,15 @@ export const columns: ColumnDef<Transaction>[] = [
     //     filterFn: dateRangeFilter
     // },
 
-    // {
-    //     //id: "id",
-    //     accessorKey: "id",
-    //     header: "ID",
-    //     enableSorting: true,
-    // },
+    {
+        id: "id",
+        accessorKey: "id",
+        header: "ID",
+        cell: ({ row }) => {
+            return <div className="text-left w-[80px]">{row.original.id}</div>;     
+        },
+        enableSorting: true,
+    },
 
     {
         accessorKey: "date",
@@ -133,32 +136,32 @@ export const columns: ColumnDef<Transaction>[] = [
 
     },
 
-    {
-        accessorKey: "account.code",
-        header: "COA",
-        cell: ({ row }) => {
-            return <div className="text-left w-[100px]">
-                {row.original.account.code}
-            </div>;
-        },
-        enableSorting: true,
-    },
+    // {
+    //     accessorKey: "account.code",
+    //     header: "COA",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left w-[100px]">
+    //             {row.original.account.code}
+    //         </div>;
+    //     },
+    //     enableSorting: true,
+    // },
 
-    {
-        accessorKey: "accountId",
-        header: "COA",
-        cell: ({ row }) => {
-            return <div className="text-left w-[100px]">
+    // {
+    //     accessorKey: "accountId",
+    //     header: "COA",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left w-[100px]">
 
-                {row.original.accountId}
+    //             {row.original.accountId}
 
-            </div>;
-        },
-        enableSorting: true,
-        filterFn: "equalsString",
-        enableHiding: true,
+    //         </div>;
+    //     },
+    //     enableSorting: true,
+    //     filterFn: "equalsString",
+    //     enableHiding: true,
 
-    },
+    // },
 
     {
         accessorKey: "ref",
