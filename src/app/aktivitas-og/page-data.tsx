@@ -24,8 +24,7 @@ import NeracaDataBebanTotalX from "./hitung-beban-total-before";
 
 export default function ShowNSData() {
 
-    const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear, titleMY } = useNeracaSaldoContext();
-
+    const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
     console.log('SHOW-NS-DATA:')
     console.log('Start:', start)
     console.log('End:', end)
@@ -132,7 +131,7 @@ export default function ShowNSData() {
 
 
                     <div className="w-1/6">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titleMY} (%)</h2>
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">MoM (%)</h2>
                         <Suspense fallback={<Loading section="MoM" />}>
                             <NeracaDataMoM row={1} />
                         </Suspense>
@@ -257,7 +256,7 @@ export default function ShowNSData() {
 
 
                     <div className="w-1/6">
-                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">{titleMY} (%)</h2>
+                        <h2 className="text-end text-blue-600 dark:text-orange-600 font-bold">MoM (%)</h2>
                         <Suspense fallback={<Loading section="MoM" />}>
                             <NeracaDataMoM row={1} />
                         </Suspense>

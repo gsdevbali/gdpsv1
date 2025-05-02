@@ -15,6 +15,7 @@ const NeracaSaldoContext = createContext
         endPrev: string; setPrevEndContext: (type: string) => void;
         titleMonthYear: string; setTitleMonthYear: (type: string) => void;
         titlePrevMonthYear: string; setPrevTitleMonthYear: (type: string) => void;
+        titleMY: string; setTitleMY: (type: string) => void;
     }>
 
     ({
@@ -28,6 +29,7 @@ const NeracaSaldoContext = createContext
         endPrev: '',
         titleMonthYear: '',
         titlePrevMonthYear: '',
+        titleMY: '',
         setFilterType: () => { },
         setSubTitle: () => { },
         setTotalTerima: () => { },
@@ -38,6 +40,7 @@ const NeracaSaldoContext = createContext
         setPrevEndContext: () => { },
         setTitleMonthYear: () => { },
         setPrevTitleMonthYear: () => { },
+        setTitleMY: () => { },
 
     });
 
@@ -54,7 +57,8 @@ export function NeracaSaldoProvider({ children }: {
     const [startPrev, setPrevStartContext] = useState('01-01-2000');
     const [endPrev, setPrevEndContext] = useState('12-31-9924');
     const [titleMonthYear, setTitleMonthYear] = useState('');
-    const [titlePrevMonthYear, setPrevTitleMonthYear] = useState('')
+    const [titlePrevMonthYear, setPrevTitleMonthYear] = useState('');
+    const [titleMY, setTitleMY] = useState('MoM');
 
     return (
         <NeracaSaldoContext.Provider value={{
@@ -68,6 +72,7 @@ export function NeracaSaldoProvider({ children }: {
             endPrev, setPrevEndContext,
             titleMonthYear, setTitleMonthYear,
             titlePrevMonthYear, setPrevTitleMonthYear,
+            titleMY, setTitleMY,
         }}>
             {children}
         </NeracaSaldoContext.Provider>

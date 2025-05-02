@@ -1,0 +1,141 @@
+'use client'
+
+import Link from "next/link"
+import { ColumnDef } from "@tanstack/react-table"
+
+export type Account = {
+    id: number
+    code: string
+    name: string
+    accountType: string
+    accountGroup: {
+        id: number
+        name: string
+    }
+    accountGroup2: {
+        id: number
+        name: string
+    }
+    //accountGroup: string
+    //accountGroup2: string
+    balance: number
+
+}
+
+
+export const columns: ColumnDef<Account>[] = [
+    // {
+    //     id: "select",
+    //     header: ({ table }) => (
+    //         <Checkbox
+    //             checked={
+    //                 table.getIsAllPageRowsSelected() ||
+    //                 (table.getIsSomePageRowsSelected() && "indeterminate")
+    //             }
+    //             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    //             aria-label="Select all"
+    //         />
+    //     ),
+    //     cell: ({ row }) => (
+    //         <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
+    //             aria-label="Select row"
+    //         />
+    //     ),
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
+
+    // {
+    //     id: "date",
+    //     accessorKey: "date",
+    //     header: () => <div className="text-left w-[60px]">Tanggal</div>,
+    //     cell: ( { row }) => {
+    //         return <div className="text-left w-[60px]">{row.original.date}</div>;
+    //     },
+    //     enableSorting: true
+    // },
+    // 
+    {
+        id: "group2",
+        accessorKey: "accountGroup2.name",
+        header: () => <div className="text-left">Kelompok</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">{row.original.accountGroup2.name}</div>;
+        },
+        enableSorting: true,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "accountGroup.name",
+        header: () => <div className="text-left w-[100px]">Kelompok</div>,
+        cell: ({ row }) => {
+            return <div className="text-left w-[100px]">{row.original.accountGroup.name}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "name",
+        header: () => <div className="text-left">Akun</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">
+                <Link
+                    href={`/coa/${row.original.id}/transactions`}
+                    className="text-blue-600 hover:underline"
+                >
+                    {row.original.name}
+                </Link>
+            </div>;
+        },
+        enableSorting: true,
+    },
+
+    // {
+    //     accessorKey: "name",
+    //     header: () => <div className="text-left">Akun</div>,
+    //     cell: ({ row }) => {
+    //         return (
+    //             <Link
+    //                 href={`/coa/${row.original.id}/transactions`}
+    //                 onClick={(e) => {
+    //                     e.preventDefault(); // Prevent default link behavior
+    //                     TransByCoaId({ params: { accountId: row.original.id, code: row.original.code, name: row.original.name } });
+    //                 }}
+    //                 className="text-blue-600 hover:underline"
+    //             >
+    //                 {row.original.name}
+    //             </Link>
+    //         );
+    //     },
+    //     enableSorting: true,
+    // },
+
+
+    {
+        accessorKey: "balance",
+        header: () => <div className="text-right">Saldo</div>,
+        cell: ({ row }) => {
+            //const balance = row.original.balance;
+            const balance = Math.abs(row.original.balance);
+            return <div className="text-right">Rp. {balance.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
+
+    // {
+    //     accessorKey: "btn1",
+    //     cell: ({ row }) => {
+    //         return <div className="text-left">
+    //             <Link
+    //                 href={`/coa/${row.original.id}/transactions`}
+    //                 className="text-blue-600 hover:underline"
+    //             >
+    //                 test
+    //             </Link>
+    //         </div>;
+    //     },
+
+    // }
+
+]
