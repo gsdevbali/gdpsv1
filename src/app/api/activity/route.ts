@@ -32,14 +32,14 @@ export async function GET(request: Request) {
             by: ['accountGroup2Id'],
             where: {
               accountGroup2Id: parseInt(accountGroup2Id),
-              transactionAlls: {
-                some: {
-                  date: {
-                    gte: new Date(startDate),
-                    lte: new Date(endDate),
-                  },
-                }
-              }
+              // transactionAlls: {
+              //   some: {
+              //     date: {
+              //       gte: new Date(startDate),
+              //       lte: new Date(endDate),
+              //     },
+              //   }
+              // }
             }
         });
 
