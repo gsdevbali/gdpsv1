@@ -29,27 +29,27 @@ export async function GET(request: Request) {
                 debit: true,
                 credit: true,
                 
-                account: {
-                    select: {
-                        id: true,
-                        code: true,
-                        name: true,
-                        accountTypeId: true,
-                        accountGroupId: true,
-                        accountGroup2Id: true,
+                // account: {
+                //     select: {
+                //         id: true,
+                //         code: true,
+                //         name: true,
+                //         accountTypeId: true,
+                //         accountGroupId: true,
+                //         accountGroup2Id: true,
                         
                         
-                        accountGroup2: {
-                            select: {
-                                id: true,
-                                name: true,
-                                flag: true
-                            }
-                        }
+                //         accountGroup2: {
+                //             select: {
+                //                 id: true,
+                //                 name: true,
+                //                 flag: true
+                //             }
+                //         }
                         
-                    }
+                //     }
 
-                }
+                // }
 
                 
                 
