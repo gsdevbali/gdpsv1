@@ -10,22 +10,22 @@ datasource db {
 }
 
 model Account {
-  id               Int               @id @default(autoincrement())
-  code             String            @unique @db.VarChar(16)
-  name             String
-  accountTypeId    Int
-  accountGroupId   Int
-  accountGroup2Id  Int
-  balance1         Float             @default(0)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  accountGroup2    AccountGroup2     @relation(fields: [accountGroup2Id], references: [id])
-  accountGroup     AccountGroup      @relation(fields: [accountGroupId], references: [id])
-  accountType      AccountType       @relation(fields: [accountTypeId], references: [id])
-  JournalDetail    JournalDetail[]
-  transactions     Transaction[]
-  transactionAlls  TransactionAll[]
-  transactionMains TransactionMain[]
+  id                Int                 @id @default(autoincrement())
+  code              String              @unique @db.VarChar(16)
+  name              String
+  accountTypeId     Int
+  accountGroupId    Int
+  accountGroup2Id   Int
+  balance1          Float               @default(0)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  accountGroup2     AccountGroup2       @relation(fields: [accountGroup2Id], references: [id])
+  accountGroup      AccountGroup        @relation(fields: [accountGroupId], references: [id])
+  accountType       AccountType         @relation(fields: [accountTypeId], references: [id])
+  JournalDetail     JournalDetail[]
+  transactions      Transaction[]
+  TransactionAllOrg TransactionAllOrg[]
+  transactionMains  TransactionMain[]
 
   @@index([accountGroup2Id], map: "Account_accountGroup2Id_fkey")
   @@index([accountGroupId], map: "Account_accountGroupId_fkey")
@@ -85,11 +85,11 @@ model TransactionTag {
 }
 
 model TransactionAllTag {
-  id               Int            @id @default(autoincrement())
+  id               Int               @id @default(autoincrement())
   transactionAllId Int
   tagId            Int
-  tag              Tag            @relation(fields: [tagId], references: [id])
-  transactionAll   TransactionAll @relation(fields: [transactionAllId], references: [id])
+  tag              Tag               @relation(fields: [tagId], references: [id])
+  transactionAll   TransactionAllOrg @relation(fields: [transactionAllId], references: [id])
 
   @@unique([transactionAllId, tagId])
   @@index([tagId], map: "TransactionAllTag_tagId_fkey")
@@ -131,19 +131,17 @@ model Transaction {
 }
 
 model TransactionAll {
-  id          Int                 @id @default(autoincrement())
-  date        DateTime            @default(now())
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
   description String
-  ref         String              @default("")
-  mediaPath   String              @default("")
-  debit       Float               @default(0)
-  credit      Float               @default(0)
+  ref         String   @default("")
+  mediaPath   String   @default("")
+  debit       Float    @default(0)
+  credit      Float    @default(0)
   accountId   Int
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  flag        String              @default("")
-  account     Account             @relation(fields: [accountId], references: [id])
-  tags        TransactionAllTag[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  flag        String   @default("")
 
   @@index([accountId], map: "Transaction_accountId_fkey")
 }
@@ -187,4 +185,22 @@ model AccountOrg {
   @@index([accountGroup2Id], map: "Account_accountGroup2Id_fkey")
   @@index([accountGroupId], map: "Account_accountGroupId_fkey")
   @@index([accountTypeId], map: "Account_accountTypeId_fkey")
+}
+
+model TransactionAllOrg {
+  id          Int                 @id @default(autoincrement())
+  date        DateTime            @default(now())
+  description String
+  ref         String              @default("")
+  mediaPath   String              @default("")
+  debit       Float               @default(0)
+  credit      Float               @default(0)
+  accountId   Int
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime
+  flag        String              @default("")
+  Account     Account             @relation(fields: [accountId], references: [id], map: "TransactionAll_accountId_fkey")
+  tags        TransactionAllTag[]
+
+  @@index([accountId], map: "Transaction_accountId_fkey")
 }

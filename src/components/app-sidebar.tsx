@@ -200,27 +200,27 @@ const data = {
 
 
 
-    {
-      title: "Pengaturan",
-      url: "#",
-      icon: Settings2,
-      isActive: false,
-      items: [
-        {
-          title: "Awal",
-          url: "#",
-        },
-        {
-          title: "Periode",
-          url: "#",
-        },
-        {
-          title: "Lain",
-          url: "#",
-        },
+    // {
+    //   title: "Pengaturan",
+    //   url: "#",
+    //   icon: Settings2,
+    //   isActive: false,
+    //   items: [
+    //     {
+    //       title: "Awal",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Periode",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Lain",
+    //       url: "#",
+    //     },
 
-      ],
-    },
+    //   ],
+    // },
   ],
   // projects: [
   //   {
