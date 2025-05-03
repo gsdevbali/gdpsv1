@@ -19,18 +19,19 @@ export async function GET() {
                 debit: true,
                 credit: true,
                 
-                account: {
-                    select: {
-                        id: true,
-                      code: true,
-                      name: true,
-                    }
-                  }, 
+                // account: {
+                //     select: {
+                //         id: true,
+                //       code: true,
+                //       name: true,
+                //     }
+                //   }, 
             },
 
             orderBy: {
                 date: 'desc',
             },
+            
             
 
 
