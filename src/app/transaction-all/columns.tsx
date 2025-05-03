@@ -116,11 +116,11 @@ export const columns: ColumnDef<Transaction>[] = [
     // },
 
     {
-        id: "accountId",
-        accessorKey: "accountId",
+        id: "coa-code",
+        accessorKey: "coa-code",
         //accessorKey: "account.code",
         //accessorFn: (row) => row.account.code,
-        header: "Akun",
+        header: "COA",
         cell: ({ row }) => {
             return <div className="text-left w-[80px]">
                 {/* {row.original.account.code} */}

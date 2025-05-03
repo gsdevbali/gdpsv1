@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
-        accountId: false,
+        id: true,
     })
     const [rowSelection, setRowSelection] = React.useState({})
 
@@ -164,9 +164,10 @@ export function DataTable<TData, TValue>({
     }
 
     const handleResetDate = () => {
+        const initDate = new Date('2020-01-01');
         setDateStart(new Date().toISOString().split('T')[0]);
         setDateEnd(new Date().toISOString().split('T')[0]);
-        table.getColumn("date")?.setFilterValue(["2020-01-01", new Date().toISOString().split('T')[0]]);
+        table.getColumn("date")?.setFilterValue([initDate, new Date().toISOString().split('T')[0]]);
         setNewPeriod(true);
     }
 
