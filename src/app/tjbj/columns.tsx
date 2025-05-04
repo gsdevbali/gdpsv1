@@ -83,21 +83,21 @@ export const columns: ColumnDef<Account>[] = [
     //     enableSorting: true,
     // },
 
-    // {
-    //     accessorKey: "name",
-    //     header: () => <div className="text-left">Akun</div>,
-    //     cell: ({ row }) => {
-    //         return <div className="text-left">
-    //             <Link
-    //                 href={`/coa/${row.original.id}/transactions`}
-    //                 className="text-blue-600 hover:underline"
-    //             >
-    //                 {row.original.name}
-    //             </Link>
-    //         </div>;
-    //     },
-    //     enableSorting: true,
-    // },
+    {
+        accessorKey: "name",
+        header: () => <div className="text-left font-bold">Akun</div>,
+        cell: ({ row }) => {
+            return <div className="text-left">
+                <Link
+                    href={`/coa/${row.original.id}/transactions`}
+                    className="text-blue-600 hover:underline"
+                >
+                    {row.original.name}
+                </Link>
+            </div>;
+        },
+        enableSorting: true,
+    },
 
     // {
     //     accessorKey: "name",
@@ -143,7 +143,7 @@ export const columns: ColumnDef<Account>[] = [
 
     {
         accessorKey: "balance",
-        header: () => <div className="text-right font-bold">Saldo</div>,
+        header: () => <div className="text-right">Saldo Akhir</div>,
         cell: ({ row }) => {
             //const balance = row.original.balance;
             const balance = Math.abs(row.original.balance);
@@ -151,6 +151,18 @@ export const columns: ColumnDef<Account>[] = [
         },
         enableSorting: true,
     },
+
+    // Untuk Saldo Nol
+    // {
+    //     accessorKey: "balance",
+    //     header: () => <div className="text-right font-bold">Saldo</div>,
+    //     cell: ({ row }) => {
+    //         //const balance = row.original.balance;
+    //         const balance = Math.abs(row.original.balance);
+    //         return <div className="text-right">Rp. 0</div>;
+    //     },
+    //     enableSorting: true,
+    // },
 
     // {
     //     accessorKey: "btn1",

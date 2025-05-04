@@ -8,7 +8,7 @@ import toidr from "@/lib/toidr";
 import Loading from "@/components/Loading";
 import useAktivitasContext from "@/context/aktivitas-context";
 
-import NeracaDataX from "./neraca-data-x";
+import NeracaData from "./neraca-data";
 import SubTotalTerima from "./total-terima";
 import SubTotalRekap from "./total-rekap";
 
@@ -25,12 +25,8 @@ export default function ShowData({
     <>
       <div>
         <div className="h-4"></div>
-        {/* <ShowDataTotal />
-        <div className="h-4"></div> */}
         <ShowNSData title="Penerimaan Persembahan" accType={4} accGroup={8} />
         <div className="h-8"></div>
-        {/* <ShowNSData title="Penerimaan Lain-lain" accType={4} accGroup={9} />
-        <div className="h-8"></div> */}
         <ShowDataTotal />
         <div className="h-4"></div>
       </div>
@@ -70,7 +66,7 @@ function ShowNSData({
 
           {/* Data */}
           <Suspense fallback={<Loading section="Tab1" />}>
-            <NeracaDataX
+            <NeracaData
               key={title}
               type={accType}
               group2={accGroup}
@@ -81,7 +77,6 @@ function ShowNSData({
           </Suspense>
         </div>
 
-        {/* SALDO AKHIR */}
       </div>
     </>
   );

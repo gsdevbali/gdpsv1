@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAktivitasContext from '@/context/aktivitas-context';
 
 import { DataTable } from "./data-tables";
-import { columns } from "./columns-saldo-nol";
+import { columns } from "./columns";
 
-const NeracaDataX = ({ key, type, group2, start, end }: { key:string; type: number; group2: number; start: string, end: string }) => {
+const NeracaData = ({ key, type, group2, start, end }: { key:string; type: number; group2: number; start: string, end: string }) => {
 
     const { setTotalTerima1, setTotalTerima2 } = useAktivitasContext();
     // Fetch data using TanStack Query
@@ -54,4 +54,4 @@ const NeracaDataX = ({ key, type, group2, start, end }: { key:string; type: numb
     )
 }
 
-export default NeracaDataX;
+export default NeracaData;
