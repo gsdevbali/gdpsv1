@@ -1,383 +1,405 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
+import React, { useEffect, useState } from "react";
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  ArrowLeft,
+  ArrowRight,
+  ChevronDown,
+  ArrowLeftToLine,
+  ArrowRightToLine,
+} from "lucide-react";
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    getPaginationRowModel,
-    SortingState,
-    useReactTable,
-    VisibilityState,
-} from "@tanstack/react-table"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
+} from "@tanstack/react-table";
 
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 // Add this new import for date handling
-import { parseISO, startOfYear, endOfYear } from "date-fns"
-import Divider from "@/components/Divider"
+import { parseISO, startOfYear, endOfYear } from "date-fns";
+import Divider from "@/components/Divider";
 
-import styles from './DataTable.module.css';
-import printStyles from './PrintStyles.module.css';
-import { getAccountsByGroup2, getGroup1, getGroup2 } from "@/actions/AccountAction"
-import { PaginationInfo } from "@/components/PaginationInfo"
+import styles from "./DataTable.module.css";
+import printStyles from "./PrintStyles.module.css";
+import {
+  getAccountsByGroup2,
+  getGroup1,
+  getGroup2,
+} from "@/actions/AccountAction";
+import { PaginationInfo } from "@/components/PaginationInfo";
 
 //import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { Label } from "@/components/ui/label"
-import { get } from "http"
-
-
+import { Label } from "@/components/ui/label";
+import { get } from "http";
 
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
-    // dateStart: string
-    // dateEnd: string
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  // dateStart: string
+  // dateEnd: string
 }
 
 interface Group1 {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 interface Group2 {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 interface Account {
-    id: number;
-    code: string;
-    name: string;
+  id: number;
+  code: string;
+  name: string;
 }
 
 export function DataTable<TData, TValue>({
-    columns,
-    data,
-
+  columns,
+  data,
 }: DataTableProps<TData, TValue>) {
+  //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+  //const [dateStart, setDateStart] = useState(firstDayOfMonth);
+  //const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
 
-    //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-    //const [dateStart, setDateStart] = useState(firstDayOfMonth);
-    //const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
+  const [newPeriod, setNewPeriod] = useState(true);
 
-    const [newPeriod, setNewPeriod] = useState(true);
+  const [dateStart, setDateStart] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [dateEnd, setDateEnd] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
-    const [dateStart, setDateStart] = useState(new Date().toISOString().split('T')[0]);
-    const [dateEnd, setDateEnd] = useState(new Date().toISOString().split('T')[0]);
+  //const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
+  //const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
-    //const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
-    //const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({
+      id: false,
+      g1id: false,
+      g2id: false,
+      g2name: false,
+      coaid: false,
+    });
+  const [rowSelection, setRowSelection] = React.useState({});
 
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
-        id: false,
-        g1id: false,
-        g2id: false,
-        g2name: false,
-        coaid: false,
-    })
-    const [rowSelection, setRowSelection] = React.useState({})
+  const [totalDebit, setTotalDebit] = useState<number>(0);
+  const [totalCredit, setTotalCredit] = useState<number>(0);
+  const [totalBalance, setBalance] = useState<number>(0);
 
-    const [totalDebit, setTotalDebit] = useState<number>(0);
-    const [totalCredit, setTotalCredit] = useState<number>(0);
-    const [totalBalance, setBalance] = useState<number>(0);
+  const [subTitle, setSubTitle] = useState<string>("SEMUA");
+  const [subTitleAccount, setSubTitleAccount] = useState<string>("SEMUA AKUN");
+  const [subTitleGroup, setSubTitleGroup] = useState<string>("SEMUA GROUP");
+  const [subTitleDateStart, setSubTitleDateStart] = useState<string>("");
+  const [subTitleDateEnd, setSubTitleDateEnd] = useState<string>("");
 
-    const [subTitle, setSubTitle] = useState<string>('SEMUA');
-    const [subTitleAccount, setSubTitleAccount] = useState<string>('SEMUA AKUN');
-    const [subTitleGroup, setSubTitleGroup] = useState<string>('SEMUA GROUP');
-    const [subTitleDateStart, setSubTitleDateStart] = useState<string>('');
-    const [subTitleDateEnd, setSubTitleDateEnd] = useState<string>('');
+  const [group1, setGroup1] = useState<Group1[]>([]);
+  const [group2, setGroup2] = useState<Group2[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
 
-    const [group1, setGroup1] = useState<Group1[]>([]);
-    const [group2, setGroup2] = useState<Group2[]>([]);
-    const [accounts, setAccounts] = useState<Account[]>([]);
+  const [currentGroup1Id, setCurrentGroup1Id] = useState<number>(0);
+  const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
+  // Add this helper function before the return statement
+  const calculateTotals = (rows: any[]) => {
+    const totals = rows.reduce(
+      (acc, row) => {
+        return {
+          debit: acc.debit + (Number(row.original.debit) || 0),
+          credit: acc.credit + (Number(row.original.credit) || 0),
+        };
+      },
+      { debit: 0, credit: 0 }
+    );
 
-    const [currentGroup1Id, setCurrentGroup1Id] = useState<number>(0)
-    const [currentGroup2Id, setCurrentGroup2Id] = useState<number>(0);
-    // Add this helper function before the return statement
-    const calculateTotals = (rows: any[]) => {
-        const totals = rows.reduce((acc, row) => {
-            return {
-                debit: acc.debit + (Number(row.original.debit) || 0),
-                credit: acc.credit + (Number(row.original.credit) || 0)
-            };
-        }, { debit: 0, credit: 0 });
+    setTotalDebit(totals.debit);
+    setTotalCredit(totals.credit);
+    setBalance(totals.debit - totals.credit);
+  };
 
-        setTotalDebit(totals.debit);
-        setTotalCredit(totals.credit);
-        setBalance(totals.debit - totals.credit);
+  // Fetch data: Group2 & Accounts for Filter Lookup
+  useEffect(() => {
+    const fetchGroup1 = async () => {
+      try {
+        const fetchedGroup1 = await getGroup1();
+        setGroup1(fetchedGroup1);
+      } catch (error) {
+        console.error("Failed to fetch data Group1:", error);
+      }
     };
 
-    // Fetch data: Group2 & Accounts for Filter Lookup
-    useEffect(() => {
+    const fetchGroup2 = async () => {
+      try {
+        const fetchedGroup2 = await getGroup2();
+        setGroup2(fetchedGroup2);
+      } catch (error) {
+        console.error("Failed to fetch data Group2:", error);
+      }
+    };
 
-        const fetchGroup1 = async () => {
-            try {
-                const fetchedGroup1 = await getGroup1();
-                setGroup1(fetchedGroup1);
-            } catch (error) {
-                console.error('Failed to fetch data Group1:', error);
-            }
-        };
+    const fetchAccounts = async () => {
+      try {
+        const fetchedAccounts = await getAccountsByGroup2(currentGroup2Id);
+        setAccounts(fetchedAccounts);
+      } catch (error) {
+        console.error("Failed to fetch accounts:", error);
+      }
+    };
 
-        const fetchGroup2 = async () => {
-            try {
-                const fetchedGroup2 = await getGroup2();
-                setGroup2(fetchedGroup2);
-            } catch (error) {
-                console.error('Failed to fetch data Group2:', error);
-            }
-        };
+    fetchGroup1();
+    fetchGroup2();
+    fetchAccounts();
 
-        const fetchAccounts = async () => {
-            try {
-                const fetchedAccounts = await getAccountsByGroup2(currentGroup2Id);
-                setAccounts(fetchedAccounts);
-            } catch (error) {
-                console.error('Failed to fetch accounts:', error);
-            }
-        };
+    //const today = new Date().toISOString().split('T')[0];
+    //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
 
-        fetchGroup1();
-        fetchGroup2();
-        fetchAccounts();
+    //setDateStart(firstDayOfMonth);
+    //setDateEnd(today);
+  }, [currentGroup1Id, currentGroup2Id]);
 
-        //const today = new Date().toISOString().split('T')[0];
-        //const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    getPaginationRowModel: getPaginationRowModel(),
 
-        //setDateStart(firstDayOfMonth);
-        //setDateEnd(today);
+    filterFns: {
+      dateRange: (row, columnId, filterValue) => {
+        const cellValue = row.getValue(columnId) as string;
+        const [start, end] = filterValue as [string, string];
+        if (!start && !end) return true;
+        if (!cellValue) return false;
 
+        const date = parseISO(cellValue);
+        const startDate = start ? parseISO(start) : startOfYear(new Date());
+        const endDate = end ? parseISO(end) : endOfYear(new Date());
 
-    }, [currentGroup1Id, currentGroup2Id]);
+        return date >= startDate && date <= endDate;
+      },
+    },
 
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
 
-    const table = useReactTable({
-        data,
-        columns,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
-        getPaginationRowModel: getPaginationRowModel(),
+  const getGroup1Name = (id: string) => {
+    if (!id) return "Semua Grup";
+    const selected = group1.find((g) => g.id === parseInt(id));
+    return selected ? selected.name : "SEMUA";
+  };
 
-        filterFns: {
-            dateRange: (row, columnId, filterValue) => {
-                const cellValue = row.getValue(columnId) as string
-                const [start, end] = filterValue as [string, string]
-                if (!start && !end) return true
-                if (!cellValue) return false
+  const getGroup2Name = (id: string) => {
+    if (!id) return "Semua Aktivitas";
+    const selected = group2.find((g) => g.id === parseInt(id));
+    return selected ? selected.name : "SEMUA";
+  };
 
-                const date = parseISO(cellValue)
-                const startDate = start ? parseISO(start) : startOfYear(new Date())
-                const endDate = end ? parseISO(end) : endOfYear(new Date())
+  const getAccountName = (id: string) => {
+    const textAll = " - Semua Akun";
+    if (!id) return textAll;
+    const selected = accounts.find((a) => a.id === parseInt(id));
+    return selected ? " - " + selected.name : textAll;
+  };
 
-                return date >= startDate && date <= endDate
-            },
+  const getDateRange = () => {
+    if (newPeriod) return "Semua Tanggal";
+    //setNewPeriod(false);
+    const start = new Date(dateStart);
+    const end = new Date(dateEnd);
 
-        },
+    const startDateLong = start.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    const endDateLong = end.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    //return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
+    return `${startDateLong} - ${endDateLong}`;
+  };
 
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-        },
+  const handleResetDate = () => {
+    setDateStart(new Date().toISOString().split("T")[0]);
+    setDateEnd(new Date().toISOString().split("T")[0]);
+    table
+      .getColumn("date")
+      ?.setFilterValue(["2020-01-01", new Date().toISOString().split("T")[0]]);
+    setNewPeriod(true);
+  };
 
-    })
+  useEffect(() => {
+    calculateTotals(table.getFilteredRowModel().rows);
+    const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
+    const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
 
-    const getGroup1Name = (id: string) => {
-        if (!id) return 'Semua Grup';
-        const selected = group1.find(g => g.id === parseInt(id));
-        return selected ? selected.name : 'SEMUA';
-    }
+    setCurrentGroup1Id(parseInt(g1Id));
+    setCurrentGroup2Id(parseInt(g2Id));
 
-    const getGroup2Name = (id: string) => {
-        if (!id) return 'Semua Aktivitas';
-        const selected = group2.find(g => g.id === parseInt(id));
-        return selected ? selected.name : 'SEMUA';
-    }
+    const coaId = table.getColumn("coaid")?.getFilterValue() as string;
+    setSubTitle(getGroup2Name(g2Id));
+    setSubTitleAccount(getAccountName(coaId));
+    setSubTitleGroup(getGroup1Name(g1Id));
 
-    const getAccountName = (id: string) => {
-        const textAll = ' - Semua Akun';
-        if (!id) return textAll;
-        const selected = accounts.find(a => a.id === parseInt(id));
-        return selected ? ' - ' + selected.name : textAll;
-    }
+    //}, [table, getGroup2Name, getAccountName]);
+  }, [table.getFilteredRowModel().rows]);
 
-    const getDateRange = () => {
-        if (newPeriod) return 'Semua Tanggal';
-        //setNewPeriod(false);
-        const start = new Date(dateStart);
-        const end = new Date(dateEnd);
+  return (
+    <>
+      <div className={printStyles.printContainer}>
+        <div>
+          <h1 className="text-3xl font-bold">
+            <span className="font-bold">BUKU BESAR</span>
+            <span className="font-light"> - {subTitle} </span>
+          </h1>
+          <h2>
+            <span className="text-[20px] text-blue-500 font-light">
+              {subTitleGroup}{" "}
+            </span>
+            <span className="text-[20px] text-blue-500 font-light">
+              {subTitleAccount}{" "}
+            </span>
+          </h2>
+          <div>
+            <span className="text-[18px] text-orange-500 font-light">
+              {getDateRange()}
+            </span>
+          </div>
 
-        const startDateLong = start.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-        const endDateLong = end.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-        //return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
-        return `${startDateLong} - ${endDateLong}`;
+          <Divider />
+        </div>
 
-    }
+        {/* TOTAL  */}
+        <div className="ml-auto flex gap-4 mr-4">
+          <div className="text-xl">
+            <span className="font-semibold">Total Debit: </span>
 
-    const handleResetDate = () => {
-        setDateStart(new Date().toISOString().split('T')[0]);
-        setDateEnd(new Date().toISOString().split('T')[0]);
-        table.getColumn("date")?.setFilterValue(["2020-01-01", new Date().toISOString().split('T')[0]]);
-        setNewPeriod(true);
-    }
+            <span className="font-bold text-orange-500">
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(totalDebit)}
+            </span>
+          </div>
+          <div className="text-xl">
+            <span className="font-semibold">Total Kredit: </span>
 
+            <span className="font-bold text-orange-500">
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(totalCredit)}
+            </span>
+          </div>
+          <div className="text-xl">
+            <span className="font-semibold">Total Saldo: </span>
 
-    useEffect(() => {
-        calculateTotals(table.getFilteredRowModel().rows);
-        const g1Id = table.getColumn("g1id")?.getFilterValue() as string;
-        const g2Id = table.getColumn("g2id")?.getFilterValue() as string;
+            <span className="font-bold text-orange-500">
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(totalBalance)}
+            </span>
+          </div>
+        </div>
 
-        setCurrentGroup1Id(parseInt(g1Id));
-        setCurrentGroup2Id(parseInt(g2Id));
+        {/* Filter Tanggal */}
+        <div className="flex justify-start pt-4 items-center gap-4">
+          <Label>Mulai dari:</Label>
+          <Input
+            className="w-[200px]"
+            name="d1"
+            type="date"
+            //value={dateStart}
+            // onChange={(e) => setDateStart(e.target.value)}
+            onChange={(e) => {
+              // Find the selected group2 item and use its name instead of ID
+              setNewPeriod(false);
+              setDateStart(e.target.value);
+              //const start) = e.target.value;
+              //const end = new Date();
+              table
+                .getColumn("date")
+                ?.setFilterValue([e.target.value, dateEnd]);
+              console.log("date start:", e.target.value);
+              //setCurrentGroup2Id(parseInt(e.target.value));
+            }}
+            placeholder="Start Date"
+          />
 
-        const coaId = table.getColumn("coaid")?.getFilterValue() as string;
-        setSubTitle(getGroup2Name(g2Id));
-        setSubTitleAccount(getAccountName(coaId));
-        setSubTitleGroup(getGroup1Name(g1Id));
+          <Label>Sampai dengan:</Label>
+          <Input
+            className="w-[200px]"
+            name="d2"
+            type="date"
+            //value={dateEnd}
+            onChange={(e) => {
+              setNewPeriod(false);
 
-        //}, [table, getGroup2Name, getAccountName]);
-    }, [table.getFilteredRowModel().rows]);
+              setDateEnd(e.target.value);
 
-    return (
-        <>
-            <div className={printStyles.printContainer}>
-                <div>
-                    <h1 className="text-3xl font-bold">
-                        <span className="font-bold">BUKU BESAR</span>
-                        <span className="font-light"> - {subTitle} </span>
-                    </h1>
-                    <h2>
-                        <span className="text-[20px] text-blue-500 font-light">{subTitleGroup} </span>
-                        <span className="text-[20px] text-blue-500 font-light">{subTitleAccount} </span>
-                    </h2>
-                    <div>
+              const newEnd = new Date(e.target.value);
+              newEnd.setDate(newEnd.getDate() + 1);
 
-                        <span className="text-[18px] text-orange-500 font-light">
-                            {getDateRange()}
-                        </span>
+              //table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
+              table
+                .getColumn("date")
+                ?.setFilterValue([
+                  dateStart,
+                  newEnd.toISOString().split("T")[0],
+                ]);
+              console.log("date end:", e.target.value);
+              //setCurrentGroup2Id(parseInt(e.target.value));
+            }}
+            placeholder="End Date"
+          />
 
-                    </div>
+          <Button onClick={handleResetDate} variant={"ghost"}>
+            RESET
+          </Button>
+        </div>
 
-                    <Divider />
-
-                </div>
-
-                {/* TOTAL  */}
-                <div className="ml-auto flex gap-4 mr-4">
-                    <div className="text-xl">
-                        <span className="font-semibold">Total Debit: </span>
-
-                        <span className="font-bold text-orange-500">
-                            {new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(totalDebit)}
-                        </span>
-
-                    </div>
-                    <div className="text-xl">
-                        <span className="font-semibold">Total Kredit: </span>
-
-                        <span className="font-bold text-orange-500">
-                            {new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(totalCredit)}
-                        </span>
-
-                    </div>
-                    <div className="text-xl">
-                        <span className="font-semibold">Total Saldo: </span>
-
-                        <span className="font-bold text-orange-500">
-                            {new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(totalBalance)}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Filter Tanggal */}
-                <div className="flex justify-start pt-4 items-center gap-4">
-                    <Label>Mulai dari:</Label>
-                    <Input
-                        className="w-[200px]"
-                        name="d1"
-                        type="date"
-                        //value={dateStart}
-                        // onChange={(e) => setDateStart(e.target.value)}
-                        onChange={(e) => {
-                            // Find the selected group2 item and use its name instead of ID
-                            setNewPeriod(false);
-                            setDateStart(e.target.value);
-                            //const start) = e.target.value;
-                            //const end = new Date();
-                            table.getColumn("date")?.setFilterValue([e.target.value, dateEnd]);
-                            console.log("date start:", e.target.value);
-                            //setCurrentGroup2Id(parseInt(e.target.value));
-                        }
-                        }
-                        placeholder="Start Date"
-
-                    />
-
-                    <Label>Sampai dengan:</Label>
-                    <Input
-                        className="w-[200px]"
-                        name="d2"
-                        type="date"
-                        //value={dateEnd}
-                        onChange={(e) => {
-                            setNewPeriod(false);
-
-                            setDateEnd(e.target.value);
-
-                            const newEnd = new Date(e.target.value);
-                            newEnd.setDate(newEnd.getDate() + 1);
-
-                            //table.getColumn("date")?.setFilterValue([dateStart, e.target.value]);
-                            table.getColumn("date")?.setFilterValue([dateStart, newEnd.toISOString().split('T')[0]]);
-                            console.log("date end:", e.target.value);
-                            //setCurrentGroup2Id(parseInt(e.target.value));
-                        }
-                        }
-                        placeholder="End Date"
-
-                    />
-
-                    <Button onClick={handleResetDate} variant={'ghost'}>RESET</Button>
-                </div>
-
-                {/* <div className="flex pt-4 items-center gap-4">
+        {/* <div className="flex pt-4 items-center gap-4">
                     <Label>Awal:</Label>
                     <Select value={selectedMonth} onValueChange={setSelectedMonth}>
                         <SelectTrigger>
@@ -437,185 +459,204 @@ export function DataTable<TData, TValue>({
                     </Select>
                 </div> */}
 
-                {/* End Filter Tgl */}
+        {/* End Filter Tgl */}
 
-                <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
+        <div className={`flex items-center py-4 gap-2 ${styles.noPrint}`}>
+          <select
+            value={(table.getColumn("g2id")?.getFilterValue() as string) ?? ""}
+            name="x"
+            onChange={(e) => {
+              // Find the selected group2 item and use its name instead of ID
+              table.getColumn("g2id")?.setFilterValue(e.target.value);
+              console.log("G2 ID:", e.target.value);
+              setCurrentGroup2Id(parseInt(e.target.value));
+            }}
+            //required
+            className="border p-2 rounded w-[100px] md:w-[30%] h-[40px]"
+          >
+            <option value="">Semua Aktivitas</option>
+            {group2.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.id} - {item.name}
+              </option>
+            ))}
+          </select>
 
-                    <select
-                        value={(table.getColumn("g2id")?.getFilterValue() as string) ?? ""}
-                        name='x'
-                        onChange={(e) => {
-                            // Find the selected group2 item and use its name instead of ID
-                            table.getColumn("g2id")?.setFilterValue(e.target.value)
-                            console.log("G2 ID:", e.target.value);
-                            setCurrentGroup2Id(parseInt(e.target.value));
-                        }
-                        }
-                        //required
-                        className='border p-2 rounded w-[100px] md:w-[30%] h-[40px]'
+          <select
+            value={(table.getColumn("coaid")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              table.getColumn("coaid")?.setFilterValue(event.target.value);
+              console.log("COA ID:", event.target.value);
+            }}
+            required
+            className="border p-2 rounded w-[100px] md:w-[50%] h-[40px]"
+          >
+            <option value="">Semua Akun</option>
+            {accounts.map((account) => (
+              <option key={account.id} value={account.id}>
+                {account.code} - {account.name}
+              </option>
+            ))}
+          </select>
+
+          {/* Group 1 */}
+          <select
+            value={(table.getColumn("g1id")?.getFilterValue() as string) ?? ""}
+            name="x"
+            onChange={(e) => {
+              // Find the selected group2 item and use its name instead of ID
+              table.getColumn("g1id")?.setFilterValue(e.target.value);
+              console.log("G1 ID:", e.target.value);
+              setCurrentGroup1Id(parseInt(e.target.value));
+            }}
+            //required
+            className="border p-2 rounded w-[100px] md:w-[50%] h-[40px]"
+          >
+            <option value="">Semua Grup</option>
+            {group1.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+
+          <Input
+            placeholder="Cari Referensi ...."
+            value={(table.getColumn("ref")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              table.getColumn("ref")?.setFilterValue(event.target.value);
+            }}
+            className="w-[200px]"
+          />
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
                     >
-                        <option value="">Semua Aktivitas</option>
-                        {group2.map((item) => (
-                            <option key={item.id} value={item.id}>
-                                {item.id} - {item.name}
-                            </option>
-                        ))}
-                    </select>
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className="text-center text-sm font-black"
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  className="text-center"
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Tidak ada data.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-                    <select
-                        value={(table.getColumn("coaid")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => {
-                            table.getColumn("coaid")?.setFilterValue(event.target.value)
-                            console.log("COA ID:", event.target.value);
-                        }
-                        }
-                        required
-                        className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
-                    >
-                        <option value="">Semua Akun</option>
-                        {accounts.map((account) => (
-                            <option key={account.id} value={account.id}>
-                                {account.code} - {account.name}
-                            </option>
-                        ))}
-                    </select>
+      {/* Pagination */}
+      <div className={printStyles.printHide}>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <PaginationInfo
+            totalRows={table.getFilteredRowModel().rows.length}
+            pageIndex={table.getState().pagination.pageIndex}
+            pageSize={table.getState().pagination.pageSize}
+          />
 
-                    {/* Group 1 */}
-                    <select
-                        value={(table.getColumn("g1id")?.getFilterValue() as string) ?? ""}
-                        name='x'
-                        onChange={(e) => {
-                            // Find the selected group2 item and use its name instead of ID
-                            table.getColumn("g1id")?.setFilterValue(e.target.value)
-                            console.log("G1 ID:", e.target.value);
-                            setCurrentGroup1Id(parseInt(e.target.value));
-                        }
-                        }
-                        //required
-                        className='border p-2 rounded w-[100px] md:w-[50%] h-[40px]'
-                    >
-                        <option value="">Semua Grup</option>
-                        {group1.map((item) => (
-                            <option key={item.id} value={item.id}>
-                                {item.name}
-                            </option>
-                        ))}
-                    </select>
-
-                    <Input
-                        placeholder="Cari Referensi ...."
-                        value={(table.getColumn("ref")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => {
-                            table.getColumn("ref")?.setFilterValue(event.target.value)
-                        }
-                        }
-                        className="w-[200px]"
-                    />
-
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="ml-auto">
-                                Columns <ChevronDown className="ml-2 h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanHide())
-                                .map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) =>
-                                                column.toggleVisibility(!!value)
-                                            }
-                                        >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            </div>
-            <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="text-center text-sm font-black">
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </TableHead>
-                                    )
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    className="text-center"
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    Tidak ada data.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-
-
-            {/* Pagination */}
-            <div className={printStyles.printHide}>
-                <div className="flex items-center justify-end space-x-2 py-4">
-                    {/* <div className="flex-1 text-sm text-foreground"> */}
-                    {/* {table.getFilteredSelectedRowModel().rows.length} dari{" "} */}
-                    {/* <span className="text-sm font-bold">{table.getFilteredRowModel().rows.length}</span> baris data ditemukan. */}
-                    {/* </div> */}
-                    <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
-                    <div className="space-x-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
-                            <ArrowLeft className="mr-2 h-4 w-4" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                        >
-                            <ArrowRight className="mr-2 h-4 w-4" />
-                        </Button>
-                    </div>
-                </div>
-            </div>
-
-        </>
-    )
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ArrowLeftToLine className="mr-2 h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <ArrowRight className="mr-2 h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <ArrowRightToLine className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
