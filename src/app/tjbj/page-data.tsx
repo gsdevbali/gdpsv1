@@ -12,7 +12,7 @@ import NeracaDataX from "./neraca-data-x";
 import SubTotalTerima from "./total-terima";
 import SubTotalRekap from "./total-rekap";
 
-export default function ShowData({ title, accType, accGroup, start, end }: { title: string, accType: number; accGroup: number; start: string; end: string }) {
+export default function ShowData({ title, start, end }: { title: string; start: string; end: string }) {
 
     return (
         <>
@@ -20,9 +20,9 @@ export default function ShowData({ title, accType, accGroup, start, end }: { tit
                 <div className="h-4"></div>
                 <ShowDataTotal />
                 <div className="h-4"></div>
-                <ShowNSData title='Penerimaan Persembahan' accType={4} accGroup={8} start={start} end={end}/>
+                <ShowNSData title='Penerimaan Persembahan' accType={4} accGroup={8} />
                 <div className="h-8"></div>
-                <ShowNSData title='Penerimaan Lain-lain' accType={4} accGroup={9} start={start} end={end} />
+                <ShowNSData title='Penerimaan Lain-lain' accType={4} accGroup={9}  />
                 <div className="h-8"></div>
                 <ShowDataTotal />
                 <div className="h-4"></div>
@@ -35,9 +35,8 @@ export default function ShowData({ title, accType, accGroup, start, end }: { tit
 //
 function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
 
-    const { totalTerima1, totalTerima2 } = useAktivitasContext();
-    
-    const { start, end, setStartContext, setEndContext } = useNeracaSaldoContext();
+    const { totalTerima1, totalTerima2 } = useAktivitasContext();    
+    const { start, end } = useNeracaSaldoContext();
 
     const subValue = accGroup === 8 ? totalTerima1 : accGroup === 9 ? totalTerima2 : 0;
 
