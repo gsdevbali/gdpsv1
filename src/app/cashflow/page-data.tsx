@@ -1,18 +1,23 @@
 import React, { Suspense } from 'react'
 import Divider from '@/components/Divider'
-import CashFlowData from './cashflow-data'
-import CashFlowData2 from './cashflow-data2';
 import Loading from './loading'
-import useCashFlowContext from '@/context/cashflow-context';
 import { toQueryDate } from '@/lib/tanggal';
 import WidgetInfoTotal from './widget-info-total';
 
+import CashFlowData from './cashflow-data'
+import CashFlowData2 from './cashflow-data2';
+import useCashFlowContext from '@/context/cashflow-context';
+import useNeracaSaldoContext from "@/context/neraca-saldo-context";
+
+
 function ShowCFData() {
-    const { start, end, periodeOn } = useCashFlowContext();
+    // const { start, end, periodeOn } = useCashFlowContext();
+    // const { periodeOn } = useCashFlowContext();
+    const { start, end } = useNeracaSaldoContext()
     console.log('SHOW-CF-DATA:')
     console.log('Start:', toQueryDate(start))
     console.log('End:', toQueryDate(end))
-    console.log('Periode is: ', periodeOn)
+    // console.log('Periode is: ', periodeOn)
 
     return (
         <>
