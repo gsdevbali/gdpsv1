@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react"
+import { ArrowLeft, ArrowRight, ChevronDown, ArrowLeftToLine, ArrowRightToLine } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -225,26 +225,47 @@ export function DataTable<TData, TValue>({
 
             {/* Pagination */}
             <div className="flex items-center justify-end space-x-2 py-4">
-            <PaginationInfo totalRows={table.getFilteredRowModel().rows.length} />
-                <div className="space-x-2">
-                    <Button
+                    <PaginationInfo 
+                        totalRows={table.getFilteredRowModel().rows.length} 
+                        pageIndex={table.getState().pagination.pageIndex}
+                        pageSize={table.getState().pagination.pageSize}
+                    />
+            
+                    <div className="space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.setPageIndex(0)}
+                        disabled={!table.getCanPreviousPage()}
+                      >
+                        <ArrowLeftToLine className="mr-2 h-4 w-4" />
+                      </Button>
+                      <Button
                         variant="outline"
                         size="sm"
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
-                    >
+                      >
                         <ArrowLeft className="mr-2 h-4 w-4" />
-                    </Button>
-                    <Button
+                      </Button>
+                      <Button
                         variant="outline"
                         size="sm"
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
-                    >
+                      >
                         <ArrowRight className="mr-2 h-4 w-4" />
-                    </Button>
-                </div>
-            </div>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        disabled={!table.getCanNextPage()}
+                      >
+                        <ArrowRightToLine className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
         </>
     )
 }

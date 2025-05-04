@@ -6,7 +6,6 @@ import { columns } from "./columns";
 import PageLayout from "@/components/PageLayout";
 import global from "@/config.js";
 import Loading from "@/components/Loading";
-import { ClientDataTable } from "./client-data-tables";
 
 // async function getAccount() {
 
@@ -62,10 +61,8 @@ export default async function AccountPage() {
                     <Button>Add New Account</Button>
                 </AccountDialog> */}
                     <h1 className='text-2xl text-bold'>DAFTAR AKUN</h1>
-                    {/* <DataTable columns={columns} data={data} /> */}
+                    <DataTable columns={columns} data={data} />
                     {/* <DataTable columns={columns()} data={data} /> */}
-                    <ClientDataTable initialData={data} />
-
 
                 </div>
             </Suspense>

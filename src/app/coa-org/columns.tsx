@@ -23,6 +23,8 @@ export type Account = {
     id: number
     code: string
     name: string
+    balance: number
+    balance1: number
     accountType: { 
         id: string
         name: string 
@@ -38,10 +40,11 @@ export type Account = {
     accountTypeId: number
     accountGroupId: number
     accountGroup2Id: number
-    balance: number
 }
 
 export const columns: ColumnDef<Account>[] = [
+// export const columns = (onSuccess: () => void): ColumnDef<Account>[] => [
+
     // {
     //     id: "select",
     //     header: ({ table }) => (
@@ -160,9 +163,20 @@ export const columns: ColumnDef<Account>[] = [
     },
     {
         accessorKey: "balance",
-        header: () => <div className="text-right w-[100%]">Saldo</div>,
+        header: () => <div className="text-right w-[100%]">Saldo Berjalan</div>,
         cell: ({ row }) => {
             const balance = row.original.balance;
+            const positiveBalance = Math.abs(balance);
+            return <div className="text-right w-[100%]">Rp. {positiveBalance.toLocaleString()}</div>;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: "balance1",
+        header: () => <div className="text-right w-[100%]">Saldo Awal</div>,
+        cell: ({ row }) => {
+            const balance = row.original.balance1;
+            // const balance = 0;
             const positiveBalance = Math.abs(balance);
             return <div className="text-right w-[100%]">Rp. {positiveBalance.toLocaleString()}</div>;
         },

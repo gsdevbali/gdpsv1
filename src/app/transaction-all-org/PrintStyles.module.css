@@ -1,0 +1,22 @@
+.printContainer {
+    display: contents;
+  }
+  
+  @media print {
+    .printContainer {
+      display: block;
+    }
+  
+    .printHide {
+      display: none !important;
+    }
+  
+    .printOnly {
+      display: block !important;
+    }
+  }
+  
+  @page {
+    size: auto;
+    margin: 0mm;
+  }

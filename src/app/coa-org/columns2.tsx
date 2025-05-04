@@ -74,7 +74,7 @@ export const columns = (
     // },
 
     {
-        id: "id",
+        id: "idcoa",
         accessorKey: "accountId",
         header: () => <div className="text-right w-[100%]">id</div>,
         cell: ({ row }) => {
@@ -83,9 +83,8 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "code",
         accessorKey: "code",
-        // header: () => <div className="text-left">Kode</div>,
+        header: () => <div className="text-left">Kode</div>,
         // cell: ({ row }) => {
         //     return <div className="text-left">
         //         {row.original.code}
@@ -96,18 +95,6 @@ export const columns = (
         //         </EditDialog> */}
         //     </div>;
         // },
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="text-left"
-                >
-                    Kode
-                    {column.getIsSorted() === "asc" ? " ↑" : column.getIsSorted() === "desc" ? " ↓" : ""}
-                </Button>
-            )
-        },
         cell: ({ row }) => {
             const isHighlighted = row.original.id === highlightedId;
             return (
@@ -122,11 +109,9 @@ export const columns = (
         filterFn: "includesString",
     },
     {
-        id: "nama-akun",
         accessorKey: "name",
         header: () => <div className="text-left w-[100%]">Nama</div>,
         cell: ({ row }) => {
-            const isHighlighted = row.original.id === highlightedId;
             return <div className="text-left w-[100%]">
                 <Link
                     href={`/coa/${row.original.id}/transactions`}
@@ -139,7 +124,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "id-group",
+        id: "codeAccountGroup",
         accessorKey: "accountGroup.code",
         header: () => <div className="text-right w-[100%]">id</div>,
         cell: ({ row }) => {
@@ -148,7 +133,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "nama-group",
+        id: "accountGroup",
         accessorKey: "accountGroup.name",
         header: "Grup",
         cell: ({ row }) => {
@@ -157,7 +142,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "id-group2",
+        id: "codeAccountGroup2",
         accessorKey: "accountGroup2.code",
         header: () => <div className="text-right w-[100%]">id</div>,
         cell: ({ row }) => {
@@ -166,7 +151,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "nama-group2",
+        id: "accountGroup2",
         accessorKey: "accountGroup2.name",
         header: "Grup 2",
         cell: ({ row }) => {
@@ -175,7 +160,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "id-tipe",
+        id: "codeAccountType",
         accessorKey: "accountType.id",
         header: () => <div className="text-right w-[100%]">id</div>,
         cell: ({ row }) => {
@@ -184,7 +169,6 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "nama-tipe",
         accessorKey: "accountType.name",
         header: "Tipe",
         cell: ({ row }) => {
@@ -193,7 +177,6 @@ export const columns = (
         enableSorting: true,
     },
     {
-        id: "saldo-berjalan",
         accessorKey: "balance",
         header: () => <div className="text-right w-[100%]">Saldo Berjalan</div>,
         cell: ({ row }) => {
@@ -215,7 +198,6 @@ export const columns = (
     //     enableSorting: true,
     // },
     {
-        id: "saldo-awal",
         accessorKey: "balance1",
         header: () => <div className="text-right w-[100%]">Saldo Awal</div>,
         cell: ({ row }) => {
@@ -226,7 +208,7 @@ export const columns = (
         enableSorting: true,
     },
     {
-            id: "aksi",
+            id: "actions",
             cell: ({ row }) => {
                 return (
                     <div className="text-right">

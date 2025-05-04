@@ -62,9 +62,9 @@ export default async function AccountPage() {
                     <Button>Add New Account</Button>
                 </AccountDialog> */}
                     <h1 className='text-2xl text-bold'>DAFTAR AKUN</h1>
-                    {/* <DataTable columns={columns} data={data} /> */}
+                    <DataTable columns={columns} data={data} />
                     {/* <DataTable columns={columns()} data={data} /> */}
-                    <ClientDataTable initialData={data} />
+                    {/* <ClientDataTable initialData={data} /> */}
 
 
                 </div>

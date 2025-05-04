@@ -1,42 +1,48 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { DataTable } from "./data-tables";
 import { columns } from "./columns2";
 import { useRouter } from "next/navigation";
 
-// interface ClientDataTableProps {
-//     initialData: any[];
-// }
-
-// export function ClientDataTable({ initialData }: ClientDataTableProps) {
-//     const router = useRouter();
-
-//     const refreshData = () => {
-//         router.refresh(); // This triggers a server-side refresh
-//     };
-
-//     return <DataTable columns={columns(refreshData)} data={initialData} />;
-// }
-
 export function ClientDataTable({ initialData }: { initialData: any[] }) {
     const router = useRouter();
+    const [data, setData] = useState(initialData);
     const [highlightedId, setHighlightedId] = useState<number | null>(null);
 
-    const refreshData = (editedId: number) => {
+    // Update local data when initialData changes
+    useEffect(() => {
+        setData(initialData);
+    }, [initialData]);
+
+    const refreshData = async (editedId: number) => {
         setHighlightedId(editedId);
+        
+        // Force a router refresh
         router.refresh();
         
-        // Clear the highlight after 2 seconds
+        // Optional: Fetch fresh data directly
+        // try {
+        //     const response = await fetch(`${process.env.APP_URL}/api/abl`, {
+        //         cache: 'no-store'
+        //     });
+        //     const freshData = await response.json();
+        //     setData(freshData);
+        // } catch (error) {
+        //     console.error('Error refreshing data:', error);
+        // }
+
+        // Clear the highlight after animation
         setTimeout(() => {
             setHighlightedId(null);
         }, 2000);
     };
 
-    return <DataTable 
-        columns={columns(refreshData, highlightedId)} 
-        data={initialData} 
-        highlightedId={highlightedId}
-    />;
+    return (
+        <DataTable 
+            columns={columns(refreshData, highlightedId)} 
+            data={data} 
+            highlightedId={highlightedId}
+        />
+    );
 }

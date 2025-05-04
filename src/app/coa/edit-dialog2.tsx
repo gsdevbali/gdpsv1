@@ -5,7 +5,6 @@ import {
   deleteTransaction,
 } from "@/actions/TransactionUpdate";
 import { updateAccount } from "@/actions/AccountAction"; // You'll need to create this
-
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,17 +29,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
-// import { Transaction } from "./columns";
 import { Trash2Icon } from "lucide-react";
-import { CurrencyInput } from "@/components/currency-input";
-import { getAccounts } from "@/actions/AccountAction";
-//import { revalidatePath } from "next/cache"
 
-// interface Account {
-//     id: number;
-//     code: string;
-//     name: string;
-// }
+import { useRouter } from "next/navigation";
+// import { CurrencyInput } from "@/components/currency-input";
+import CurrencyInput from "react-currency-input-field";
+import { error } from "console";
 
 interface Account {
   id: number;
@@ -52,19 +46,17 @@ interface Account {
   accountGroup2Id: number;
 }
 
-// interface EditDialogProps {
-//     children: React.ReactNode
-//     transaction: Transaction
-// }
 
 interface EditDialogProps {
   children: React.ReactNode;
   account: Account;
-  onSuccess?: () => void; 
+  onSuccess?: () => void;
 }
+
 
 // export function EditDialog({ children, account }: EditDialogProps) {
 export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
+  const router = useRouter();
 
   // Add loading state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,23 +66,28 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const { toast }: any = useToast();
   const [accounts, setAccounts] = useState<Account[]>([]);
-  const [selectedAccountId, setSelectedAccountId] = useState(
-    account.id
-  );
+  const [selectedAccountId, setSelectedAccountId] = useState(account.id);
   const balancedefault = 0; // Set default value for balance
+  const [balance1, setBalance1] = useState<number>(account.balance1);
+  // const [balance1, setBalance1] = useState<string>(account.balance1?.toString() || '0');
 
-//   useEffect(() => {
-//     const fetchAccounts = async () => {
-//       try {
-//         const fetchedAccounts = await getAccounts();
-//         setAccounts(fetchedAccounts);
-//       } catch (error) {
-//         console.error("Failed to fetch accounts:", error);
-//       }
-//     };
+  // update balance1 when account changes
+  useEffect(() => {
+    setBalance1(account.balance1);
+  }, [account.balance1]);
+  
+  //   useEffect(() => {
+  //     const fetchAccounts = async () => {
+  //       try {
+  //         const fetchedAccounts = await getAccounts();
+  //         setAccounts(fetchedAccounts);
+  //       } catch (error) {
+  //         console.error("Failed to fetch accounts:", error);
+  //       }
+  //     };
 
-//     fetchAccounts();
-//   }, []);
+  //     fetchAccounts();
+  //   }, []);
 
   // Log initial selectedAccountId
   // useEffect(() => {
@@ -99,20 +96,16 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
 
   async function handleFormAction(formData: FormData) {
     setIsSubmitting(true);
-    // console.log('Before setting accountId:', formData.get('accountId'));
     formData.set("accountId", selectedAccountId.toString());
-    // console.log('After setting accountId:', formData.get('accountId'));
-    // Create a new FormData instance to avoid mutation issues
     const updatedFormData = new FormData();
     // Copy all existing form data
     Array.from(formData.entries()).forEach(([key, value]) => {
       updatedFormData.append(key, value);
     });
-    // for (const [key, value] of formData.entries()) {
-    //     updatedFormData.append(key, value);
-    // }
     // Explicitly set the accountId
     updatedFormData.set("accountId", selectedAccountId.toString());
+    // updatedFormData.set("balance1", balance1.replace(/[^\d.-]/g, '')); // Remove currency formatting
+ 
 
     try {
       const result = await updateAccount(formData);
@@ -135,9 +128,11 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
       });
 
       setOpen(false);
+      // router.refresh();
       // Call the success callback to refresh the table
       if (onSuccess) {
         onSuccess();
+        // onSuccess(account.id);
       }
     } catch (error) {
       toast({
@@ -156,12 +151,12 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
   const handleDelete = async () => {
     try {
       const result = await deleteTransaction(account.id);
+      // const result = { success: true, error }; // Mock result for testing
 
       if (!result || result.error) {
         toast({
           title: "Gagal",
-          description:
-            result?.error || "Terjadi kesalahan saat menghapus Akun",
+          description: result?.error || "Terjadi kesalahan saat menghapus Akun",
           variant: "destructive",
         });
         return;
@@ -177,7 +172,7 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
       setShowDeleteAlert(false);
       //window.location.reload() // Temporary solution - better to use React state management
     } catch (error) {
-      console.error("Error deleting transaction:", error);
+      console.error("Error deleting Akun:", error);
       toast({
         title: "Gagal",
         description: "Terjadi kesalahan saat menghapus Akun",
@@ -228,12 +223,35 @@ export function EditDialog2({ children, account, onSuccess }: EditDialogProps) {
                   id="balance1"
                   name="balance1"
                   type="number"
-                  step="0.01"
-                  defaultValue={account.balance1 || 0}
+                  prefix="Rp. "                  
+                  // step="0.01"
+                  value={balance1}
+                  onChange={(e) => setBalance1(Number(e.target.value))}
                   className="col-span-3"
                 />
-              </div>
 
+              </div>
+              {/* <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="balance1" className="text-left w-[100%]">
+                  Saldo Awal
+                </Label>
+                <CurrencyInput
+                  className="w-full bg-inherit col-span-3 px-3 py-1.5 border border-gray-300 rounded-md"
+                  prefix="Rp. "
+                  id="balance1"
+                  name="balance1"
+                  placeholder="Saldo Awal"
+                  groupSeparator="."
+                  decimalSeparator=","
+                  // decimalsLimit={2}
+                  // defaultValue={balance1}
+                  value={balance1}
+                  onChange={(e) => setBalance1(Number(e.target.value))}
+                  // onValueChange={(value) => setBalance1(value || '0')}
+                  // onValueChange={(value, name, values) => console.log(value, name, values)}
+                />
+
+              </div> */}
             </div>
             <div className="flex justify-between space-x-2">
               <Button variant="link" onClick={handleDeleteClick}>

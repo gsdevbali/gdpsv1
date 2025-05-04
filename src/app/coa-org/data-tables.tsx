@@ -36,6 +36,7 @@ import { PaginationInfo } from "@/components/PaginationInfo"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    highlightedId?: number | null
 }
 
 export function DataTable<TData, TValue>({
