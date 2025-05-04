@@ -1,0 +1,47 @@
+"use client"
+
+import { useQuery } from '@tanstack/react-query';
+import toidr from "@/lib/toidr";
+
+import { DataTable } from "./data-tables";
+import { columns } from "./columns-credit";
+import SubTotalDK from './total-dk';
+
+const NeracaDataCredit = ({ title, titleTotal, type, group2, start, end }: { title: string; titleTotal: string; type: number; group2: number; start: string, end: string }) => {
+
+    // Fetch data using TanStack Query
+    const { data: result, isLoading, error, isSuccess } = useQuery({
+        queryKey: ['nsCredit', type, group2],
+        queryFn: () => fetch(`/api/neraca-saldo-group2?accountGroup2Id=${group2}&startDate=${start}&endDate=${end}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            }),
+    });
+
+    if (isLoading) return <div>Tunggu...</div>; // Handle loading state
+    if (error) return <div>Error: {error.message}</div>; // Handle error state
+    if (!result) return <div>Tidak ada data (null)</div>;
+
+    //Total & data for table
+    const { accounts: data, totalBalance, totalDebit, totalCredit } = result;
+
+    const newTotalCredit = toidr(Math.abs(totalCredit));
+
+    //Update Total global States
+    // if (isSuccess) {
+        //UpdateTotalCF(group2, totalBalance);
+        //const newTotal = Math.abs(totalBalance);
+    //};
+
+    return (
+        <>
+            <div className="w-full">
+                <DataTable columns={columns} data={data} />
+                <SubTotalDK value={newTotalCredit} />
+            </div>
+        </>
+    )
+}
+
+export default NeracaDataCredit;
