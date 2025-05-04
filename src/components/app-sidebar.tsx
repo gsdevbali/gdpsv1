@@ -173,6 +173,10 @@ const data = {
           title: "Penerimaan / Pengeluaran",
           url: "/cashflow",
         },
+        {
+          title: "Penerimaan / Pengeluaran Harian",
+          url: "/cashflow-org",
+        },
 
         {
           title: "Buku Besar RIIL",
