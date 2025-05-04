@@ -192,6 +192,10 @@ const data = {
         //   title: "NERACA SALDO",
         //   url: "/neraca-saldo",
         // },
+        {
+          title: "Laporan TJBJ",
+          url: "/tjbj",
+        },
 
 
 
