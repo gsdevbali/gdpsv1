@@ -126,7 +126,7 @@ const YearSelector = () => {
             </div>
 
             <div>
-                {showComponent && <ShowNSData />}
+                {showComponent && <ShowNSData title="Xabc" accType={1} accGroup={1} />}
             </div>
         </>
     );
