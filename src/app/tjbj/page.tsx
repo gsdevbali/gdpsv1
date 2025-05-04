@@ -1,7 +1,9 @@
 "use client"
 
 import { useSearchParams } from 'next/navigation'
+import { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
@@ -10,10 +12,13 @@ import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 //import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import MonthYearSelector from "./widget-monthly";
+import YearSelector from './widget-yearly';
 
 
 export default function Page() {
 
+    const [periodType, setPeriodType] = useState<'monthly' | 'yearly'>('monthly');
+    
     const searchParams = useSearchParams();
     const title = searchParams.get('title');
     const type = searchParams.get('type');
@@ -37,7 +42,26 @@ export default function Page() {
 
                 <Divider />
 
-                <MonthYearSelector title={title || ''} type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} />
+                {/* <MonthYearSelector title={title || ''} type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} /> */}
+                {/* Period Type Selection Buttons */}
+                <div className="flex gap-2 mb-4 py-2">
+                    <Button 
+                        variant={periodType === 'monthly' ? 'default' : 'outline'}
+                        onClick={() => setPeriodType('monthly')}
+                    >
+                        Bulanan
+                    </Button>
+                    <Button 
+                        variant={periodType === 'yearly' ? 'default' : 'outline'}
+                        onClick={() => setPeriodType('yearly')}
+                    >
+                        Tahunan
+                    </Button>
+                </div>
+
+                {/* Period Selector Component */}
+                {periodType === 'monthly' ? <MonthYearSelector /> : <YearSelector />}
+
 
             </div>
         </PageLayout >

@@ -12,7 +12,7 @@ import NeracaDataX from "./neraca-data-x";
 import SubTotalTerima from "./total-terima";
 import SubTotalRekap from "./total-rekap";
 
-export default function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
+export default function ShowData({ title, accType, accGroup, start, end }: { title: string, accType: number; accGroup: number; start: string; end: string }) {
 
     return (
         <>
@@ -20,9 +20,9 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
                 <div className="h-4"></div>
                 <ShowDataTotal />
                 <div className="h-4"></div>
-                <ShowData title='Penerimaan Persembahan' accType={4} accGroup={8} />
+                <ShowNSData title='Penerimaan Persembahan' accType={4} accGroup={8} start={start} end={end}/>
                 <div className="h-8"></div>
-                <ShowData title='Penerimaan Lain-lain' accType={4} accGroup={9} />
+                <ShowNSData title='Penerimaan Lain-lain' accType={4} accGroup={9} start={start} end={end} />
                 <div className="h-8"></div>
                 <ShowDataTotal />
                 <div className="h-4"></div>
@@ -33,14 +33,13 @@ export default function ShowNSData({ title, accType, accGroup }: { title: string
 }
 
 //
-function ShowData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
+function ShowNSData({ title, accType, accGroup }: { title: string, accType: number; accGroup: number }) {
 
     const { totalTerima1, totalTerima2 } = useAktivitasContext();
-    const { start, end, startPrev, endPrev, titleMonthYear, titlePrevMonthYear } = useNeracaSaldoContext();
-    const startPrevX = "2020-01-01";
+    
+    const { start, end, setStartContext, setEndContext } = useNeracaSaldoContext();
 
     const subValue = accGroup === 8 ? totalTerima1 : accGroup === 9 ? totalTerima2 : 0;
-    const newTitle = title.toUpperCase();
 
     return (
         <>
@@ -56,7 +55,7 @@ function ShowData({ title, accType, accGroup }: { title: string, accType: number
 
                     {/* kolom AKUN dan Saldo Awal */}
                     <Suspense fallback={<Loading section="Tab1" />}>
-                        <NeracaDataX title="Tab1" titleTotal="Tab1" type={accType} group2={accGroup} start={startPrevX} end={endPrev} />
+                        <NeracaDataX title="Tab1" titleTotal="Tab1" type={accType} group2={accGroup} start={start} end={end} />
                         <SubTotalTerima value={toidr(subValue)} title={title} />
                     </Suspense>
                 </div>
@@ -82,11 +81,8 @@ function ShowDataTotal() {
     return (
         <>
         <div className="bg-slate-300 dark:bg-gray-800 p-4 rounded-md shadow-md">
-        {/* <h2>Total Penerimaan: {totalTerima1+totalTerima2}</h2> */}
         <SubTotalRekap value={toidr(totalPenerimaan)} title="Total Penerimaan" />
-        {/* <h2>Total Biaya{totalBebanOp+totalBeban2+totalBeban3}</h2> */}
         <SubTotalRekap value={toidr(totalKlasis)} title="Total TJBJ Klasis (4%)" />
-        {/* <h2>Surplus/Defisit{selisih}</h2> */}
         <SubTotalRekap value={toidr(totalSinwil)} title="Total TJBJ Sinwil (10%)" />
         <Divider/>
         </div>

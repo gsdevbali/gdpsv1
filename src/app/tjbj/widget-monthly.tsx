@@ -10,11 +10,10 @@ import {
 } from "@/components/ui/select"
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 import React, { useState } from 'react';
-import ShowNSData from "./page-data";
-import Divider from "@/components/Divider";
+import ShowData from "./page-data";
 
-const MonthYearSelector = ({ title, type, group }: { title: string, type: number; group: number }) => {
-    const { start, end, setSubTitle, setStartContext, setEndContext, setPrevStartContext, setPrevEndContext,
+const MonthYearSelector = () => {
+    const { start, end, subTitle, setSubTitle, setStartContext, setEndContext, setPrevStartContext, setPrevEndContext,
         setTitleMonthYear, setPrevTitleMonthYear } = useNeracaSaldoContext();
 
     const currentMonthIndex = new Date().getMonth(); // Get current month index (0-11)
@@ -143,10 +142,9 @@ const MonthYearSelector = ({ title, type, group }: { title: string, type: number
             </div>
 
             <div>
-
-                <Divider />
-                {showComponent && <ShowNSData title={title} accType={type} accGroup={group} />}
-
+                {/* {showComponent && <ShowNSData />} */}
+                {showComponent && <ShowData title={subTitle} start={start} end={end} />}
+                
             </div>
         </>
     );
