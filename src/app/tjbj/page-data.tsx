@@ -25,12 +25,12 @@ export default function ShowData({
     <>
       <div>
         <div className="h-4"></div>
-        <ShowDataTotal />
-        <div className="h-4"></div>
+        {/* <ShowDataTotal />
+        <div className="h-4"></div> */}
         <ShowNSData title="Penerimaan Persembahan" accType={4} accGroup={8} />
         <div className="h-8"></div>
-        <ShowNSData title="Penerimaan Lain-lain" accType={4} accGroup={9} />
-        <div className="h-8"></div>
+        {/* <ShowNSData title="Penerimaan Lain-lain" accType={4} accGroup={9} />
+        <div className="h-8"></div> */}
         <ShowDataTotal />
         <div className="h-4"></div>
       </div>
@@ -61,7 +61,7 @@ function ShowNSData({
 
         <div className="w-full pr-2">
           <div className="flex justify-between">
-            <h2 className="text-blue-600 dark:text-orange-600 font-bold">
+            <h2 className="text-blue-600 dark:text-orange-600 text-lg font-bold">
               {title}
             </h2>
             {/* <h2 className="text-blue-600 dark:text-orange-600 font-bold">Saldo Awal</h2> */}
@@ -89,9 +89,9 @@ function ShowNSData({
 
 //
 function ShowDataTotal() {
-  const { totalTerima1, totalTerima2 } = useAktivitasContext();
+  const { totalTerima1 } = useAktivitasContext();
 
-  const totalPenerimaan = totalTerima1 + totalTerima2;
+  const totalPenerimaan = totalTerima1;
   const totalKlasis = 0.04 * totalPenerimaan;
   const totalSinwil = 0.1 * totalPenerimaan;
 
@@ -100,7 +100,7 @@ function ShowDataTotal() {
       <div className="bg-slate-300 dark:bg-gray-800 p-4 rounded-md shadow-md">
         <SubTotalRekap
           value={toidr(totalPenerimaan)}
-          title="Total Penerimaan"
+          title="Total Penerimaan Persembahan"
         />
         <SubTotalRekap
           value={toidr(totalKlasis)}

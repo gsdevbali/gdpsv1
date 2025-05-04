@@ -1,15 +1,13 @@
 "use client"
 
-import { useSearchParams } from 'next/navigation'
 import { useState } from 'react';
-
 import { Button } from '@/components/ui/button';
+
 import PageLayout from "@/components/PageLayout";
 import Divider from "@/components/Divider";
 import global from "@/config.js";
 import useNeracaSaldoContext from "@/context/neraca-saldo-context";
 
-//import WidgetPeriode from "./widget-periode";
 import WidgetSubtitlePeriode from "./widget-subtitle-periode";
 import MonthYearSelector from "./widget-monthly";
 import YearSelector from './widget-yearly';
@@ -18,11 +16,6 @@ import YearSelector from './widget-yearly';
 export default function Page() {
 
     const [periodType, setPeriodType] = useState<'monthly' | 'yearly'>('monthly');
-    
-    const searchParams = useSearchParams();
-    const title = searchParams.get('title');
-    const type = searchParams.get('type');
-    const group = searchParams.get('group');
 
     const header = <h4>{global.pageInfo.headerText}</h4>;
     const footer = <p>{global.pageInfo.footerText}</p>;
@@ -37,9 +30,8 @@ export default function Page() {
             <div className="w-full">
 
                 <h1 className="text-3xl font-bold dark:text-blue-500">TJBJ</h1>
-                {/* <Divider /> */}
-                <WidgetSubtitlePeriode />
 
+                <WidgetSubtitlePeriode />
                 <Divider />
 
                 {/* <MonthYearSelector title={title || ''} type={type ? parseInt(type) : 0} group={group ? parseInt(group) : 0} /> */}
@@ -59,9 +51,8 @@ export default function Page() {
                     </Button>
                 </div>
 
-                {/* Period Selector Component */}
+                {/* Period Selector*/}
                 {periodType === 'monthly' ? <MonthYearSelector /> : <YearSelector />}
-
 
             </div>
         </PageLayout >
